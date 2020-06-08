@@ -38,6 +38,7 @@ import { AppReducer } from './store/app.reducer';
 import { AppEffects } from './store/app.effects';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +55,7 @@ import { AppEffects } from './store/app.effects';
     NavRightComponent,
     ConfigurationComponent,
     ToggleFullScreenDirective,
-    FooterComponent
+    FooterComponent,
   ],
   imports: [
     BrowserModule,

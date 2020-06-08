@@ -18,6 +18,10 @@ const routes: Routes = [
       {
         path: 'social',
         loadChildren: () => import('./pages/social/social.module').then(module => module.SocialModule)
+      },
+      {
+        path: 'collaborate',
+        loadChildren: () => import('./pages/collaborate/collaborate.module').then(module => module.CollaborateModule)
       }
     ]
   },

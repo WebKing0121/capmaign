@@ -302,17 +302,39 @@ const NavigationItems = [
         url: 'javascript:',
         external: true
       },{
-        id: 'collaboration',
-        title: 'Collaboration',
+        id: 'collaborate',
+        title: 'Collaborate',
         type: 'collapse',
+        url: '/collaborate',
         icon: 'feather icon-at-sign',
         children:[
           {
-            id: 'collaboration-add-team',
+            id: 'collaborate-add-team',
             title: 'Add Team',
             type: 'item',
-            url: 'collaboration/add-team',
-            external: true
+            url: '/collaborate/create-team',
+            external: false
+          },
+          {
+            id: 'collaborate-associate-team',
+            title: 'Associate Team',
+            type: 'item',
+            url: '/collaborate/associate-team',
+            external: false
+          },
+          {
+            id: 'collaborate-my-calendar',
+            title: 'My Calendar',
+            type: 'item',
+            url: '/collaborate/my-calendar',
+            external: false
+          },
+          {
+            id: 'collaborate-collaboration',
+            title: 'Collaboration',
+            type: 'item',
+            url: '/collaborate/collaboration',
+            external: false
           },
         ]
       },
