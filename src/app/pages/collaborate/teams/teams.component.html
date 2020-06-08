@@ -1,0 +1,58 @@
+<app-card cardTitle="Collaboration Teams" [cardButtons]="cardButtons" cardClass="card-datatable" [options]="false">
+	<div class="table-responsive">
+		<table datatable #teamsTable [dtOptions]="dtTeamsOption" class="table table-striped table-bordered table-hover">
+			
+		</table>
+	</div>
+</app-card>
+
+<app-ui-modal #newTeamModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
+	<div class="app-modal-header">
+		<h5 class="modal-title">Create a New Team</h5>
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="newTeamModal.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<div class="app-modal-body">
+		<form [formGroup]="teamForm" (ngSubmit)="onCreateTeam()">
+			<div class="row">
+				<div class="col-md-6">
+					<label for="team_name">Team Name</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="feather icon-users"></i></span>
+						</div>
+						<input type="text" class="form-control" id="team_name" placeholder="Team name" formControlName="team_name"  [ngClass]="{ 'is-invalid': submitted && f.team_name.errors }">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<label for="team_desc">Short Description</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="feather icon-check-square"></i></span>
+						</div>
+						<input type="text" class="form-control" id="team_desc" placeholder="Short Description"  formControlName="team_desc"  [ngClass]="{ 'is-invalid': submitted && f.team_desc.errors }">
+					</div>
+				</div>  
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<label for="team_name">Team Members</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text"><i class="feather icon-user"></i></span>
+						</div>
+						<ng-select [ngClass]="'ng-select'" [options]="allUsers" [multiple]="true"></ng-select>
+					</div>
+				</div>
+			</div> 
+		</form>
+	</div>
+
+	<div class="app-modal-footer">
+		<button type="button" class="btn btn-primary" (click)="onCreateTeam()">Create</button> &nbsp;
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="newTeamModal.hide()">Close</button>
+	</div>
+</app-ui-modal>
+

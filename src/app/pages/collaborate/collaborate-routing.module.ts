@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { AssociateTeamComponent } from './associate-team/associate-team.component';
 import { CollaborationComponent } from './collaboration/collaboration.component';
-import { CreateTeamComponent } from './create-team/create-team.component';
+import { TeamsComponent } from './teams/teams.component';
 import { MyCalendarComponent } from './my-calendar/my-calendar.component'
 const routes: Routes = [
   {
@@ -10,12 +9,8 @@ const routes: Routes = [
     component: MyCalendarComponent
   },
   {
-    path: 'create-team',
-    component: CreateTeamComponent
-  },
-  {
-    path: 'associate-team',
-    component: AssociateTeamComponent
+    path: 'teams',
+    component: TeamsComponent
   },
   {
     path: 'collaboration',

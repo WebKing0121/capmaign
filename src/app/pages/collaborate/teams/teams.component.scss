@@ -1,0 +1,9 @@
+ng-select {
+    width: calc(100% - 55px)!important;
+    min-height: 40px;
+    
+}
+
+ng-select > div {
+    min-height: 40px !important;
+}

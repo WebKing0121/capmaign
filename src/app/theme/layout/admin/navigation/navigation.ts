@@ -309,17 +309,10 @@ const NavigationItems = [
         icon: 'feather icon-at-sign',
         children:[
           {
-            id: 'collaborate-add-team',
-            title: 'Add Team',
+            id: 'collaborate-tems',
+            title: 'Teams',
             type: 'item',
-            url: '/collaborate/create-team',
-            external: false
-          },
-          {
-            id: 'collaborate-associate-team',
-            title: 'Associate Team',
-            type: 'item',
-            url: '/collaborate/associate-team',
+            url: '/collaborate/teams',
             external: false
           },
           {

@@ -5,7 +5,22 @@ import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 
 import { User } from '../_models/user';
 
-const users: User[] = [{ id: 1, username: 'test', password: 'test', firstName: 'Test', lastName: 'User' }];
+const users: User[] = [
+    { id: 1, username: 'test', password: 'test', firstName: 'Robert', lastName: 'Robertson' },
+    { id: 2, username: 'greyson', password: 'test', firstName: 'Greyson', lastName: 'Wellington' },
+    { id: 3, username: 'zander', password: 'test', firstName: 'Zander', lastName: 'Johnston' },
+    { id: 4, username: 'ayden', password: 'test', firstName: 'Ayden', lastName: 'Bailey' },
+    { id: 5, username: 'jax', password: 'test', firstName: 'Jax', lastName: 'Brook' },
+    { id: 6, username: 'jordan', password: 'test', firstName: 'Jordan', lastName: 'Macdonald' },
+    { id: 7, username: 'malcolm', password: 'test', firstName: 'Malcolm', lastName: 'Watson' },
+    { id: 8, username: 'thomas', password: 'test', firstName: 'Thomas', lastName: 'Sim' },
+    { id: 9, username: 'zayn', password: 'test', firstName: 'Zayn', lastName: 'Davies' },
+    { id: 10, username: 'jack', password: 'test', firstName: 'Jack', lastName: 'Carlson' },
+    { id: 11, username: 'barrett', password: 'test', firstName: 'Barrett', lastName: 'Gale' },
+    { id: 12, username: 'francis', password: 'test', firstName: 'Francis', lastName: 'Burt' },
+    { id: 13, username: 'bentley', password: 'test', firstName: 'Bentley', lastName: 'Withers' },
+    { id: 14, username: 'kayden', password: 'test', firstName: 'Kayden', lastName: 'Carlson' },
+];
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
@@ -34,6 +49,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 case url.includes('/social/chat-messages/') && method === 'GET':
                     const userId = url.substring(url.lastIndexOf('/') + 1);
                     return getSocialChatMessages(userId);
+                case url.endsWith('/collaborate/teams') && method === 'GET':
+                    return getCollaborateTeams();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -302,6 +319,23 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             }
             return ok(message);
+        }
+
+        function getCollaborateTeams() {
+            return ok([
+                {
+                    id: 1,
+                    teamname: "C2C Team",
+                    members: 2,
+                    created_at: 'Jan 29, 2019 5:06:44 AM'
+                },
+                {
+                    id: 2,
+                    teamname: "My Team",
+                    members: 3,
+                    created_at: 'Feb 4, 2019 11:56:49 AM'
+                }
+            ])
         }
     }
 }

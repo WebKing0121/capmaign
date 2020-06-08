@@ -32,7 +32,7 @@
     "@ngrx/store": "^9.2.0",
     "amazing-time-picker": "^1.8.0",
     "angular-archwizard": "^5.0.0",
-    "angular-datatables": "^8.0.0",
+    "angular-datatables": "^9.0.2",
     "angular-dual-listbox": "^5.0.1",
     "angular-highcharts-chart": "^1.0.2",
     "angular-pell": "^0.1.0",
