@@ -22,6 +22,33 @@ const users: User[] = [
     { id: 14, username: 'kayden', password: 'test', firstName: 'Kayden', lastName: 'Carlson' },
 ];
 
+const campaigns: any[] = [
+    {id: 1, name: "Invest Now - Demo1", start_date: "May 3, 2019 2:00:00 AM", end_date: "Sep 14, 2019 2:00:00 AM", percent: 0.0, type: 'Email', status: 'inprogress' },
+    {id: 2, name: "New feature - Demo1", start_date: "Jun 16, 2019 2:00:00 AM", end_date: "Aug 23, 2019 2:00:00 AM", percent: 4.0, type: 'Email', status: 'inprogress' },
+    {id: 3, name: "Webinar Event for Demo", start_date: "Mar 15, 2019 1:00:00 AM", end_date: "Jul 27, 2019 2:00:00 AM", percent: 11.0, type: 'Email', status: 'inprogress' },
+    {id: 4, name: "Campaign Explore new products", start_date: "Jun 19, 2019 2:00:00 AM", end_date: "Jun 20, 2019 2:00:00 AM", percent: 61.0, type: 'Email', status: 'inprogress' },
+    {id: 5, name: "Automation Email", start_date: "May 7, 2019 2:00:00 AM", end_date: "Jul 18, 2019 2:00:00 AM", percent: 23.0, type: 'Email', status: 'inprogress' },
+    {id: 6, name: "Raw office-sticky notes promo", start_date: "May 7, 2019 2:00:00 AM", end_date: "May 7, 2019 2:00:00 AM", percent: 66.0, type: 'Email', status: 'inprogress' },
+];
+
+const teams: any[] = [
+    {
+        id: 1, name: "C2C Team", members: 2,  created_at: 'Jan 29, 2019 5:06:44',
+        assigned_campaigns: [1]
+    },
+    {
+        id: 2, name: "My Team", members: 3,  created_at: 'Feb 3, 2019 12:17:41',
+        assigned_campaigns: [2]
+    },
+    {
+        id: 3, name: "Digial Marketing Team", members: 4,  created_at: 'Feb 12, 2019 16:22:15',
+        assigned_campaigns: [3, 4, 5, 6]
+    },
+    {
+        id: 4, name: "Test Team", members: 2,  created_at: 'Feb 3, 2019 12:17:41',
+        assigned_campaigns: []
+    }
+]
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -51,6 +78,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return getSocialChatMessages(userId);
                 case url.endsWith('/collaborate/teams') && method === 'GET':
                     return getCollaborateTeams();
+                case url.endsWith('/collaborate/campaigns') && method === 'GET':
+                    return getCollaborateCampaigns();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -322,22 +351,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         }
 
         function getCollaborateTeams() {
-            return ok([
-                {
-                    id: 1,
-                    teamname: "C2C Team",
-                    members: 2,
-                    created_at: 'Jan 29, 2019 5:06:44 AM'
-                },
-                {
-                    id: 2,
-                    teamname: "My Team",
-                    members: 3,
-                    created_at: 'Feb 4, 2019 11:56:49 AM'
-                }
-            ])
+            return ok(teams)
         }
-    }
+
+        function getCollaborateCampaigns() {
+            return ok(campaigns)
+        }    }
 }
 
 export let fakeBackendProvider = {

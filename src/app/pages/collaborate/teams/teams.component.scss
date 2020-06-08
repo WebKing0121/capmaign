@@ -7,3 +7,37 @@ ng-select {
 ng-select > div {
     min-height: 40px !important;
 }
+
+table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
+    background: #bce8fb;
+}
+
+.campaign-table-body {
+    height: 300px;
+    overflow: auto;
+}
+
+.card-teams {
+    .card-body {
+        height: calc(100vh - 200px);
+    }
+}
+
+.card-campaigns {
+    padding-left: 0px;
+    .card-assigned-campaigns {
+        margin-bottom: 15px;
+        .card-body {
+            height: calc(50vh - 120px);
+        }
+    }
+    .card-assigned-members {
+        .card-body {
+            height: calc(50vh - 147px);
+        }
+    }
+}
+
+.table th, .table td  {
+    vertical-align: middle;
+}

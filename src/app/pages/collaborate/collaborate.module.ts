@@ -7,7 +7,7 @@ import { MyCalendarComponent } from './my-calendar/my-calendar.component';
 import { CollaborationComponent } from './collaboration/collaboration.component';
 import { TeamsComponent } from './teams/teams.component';
 import { SelectModule } from 'ng-select';
-
+import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     MyCalendarComponent,
@@ -19,7 +19,8 @@ import { SelectModule } from 'ng-select';
     CollaborateRoutingModule,
     SharedModule,
     DataTablesModule,
-    SelectModule
+    SelectModule,
+    NgbProgressbarModule
   ]
 })
 export class CollaborateModule { }
