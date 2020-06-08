@@ -1,0 +1,75 @@
+.social-link {
+    padding-left: 0;
+    list-style-type: none;
+
+    li {
+        display: inline-block;
+        cursor: pointer;
+        margin: 10px 10px 10px 0;
+        position: relative;
+
+        img {
+            border-radius: 10px;
+            filter: grayscale(100%);
+            opacity: 0.4;
+            border: 1px solid #ddd;
+        }
+        img.selected {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+        img.selected-border {
+            border: 3px solid #00acf0;
+        }
+
+        .social-link-name {
+            font-size: 12px;
+            font-size: 12px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 64px;
+            text-align: center;
+            color: #aaa;
+        }
+        .social-link-name.selected {
+            font-weight: bold;
+            color: #00acf0;
+        }
+    }
+}
+
+.social-icon {
+    position: absolute;
+    left: 52px;
+    top: -8px;
+    width: 20px;
+    height: 20px;
+    border: none;
+}
+.font-size-50 {
+    font-size: 50px;
+}
+.post-to {
+    margin-top: -10px;
+    margin-bottom: -10px;
+    text-align: left;
+}
+
+@keyframes error_animation {
+    from { transform: translateX(110%) }
+    10% { transform: translateX(-15%)}
+    90% { transform: translateX(-15%)}
+    to { transform: translateX(110%)}
+}
+
+.error-message {
+    position: absolute;
+    right: -5px;
+    top: -45px;
+    padding: 5px 10px;
+    transform: translateX(100%);
+    animation-name: error_animation;
+    animation-duration: 2s;
+    animation-delay: 0.1s;
+}

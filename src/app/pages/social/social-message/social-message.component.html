@@ -1,0 +1,57 @@
+<div class="d-flex">
+	<div class="user-section">
+		<app-card cardTitle="Users">
+			<ngb-tabset>
+				<ngb-tab title="Inbox">
+					<ng-template ngbTabContent>
+						<ul class="chat-users">
+							<li *ngFor="let user of socialChatUsers" (click)="selectUser(user.id)" [ngClass]="{'selected': user.id===selectedUserId}">
+								<img [src]="user.profileImage" class="profile-image" />
+								<img [src]="socialIcons[user.site]" class="social-site" />
+								<div class="user-name">
+									<div class="page">{{user.page}}</div>
+									<div class="name">
+
+										{{user.profileName}}
+										<span class="float-right created_at">{{user.registeredAt.substring(0, 10)}}</span>
+									</div>
+								</div>
+							</li>
+						</ul>
+					</ng-template>
+				</ngb-tab>
+				<ngb-tab title="Saved Messages">
+					<ng-template ngbTabContent>
+						Saved messages
+					</ng-template>
+				</ngb-tab>
+			</ngb-tabset>
+		</app-card>
+	</div>
+	<div class="message-section">
+		<app-card cardTitle="Conversation with CampaignToCash">
+			<ul class="chat-messages">
+				<li *ngFor="let message of socialChatMessages">
+					<div *ngIf="message.mine === 0" class="d-flex">
+						<div class="user-image">
+							<img [src]="message.profileImage" /><br />
+							<span>12:43</span>
+						</div>
+						<p class="user-chat-text">
+							{{message.message}}
+						</p>
+					</div>
+					<div *ngIf="message.mine === 1" class="d-flex justify-content-end">
+						<p class="mine-chat-text">
+							{{message.message}}
+						</p>
+						<div class="user-image">
+							<img [src]="message.profileImage" /><br />
+							<span>12:43</span>
+						</div>
+					</div>
+				</li>
+			</ul>
+		</app-card>
+	</div>
+</div>

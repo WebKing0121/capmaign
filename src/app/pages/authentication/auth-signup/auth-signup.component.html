@@ -1,0 +1,50 @@
+<div class="auth-wrapper">
+  <div class="auth-content">
+    <div class="card">
+      <div class="row align-items-center text-center">
+        <div class="col-md-12">
+          <div class="card-body">
+            <img src="assets/images/logo-dark.png" alt="" class="img-fluid mb-4">
+            <form action="javascript:">
+              <h1 class="display-4 mb-10">Sign up for free</h1>
+              <p class="mb-30">Create your account and start your free trial today</p>
+              <div class="form-row">
+                <div class="col-md-6 form-group">
+                  <input class="form-control" placeholder="First name" value="" type="text">
+                </div>
+                <div class="col-md-6 form-group">
+                  <input class="form-control" placeholder="Last name" value="" type="text">
+                </div>
+              </div>
+              <div class="form-group">
+                <input class="form-control" placeholder="Email" type="email">
+              </div>
+              <div class="form-group">
+                <input class="form-control" placeholder="Password" type="password">
+              </div>
+              <div class="form-group">
+                <div class="input-group">
+                  <input class="form-control" placeholder="Confirm Password" type="password">
+                  <div class="input-group-append">
+                    <span class="input-group-text"><i class="icon feather icon-eye-off"></i></span>
+                  </div>
+                </div>
+              </div>
+              <div class="custom-control custom-checkbox m-b-25">
+                <input class="custom-control-input" id="same-address" type="checkbox" checked="">
+                <label class="custom-control-label font-14" for="same-address">I have read and agree to the <a href=""><u>term and conditions</u></a></label>
+              </div>
+              <button class="btn btn-primary btn-block" type="submit">Register</button>
+              <div class="text-center">
+                <div class="saprator my-4"><span>OR</span></div>
+                <button class="btn text-white bg-facebook mb-2 mr-2 "><i class="fab fa-facebook-f"></i> facebook</button>
+                <button class="btn text-white bg-twitter mb-2 "><i class="fab fa-twitter"></i> twitter</button>
+                <p class="mt-4">Already have an account? <a [routerLink]="['/auth/signin']" class="f-w-400">Signin</a></p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

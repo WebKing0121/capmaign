@@ -1,0 +1,16 @@
+<div role="alert" class="alert alert-danger error-message" *ngIf="errorNumber > 0">{{errorMessage}}</div>
+<div class="post-to">
+	<ul class="social-link">
+		<li *ngFor="let social of socialAccounts$ | async" (click)="clickSocialIcon(social.id)">
+			<img [src]="social.profileImg" [ngClass]="{'selected': getSocialLinkSelected(social.id), 'selected-border': getSocialLinkSelected(social.id)}" width="64px" />
+			<img [src]="social.img" class="social-icon" [ngClass]="{'selected': getSocialLinkSelected(social.id)}" />
+			<div class="social-link-name" [ngClass]="{'selected': getSocialLinkSelected(social.id)}" >{{social.type==='profile' ? social.userProfileName : social.pageName}}</div>
+		</li>
+		<li class="float-right text-center" (click)="addConnection()">
+			<i class="feather icon-plus font-size-50"></i>
+			<div class="social-add-new">
+				Add New
+			</div>
+		</li>
+	</ul>
+</div>

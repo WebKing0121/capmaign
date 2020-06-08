@@ -1,0 +1,15 @@
+<app-ui-modal #confirmModal dialogClass="modal-dialog-centered" [dialogClass]="'confirm-modal'">
+	<div class="app-modal-header">
+		<h5 class="modal-title">{{modalTitle}}</h5>
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="confirmModal.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="app-modal-body">
+		<p>{{modalMessage}}</p>
+	</div>
+	<div class="app-modal-footer">
+		<button type="button" *ngFor="let button of buttons" class="btn" [ngClass]="button.class" (click)="onClickYes(button.action)">{{button.label}}</button> &nbsp;
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="confirmModal.hide()">{{btnNoText ? btnNoText: 'Cancel'}}</button>
+	</div>
+</app-ui-modal>

@@ -1,0 +1,25 @@
+.card-buttons {
+    position: absolute;
+    top: 7px;
+    right: 20px;
+    button {
+        padding: 7px 5px;
+    }
+}
+.tab-section {
+    margin-top: -15px;
+}
+
+.btn-close-tab {
+    padding: 7px 20px;
+}
+
+
+.new-stream {
+    .modal-content {
+        overflow: hidden;
+    }
+    .input-group-text {
+        width: 140px;
+    }
+} 

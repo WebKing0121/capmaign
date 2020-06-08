@@ -1,0 +1,18 @@
+<ng-container *ngIf="this.navigationList">
+  <ng-container *ngFor="let breadcrumb of navigationList; let last = last">
+    <div class="page-header" *ngIf="last && breadcrumb.breadcrumbs !== false">
+      <div class="page-block">
+        <div class="row align-items-center bg-white">
+          <div class="pl-3">
+            <ul class="breadcrumb">
+              <ng-container *ngFor="let breadcrumb of navigationList">
+                <li class="breadcrumb-item" *ngIf="breadcrumb.url !== false"><a [routerLink]="breadcrumb.url">{{breadcrumb.title}}</a></li>
+                <li class="breadcrumb-item" *ngIf="breadcrumb.url === false"><a href="javascript:">{{breadcrumb.title}}</a></li>
+              </ng-container>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>
