@@ -38,6 +38,9 @@
                                         <td>{{campaign.type}}</td>
                                         <td>{{campaign.status}}</td>
                                     </tr>
+                                    <tr *ngIf="filteredCampaignsInProgress.length === 0">
+                                        <td colspan=7 align="center"> No data available in table.</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </ng-template>
@@ -67,6 +70,9 @@
                                         </td>
                                         <td>{{campaign.type}}</td>
                                         <td>{{campaign.status}}</td>
+                                    </tr>
+                                    <tr *ngIf="filteredCampaignsInArchived.length === 0">
+                                        <td align="center" colspan=7> No data available in table.</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -108,27 +114,26 @@
 	</div>
 
 	<div class="app-modal-body">
-			<div class="row" *ngIf="replaceTeam">
-				<div class="col-md-12">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text">Current Team</span>
-						</div>
-						<input type="text" class="form-control" id="team_name" placeholder="Team name" [value] = "getCurrentTeamName()" readonly formControlName="team_name">
-					</div>
-				</div>
-			</div>
-			<div class="row" [ngClass]="{'mt-4': replaceTeam}">
-				<div class="col-md-12">
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text">New Team</span>
-						</div>
-						<ng-select [ngClass]="'ng-select'" [options]="getExistingTeam()"></ng-select>
-					</div>
-				</div>
-			</div> 
-		
+        <div class="row" *ngIf="replaceTeam">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Current Team</span>
+                    </div>
+                    <input type="text" class="form-control" id="team_name" placeholder="Team name" [value] = "getCurrentTeamName()" readonly>
+                </div>
+            </div>
+        </div>
+        <div class="row" [ngClass]="{'mt-4': replaceTeam}">
+            <div class="col-md-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">New Team</span>
+                    </div>
+                    <ng-select [ngClass]="'ng-select'" [options]="getExistingTeam()"></ng-select>
+                </div>
+            </div>
+        </div>
 	</div>
 
 	<div class="app-modal-footer">

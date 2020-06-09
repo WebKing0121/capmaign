@@ -55,4 +55,6 @@
 
 .tab-pane {
     height: calc(100vh - 280px);
+    width: 100%;
+    overflow: auto;
 }
