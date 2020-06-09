@@ -21,6 +21,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   @ViewChild('cardTeams', { static: false }) cardTeams;
   @ViewChild('cardAssignCampaigns', { static: false }) cardAssignCampaigns;
   @ViewChild('cardTasks', { static: false }) cardTasks;
+  @ViewChild('campaignTasks', { static: false }) campaignTasks;
   
   teamForm: FormGroup;
   loading = false;
@@ -215,22 +216,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
    *******************************************************/
   onClickCampaign(campaignId: number) {
     this.selectedCampaignId = campaignId;
-    this.loadTasksFromCampaign(campaignId);
-  }
-
-  loadTasksFromCampaign(campaignId: number) {
-    this.cardTasks.setCardRefresh( true );  
-    this.collaborateService.getCampaignTasks(campaignId)
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.tasks = data;
-        this.cardTasks.setCardRefresh( false );  
-      },
-      error => {
-        console.log('error', error)
-      }
-    );
+    this.campaignTasks.loadTasksFromCampaign(campaignId);
   }
 
   getSelectedCampaigns() {
@@ -309,7 +295,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
     
   }
 
-     /******************************************************
+  /******************************************************
    * Click event - select row in Assigned Campaign table *
    * --------------------------------------------------- *
    *                                                     *

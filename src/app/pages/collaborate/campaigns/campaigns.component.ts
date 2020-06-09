@@ -3,8 +3,8 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Subject } from 'rxjs';
 import { first } from 'rxjs/operators';
 
-import { CollaborateService } from 'src/app/_services/collaborate.service';
-
+import { CollaborateService } from '../../../_services/collaborate.service';
+import { UserService } from '../../../_services/user.service';
 @Component({
   selector: 'app-campaigns',
   templateUrl: './campaigns.component.html',
@@ -13,6 +13,8 @@ import { CollaborateService } from 'src/app/_services/collaborate.service';
 })
 export class CampaignsComponent implements OnInit {
   @ViewChild('assignTeamModal', { static: false }) assignTeamModal;
+  @ViewChild('cardTasks', { static: false }) cardTasks;
+  @ViewChild('campaignTasks', { static: false }) campaignTasks;
 
   cardButtonsInTasks = [
     { label: 'Add Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddTask()},
@@ -38,13 +40,20 @@ export class CampaignsComponent implements OnInit {
   replaceTeam: boolean = false;
   selectedCampainIdForReplace: number;
   selectedCampaignId: number;
+  tasks: any[];
+  allUsers: any[];
 
   constructor(
-    private collaborateService: CollaborateService
+    private collaborateService: CollaborateService,
+    private userService: UserService
   ) {
     this.campaigns = [];
     this.teams = [];
     this.teamsForNgSelect = [];
+    this.tasks = [];
+    this.allUsers = [];
+    this.filteredCampaignsInProgress = [];
+    this.filteredCampaignsInArchived = [];
   }
 
   ngOnInit(): void {
@@ -68,6 +77,16 @@ export class CampaignsComponent implements OnInit {
         this.campaigns = data;
         this.filteredCampaignsInProgress = data.filter(item=>item.status==='inprogress');
         this.filteredCampaignsInArchived = data.filter(item=>item.status!=='inprogress');
+      },
+      error => {
+        console.log('error', error)
+      }
+    );
+    this.userService.getAll()
+    .pipe(first())
+    .subscribe(
+      data => {
+        this.allUsers = data.map(user=>({id: user.id, label: user.firstName + ' ' + user.lastName }));
       },
       error => {
         console.log('error', error)
@@ -148,7 +167,9 @@ export class CampaignsComponent implements OnInit {
 
   onClickCampaign(campaignId: number) {
     this.selectedCampaignId = campaignId;
+    this.campaignTasks.loadTasksFromCampaign(campaignId);
   }
+  
    /*********************************************
    * Click event - Plus icon in Campaigns table *
    * ------------------------------------------ *

@@ -1,0 +1,41 @@
+.task-table-header {
+    th {
+        padding: 0.5rem 0.75rem;
+    }
+}
+.task-table-body {
+    height: 300px;
+    overflow: auto;
+
+    td {
+        padding: 0.5rem 0.75rem;
+    }
+    .selected {
+        background: #bce8fb !important;
+    }
+}
+
+.add-task-modal {
+    .input-group-prepend {
+        .input-group-text {
+            width: 120px;
+        }
+    }
+    
+    .form-control:disabled, .form-control[readonly] {
+        background-color: #f7f7f7;
+    }
+
+    ng-select {
+        width: calc(100% - 118px)!important;
+        min-height: 45px;
+    }
+
+
+    ng-select > div {
+        min-height: 45px !important;
+    }
+    ng-select>div>div.single>div.placeholder, ng-select>div>div.single>div.value {
+        line-height: 45px;
+    }
+}

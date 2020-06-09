@@ -17,10 +17,12 @@ import { ToastService } from './components/toast/toast.service';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { TinymceModule } from 'angular2-tinymce';
-import { NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbTabsetModule, NgbProgressbarModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { SocialAddConnectionComponent } from './components/social-add-connection/social-add-connection.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SocialAccountListComponent } from './components/social-account-list/social-account-list.component';
+import { CampaignTasksComponent } from './components/campaign-tasks/campaign-tasks.component';
+import { SelectModule } from 'ng-select';
 /*import 'hammerjs';
 import 'mousetrap';
 import { GalleryModule } from '@ks89/angular-modal-gallery';*/
@@ -41,7 +43,10 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalModule,
     ClickOutsideModule,
     LightboxModule,
-    TextMaskModule
+    TextMaskModule,
+    NgbProgressbarModule,
+    NgbDatepickerModule,
+    SelectModule
   ],
   exports: [
     CommonModule,
@@ -64,7 +69,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbTabsetModule,
     SocialAddConnectionComponent,
     SocialAccountListComponent,
-    TextMaskModule
+    TextMaskModule,
+    CampaignTasksComponent
   ],
   declarations: [
     DataFilterPipe,
@@ -75,7 +81,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ToastComponent,
     GalleryComponent,
     SocialAddConnectionComponent,
-    SocialAccountListComponent
+    SocialAccountListComponent,
+    CampaignTasksComponent
   ],
   providers: [
     {

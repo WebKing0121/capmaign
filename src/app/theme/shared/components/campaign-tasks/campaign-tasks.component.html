@@ -1,0 +1,121 @@
+<app-card cardTitle="Tasks" #cardTasks [cardButtons]="cardButtonsInTasks" cardClass="card-tasks" [options]="false">
+	<div class="table-responsive">
+		<table #taskTable class="table table-striped table-hover">
+			<thead class="task-table-header">
+				<th>Task Name</th>
+				<th>Description</th>
+				<th>Start Date</th>
+				<th>End Date</th>
+				<th>Progress</th>
+				<th>Est.</th>
+				<th>Member</th>
+			</thead>
+			<tbody class="task-table-body">
+				<tr *ngFor="let task of tasks" (click)="onClickTask(task.id)" [ngClass]="{'selected': task.id === selectedTaskId}">
+					<td>{{task.name}}</td>
+					<td>{{task.desc}}</td>
+					<td>{{task.start_date.substring(0, 11)}}</td>
+					<td>{{task.end_date.substring(0, 11)}}</td>
+					<td>
+						<ngb-progressbar height="20px" [value]="task.percent"></ngb-progressbar>
+					</td>
+					<td>{{task.esti_hours}}</td>
+					<td>{{getUserName(task.user_id)}}</td>
+				</tr>
+				<tr *ngIf="tasks.length === 0">
+					<td colspan=6 align="center">No data available in table</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</app-card>
+
+<app-ui-modal #addTaskModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg add-task-modal'">
+	<div class="app-modal-header">
+		<h5 class="modal-title">Add Task</h5>
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="addTaskModal.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<div class="app-modal-body">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Team</span>
+					</div>
+					<input type="text" class="form-control" [value]="getTeamName()" readonly />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Campaigns</span>
+					</div>
+					<input type="text" class="form-control" [value]="getCampaignName()" readonly />
+				</div>
+			</div>
+		</div> 
+		<div class="row mt-4">
+			<div class="col-md-12 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Task Name</span>
+				</div>
+				<input type="text" class="form-control" />
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-md-12 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Description</span>
+				</div>
+				<input type="text" class="form-control" />
+			</div>
+		</div>
+
+		<div class="row mt-2">
+			<div class="col-md-6 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Start</span>
+				</div>
+				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker #d_f="ngbDatepicker">
+				<div class="input-group-append">
+					<span class="input-group-text" (click)="d_f.toggle()">
+						<i class="fa fa-calendar"></i>
+					</span>
+				</div>
+			</div>
+			<div class="col-md-6 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">End</span>
+				</div>
+				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker #d_t="ngbDatepicker">
+				<div class="input-group-append">
+					<span class="input-group-text" (click)="d_t.toggle()">
+						<i class="fa fa-calendar"></i>
+					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-md-6 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">User</span>
+				</div>
+				<ng-select [ngClass]="'ng-select'" [options]="getTeamMembers()"></ng-select>
+			</div>
+			<div class="col-md-6 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Estimation</span>
+				</div>
+				<input type="text" class="form-control" />
+			</div>
+		</div>
+	</div>
+
+	<div class="app-modal-footer">
+		<button type="button" class="btn btn-primary">Assign</button> &nbsp;
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addTaskModal.hide()">Close</button>
+	</div>
+</app-ui-modal>
