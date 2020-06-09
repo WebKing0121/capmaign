@@ -83,20 +83,20 @@ const campaign_subtasks: any[] = [
 
 const teams: any[] = [
     {
-        id: 1, name: "C2C Team", members: 2,  created_at: 'Jan 29, 2019 5:06:44',
-        assigned_campaigns: [1]
+        id: 1, name: "C2C Team", created_at: 'Jan 29, 2019 5:06:44',
+        members: [1, 2], assigned_campaigns: [1]
     },
     {
-        id: 2, name: "My Team", members: 3,  created_at: 'Feb 3, 2019 12:17:41',
-        assigned_campaigns: [2]
+        id: 2, name: "My Team", created_at: 'Feb 3, 2019 12:17:41',
+        members: [3, 4, 5], assigned_campaigns: [2]
     },
     {
-        id: 3, name: "Digial Marketing Team", members: 4,  created_at: 'Feb 12, 2019 16:22:15',
-        assigned_campaigns: [3, 4, 5]
+        id: 3, name: "Digial Marketing Team", created_at: 'Feb 12, 2019 16:22:15',
+        members: [6, 7, 8, 9], assigned_campaigns: [3, 4, 5]
     },
     {
-        id: 4, name: "Test Team", members: 2,  created_at: 'Feb 3, 2019 12:17:41',
-        assigned_campaigns: []
+        id: 4, name: "Test Team", created_at: 'Feb 3, 2019 12:17:41',
+        members: [10, 11], assigned_campaigns: []
     }
 ]
 @Injectable()

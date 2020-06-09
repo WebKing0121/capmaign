@@ -6,7 +6,10 @@ ng-select {
 ng-select > div {
     min-height: 40px !important;
 }
-
+.btn-normal-padding {
+    padding: 5px 15px;
+    margin-right: 15px;
+}
 .assigned_campaigns {
     ng-select {
         width: calc(100% - 90px)!important;
@@ -86,5 +89,40 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
         background-color: transparent;
         color: #00acf0;
         border-color: #00acf0;
+    }
+}
+
+.toast-div {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    .bg-blue-light {
+        background-color: #bce8fb;
+    }
+}
+
+.add-subtask-modal {
+    .input-group-prepend {
+        .input-group-text {
+            width: 120px;
+        }
+    }
+    
+    .form-control:disabled, .form-control[readonly] {
+        background-color: #f7f7f7;
+    }
+
+    ng-select {
+        width: calc(100% - 118px)!important;
+        min-height: 45px;
+    }
+
+
+    ng-select > div {
+        min-height: 45px !important;
+    }
+    ng-select>div>div.single>div.placeholder, ng-select>div>div.single>div.value {
+        line-height: 45px;
     }
 }

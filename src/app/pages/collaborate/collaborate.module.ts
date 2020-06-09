@@ -7,9 +7,8 @@ import { MyCalendarComponent } from './my-calendar/my-calendar.component';
 import { CollaborationComponent } from './collaboration/collaboration.component';
 import { TeamsComponent } from './teams/teams.component';
 import { SelectModule } from 'ng-select';
-import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbProgressbarModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
-
 @NgModule({
   declarations: [
     MyCalendarComponent,
@@ -23,6 +22,7 @@ import { AngularDualListBoxModule } from 'angular-dual-listbox';
     DataTablesModule,
     SelectModule,
     NgbProgressbarModule,
+    NgbDatepickerModule,
     AngularDualListBoxModule
   ]
 })

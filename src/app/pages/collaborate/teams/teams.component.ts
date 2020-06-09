@@ -6,8 +6,7 @@ import { first } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/_services/user.service';
 import { Subject } from 'rxjs';
-import { NgIf } from '@angular/common';
-
+import { ToastService } from '../../../theme/shared/components/toast/toast.service';
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
@@ -18,6 +17,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   @ViewChild('teamsTable', { static: false }) teamsTable;
   @ViewChild('newTeamModal', { static: false }) newTeamModal;
   @ViewChild('assignCampaignModal', { static: false }) assignCampaignModal;
+  @ViewChild('addSubTaskModal', { static: false }) addSubTaskModal;
   @ViewChild('cardTeams', { static: false }) cardTeams;
   @ViewChild('cardAssignCampaigns', { static: false }) cardAssignCampaigns;
   @ViewChild('cardSubtasks', { static: false }) cardSubtasks;
@@ -51,7 +51,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
 
   selectedTeamInAssignCampaigns: any;
   teamsInAssignCampaign: any[];
-  
+  teamMembers: any[];
   selectedCampaignId: number;
 
   // dual list box
@@ -69,13 +69,15 @@ export class TeamsComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private collaborateService: CollaborateService,
-    private userService: UserService
+    private userService: UserService,
+    private toastEvent: ToastService
     
   ) {
     this.teams = [];
     this.allUsers = [];
     this.campaigns = [];
     this.subTasks = [];
+    this.teamMembers = [];
     this.selectedCampaignId = -1;
   }
 
@@ -130,7 +132,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
       }, {
         title: 'Campaigns',
       }, {
-        title: 'Created At',
+        title: '',
       }],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         $('td', row).unbind('click');
@@ -249,6 +251,22 @@ export class TeamsComponent implements OnInit, OnDestroy {
     }
   }
 
+  getSelectedTeamName() {
+    if (this.selectedTeam) {
+      return this.selectedTeam.name;
+    } else {
+      return '';
+    }
+  }
+
+  getSelectedCampaignName() {
+    if (this.selectedCampaignId > 0) {
+      return this.campaigns.filter(campaign => campaign.id === this.selectedCampaignId)[0].name;
+    } else {
+      return '';
+    }
+  }
+
   getUnassignedCampaigns() {
     const all_assigned = [];
     this.teams.map(team => {
@@ -281,7 +299,14 @@ export class TeamsComponent implements OnInit, OnDestroy {
    *                                            *
    **********************************************/
   onClickAddSubTasks() {
-
+    if (this.selectedCampaignId > 0) {
+      const { members } =  this.selectedTeam;
+      this.teamMembers = this.allUsers.filter(user => members.indexOf(user.id) >= 0).map(user => ({value: '' + user.id, label: user.label}));
+      this.addSubTaskModal.show();
+    } else {
+      this.toastEvent.toast({uid: 'toast1', delay: 3000});
+    }
+    
   }
 
      /******************************************************

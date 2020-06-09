@@ -8,15 +8,15 @@
 							<th>Team name</th>
 							<th>Members</th>
 							<th>Campaigns</th>
-							<th>Created At</th>
+							<th> </th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr *ngFor="let team of teams" [id]="team.id">
 							<td>{{ team.name }}</td>
-							<td>{{ team.members }}</td>
+							<td>{{ team.members.length }}</td>
 							<td>{{ team.assigned_campaigns.length }}</td>
-							<td>{{ team.created_at }}</td>
+							<td><button class="btn btn-outline-primary btn-normal-padding">Edit</button><button class="btn btn-danger btn-normal-padding">Delete</button></td>
 						</tr>
 					</tbody>
 				</table>
@@ -172,3 +172,98 @@
 		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="assignCampaignModal.hide()">Close</button>
 	</div>
 </app-ui-modal>
+
+<app-ui-modal #addSubTaskModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg add-subtask-modal'">
+	<div class="app-modal-header">
+		<h5 class="modal-title">Add Sub Task</h5>
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="addSubTaskModal.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<div class="app-modal-body">
+		<div class="row">
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Team</span>
+					</div>
+					<input type="text" class="form-control" [value]="getSelectedTeamName()" readonly />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Campaigns</span>
+					</div>
+					<input type="text" class="form-control" [value]="getSelectedCampaignName()" readonly />
+				</div>
+			</div>
+		</div> 
+		<div class="row mt-4">
+			<div class="col-md-12 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Task Name</span>
+				</div>
+				<input type="text" class="form-control" />
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-md-12 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Description</span>
+				</div>
+				<input type="text" class="form-control" />
+			</div>
+		</div>
+
+		<div class="row mt-2">
+			<div class="col-md-6 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Start</span>
+				</div>
+				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker #d_f="ngbDatepicker">
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="d_f.toggle()">
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                </div>
+			</div>
+			<div class="col-md-6 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">End</span>
+				</div>
+				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker #d_t="ngbDatepicker">
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="d_t.toggle()">
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                </div>
+			</div>
+		</div>
+		<div class="row mt-2">
+			<div class="col-md-6 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">User</span>
+				</div>
+				<ng-select [ngClass]="'ng-select'" [options]="teamMembers"></ng-select>
+			</div>
+			<div class="col-md-6 input-group">
+				<div class="input-group-prepend">
+					<span class="input-group-text">Estimation</span>
+				</div>
+				<input type="text" class="form-control" />
+			</div>
+		</div>
+	</div>
+
+	<div class="app-modal-footer">
+		<button type="button" class="btn btn-primary" (click)="onCreateTeam()">Assign</button> &nbsp;
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addSubTaskModal.hide()">Close</button>
+	</div>
+</app-ui-modal>
+<div class="toast-div">
+	<app-toast uID="toast1" toastTitle="Notice" toastCaption="" toastClass="bg-blue-light m-b-10 m-r-10">
+		Please Select Campaign.
+	</app-toast>
+</div>
