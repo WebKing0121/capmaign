@@ -147,6 +147,15 @@ export class CardComponent implements OnInit {
     }, 3000);
   }
 
+  setCardRefresh(flag: boolean) {
+    this.loadCard = flag;
+    if (flag) {
+      this.cardClass = 'card-load';
+    } else {
+      this.cardClass = 'expanded';
+    }
+  }
+
   cardRemoveAction() {
     this.cardRemove = this.cardRemove === 'closed' ? 'open' : 'closed';
   }

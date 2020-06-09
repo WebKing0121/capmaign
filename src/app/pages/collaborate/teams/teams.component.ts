@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/_services/user.service';
 import { Subject } from 'rxjs';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-teams',
@@ -17,28 +18,42 @@ export class TeamsComponent implements OnInit, OnDestroy {
   @ViewChild('teamsTable', { static: false }) teamsTable;
   @ViewChild('newTeamModal', { static: false }) newTeamModal;
   @ViewChild('assignCampaignModal', { static: false }) assignCampaignModal;
+  @ViewChild('cardTeams', { static: false }) cardTeams;
+  @ViewChild('cardAssignCampaigns', { static: false }) cardAssignCampaigns;
+  @ViewChild('cardSubtasks', { static: false }) cardSubtasks;
   
   teamForm: FormGroup;
   loading = false;
   submitted = false;
   previousRow: any;
+
   cardButtons = [
     { label: 'Create a Team', icon: 'icon-plus-circle', action: ()=>this.onClickCreateTeam()},
   ];
+
   cardButtonsInCampaigns = [
     { label: 'Assign campaigns', icon: 'icon-plus-circle', action: ()=>this.onClickAssignCampaigns()},
   ];
+
+  cardButtonsInSubTasks = [
+    { label: 'Add Sub Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddSubTasks()},
+  ];
+
   dtTeamsOption: any = {};
   dtTrigger: Subject<any> = new Subject();
   teams: any[];
   campaigns: any[];
+  subTasks: any[];
   loadTeams: boolean = false;
   allUsers: any[];
   selectedTeam: any;
+  selectedSubTaskId: number;
 
   selectedTeamInAssignCampaigns: any;
   teamsInAssignCampaign: any[];
   
+  selectedCampaignId: number;
+
   // dual list box
   sourceCampaigns: any[];
   unassignedCampaigns: any[];
@@ -60,10 +75,13 @@ export class TeamsComponent implements OnInit, OnDestroy {
     this.teams = [];
     this.allUsers = [];
     this.campaigns = [];
+    this.subTasks = [];
+    this.selectedCampaignId = -1;
   }
 
   ngOnInit(): void {
-    this.loadTeams = true;
+    
+    // this.cardTeams.setCardRefresh(true);
     this.collaborateService.getCollaborateTeams()
     .pipe(first())
     .subscribe(
@@ -72,10 +90,10 @@ export class TeamsComponent implements OnInit, OnDestroy {
         this.teamsInAssignCampaign = this.teams.map(team=>({value: '' + team.id, label: team.name}));
         this.dtTrigger.next();
         this.getUnassignedCampaigns();
+        // this.cardTeams.setCardRefresh(false);
       },
       error => {
         console.log('error', error)
-        this.loadTeams = false;
       }
     );
 
@@ -143,19 +161,35 @@ export class TeamsComponent implements OnInit, OnDestroy {
 
   onClickTeam(teamId: number): void {
     this.selectedTeam = this.teams.filter(team=>team.id === teamId)[0];
+    this.subTasks = [];
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.teamForm.controls; }
 
+  /*******************************************************
+   * Click event - Plus (+) button in Teams table header *
+   * --------------------------------------------------- *
+   *                                                     *
+   *******************************************************/
   onClickCreateTeam() {
     this.newTeamModal.show();
   }
 
+  /*******************************************************
+   * Click event - Create button in New Team Modal       *
+   * --------------------------------------------------- *
+   *                                                     *
+   *******************************************************/
   onCreateTeam() {
     
   }
 
+   /******************************************************************
+   * Click event - Plus (+) button in Assigned Campaign table header *
+   * --------------------------------------------------------------- *
+   *                                                                 *
+   *******************************************************************/
   onClickAssignCampaigns() {
     
     if (this.selectedTeam) {
@@ -169,10 +203,33 @@ export class TeamsComponent implements OnInit, OnDestroy {
       this.sourceCampaigns = [...this.unassignedCampaigns];
     }
     
-    
     this.assignCampaignModal.show();
   }
 
+   /******************************************************
+   * Click event - select row in Assigned Campaign table *
+   * --------------------------------------------------- *
+   *                                                     *
+   *******************************************************/
+  onClickCampaign(campaignId: number) {
+    this.selectedCampaignId = campaignId;
+    this.loadSubTasksFromCampaign(campaignId);
+  }
+
+  loadSubTasksFromCampaign(campaignId: number) {
+    this.cardSubtasks.setCardRefresh( true );  
+    this.collaborateService.getCampaignDetails(campaignId)
+    .pipe(first())
+    .subscribe(
+      data => {
+        this.subTasks = data;
+        this.cardSubtasks.setCardRefresh( false );  
+      },
+      error => {
+        console.log('error', error)
+      }
+    );
+  }
 
   getSelectedCampaigns() {
     if (this.selectedTeam) {
@@ -180,6 +237,15 @@ export class TeamsComponent implements OnInit, OnDestroy {
       return this.campaigns.filter(campaign => this.selectedTeam.assigned_campaigns.indexOf(campaign.id) >= 0 );
     } else {
       return [];
+    }
+  }
+
+  getUserName(userId: number) {
+    const user = this.allUsers.find(user=>user.id === userId);
+    if (user) {
+      return user.label;
+    } else {
+      return '';
     }
   }
 
@@ -191,6 +257,11 @@ export class TeamsComponent implements OnInit, OnDestroy {
     this.unassignedCampaigns = this.campaigns.filter(campaign => all_assigned.indexOf(campaign.id) < 0 );
   }
 
+   /***********************************************************
+   * Change event - Team control(ng-select) in campaign modal *
+   * -------------------------------------------------------- *
+   *                                                          *
+   ************************************************************/
   onChangeTeam(event) {
     this.selectedTeamInAssignCampaigns = this.teams.find(team => team.id === Number(event));
     const {assigned_campaigns} = this.selectedTeamInAssignCampaigns;
@@ -202,5 +273,23 @@ export class TeamsComponent implements OnInit, OnDestroy {
 
   campaignLabel(campaign: any) {
     return campaign.name;
+  }
+
+  /**********************************************
+   * Click event - Plus icon in sub tasks table *
+   * ------------------------------------------ *
+   *                                            *
+   **********************************************/
+  onClickAddSubTasks() {
+
+  }
+
+     /******************************************************
+   * Click event - select row in Assigned Campaign table *
+   * --------------------------------------------------- *
+   *                                                     *
+   *******************************************************/
+  onClickSubTask(subTaskId: number) {
+    this.selectedSubTaskId = subTaskId;
   }
 }
