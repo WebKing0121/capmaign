@@ -42,7 +42,7 @@ const teams: any[] = [
     },
     {
         id: 3, name: "Digial Marketing Team", members: 4,  created_at: 'Feb 12, 2019 16:22:15',
-        assigned_campaigns: [3, 4, 5, 6]
+        assigned_campaigns: [3, 4, 5]
     },
     {
         id: 4, name: "Test Team", members: 2,  created_at: 'Feb 3, 2019 12:17:41',
@@ -53,14 +53,14 @@ const teams: any[] = [
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
-
+        console.log(method, url);
         // wrap in delayed observable to simulate server api call
         return of(null)
             .pipe(mergeMap(handleRoute))
             .pipe(materialize()) // call materialize and dematerialize to ensure delay even if an error is thrown (https://github.com/Reactive-Extensions/RxJS/issues/648)
             .pipe(delay(500))
             .pipe(dematerialize());
-
+        
         function handleRoute() {
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':

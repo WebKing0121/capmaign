@@ -3,11 +3,24 @@ ng-select {
     min-height: 40px;
     
 }
-
 ng-select > div {
     min-height: 40px !important;
 }
 
+.assigned_campaigns {
+    ng-select {
+        width: calc(100% - 90px)!important;
+        min-height: 45px;
+    }
+
+
+    ng-select > div {
+        min-height: 45px !important;
+    }
+    ng-select>div>div.single>div.placeholder, ng-select>div>div.single>div.value {
+        line-height: 45px;
+    }
+}
 table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     background: #bce8fb;
 }
@@ -40,4 +53,12 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
 
 .table th, .table td  {
     vertical-align: middle;
+}
+
+.dual-list {
+    .btn-primary {
+        background-color: transparent;
+        color: #00acf0;
+        border-color: #00acf0;
+    }
 }

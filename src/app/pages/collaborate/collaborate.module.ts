@@ -8,6 +8,8 @@ import { CollaborationComponent } from './collaboration/collaboration.component'
 import { TeamsComponent } from './teams/teams.component';
 import { SelectModule } from 'ng-select';
 import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
+import { AngularDualListBoxModule } from 'angular-dual-listbox';
+
 @NgModule({
   declarations: [
     MyCalendarComponent,
@@ -20,7 +22,8 @@ import { NgbProgressbarModule } from '@ng-bootstrap/ng-bootstrap';
     SharedModule,
     DataTablesModule,
     SelectModule,
-    NgbProgressbarModule
+    NgbProgressbarModule,
+    AngularDualListBoxModule
   ]
 })
 export class CollaborateModule { }

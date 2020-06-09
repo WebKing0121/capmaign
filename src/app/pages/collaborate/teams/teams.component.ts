@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { CollaborateService } from '../../../_services/collaborate.service';
+import { DualListComponent } from 'angular-dual-listbox';
 
 import { first } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/_services/user.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-teams',
@@ -11,23 +13,43 @@ import { UserService } from 'src/app/_services/user.service';
   styleUrls: ['./teams.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TeamsComponent implements OnInit {
+export class TeamsComponent implements OnInit, OnDestroy {
   @ViewChild('teamsTable', { static: false }) teamsTable;
   @ViewChild('newTeamModal', { static: false }) newTeamModal;
+  @ViewChild('assignCampaignModal', { static: false }) assignCampaignModal;
+  
   teamForm: FormGroup;
   loading = false;
   submitted = false;
   previousRow: any;
   cardButtons = [
-    { label: 'New Engager', icon: 'icon-plus-circle', action: ()=>this.onClickCreateTeam()},
+    { label: 'Create a Team', icon: 'icon-plus-circle', action: ()=>this.onClickCreateTeam()},
   ];
-
+  cardButtonsInCampaigns = [
+    { label: 'Assign campaigns', icon: 'icon-plus-circle', action: ()=>this.onClickAssignCampaigns()},
+  ];
   dtTeamsOption: any = {};
+  dtTrigger: Subject<any> = new Subject();
   teams: any[];
   campaigns: any[];
   loadTeams: boolean = false;
   allUsers: any[];
   selectedTeam: any;
+
+  selectedTeamInAssignCampaigns: any;
+  teamsInAssignCampaign: any[];
+  
+  // dual list box
+  sourceCampaigns: any[];
+  unassignedCampaigns: any[];
+  assignedCampaigns: any[];
+
+  keepSorted = true;
+  display: any;
+  filter = false;
+  key: string;
+  sourceLeft = true;
+  format: any = DualListComponent.DEFAULT_FORMAT;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -46,9 +68,10 @@ export class TeamsComponent implements OnInit {
     .pipe(first())
     .subscribe(
       data => {
-        console.log(data);
         this.teams = data;
-        this.dtTeamsOption.data = data;
+        this.teamsInAssignCampaign = this.teams.map(team=>({value: '' + team.id, label: team.name}));
+        this.dtTrigger.next();
+        this.getUnassignedCampaigns();
       },
       error => {
         console.log('error', error)
@@ -61,6 +84,8 @@ export class TeamsComponent implements OnInit {
     .subscribe(
       data => {
         this.campaigns = data;
+        this.sourceCampaigns = this.campaigns;
+        this.getUnassignedCampaigns();
       },
       error => {
         console.log('error', error)
@@ -79,27 +104,15 @@ export class TeamsComponent implements OnInit {
     );
 
     this.dtTeamsOption = {
-      data: this.teams,
+      // data: this.teams,
       columns: [{
         title: 'Team name',
-        data: 'name'
       }, {
         title: 'Members',
-        data: 'members'
       }, {
         title: 'Campaigns',
-        data: 'assigned_campaigns',
-        render: function (data: any, type: any, full: any) {
-          return data.length;
-        }
       }, {
         title: 'Created At',
-        data: 'created_at'
-      }, {
-        title: 'Action',
-        render: function (data: any, type: any, full: any) {
-          return '<button class="btn btn-outline-primary btn-sm">View</button>';
-        }
       }],
       rowCallback: (row: Node, data: any[] | Object, index: number) => {
         $('td', row).unbind('click');
@@ -109,9 +122,8 @@ export class TeamsComponent implements OnInit {
           }
           $(row).addClass('selected');
           this.previousRow = row;
-          this.onClickTeam(data);
+          this.onClickTeam(Number($(row).attr('id')));
         });
-
         return row;
       }
       
@@ -125,8 +137,12 @@ export class TeamsComponent implements OnInit {
 
   }
 
-  onClickTeam(team: any): void {
-    this.selectedTeam = team;
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+  }
+
+  onClickTeam(teamId: number): void {
+    this.selectedTeam = this.teams.filter(team=>team.id === teamId)[0];
   }
 
   // convenience getter for easy access to form fields
@@ -140,6 +156,24 @@ export class TeamsComponent implements OnInit {
     
   }
 
+  onClickAssignCampaigns() {
+    
+    if (this.selectedTeam) {
+      this.selectedTeamInAssignCampaigns = this.teams.find(team => team.id === this.selectedTeam.id);
+      const { assigned_campaigns } = this.selectedTeamInAssignCampaigns;
+      this.assignedCampaigns = this.campaigns.filter(campaign => assigned_campaigns.indexOf(campaign.id) >= 0 )
+      this.sourceCampaigns = [...this.unassignedCampaigns, ...this.assignedCampaigns];
+      this.selectedTeamInAssignCampaigns = '' + this.selectedTeam.id;
+    } else {
+      this.assignedCampaigns = [];
+      this.sourceCampaigns = [...this.unassignedCampaigns];
+    }
+    
+    
+    this.assignCampaignModal.show();
+  }
+
+
   getSelectedCampaigns() {
     if (this.selectedTeam) {
       
@@ -147,5 +181,26 @@ export class TeamsComponent implements OnInit {
     } else {
       return [];
     }
+  }
+
+  getUnassignedCampaigns() {
+    const all_assigned = [];
+    this.teams.map(team => {
+      all_assigned.push(...team.assigned_campaigns);
+    });
+    this.unassignedCampaigns = this.campaigns.filter(campaign => all_assigned.indexOf(campaign.id) < 0 );
+  }
+
+  onChangeTeam(event) {
+    this.selectedTeamInAssignCampaigns = this.teams.find(team => team.id === Number(event));
+    const {assigned_campaigns} = this.selectedTeamInAssignCampaigns;
+    this.assignedCampaigns = this.campaigns.filter(campaign => assigned_campaigns.indexOf(campaign.id) >= 0 )
+    
+    this.sourceCampaigns = [...this.unassignedCampaigns, ...this.assignedCampaigns];
+    
+  }
+
+  campaignLabel(campaign: any) {
+    return campaign.name;
   }
 }
