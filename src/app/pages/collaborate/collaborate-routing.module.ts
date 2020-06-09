@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CollaborationComponent } from './collaboration/collaboration.component';
+import { CampaignsComponent } from './campaigns/campaigns.component';
 import { TeamsComponent } from './teams/teams.component';
 import { MyCalendarComponent } from './my-calendar/my-calendar.component'
 const routes: Routes = [
@@ -13,8 +13,8 @@ const routes: Routes = [
     component: TeamsComponent
   },
   {
-    path: 'collaboration',
-    component: CollaborationComponent
+    path: 'campaigns',
+    component: CampaignsComponent
   },
   {
     path: '**',

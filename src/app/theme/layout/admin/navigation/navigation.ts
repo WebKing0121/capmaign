@@ -316,17 +316,17 @@ const NavigationItems = [
             external: false
           },
           {
+            id: 'collaborate-campaigns',
+            title: 'Campaigns',
+            type: 'item',
+            url: '/collaborate/campaigns',
+            external: false
+          },
+          {
             id: 'collaborate-my-calendar',
             title: 'My Calendar',
             type: 'item',
             url: '/collaborate/my-calendar',
-            external: false
-          },
-          {
-            id: 'collaborate-collaboration',
-            title: 'Collaboration',
-            type: 'item',
-            url: '/collaborate/collaboration',
             external: false
           },
         ]
