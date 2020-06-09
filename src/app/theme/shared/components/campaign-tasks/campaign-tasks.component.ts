@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, Input } from '@angular/core';
 import { CollaborateService } from 'src/app/_services/collaborate.service';
 import { first } from 'rxjs/operators';
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'app-campaign-tasks',
@@ -24,7 +25,8 @@ export class CampaignTasksComponent implements OnInit {
   ];
 
   constructor(
-    private collaborateService: CollaborateService
+    private collaborateService: CollaborateService,
+    private toastEvent: ToastService
   ) {
     this.tasks = [];
     this.selectedTaskId = 0;
@@ -39,13 +41,11 @@ export class CampaignTasksComponent implements OnInit {
    *                                            *
    **********************************************/
   onClickAddTask() {
-    // if (this.selectedCampaignId > 0) {
-    //   const { members } =  this.selectedTeam;
-    //   this.teamMembers = this.allUsers.filter(user => members.indexOf(user.id) >= 0).map(user => ({value: '' + user.id, label: user.label}));
-    //   this.addSubTaskModal.show();
-    // } else {
-    //   this.toastEvent.toast({uid: 'toast1', delay: 3000});
-    // }
+    if (this.campaignId > 0) {
+      this.addTaskModal.show();
+    } else {
+      this.toastEvent.toast({uid: 'toast1', delay: 3000});
+    }
     
   }
 

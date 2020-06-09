@@ -39,3 +39,15 @@
         line-height: 45px;
     }
 }
+
+
+.toast-div {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+
+    .bg-blue-light {
+        background-color: #bce8fb;
+    }
+}
+

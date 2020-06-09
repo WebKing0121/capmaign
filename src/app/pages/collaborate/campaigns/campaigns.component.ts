@@ -138,13 +138,15 @@ export class CampaignsComponent implements OnInit {
     
   }
 
-  onClickChangeTeam(campaign_id: number) {
+  onClickChangeTeam(campaign_id: number, event) {
+    event.stopPropagation();
     this.selectedCampainIdForReplace = campaign_id;
     this.replaceTeam = true;
     this.assignTeamModal.show();
   }
 
-  onClickAssignTeam(campaign_id: number) {
+  onClickAssignTeam(campaign_id: number, event) {
+    event.stopPropagation();
     this.selectedCampainIdForReplace = campaign_id;
     this.replaceTeam = false;
     this.assignTeamModal.show();

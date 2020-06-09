@@ -28,8 +28,8 @@
                                 <tbody class="campaign-table-body">
                                     <tr *ngFor="let campaign of filteredCampaignsInProgress" (click)="onClickCampaign(campaign.id)" [ngClass]="{'selected': campaign.id === selectedCampaignId}">
                                         <td>{{campaign.name}}</td>
-                                        <td *ngIf="campaign.team_id > 0"><a href='javascript:' (click)="onClickChangeTeam(campaign.id)">{{getTeamName(campaign.team_id)}}</a></td>
-                                        <td *ngIf="campaign.team_id === 0"><button class="btn btn-outline-primary btn-normal-padding"  (click)="onClickAssignTeam(campaign.id)">Assign Team</button></td>
+                                        <td *ngIf="campaign.team_id > 0"><a href='javascript:' (click)="onClickChangeTeam(campaign.id, $event)">{{getTeamName(campaign.team_id)}}</a></td>
+                                        <td *ngIf="campaign.team_id === 0"><button class="btn btn-outline-primary btn-normal-padding"  (click)="onClickAssignTeam(campaign.id, $event)">Assign Team</button></td>
                                         <td>{{campaign.start_date.substring(0, 11)}}</td>
                                         <td>{{campaign.end_date.substring(0, 11)}}</td>
                                         <td>
