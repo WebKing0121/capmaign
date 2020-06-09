@@ -1,0 +1,58 @@
+.card-tasks {
+    padding-left: 0;
+}
+
+.campaign-table-header {
+    th {
+        padding: 0.5rem 0.75rem;
+    }
+}
+.campaign-table-body {
+
+    td {
+        padding: 0.5rem 0.75rem;
+    }
+    .selected {
+        background: #bce8fb !important;
+    }
+}
+
+.margin-top-up-10 {
+    margin-top: -15px;
+}
+.campaign-filter {
+    position: absolute;
+    height: 40px;
+    width: 220px;
+    right: 0px;
+    top: 8px;
+    .btn-group {
+        width: 100%;
+        .dropdown-toggle {
+            text-align: left;
+        }
+        .dropdown-toggle:after {
+            float: right;
+            margin-top: 8px;
+        }
+    }
+}
+
+.modal-assign-team {
+    .input-group-text {
+        width: 130px;
+    }
+    ng-select {
+        width: calc(100% - 128px)!important;
+        min-height: 45px;
+        
+    }
+    
+    ng-select > div {
+        min-height: 45px !important;
+    }
+}
+
+.tab-pane {
+    height: calc(100vh - 280px);
+}

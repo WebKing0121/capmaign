@@ -815,3 +815,11 @@ pre[class*=language-]:before {
         margin-top: 20px;
     }
 }
+
+.btn-normal-padding {
+    padding: 5px 15px;
+    margin-right: 15px;
+}
+.form-control:disabled, .form-control[readonly] {
+    background: #f6f6f6;
+}

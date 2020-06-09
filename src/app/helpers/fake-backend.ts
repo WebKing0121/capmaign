@@ -23,12 +23,12 @@ const users: User[] = [
 ];
 
 const campaigns: any[] = [
-    {id: 1, name: "Invest Now - Demo1", start_date: "May 3, 2019 2:00:00 AM", end_date: "Sep 14, 2019 2:00:00 AM", percent: 0.0, type: 'Email', status: 'inprogress' },
-    {id: 2, name: "New feature - Demo1", start_date: "Jun 16, 2019 2:00:00 AM", end_date: "Aug 23, 2019 2:00:00 AM", percent: 4.0, type: 'Email', status: 'inprogress' },
-    {id: 3, name: "Webinar Event for Demo", start_date: "Mar 15, 2019 1:00:00 AM", end_date: "Jul 27, 2019 2:00:00 AM", percent: 11.0, type: 'Email', status: 'inprogress' },
-    {id: 4, name: "Campaign Explore new products", start_date: "Jun 19, 2019 2:00:00 AM", end_date: "Jun 20, 2019 2:00:00 AM", percent: 61.0, type: 'Email', status: 'inprogress' },
-    {id: 5, name: "Automation Email", start_date: "May 7, 2019 2:00:00 AM", end_date: "Jul 18, 2019 2:00:00 AM", percent: 23.0, type: 'Email', status: 'inprogress' },
-    {id: 6, name: "Raw office-sticky notes promo", start_date: "May 7, 2019 2:00:00 AM", end_date: "May 7, 2019 2:00:00 AM", percent: 66.0, type: 'Email', status: 'inprogress' },
+    {id: 1, name: "Invest Now - Demo1", start_date: "May 3, 2019 2:00:00 AM", end_date: "Sep 14, 2019 2:00:00 AM", percent: 0.0, type: 'Email', status: 'inprogress', team_id: 1 },
+    {id: 2, name: "New feature - Demo1", start_date: "Jun 16, 2019 2:00:00 AM", end_date: "Aug 23, 2019 2:00:00 AM", percent: 4.0, type: 'Email', status: 'inprogress', team_id: 2 },
+    {id: 3, name: "Webinar Event for Demo", start_date: "Mar 15, 2019 1:00:00 AM", end_date: "Jul 27, 2019 2:00:00 AM", percent: 11.0, type: 'Email', status: 'inprogress', team_id: 3 },
+    {id: 4, name: "Campaign Explore new products", start_date: "Jun 19, 2019 2:00:00 AM", end_date: "Jun 20, 2019 2:00:00 AM", percent: 61.0, type: 'Email', status: 'inprogress', team_id: 3 },
+    {id: 5, name: "Automation Email", start_date: "May 7, 2019 2:00:00 AM", end_date: "Jul 18, 2019 2:00:00 AM", percent: 23.0, type: 'Email', status: 'inprogress', team_id: 3 },
+    {id: 6, name: "Raw office-sticky notes promo", start_date: "May 7, 2019 2:00:00 AM", end_date: "May 7, 2019 2:00:00 AM", percent: 66.0, type: 'Email', status: 'inprogress', team_id: 0 },
 ];
 
 const campaign_subtasks: any[] = [
@@ -103,7 +103,6 @@ const teams: any[] = [
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         const { url, method, headers, body } = request;
-        console.log(method, url);
         // wrap in delayed observable to simulate server api call
         return of(null)
             .pipe(mergeMap(handleRoute))
