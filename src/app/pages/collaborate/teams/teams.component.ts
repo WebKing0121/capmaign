@@ -17,10 +17,10 @@ export class TeamsComponent implements OnInit, OnDestroy {
   @ViewChild('teamsTable', { static: false }) teamsTable;
   @ViewChild('newTeamModal', { static: false }) newTeamModal;
   @ViewChild('assignCampaignModal', { static: false }) assignCampaignModal;
-  @ViewChild('addSubTaskModal', { static: false }) addSubTaskModal;
+  @ViewChild('addTaskModal', { static: false }) addTaskModal;
   @ViewChild('cardTeams', { static: false }) cardTeams;
   @ViewChild('cardAssignCampaigns', { static: false }) cardAssignCampaigns;
-  @ViewChild('cardSubtasks', { static: false }) cardSubtasks;
+  @ViewChild('cardTasks', { static: false }) cardTasks;
   
   teamForm: FormGroup;
   loading = false;
@@ -35,19 +35,19 @@ export class TeamsComponent implements OnInit, OnDestroy {
     { label: 'Assign campaigns', icon: 'icon-plus-circle', action: ()=>this.onClickAssignCampaigns()},
   ];
 
-  cardButtonsInSubTasks = [
-    { label: 'Add Sub Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddSubTasks()},
+  cardButtonsInTasks = [
+    { label: 'Add Task', icon: 'icon-plus-circle', action: ()=>this.onClickAddTask()},
   ];
 
   dtTeamsOption: any = {};
   dtTrigger: Subject<any> = new Subject();
   teams: any[];
   campaigns: any[];
-  subTasks: any[];
+  tasks: any[];
   loadTeams: boolean = false;
   allUsers: any[];
   selectedTeam: any;
-  selectedSubTaskId: number;
+  selectedTaskId: number;
 
   selectedTeamInAssignCampaigns: any;
   teamsInAssignCampaign: any[];
@@ -76,7 +76,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
     this.teams = [];
     this.allUsers = [];
     this.campaigns = [];
-    this.subTasks = [];
+    this.tasks = [];
     this.teamMembers = [];
     this.selectedCampaignId = -1;
   }
@@ -163,7 +163,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
 
   onClickTeam(teamId: number): void {
     this.selectedTeam = this.teams.filter(team=>team.id === teamId)[0];
-    this.subTasks = [];
+    this.tasks = [];
   }
 
   // convenience getter for easy access to form fields
@@ -215,17 +215,17 @@ export class TeamsComponent implements OnInit, OnDestroy {
    *******************************************************/
   onClickCampaign(campaignId: number) {
     this.selectedCampaignId = campaignId;
-    this.loadSubTasksFromCampaign(campaignId);
+    this.loadTasksFromCampaign(campaignId);
   }
 
-  loadSubTasksFromCampaign(campaignId: number) {
-    this.cardSubtasks.setCardRefresh( true );  
-    this.collaborateService.getCampaignDetails(campaignId)
+  loadTasksFromCampaign(campaignId: number) {
+    this.cardTasks.setCardRefresh( true );  
+    this.collaborateService.getCampaignTasks(campaignId)
     .pipe(first())
     .subscribe(
       data => {
-        this.subTasks = data;
-        this.cardSubtasks.setCardRefresh( false );  
+        this.tasks = data;
+        this.cardTasks.setCardRefresh( false );  
       },
       error => {
         console.log('error', error)
@@ -294,15 +294,15 @@ export class TeamsComponent implements OnInit, OnDestroy {
   }
 
   /**********************************************
-   * Click event - Plus icon in sub tasks table *
+   * Click event - Plus icon in tasks table     *
    * ------------------------------------------ *
    *                                            *
    **********************************************/
-  onClickAddSubTasks() {
+  onClickAddTask() {
     if (this.selectedCampaignId > 0) {
       const { members } =  this.selectedTeam;
       this.teamMembers = this.allUsers.filter(user => members.indexOf(user.id) >= 0).map(user => ({value: '' + user.id, label: user.label}));
-      this.addSubTaskModal.show();
+      this.addTaskModal.show();
     } else {
       this.toastEvent.toast({uid: 'toast1', delay: 3000});
     }
@@ -314,7 +314,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
    * --------------------------------------------------- *
    *                                                     *
    *******************************************************/
-  onClickSubTask(subTaskId: number) {
-    this.selectedSubTaskId = subTaskId;
+  onClickTask(taskId: number) {
+    this.selectedTaskId = taskId;
   }
 }

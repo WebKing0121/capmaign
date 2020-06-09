@@ -19,7 +19,7 @@ export class CollaborateService {
     return this.http.get<any>(`${environment.apiUrl}/${this.url}/campaigns`);
   }
 
-  getCampaignDetails(campaignId: number) {
-    return this.http.get<any>(`${environment.apiUrl}/${this.url}/campaign/${campaignId}`);
+  getCampaignTasks(campaignId: number) {
+    return this.http.get<any>(`${environment.apiUrl}/${this.url}/campaign/${campaignId}/tasks`);
   }
 }

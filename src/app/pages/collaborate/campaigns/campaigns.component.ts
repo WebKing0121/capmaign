@@ -14,8 +14,8 @@ import { CollaborateService } from 'src/app/_services/collaborate.service';
 export class CampaignsComponent implements OnInit {
   @ViewChild('assignTeamModal', { static: false }) assignTeamModal;
 
-  cardButtonsInSubTasks = [
-    { label: 'Add Sub Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddSubTasks()},
+  cardButtonsInTasks = [
+    { label: 'Add Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddTask()},
   ];
 
   campaignFilter: any[] = [
@@ -163,7 +163,7 @@ export class CampaignsComponent implements OnInit {
    * ------------------------------------------ *
    *                                            *
    **********************************************/
-  onClickAddSubTasks() {
+  onClickAddTask() {
     // if (this.selectedCampaignId > 0) {
     //   const { members } =  this.selectedTeam;
     //   this.teamMembers = this.allUsers.filter(user => members.indexOf(user.id) >= 0).map(user => ({value: '' + user.id, label: user.label}));

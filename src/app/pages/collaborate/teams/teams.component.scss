@@ -39,12 +39,12 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     }
 }
 
-.subtask-table-header {
+.task-table-header {
     th {
         padding: 0.5rem 0.75rem;
     }
 }
-.subtask-table-body {
+.task-table-body {
     height: 300px;
     overflow: auto;
 
@@ -99,7 +99,7 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     }
 }
 
-.add-subtask-modal {
+.add-task-modal {
     .input-group-prepend {
         .input-group-text {
             width: 120px;
