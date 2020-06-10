@@ -32,8 +32,9 @@
 @import "~tinymce/skins/lightgray/content.min.css";
 
 @import "~fullcalendar/dist/fullcalendar.min.css";
-@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/common/main.css';
 @import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
 
 @import '~angular-archwizard/archwizard.css';
 
