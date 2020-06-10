@@ -1,2 +1,120 @@
-<p>campaign works!</p>
-<mat-icon>close</mat-icon>
+<div class="row">
+	<div class="col-3 folders">
+		<h1>Folders --- TODO</h1>
+	</div>
+	<div class="col-9">
+		<div class="label d-flex justify-content-between align-items-center">
+			<h2>MANAGE CAMPAIGN</h2>
+			<h3>Total Campaign: <span>{{'0'}}</span></h3>
+		</div>
+		<div class="campaign-table">
+			<div class="campaign-table-setting d-flex justify-content-start align-items-center">
+				<div class="campaign-selection d-flex align-items-end">
+					<mat-form-field class="selection">
+						<mat-label>Select Campaign Type</mat-label>
+						<mat-select>
+							<mat-option>None</mat-option>
+							<mat-option *ngFor="let type of types" [value]="type">{{type}}</mat-option>
+						</mat-select>
+					</mat-form-field>
+				</div>
+				<div class="delete d-flex justify-content-between align-items-center ml-3 mt-2">
+					Delete <mat-icon class="ml-2">delete</mat-icon>
+				</div>
+				<div class="send d-flex justify-content-between align-items-center ml-3 mt-2">
+					Send Campaign <mat-icon class="ml-2">email</mat-icon>
+				</div>
+				<div class="d-flex justify-content-between align-items-center ml-auto">
+					<mat-form-field class="d-flex align-items-center">
+						<mat-label class="d-flex align-items-center"><mat-icon class="mr-1">search</mat-icon> Search Campaign </mat-label>
+
+						<input matInput type="text" [(ngModel)]="value" (keyup)="applyFilter($event.target.value)">
+						<button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+							(click)="onClose()">
+							<mat-icon>close</mat-icon>
+						</button>
+					</mat-form-field>
+				</div>
+				<div class="refresh d-flex justify-content-between align-items-center ml-3 mt-2 mr-3">
+					<mat-icon class="ml-2">refresh</mat-icon>
+				</div>
+			</div>
+			<div class="table-section">
+				<table mat-table #table [dataSource]="dataSource" matSort class="table-list">
+
+					<ng-container matColumnDef="check">
+						<th mat-header-cell *matHeaderCellDef>
+							<mat-checkbox (change)="$event ? masterToggle() : null"
+								[checked]="selection.hasValue() && isAllSelected()"
+								[indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+							</mat-checkbox>
+						</th>
+						<td mat-cell *matCellDef="let element" (click)="$event.stopPropagation()">
+							<mat-checkbox (click)="checkboxSelection($event, element)"
+								(change)="$event ? selection.toggle(element) : null" [checked]="selection.isSelected(element)"
+								[aria-label]="checkboxLabel(element)">
+							</mat-checkbox>
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="name">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header>
+							Name
+						</th>
+						<td mat-cell *matCellDef="let element">
+							{{element.name}}
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="subject">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> Subject </th>
+						<td mat-cell *matCellDef="let element">
+							{{element.subject}}
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="type">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> Type </th>
+						<td mat-cell *matCellDef="let element">
+							{{element.type}}
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="modificationdate">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> Modification Date</th>
+						<td mat-cell *matCellDef="let element">
+							{{element.modificationdate | dateFormat: 'DD MMM YY'}}
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="createddate">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> Created Date</th>
+						<td mat-cell *matCellDef="let element">
+							{{element.createddate | dateFormat: 'DD MMM YY'}}
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="lastsent">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> Last Sent</th>
+						<td mat-cell *matCellDef="let element">
+							{{element.lastsent | dateFormat: 'DD MMM YY'}}
+						</td>
+					</ng-container>
+
+					<ng-container matColumnDef="scheduled">
+						<th mat-header-cell *matHeaderCellDef mat-sort-header> Scheduled</th>
+						<td mat-cell *matCellDef="let element">
+							{{element.scheduled | dateFormat: 'DD MMM YY'}}
+						</td>
+					</ng-container>
+
+					<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+					<tr mat-row *matRowDef="let row; columns: displayedColumns;">
+					</tr>
+				</table>
+
+				<mat-paginator #paginator [pageSizeOptions]="[20, 50, 100]" showFirstLastButtons="true"></mat-paginator>
+			</div>
+		</div>
+	</div>
+</div>

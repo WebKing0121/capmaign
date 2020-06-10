@@ -288,10 +288,10 @@ const NavigationItems = [
       },
       {
         id: 'campaign',
-        title: 'Campiagn',
+        title: 'Campaign',
         type: 'item',
         icon: 'feather icon-globe',
-        url: 'javascript:',
+        url: '/campaign',
         external: true
       },
       {
@@ -301,7 +301,8 @@ const NavigationItems = [
         icon: 'feather icon-monitor',
         url: 'javascript:',
         external: true
-      },{
+      },
+      {
         id: 'collaborate',
         title: 'Collaborate',
         type: 'collapse',

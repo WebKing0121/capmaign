@@ -4,6 +4,8 @@ import { CampaignComponent } from './campaign.component';
 import { CampaignRoutingModule } from './campaign-routing.module';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { DemoMaterialModule } from 'src/app/theme/shared/material/material.module';
+import { FormsModule } from '@angular/forms';
+import { PipesModule } from 'src/app/theme/shared/pipes/pipes.module';
 
 
 
@@ -12,7 +14,9 @@ import { DemoMaterialModule } from 'src/app/theme/shared/material/material.modul
   imports: [
     CommonModule,
     CampaignRoutingModule,
-    DemoMaterialModule
+    DemoMaterialModule,
+    FormsModule,
+    PipesModule
   ]
 })
 export class CampaignModule { }
