@@ -36,6 +36,7 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AppReducer } from './store/app.reducer';
 import { AppEffects } from './store/app.effects';
+import { DemoMaterialModule } from './theme/shared/material/material.module'
 
 
 
@@ -63,6 +64,7 @@ import { AppEffects } from './store/app.effects';
     BrowserAnimationsModule,
     HttpClientModule,
     SharedModule,
+    DemoMaterialModule,
     NgbDropdownModule,
     NgbTooltipModule,
     NgbButtonsModule,

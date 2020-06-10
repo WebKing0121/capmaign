@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AdminComponent } from './theme/layout/admin/admin.component';
-import {AuthComponent} from './theme/layout/auth/auth.component';
+import { AuthComponent } from './theme/layout/auth/auth.component';
 import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes = [
@@ -22,6 +22,10 @@ const routes: Routes = [
       {
         path: 'collaborate',
         loadChildren: () => import('./pages/collaborate/collaborate.module').then(module => module.CollaborateModule)
+      },
+      {
+        path: 'campaign',
+        loadChildren: () => import('./pages/campaign/campaign.module').then(module => module.CampaignModule)
       }
     ]
   },
