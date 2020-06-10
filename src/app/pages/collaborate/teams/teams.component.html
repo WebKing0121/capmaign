@@ -58,7 +58,15 @@
 			[teams]="teams"
 			[campaigns]="campaigns"
 			[users]="allUsers"
+			(onSelectRow)="onSelectTask($event)"
 		></app-campaign-tasks>
+		<app-campaign-sub-tasks #campaignSubTasks
+            [taskId]="selectedTaskId"
+            [taskName]="selectedTaskName"
+            [userId]="selectedUserId"
+            [userName]="selectedUserName"
+        >
+        </app-campaign-sub-tasks>
 	</div>
 </div>
 

@@ -52,12 +52,19 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     .card-assigned-campaigns {
         margin-bottom: 15px;
         .card-body {
-            height: calc(50vh - 120px);
+            height: calc(30vh - 20px);
         }
     }
-    .card-assigned-members {
+    .card-tasks {
+        margin-bottom: 15px;
         .card-body {
-            height: calc(50vh - 147px);
+            height: calc(30vh - 120px);
+        }
+    }
+    .card-sub-tasks {
+        margin-bottom: 15px;
+        .card-body {
+            height: calc(30vh - 100px);
         }
     }
 }
@@ -73,3 +80,5 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
         border-color: #00acf0;
     }
 }
+
+

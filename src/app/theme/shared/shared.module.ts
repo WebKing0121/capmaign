@@ -23,6 +23,7 @@ import { TextMaskModule } from 'angular2-text-mask';
 import { SocialAccountListComponent } from './components/social-account-list/social-account-list.component';
 import { CampaignTasksComponent } from './components/campaign-tasks/campaign-tasks.component';
 import { SelectModule } from 'ng-select';
+import { CampaignSubTasksComponent } from './components/campaign-sub-tasks/campaign-sub-tasks.component';
 /*import 'hammerjs';
 import 'mousetrap';
 import { GalleryModule } from '@ks89/angular-modal-gallery';*/
@@ -70,7 +71,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SocialAddConnectionComponent,
     SocialAccountListComponent,
     TextMaskModule,
-    CampaignTasksComponent
+    CampaignTasksComponent,
+    CampaignSubTasksComponent
   ],
   declarations: [
     DataFilterPipe,
@@ -82,7 +84,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     GalleryComponent,
     SocialAddConnectionComponent,
     SocialAccountListComponent,
-    CampaignTasksComponent
+    CampaignTasksComponent,
+    CampaignSubTasksComponent
   ],
   providers: [
     {

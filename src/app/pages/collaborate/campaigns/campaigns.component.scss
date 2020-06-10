@@ -1,5 +1,11 @@
 .card-tasks {
     padding-left: 0;
+    .card {
+        margin-bottom: 15px;
+        .card-body {
+            height: calc(50vh - 140px);
+        }
+    }
 }
 
 .campaign-table-header {

@@ -1,9 +1,9 @@
-.task-table-header {
+.sub-task-table-header {
     th {
         padding: 0.5rem 0.3rem;
     }
 }
-.task-table-body {
+.sub-task-table-body {
     height: 300px;
     overflow: auto;
 
@@ -22,7 +22,7 @@
     }
 }
 
-.add-task-modal {
+.add-sub-task-modal {
     .input-group-prepend {
         .input-group-text {
             width: 120px;
@@ -46,16 +46,5 @@
         line-height: 45px !important;
     }
     
-}
-
-
-.toast-div {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-
-    .bg-blue-light {
-        background-color: #bce8fb;
-    }
 }
 

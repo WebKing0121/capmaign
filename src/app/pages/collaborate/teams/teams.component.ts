@@ -22,6 +22,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   @ViewChild('cardAssignCampaigns', { static: false }) cardAssignCampaigns;
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('campaignTasks', { static: false }) campaignTasks;
+  @ViewChild('campaignSubTasks', { static: false }) campaignSubTasks;
   
   teamForm: FormGroup;
   loading = false;
@@ -48,12 +49,18 @@ export class TeamsComponent implements OnInit, OnDestroy {
   loadTeams: boolean = false;
   allUsers: any[];
   selectedTeam: any;
+
   selectedTaskId: number;
+  selectedTaskName: string;
+  selectedUserId: number;
+  selectedUserName: string;
 
   selectedTeamInAssignCampaigns: any;
   teamsInAssignCampaign: any[];
   teamMembers: any[];
   selectedCampaignId: number;
+
+  
 
   // dual list box
   sourceCampaigns: any[];
@@ -80,6 +87,11 @@ export class TeamsComponent implements OnInit, OnDestroy {
     this.tasks = [];
     this.teamMembers = [];
     this.selectedCampaignId = -1;
+
+    this.selectedTaskId = 0;
+    this.selectedTaskName = '';
+    this.selectedUserId = 0;
+    this.selectedUserName = '';
   }
 
   ngOnInit(): void {
@@ -219,6 +231,10 @@ export class TeamsComponent implements OnInit, OnDestroy {
     this.campaignTasks.loadTasksFromCampaign(campaignId);
   }
 
+  onSelectTask(taskId: number) {
+    console.log(taskId);
+  }
+
   getSelectedCampaigns() {
     if (this.selectedTeam) {
       
@@ -300,7 +316,16 @@ export class TeamsComponent implements OnInit, OnDestroy {
    * --------------------------------------------------- *
    *                                                     *
    *******************************************************/
-  onClickTask(taskId: number) {
-    this.selectedTaskId = taskId;
+  onClickTask(task: any) {
+    this.selectedTaskId = task.id;
+    this.selectedTaskName = task.name;
+    this.selectedUserId = task.user_id;
+    const user = this.allUsers.find(user => user.id === this.selectedUserId);
+    if (user) {
+      this.selectedUserName = user.label;
+    } else {
+      this.selectedUserName = '';
+    }
+    this.campaignSubTasks.loadSubTasks(this.selectedTaskId)
   }
 }

@@ -4,7 +4,7 @@
             <div class="campaign-filter">
                 <div class="position-relative">
                     <div class="btn-group dropdown" ngbDropdown placement="auto">
-                        <button class="btn btn-outline-primary  btn-normal-padding" ngbDropdownToggle type="button">{{getFilterLabel()}}</button>
+                        <button class="btn btn-outline-primary  btn-normal-padding" ngbDropdownToggle type="button">{{filterLabel}}</button>
                         <div ngbDropdownMenu>
                             <a *ngFor="let filter of campaignFilter" class="dropdown-item" (click)="onClickFilterInCampaigns(filter.value)">{{filter.label}}</a>
                         </div>
@@ -88,8 +88,16 @@
 			[campaignId]="selectedCampaignId"
 			[teams]="teams"
 			[campaigns]="campaigns"
-			[users]="allUsers"
-		></app-campaign-tasks>
+            [users]="allUsers"
+            (onSelectRow)="onSelectTask($event)"
+        ></app-campaign-tasks>
+        <app-campaign-sub-tasks #campaignSubTasks
+            [taskId]="selectedTaskId"
+            [taskName]="selectedTaskName"
+            [userId]="selectedUserId"
+            [userName]="selectedUserName"
+        >
+        </app-campaign-sub-tasks>
     </div>
 </div>
 
@@ -118,7 +126,7 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text">New Team</span>
                     </div>
-                    <ng-select [ngClass]="'ng-select'" [options]="getExistingTeam()"></ng-select>
+                    <ng-select [ngClass]="'ng-select'" [options]="teamsForNgSelectTemp"></ng-select>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, Input, EventEmitter, Output } from '@angular/core';
 import { CollaborateService } from 'src/app/_services/collaborate.service';
 import { first } from 'rxjs/operators';
 import { ToastService } from '../toast/toast.service';
@@ -16,7 +16,7 @@ export class CampaignTasksComponent implements OnInit {
   @Input() users: any[];
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('addTaskModal', { static: false }) addTaskModal;
-
+  @Output() onSelectRow: EventEmitter<any> = new EventEmitter();
   tasks: any[];
   selectedTaskId: number;
 
@@ -54,8 +54,9 @@ export class CampaignTasksComponent implements OnInit {
    * --------------------------------------------------- *
    *                                                     *
    *******************************************************/
-  onClickTask(taskId: number) {
-    this.selectedTaskId = taskId;
+  onClickTask(task: any ) {
+    this.selectedTaskId = task.id;
+    this.onSelectRow.emit({id: task.id, name: task.name, user_id: task.user_id});
   }
 
   getUserName(userId: number) {

@@ -15,7 +15,8 @@ export class CampaignsComponent implements OnInit {
   @ViewChild('assignTeamModal', { static: false }) assignTeamModal;
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('campaignTasks', { static: false }) campaignTasks;
-
+  @ViewChild('campaignSubTasks', { static: false }) campaignSubTasks;
+  
   cardButtonsInTasks = [
     { label: 'Add Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddTask()},
   ];
@@ -37,11 +38,16 @@ export class CampaignsComponent implements OnInit {
   filteredCampaignsInArchived: any[];
   teams: any[];
   teamsForNgSelect: any[];
+  teamsForNgSelectTemp: any[];
   replaceTeam: boolean = false;
   selectedCampainIdForReplace: number;
   selectedCampaignId: number;
-  tasks: any[];
   allUsers: any[];
+
+  selectedTaskId: number;
+  selectedTaskName: string;
+  selectedUserId: number;
+  selectedUserName: string;
 
   constructor(
     private collaborateService: CollaborateService,
@@ -50,10 +56,15 @@ export class CampaignsComponent implements OnInit {
     this.campaigns = [];
     this.teams = [];
     this.teamsForNgSelect = [];
-    this.tasks = [];
+    this.teamsForNgSelectTemp = [];
     this.allUsers = [];
     this.filteredCampaignsInProgress = [];
     this.filteredCampaignsInArchived = [];
+
+    this.selectedTaskId = 0;
+    this.selectedTaskName = '';
+    this.selectedUserId = 0;
+    this.selectedUserName = '';
   }
 
   ngOnInit(): void {
@@ -119,13 +130,14 @@ export class CampaignsComponent implements OnInit {
     return ''
   }
 
-  getFilterLabel() {
+  get filterLabel() {
     const filter = this.campaignFilter.find(filter => filter.value === this.selectedFilter);
     if (filter) {
       return filter.label;
     }
     return 'All Campaigns';
   }
+
   onClickFilterInCampaigns(filter: string) {
     this.selectedFilter = filter;
     if (filter === 'All') {
@@ -141,6 +153,8 @@ export class CampaignsComponent implements OnInit {
   onClickChangeTeam(campaign_id: number, event) {
     event.stopPropagation();
     this.selectedCampainIdForReplace = campaign_id;
+    const campaign = this.campaigns.find(campaign => campaign.id === this.selectedCampainIdForReplace);
+    this.teamsForNgSelectTemp = this.teamsForNgSelect.filter(team => Number(team.value) !== campaign.team_id )
     this.replaceTeam = true;
     this.assignTeamModal.show();
   }
@@ -148,6 +162,7 @@ export class CampaignsComponent implements OnInit {
   onClickAssignTeam(campaign_id: number, event) {
     event.stopPropagation();
     this.selectedCampainIdForReplace = campaign_id;
+    this.teamsForNgSelectTemp = this.teamsForNgSelect;
     this.replaceTeam = false;
     this.assignTeamModal.show();
   }
@@ -170,6 +185,21 @@ export class CampaignsComponent implements OnInit {
   onClickCampaign(campaignId: number) {
     this.selectedCampaignId = campaignId;
     this.campaignTasks.loadTasksFromCampaign(campaignId);
+    this.campaignSubTasks.loadSubTasks(0);
+  }
+
+  onSelectTask(task: any) {
+    
+    this.selectedTaskId = task.id;
+    this.selectedTaskName = task.name;
+    this.selectedUserId = task.user_id;
+    const user = this.allUsers.find(user => user.id === this.selectedUserId);
+    if (user) {
+      this.selectedUserName = user.label;
+    } else {
+      this.selectedUserName = '';
+    }
+    this.campaignSubTasks.loadSubTasks(this.selectedTaskId)
   }
   
    /*********************************************
