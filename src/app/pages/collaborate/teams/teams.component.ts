@@ -45,7 +45,6 @@ export class TeamsComponent implements OnInit, OnDestroy {
   dtTrigger: Subject<any> = new Subject();
   teams: any[];
   campaigns: any[];
-  tasks: any[];
   loadTeams: boolean = false;
   allUsers: any[];
   selectedTeam: any;
@@ -84,7 +83,6 @@ export class TeamsComponent implements OnInit, OnDestroy {
     this.teams = [];
     this.allUsers = [];
     this.campaigns = [];
-    this.tasks = [];
     this.teamMembers = [];
     this.selectedCampaignId = -1;
 
@@ -176,7 +174,8 @@ export class TeamsComponent implements OnInit, OnDestroy {
 
   onClickTeam(teamId: number): void {
     this.selectedTeam = this.teams.filter(team=>team.id === teamId)[0];
-    this.tasks = [];
+    this.campaignTasks.loadTasksFromCampaign(0);
+    this.campaignSubTasks.loadSubTasks(0)
   }
 
   // convenience getter for easy access to form fields
@@ -229,10 +228,20 @@ export class TeamsComponent implements OnInit, OnDestroy {
   onClickCampaign(campaignId: number) {
     this.selectedCampaignId = campaignId;
     this.campaignTasks.loadTasksFromCampaign(campaignId);
+    this.campaignSubTasks.loadSubTasks(0);
   }
 
-  onSelectTask(taskId: number) {
-    console.log(taskId);
+  onSelectTask(task: any) {
+    this.selectedTaskId = task.id;
+    this.selectedTaskName = task.name;
+    this.selectedUserId = task.user_id;
+    const user = this.allUsers.find(user => user.id === this.selectedUserId);
+    if (user) {
+      this.selectedUserName = user.label;
+    } else {
+      this.selectedUserName = '';
+    }
+    this.campaignSubTasks.loadSubTasks(this.selectedTaskId);
   }
 
   getSelectedCampaigns() {

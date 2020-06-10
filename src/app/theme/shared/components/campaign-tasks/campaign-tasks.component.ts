@@ -97,7 +97,11 @@ export class CampaignTasksComponent implements OnInit {
   }
 
   loadTasksFromCampaign(campaignId: number) {
-    console.log("LOAD");
+    if(campaignId === 0) {
+      this.tasks = [];
+      return;
+    }
+
     this.cardTasks.setCardRefresh( true );  
     this.collaborateService.getCampaignTasks(campaignId)
     .pipe(first())
