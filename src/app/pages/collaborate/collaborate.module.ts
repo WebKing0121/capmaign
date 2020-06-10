@@ -10,11 +10,15 @@ import { NgbProgressbarModule, NgbDatepickerModule, NgbButtonsModule, NgbDropdow
 
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { CampaignsComponent } from './campaigns/campaigns.component';
+import { RecentActivityComponent } from './recent-activity/recent-activity.component';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 @NgModule({
   declarations: [
     MyCalendarComponent,
     TeamsComponent,
-    CampaignsComponent
+    CampaignsComponent,
+    RecentActivityComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,8 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
     NgbButtonsModule,
     NgbDropdownModule,
     NgbTooltipModule,
-    AngularDualListBoxModule
+    AngularDualListBoxModule,
+    InfiniteScrollModule
   ]
 })
 export class CollaborateModule { }

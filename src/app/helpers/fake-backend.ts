@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
+import * as moment from 'moment';
 
 import { User } from '../_models/user';
 
@@ -146,7 +147,10 @@ const teams: any[] = [
         id: 4, name: "Test Team", created_at: 'Feb 3, 2019 12:17:41',
         members: [10, 11], assigned_campaigns: []
     }
-]
+];
+
+let last_activity_time = '';
+
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -188,9 +192,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     }
                     return ok([]);
                 case url.includes('/collaborate/task/') && method === 'GET':
-                    
                     subURL = url.split('/collaborate/task/')[1];
-                    console.log(url);
                     switch( true ) {
                         case subURL.endsWith('/sub-tasks'):
                             let taskId = '';
@@ -198,7 +200,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                             return getCampaignSubTasks(Number(taskId));
                     }
                     return ok([]);
-                    
+                case url.endsWith('/activity') && method === 'POST':
+                    return getRecentActivities();
+
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -483,6 +487,35 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
         function getCampaignSubTasks(taskId) {
             return ok(campaign_subtasks.filter(subtask =>  subtask.task_id === taskId));
+        }
+
+        function getRecentActivities() {
+            const activities = [];
+            const { date, campaignId } = body;
+            if (last_activity_time === '') {
+                last_activity_time = moment(date).format('YYYY-MM-DD HH:mm:ss');
+            }
+            let activity_records = 20;
+            let user_id = 0;
+            let campaign_id = 0;
+            let campaign;
+            let user;
+            while (activity_records > 0) {
+                last_activity_time = moment(last_activity_time).subtract(1, 'm').format('YYYY-MM-DD HH:mm:ss');
+                user_id = Math.ceil(Math.random() * 14);
+                user = users.find(x => x.id === user_id);
+                campaign_id = campaignId > 0 ? campaignId: Math.ceil(Math.random() * 6);
+                campaign = campaigns.find(x => x.id === campaign_id);
+                activities.push({
+                    time: last_activity_time,
+                    user: user.firstName + ' ' + user.lastName,
+                    module_id: 1,
+                    campaign: campaign.name,
+                    message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+                });
+                activity_records --;
+            }
+            return ok(activities);
         }
     }
 }

@@ -309,7 +309,7 @@ const NavigationItems = [
         icon: 'feather icon-at-sign',
         children:[
           {
-            id: 'collaborate-tems',
+            id: 'collaborate-teams',
             title: 'Teams',
             type: 'item',
             url: '/collaborate/teams',
@@ -327,6 +327,13 @@ const NavigationItems = [
             title: 'My Calendar',
             type: 'item',
             url: '/collaborate/my-calendar',
+            external: false
+          },
+          {
+            id: 'collaborate-recent-activity',
+            title: 'Recent Activity',
+            type: 'item',
+            url: '/collaborate/recent-activity',
             external: false
           },
         ]

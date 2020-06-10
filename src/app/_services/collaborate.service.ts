@@ -26,4 +26,11 @@ export class CollaborateService {
   getCampaignSubTasks(taskId: number) {
     return this.http.get<any>(`${environment.apiUrl}/${this.url}/task/${taskId}/sub-tasks`);
   }
+
+  getRecentActivities(date: string, campaignId: number) {
+    return this.http.post<any>(`${environment.apiUrl}/${this.url}/activity`, {
+      date,
+      campaignId
+    });
+  }
 }
