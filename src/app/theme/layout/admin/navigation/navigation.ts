@@ -122,7 +122,7 @@ const NavigationItems = [
             url: 'javascript:',
             external: true
           },
-          
+
           {
             id: 'create-email-template',
             title: 'Email Template',
@@ -130,7 +130,7 @@ const NavigationItems = [
             url: 'javascript:',
             external: true
           },
-          
+
           {
             id: 'create-landing-page-category',
             title: 'Landing Page Category',
@@ -292,7 +292,7 @@ const NavigationItems = [
         type: 'item',
         icon: 'feather icon-globe',
         url: '/campaign',
-        external: true
+        external: false
       },
       {
         id: 'automation',
