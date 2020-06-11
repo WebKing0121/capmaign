@@ -21,6 +21,16 @@ export class CampaignComponent implements OnInit, AfterViewInit {
         'Create Facebook Campaign',
     ];
 
+    columns: any[] = [
+        {mark: true, label: 'Name'},
+        {mark: true, label: 'Subject'},
+        {mark: true, label: 'Type'},
+        {mark: true, label: 'Modification Date'},
+        {mark: true, label: 'Created Date'},
+        {mark: true, label: 'Last sent'},
+        {mark: true, label: 'Scheduled'},
+    ];
+
     mockData: any[] = CampaignResponseMockData;
 
     displayedColumns: string[] = ['check', 'name', 'subject', 'type', 'modificationdate', 'createddate', 'lastsent', 'scheduled'];
@@ -54,7 +64,7 @@ export class CampaignComponent implements OnInit, AfterViewInit {
     }
 
     onClose() {
-        this.value = ''
+        this.value = '';
         this.applyFilter(this.value);
     }
 
@@ -89,7 +99,7 @@ export class CampaignComponent implements OnInit, AfterViewInit {
     }
 
     removeElement(element) {
-        this.selectedCampaigns = this.selectedCampaigns.filter(c => c._id !== element._id);
+        this.selectedCampaigns = this.selectedCampaigns.filter(c => c !== element);
     }
 
     checkboxSelection($event, element) {
@@ -106,4 +116,9 @@ export class CampaignComponent implements OnInit, AfterViewInit {
         this.dataSource.paginator = this.paginator;
     }
 
+    isVisible(column: any, $event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+        column.mark = !column.mark;
+    }
 }

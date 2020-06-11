@@ -40,6 +40,15 @@
 		}
 	}
 
+	.table-section {
+		position: relative;
+		.column {
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+	}
+
 	::ng-deep {
 		.selection.mat-form-field {
 			width: 13rem;
@@ -69,10 +78,15 @@
 			align-content: space-around;
 		}
 
-		.mat-header-cell, .mat-cell {
+		.mat-header-cell,
+		.mat-cell {
 			display: flex;
 			align-items: center;
 			justify-content: center;
+		}
+		.mat-header-cell.hidden,
+		.mat-cell.hidden {
+			display: none !important;
 		}
 
 		.mat-paginator-range-actions {
