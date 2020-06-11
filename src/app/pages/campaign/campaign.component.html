@@ -1,11 +1,13 @@
 <div class="row">
 	<div class="col-lg-3 col-md-12 folders">
-		<h1>Folders --- TODO</h1>
+		<div class="folders-label">
+			<h4>FOLDERS</h4> <mat-icon>add_circle</mat-icon>
+		</div>
 	</div>
 	<div class="col-lg-9 col-md-12">
 		<div class="label d-flex justify-content-between align-items-center">
 			<h2>MANAGE CAMPAIGN</h2>
-			<h3>Total Campaign: <span>{{'0'}}</span></h3>
+			<h3>Total Campaign: <span>{{mockData.length}}</span></h3>
 		</div>
 		<div class="campaign-table">
 			<div class="campaign-table-setting d-flex justify-content-start align-items-center">
@@ -18,10 +20,10 @@
 						</mat-select>
 					</mat-form-field>
 				</div>
-				<div class="delete d-flex justify-content-between align-items-center ml-3 mt-2">
+				<div class="delete d-flex justify-content-between align-items-center ml-3 mt-2" (click)="deleteCampaigns()">
 					Delete <mat-icon class="ml-2">delete</mat-icon>
 				</div>
-				<div class="send d-flex justify-content-between align-items-center ml-3 mt-2">
+				<div class="send d-flex justify-content-between align-items-center ml-3 mt-2" (click)="sendCampaigns()">
 					Send Campaign <mat-icon class="ml-2">email</mat-icon>
 				</div>
 				<div class="d-flex justify-content-between align-items-center ml-auto">

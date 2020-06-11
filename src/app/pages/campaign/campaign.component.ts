@@ -105,7 +105,17 @@ export class CampaignComponent implements OnInit, AfterViewInit {
     checkboxSelection($event, element) {
         $event.stopPropagation();
         this.selection.isSelected(element) ? this.removeElement(element) : this.selectedCampaigns.push(element);
-        console.log('checkboxSelection func ----------', this.selectedCampaigns);
+    }
+
+    deleteCampaigns() {
+        const remain = this.mockData.filter(x => !this.selectedCampaigns.includes(x));
+        this.dataSource.data = remain;
+        this.selectedCampaigns.length = 0;
+        this.selection.clear();
+    }
+
+    sendCampaigns() {
+        console.log('Send Campaigns ----------', this.selectedCampaigns);
     }
 
     sortData() {
