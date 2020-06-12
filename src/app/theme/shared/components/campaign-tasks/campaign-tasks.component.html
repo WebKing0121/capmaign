@@ -14,8 +14,8 @@
 				<tr *ngFor="let task of tasks" (click)="onClickTask(task)" [ngClass]="{'selected': task.id === selectedTaskId}">
 					<td>{{task.name}}</td>
 					<td>{{task.desc}}</td>
-					<td>{{getDate(task.startDate)}}</td>
-					<td>{{getDate(task.endDate)}}</td>
+					<td>{{task.startDate | date}}</td>
+					<td>{{task.endDate | date}}</td>
 					<td class="flex-position-relative">
 						<span class="percent">{{task.percent}}%</span>
 						<ngb-progressbar height="20px" [value]="task.percent"></ngb-progressbar>
@@ -47,7 +47,7 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text">Team</span>
 					</div>
-					<input type="text" class="form-control" [value]="getTeamName()" readonly />
+					<input type="text" class="form-control" [value]="modalTeamName" readonly />
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -55,7 +55,7 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text">Campaigns</span>
 					</div>
-					<input type="text" class="form-control" [value]="getCampaignName()" readonly />
+					<input type="text" class="form-control" [value]="modalCampaignName" readonly />
 				</div>
 			</div>
 		</div>
@@ -107,7 +107,7 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">User</span>
 				</div>
-				<ng-select [ngClass]="'ng-select'" [options]="getTeamMembers()"></ng-select>
+				<ng-select [ngClass]="'ng-select'" [options]="modalTeamMembers"></ng-select>
 			</div>
 			<div class="col-md-6 input-group">
 				<div class="input-group-prepend">

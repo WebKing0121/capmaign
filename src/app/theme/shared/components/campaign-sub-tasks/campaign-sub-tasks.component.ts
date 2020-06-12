@@ -88,8 +88,4 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy {
         );
     }
   }
-
-  getDate(x: string) {
-    return moment(x).format('YYYY-MM-DD');
-  }
 }

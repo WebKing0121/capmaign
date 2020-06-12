@@ -1,8 +1,12 @@
 <app-card cardTitle="Monitor Tags or Keywords" [options]="false">
 	<div class="card-buttons">
-		<button class="btn" (click)="addTabDialog()"><i class="feather icon-plus"></i> Add Tab</button>
+		<button class="btn" (click)="addTabDialog()">
+			<i class="feather icon-plus"></i> Add Tab
+		</button>
 	</div>
-	<div *ngIf="tabs.length === 0" role="alert" class="alert alert-warning"><i class="feather icon-alert-triangle"></i> Please add <a href='#'>Tab</a> first.</div>
+	<div *ngIf="tabs.length === 0" role="alert" class="alert alert-warning">
+		<i class="feather icon-alert-triangle"></i> Please add <a href='#'>Tab</a> first.
+	</div>
 	<div *ngIf="tabs.length > 0" class="tab-section">
 		<ngb-tabset>
 			<ngb-tab *ngFor="let tab of tabs" [title]="tab.label">
@@ -13,8 +17,10 @@
 					<div *ngIf="tab.streams.length > 0" class="mt-3">
 						<app-card *ngFor="let stream of tab.streams" [cardTitle]="stream.label"></app-card>
 					</div>
-					<button type="button" class="btn btn-outline-success btn-close-tab" (click)="onAddStream(tab.id)"><i class="feather icon-plus"></i> {{tab.streams.length > 0 ? 'Update' : 'Add'}} Stream </button>
-					<button type="button" class="btn btn-outline-primary float-right btn-close-tab" (click)="onCloseTabConfirm(tab.id)">Close</button>
+					<button type="button" class="btn btn-outline-success btn-close-tab" (click)="onAddStream(tab.id)"><i
+							class="feather icon-plus"></i> {{tab.streams.length > 0 ? 'Update' : 'Add'}} Stream </button>
+					<button type="button" class="btn btn-outline-primary float-right btn-close-tab"
+						(click)="onCloseTabConfirm(tab.id)">Close</button>
 				</ng-template>
 			</ngb-tab>
 		</ngb-tabset>
@@ -22,38 +28,40 @@
 
 	<!-- new tab modal -->
 	<app-ui-modal #newTabModal dialogClass="modal-dialog-centered" [dialogClass]="'new-tab'">
-    <div class="app-modal-header">
-      <h5 class="modal-title">Add Tab</h5>
-      <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="newTabModal.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="app-modal-body">
+		<div class="app-modal-header">
+			<h5 class="modal-title">Add Tab</h5>
+			<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+				(click)="newTabModal.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="app-modal-body">
 			<form [formGroup]="tabForm" (ngSubmit)="onAddTab()">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Please type tab name" formControlName="tabname"  [ngClass]="{ 'is-invalid': submitted && f.tabname.errors }" />
+					<input type="text" class="form-control" placeholder="Please type tab name" formControlName="tabname"
+						[ngClass]="{ 'is-invalid': submitted && f.tabname.errors }" />
 					<div class="input-group-append">
-						<button type="submit" class="btn btn-primary">Add</button>			
+						<button type="submit" class="btn btn-primary">Add</button>
 					</div>
-					
+
 				</div>
 			</form>
-      
-    </div>
+
+		</div>
 	</app-ui-modal>
-	<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to close tab?" [buttons]="confirmButtons"></app-confirm-modal>
+	<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to close tab?"
+		[buttons]="confirmButtons"></app-confirm-modal>
 
 	<app-ui-modal #newStreamModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl new-stream'">
-    <div class="app-modal-header">
-      <h5 class="modal-title">{{getStreamModalTitle()}}</h5>
-      <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="newStreamModal.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="app-modal-body">
-			<app-social-account-list
-				(addConnection)="onAddConnection()"
-				(selectedUsers)="onSelectedUsers($event)">
+		<div class="app-modal-header">
+			<h5 class="modal-title">{{modalStreamTitle}}</h5>
+			<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+				(click)="newStreamModal.hide()">
+				<span aria-hidden="true">&times;</span>
+			</button>
+		</div>
+		<div class="app-modal-body">
+			<app-social-account-list (addConnection)="onAddConnection()" (selectedUsers)="onSelectedUsers($event)">
 			</app-social-account-list>
 			<div class="d-flex">
 				<div class="form-group pr-4">
@@ -75,47 +83,48 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">Keyword</span>
 				</div>
-				<input type="text" name="keyword" class="form-control"/>
+				<input type="text" name="keyword" class="form-control" />
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">Email</span>
 				</div>
-				<input type="text" name="email" class="form-control"/>
+				<input type="text" name="email" class="form-control" />
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">Screen Name</span>
 				</div>
-				<input type="text" name="screen_name" class="form-control"/>
+				<input type="text" name="screen_name" class="form-control" />
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">Name</span>
 				</div>
-				<input type="text" name="name" class="form-control"/>
+				<input type="text" name="name" class="form-control" />
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">Location</span>
 				</div>
-				<input type="text" name="location" class="form-control"/>
+				<input type="text" name="location" class="form-control" />
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">Description</span>
 				</div>
-				<input type="text" name="description" class="form-control"/>
+				<input type="text" name="description" class="form-control" />
 			</div>
 			<div class="input-group mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text">@/#Tag</span>
 				</div>
-				<input type="text" name="tag" class="form-control"/>
+				<input type="text" name="tag" class="form-control" />
 			</div>
 		</div>
 		<div class="app-modal-fotter">
-			<button type="button" class="btn btn-outline-success" ><i class="feather icon-plus"></i> {{getStreamModalTitle()}}</button>
+			<button type="button" class="btn btn-outline-success"><i class="feather icon-plus"></i>
+				{{modalStreamTitle}}</button>
 			<button type="button" class="btn btn-outline-primary float-right" (click)="newStreamModal.hide()">Close</button>
 		</div>
 		<div class="app-modal-footer">
@@ -125,4 +134,3 @@
 	</app-ui-modal>
 	<app-social-add-connection #addConnection></app-social-add-connection>
 </app-card>
-    

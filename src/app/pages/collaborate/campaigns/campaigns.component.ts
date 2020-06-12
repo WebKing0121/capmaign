@@ -55,6 +55,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   selectedUserId: number;
   selectedUserName: string;
 
+  modalTeamName: string;
+
   constructor(
     private collaborateService: CollaborateService,
     private userService: UserService
@@ -73,6 +75,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     this.selectedUserName = '';
     this.selectedFilter = 'All';
     this.replaceTeam = false;
+    this.modalTeamName = '';
   }
 
   ngOnInit(): void {
@@ -143,9 +146,6 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  getDate(x: string) {
-    return moment(x).format('YYYY-MM-DD');
-  }
 
   get filterLabel() {
     const filter = this.campaignFilter.find(x => x.value === this.selectedFilter);
@@ -179,6 +179,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     const { teamId } = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
     this.teamsForNgSelectTemp = this.teamsForNgSelect.filter(x => Number(x.value) !== teamId);
     this.replaceTeam = true;
+    this.modalTeamName = this.getCurrentTeamName();
     this.assignTeamModal.show();
   }
 
@@ -187,6 +188,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     this.selectedCampainIdForReplace = campaignId;
     this.teamsForNgSelectTemp = this.teamsForNgSelect;
     this.replaceTeam = false;
+    this.modalTeamName = '';
     this.assignTeamModal.show();
   }
 

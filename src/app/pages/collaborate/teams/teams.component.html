@@ -45,8 +45,8 @@
 						<tr *ngFor="let row of getSelectedCampaigns()" (click)="onClickCampaign(row.id)"
 							[ngClass]="{'selected': row.id === selectedCampaignId}">
 							<td>{{row.name}}</td>
-							<td>{{getDate(row.startDate)}}</td>
-							<td>{{getDate(row.endDate)}}</td>
+							<td>{{row.startDate | date}}</td>
+							<td>{{row.endDate | date}}</td>
 							<td>
 								<ngb-progressbar height="20px" [value]="row.percent"></ngb-progressbar>
 							</td>

@@ -16,8 +16,8 @@
 					[ngClass]="{'selected': subTask.id === selectedSubTaskId}">
 					<td>{{subTask.name}}</td>
 					<td>{{subTask.desc}}</td>
-					<td>{{getDate(subTask.startDate)}}</td>
-					<td>{{getDate(subTask.endDate)}}</td>
+					<td>{{subTask.startDate | date}}</td>
+					<td>{{subTask.endDate | date}}</td>
 					<td class="flex-position-relative">
 						<span class="percent">{{subTask.percent}}%</span>
 						<ngb-progressbar height="20px" [value]="subTask.percent"></ngb-progressbar>

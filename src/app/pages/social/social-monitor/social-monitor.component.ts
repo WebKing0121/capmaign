@@ -30,6 +30,7 @@ export class SocialMonitorComponent implements OnInit {
   selectedTabId: number;
 
   selectedLinks: SocialLinkSelected[];
+  modalStreamTitle: string;
 
   constructor(
     private formBuilder: FormBuilder
@@ -37,6 +38,7 @@ export class SocialMonitorComponent implements OnInit {
     this.tabId = 1;
     this.selectedTabId = 0;
     this.selectedLinks = [];
+    this.modalStreamTitle = '';
   }
 
   ngOnInit(): void {
@@ -90,6 +92,7 @@ export class SocialMonitorComponent implements OnInit {
 
   onAddStream(tabId: number) {
     this.selectedTabId = tabId;
+    this.modalStreamTitle = this.getStreamModalTitle();
     this.newStreamModal.show();
   }
 

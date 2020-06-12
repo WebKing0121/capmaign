@@ -31,12 +31,19 @@ export class CampaignTasksComponent implements OnInit, OnDestroy {
     { label: 'Add Tasks', icon: 'icon-plus-circle', action: () => this.onClickAddTask() },
   ];
 
+  modalTeamName: string;
+  modalCampaignName: string;
+  modalTeamMembers: any[];
+
   constructor(
     private collaborateService: CollaborateService,
     private toastEvent: ToastService
   ) {
     this.tasks = [];
     this.selectedTaskId = 0;
+    this.modalTeamName = '';
+    this.modalCampaignName = '';
+    this.modalTeamMembers = [];
   }
 
   ngOnInit(): void {
@@ -54,6 +61,9 @@ export class CampaignTasksComponent implements OnInit, OnDestroy {
    **********************************************/
   onClickAddTask() {
     if (this.campaignId > 0) {
+      this.modalTeamName = this.getTeamName();
+      this.modalCampaignName = this.getCampaignName();
+      this.modalTeamMembers = this.getTeamMembers();
       this.addTaskModal.show();
     } else {
       this.toastEvent.toast({ uid: 'toast1', delay: 3000 });
@@ -106,10 +116,6 @@ export class CampaignTasksComponent implements OnInit, OnDestroy {
     } else {
       return [];
     }
-  }
-
-  getDate(x: string) {
-    return moment(x).format('YYYY-MM-DD');
   }
 
   loadTasksFromCampaign(campaignId: number) {
