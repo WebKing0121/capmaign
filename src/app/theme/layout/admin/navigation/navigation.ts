@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 export interface NavigationItem {
   id: string;
@@ -122,7 +122,7 @@ const NavigationItems = [
             url: 'javascript:',
             external: true
           },
-          
+
           {
             id: 'create-email-template',
             title: 'Email Template',
@@ -130,7 +130,7 @@ const NavigationItems = [
             url: 'javascript:',
             external: true
           },
-          
+
           {
             id: 'create-landing-page-category',
             title: 'Landing Page Category',
@@ -160,73 +160,73 @@ const NavigationItems = [
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-subscriber',
             title: 'Subscriber',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-unsubscriber',
             title: 'Unsubscriber',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-leads',
             title: 'Leads',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-contacts',
             title: 'Contacts',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-prospects',
             title: 'Prospects',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-accounts',
             title: 'Accounts',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-transactional',
             title: 'Transactional',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-landing-page-category',
             title: 'Landing Page Category',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-lists',
             title: 'Lists',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-event-lists',
             title: 'Event Lists',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-custom-fields',
             title: 'Custom Fields',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'data-filters',
             title: 'Filters',
             type: 'item',
@@ -247,37 +247,37 @@ const NavigationItems = [
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'contents-landing-pages',
             title: 'Landing Pages',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'contents-dynamic-contents',
             title: 'Dynamic Contents',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'contents-email-templates',
             title: 'Email Templates',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'contents-landing-page-templates',
             title: 'Landing Page Templates',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'contents-dynamic-qr-codes',
             title: 'Dynamic QR codes',
             type: 'item',
             url: 'javascript:',
             external: true
-          },{
+          }, {
             id: 'contents-creatives',
             title: 'Creatives',
             type: 'item',
@@ -301,13 +301,13 @@ const NavigationItems = [
         icon: 'feather icon-monitor',
         url: 'javascript:',
         external: true
-      },{
+      }, {
         id: 'collaborate',
         title: 'Collaborate',
         type: 'collapse',
         url: '/collaborate',
         icon: 'feather icon-at-sign',
-        children:[
+        children: [
           {
             id: 'collaborate-teams',
             title: 'Teams',
@@ -343,7 +343,7 @@ const NavigationItems = [
         title: 'Events',
         type: 'collapse',
         icon: 'feather icon-square',
-        children:[
+        children: [
           {
             id: 'events-events',
             title: 'Events',
@@ -379,7 +379,7 @@ const NavigationItems = [
         title: 'Scoring',
         type: 'collapse',
         icon: 'feather icon-award',
-        children:[
+        children: [
           {
             id: 'scoring-lead-category',
             title: 'Lead Category',
@@ -415,7 +415,7 @@ const NavigationItems = [
         title: 'Mobile',
         type: 'collapse',
         icon: 'feather icon-book',
-        children:[
+        children: [
           {
             id: 'mobile-sms-messages',
             title: 'SMS Messages',
@@ -451,7 +451,7 @@ const NavigationItems = [
         title: 'Adversting',
         type: 'collapse',
         icon: 'feather icon-map',
-        children:[
+        children: [
           {
             id: 'adversting-facebook-ads',
             title: 'Facebook Ads',
@@ -481,7 +481,7 @@ const NavigationItems = [
         type: 'collapse',
         url: '/social',
         icon: 'feather icon-share-2',
-        children:[
+        children: [
           {
             id: 'social-post',
             title: 'Post',

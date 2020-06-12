@@ -9,13 +9,15 @@
 <div class="chat-widget" *ngIf="isOpened">
     <span class="chat-widget-title">Chats</span>
     <div class="input-group col-md-12 search-group">
-        <input class="form-control search-input" type="search"[(ngModel)]="searchKey" (ngModelChange)="onChangeSearchKey()" placeholder="Search..." id="example-search-input">
+        <input class="form-control search-input" type="search" [(ngModel)]="searchKey"
+            (ngModelChange)="onChangeSearchKey()" placeholder="Search..." id="example-search-input">
         <span class="input-group-prepend search-icon">
             <i class="fa fa-search"></i>
         </span>
-  </div>
+    </div>
     <ul>
-        <li *ngFor="let room of filteredRooms" class="d-flex" (click)="onClickRoom(room)" [ngClass]="{'selected': room.id === selectedRoomId}">
+        <li *ngFor="let room of filteredRooms" class="d-flex" (click)="onClickRoom(room)"
+            [ngClass]="{'selected': room.id === selectedRoomId}">
             <span class="team-icon" *ngIf="room.type==='group'">
                 <i class="fa fa-users fa-lg"></i>
             </span>
@@ -32,7 +34,7 @@
     </ul>
 </div>
 <div class="chat-widget-details" *ngIf="isOpened && selectedRoomId > 0">
-    
+
     <span class="chat-widget-title">
         <span class="team-icon" *ngIf="selectedRoom.type === 'group'">
             <i class="fa fa-users fa-lg"></i>
@@ -49,13 +51,14 @@
                 <div *ngIf="message.mine === 0" class="d-flex">
                     <img [src]="selectedRoom.profileImg" class="user-avatar" />
                     <div class="user-message">
-                        <div class="user-o-info">{{selectedRoom.name.split(' ')[0]}}, {{getMessageTime(message.message_time)}}</div>
+                        <div class="user-o-info">{{selectedRoom.name.split(' ')[0]}},
+                            {{getMessageTime(message.messageTime)}}</div>
                         <p class='user-o-content'>{{message.message}}</p>
                     </div>
                 </div>
                 <div *ngIf="message.mine === 1" class="d-flex justify-content-end">
                     <div class="user-message">
-                        <div class="user-m-info">Me, {{getMessageTime(message.message_time)}}</div>
+                        <div class="user-m-info">Me, {{getMessageTime(message.messageTime)}}</div>
                         <p class='user-m-content'>{{message.message}}</p>
                     </div>
                 </div>

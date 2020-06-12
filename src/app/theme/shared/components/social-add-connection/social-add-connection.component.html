@@ -1,7 +1,8 @@
 <app-ui-modal #addConnection dialogClass="modal-dialog-centered" [dialogClass]="'modal-add-connection'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Add Connection</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="addConnection.hide()">
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="addConnection.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -9,7 +10,7 @@
 	<div class="app-modal-body">
 		<div class="row">
 			<div class="col-4" *ngFor="let social of socialSites$ | async">
-				<app-card [hidHeader]="true"  cardClass="text-center social-site">
+				<app-card [hidHeader]="true" cardClass="text-center social-site">
 					<img [src]="social.normalImg" width="64px" />
 					<div class="card-text">{{social.label}}</div>
 					<div *ngFor="let button of social.buttons" class="social-button">

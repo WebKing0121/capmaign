@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { first } from 'rxjs/operators';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { AuthenticationService } from '../../../_services/authentication.service';
 import { AppState, AppTypes } from '../../../store/app.models';
@@ -12,12 +14,15 @@ import { Store } from '@ngrx/store';
   templateUrl: './auth-signin.component.html',
   styleUrls: ['./auth-signin.component.scss']
 })
-export class AuthSigninComponent implements OnInit {
+export class AuthSigninComponent implements OnInit, OnDestroy {
+
+  private unsubscribe$ = new Subject();
+
   loginForm: FormGroup;
   loading = false;
   submitted = false;
   returnUrl: string;
-  error= '';
+  error = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -26,7 +31,7 @@ export class AuthSigninComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private store: Store<AppState>,
   ) {
-    if(this.authenticationService.currentUserValue) {
+    if (this.authenticationService.currentUserValue) {
       this.router.navigate(['/']);
     }
   }
@@ -37,8 +42,13 @@ export class AuthSigninComponent implements OnInit {
       username: ['', Validators.required],
       password: ['', Validators.required]
     });
+    const key = 'returnUrl';
+    this.returnUrl = this.route.snapshot.queryParams[key] || '/';
+  }
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   // convenience getter for easy access to form fields
@@ -46,14 +56,14 @@ export class AuthSigninComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-     // stop here if form is invalid
+    // stop here if form is invalid
     if (this.loginForm.invalid) {
       return;
     }
 
     this.loading = true;
     this.authenticationService.login(this.f.username.value, this.f.password.value)
-      .pipe(first())
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
           this.store.dispatch({
@@ -69,5 +79,5 @@ export class AuthSigninComponent implements OnInit {
           this.loading = false;
         });
   }
-
 }
+

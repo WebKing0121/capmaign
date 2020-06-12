@@ -1,7 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, Input, EventEmitter, Output } from '@angular/core';
 import { CollaborateService } from 'src/app/_services/collaborate.service';
-import { first } from 'rxjs/operators';
 import { ToastService } from '../toast/toast.service';
+import * as moment from 'moment';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-campaign-sub-tasks',
@@ -9,20 +13,22 @@ import { ToastService } from '../toast/toast.service';
   styleUrls: ['./campaign-sub-tasks.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CampaignSubTasksComponent implements OnInit {
+export class CampaignSubTasksComponent implements OnInit, OnDestroy {
   @Input() taskId: number;
   @Input() taskName: string;
   @Input() userId: number;
   @Input() userName: string;
   @ViewChild('cardSubTasks', { static: false }) cardSubTasks;
   @ViewChild('addSubTaskModal', { static: false }) addSubTaskModal;
-  @Output() onSelectRow: EventEmitter<any> = new EventEmitter();
+  @Output() selectRow: EventEmitter<any> = new EventEmitter();
+
+  private unsubscribe$ = new Subject();
 
   subTasks: any[];
   selectedSubTaskId: number;
 
   cardButtonsInSubTasks = [
-    { label: 'Add Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddTask()},
+    { label: 'Add Tasks', icon: 'icon-plus-circle', action: () => this.onClickAddTask() },
   ];
 
   constructor(
@@ -36,6 +42,11 @@ export class CampaignSubTasksComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   /**********************************************
    * Click event - Plus icon in sub tasks table *
    * ------------------------------------------ *
@@ -45,9 +56,8 @@ export class CampaignSubTasksComponent implements OnInit {
     if (this.taskId > 0) {
       this.addSubTaskModal.show();
     } else {
-      this.toastEvent.toast({uid: 'toast2', delay: 3000});
+      this.toastEvent.toast({ uid: 'toast2', delay: 3000 });
     }
-    
   }
 
   /******************************************************
@@ -57,26 +67,29 @@ export class CampaignSubTasksComponent implements OnInit {
    *******************************************************/
   onClickSubTask(subTaskId: number) {
     this.selectedSubTaskId = subTaskId;
-    this.onSelectRow.emit(this.selectedSubTaskId);
+    this.selectRow.emit(this.selectedSubTaskId);
   }
 
   loadSubTasks(taskId: number) {
     if (taskId === 0) {
       this.subTasks = [];
     } else {
-      this.cardSubTasks.setCardRefresh( true );  
+      this.cardSubTasks.setCardRefresh(true);
       this.collaborateService.getCampaignSubTasks(taskId)
-      .pipe(first())
-      .subscribe(
-        data => {
-          this.subTasks = data;
-          this.cardSubTasks.setCardRefresh( false );  
-        },
-        error => {
-          console.log('error', error)
-        }
-      );
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            this.subTasks = data;
+            this.cardSubTasks.setCardRefresh(false);
+          },
+          error => {
+            console.log('error', error);
+          }
+        );
     }
-    
+  }
+
+  getDate(x: string) {
+    return moment(x).format('YYYY-MM-DD');
   }
 }

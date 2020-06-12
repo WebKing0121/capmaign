@@ -23,7 +23,7 @@
       </button>
     </div>
     <div class="app-modal-body">
-      <app-social-account-list (onAddConnection)="onAddConnection()" (onSelectedUsers)="onSelectedUsers($event)"></app-social-account-list>
+      <app-social-account-list (addConnection)="onAddConnection()" (selectedUsers)="onSelectedUsers($event)"></app-social-account-list>
       <app-tinymce [(ngModel)]='newPostContent' #tinymce='tinymce'></app-tinymce>
     </div>
 

@@ -9,7 +9,7 @@ import {NextConfig} from '../../../../app-config';
 export class NavigationComponent implements OnInit {
   public windowWidth: number;
   public nextConfig: any;
-  @Output() onNavMobCollapse = new EventEmitter();
+  @Output() navMobCollapse = new EventEmitter();
 
   constructor() {
     this.nextConfig = NextConfig.config;
@@ -18,9 +18,9 @@ export class NavigationComponent implements OnInit {
 
   ngOnInit() { }
 
-  navMobCollapse() {
+  onNavMobCollapse() {
     if (this.windowWidth < 992) {
-      this.onNavMobCollapse.emit();
+      this.navMobCollapse.emit();
     }
   }
 }

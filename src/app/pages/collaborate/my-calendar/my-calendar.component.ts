@@ -12,17 +12,17 @@ import * as moment from 'moment';
 })
 export class MyCalendarComponent implements OnInit {
   @ViewChild('newEventModal', { static: false }) newEventModal;
-  
+
   selectedDate: string;
   prevDayElement: any;
   schedules: any[];
   calendarOptions: any;
 
   eventTypes = [
-    {value: 'all-day-event', label: 'All Day Event'},
-    {value: 'time-event', label: 'Time Event'}
+    { value: 'all-day-event', label: 'All Day Event' },
+    { value: 'time-event', label: 'Time Event' }
   ];
-  
+
   eventType: string;
 
   constructor() {
@@ -40,7 +40,7 @@ export class MyCalendarComponent implements OnInit {
         center: 'title',
         end: 'dayGridMonth timeGridWeek timeGridDay'
       },
-      dateClick: (info: any)=> this.onClickDate(info),
+      dateClick: (info: any) => this.onClickDate(info),
       droppable: true,
       editable: true,
       eventClick: (info: any) => this.onClickEvent(info),
@@ -53,48 +53,48 @@ export class MyCalendarComponent implements OnInit {
 
       events: [
         {
-          title  : 'event1',
-          start  : '2020-06-13'
+          title: 'event1',
+          start: '2020-06-13'
         },
         {
-          title  : 'event2',
-          start  : '2020-06-15',
-          end    : '2020-06-17'
+          title: 'event2',
+          start: '2020-06-15',
+          end: '2020-06-17'
         },
         {
-          title  : 'event3',
-          start  : '2020-06-09T12:30:00',
-          allDay : false // will make the time show
+          title: 'event3',
+          start: '2020-06-09T12:30:00',
+          allDay: false // will make the time show
         },
         {
-          title  : 'event4',
-          start  : '2020-06-09T13:30:00',
-          allDay : false // will make the time show
+          title: 'event4',
+          start: '2020-06-09T13:30:00',
+          allDay: false // will make the time show
         },
         {
-          title  : 'event5',
-          start  : '2020-06-09T14:30:00',
-          allDay : false // will make the time show
+          title: 'event5',
+          start: '2020-06-09T14:30:00',
+          allDay: false // will make the time show
         },
         {
-          title  : 'event6',
-          start  : '2020-06-09T15:30:00',
-          allDay : false // will make the time show
+          title: 'event6',
+          start: '2020-06-09T15:30:00',
+          allDay: false // will make the time show
         },
         {
-          title  : 'event7',
-          start  : '2020-06-09T16:30:00',
-          allDay : false // will make the time show
+          title: 'event7',
+          start: '2020-06-09T16:30:00',
+          allDay: false // will make the time show
         },
         {
-          title  : 'event8',
-          start  : '2020-06-09T17:30:00',
-          allDay : false // will make the time show
+          title: 'event8',
+          start: '2020-06-09T17:30:00',
+          allDay: false // will make the time show
         },
         {
-          title  : 'event9',
-          start  : '2020-06-09T18:30:00',
-          allDay : false // will make the time show
+          title: 'event9',
+          start: '2020-06-09T18:30:00',
+          allDay: false // will make the time show
         }
       ]
     };
@@ -106,7 +106,7 @@ export class MyCalendarComponent implements OnInit {
       if (this.prevDayElement) {
         this.prevDayElement.className = this.prevDayElement.className.replace(' selected', '');
       }
-      info.dayEl.className += " selected";
+      info.dayEl.className += ' selected';
       this.prevDayElement = info.dayEl;
     }
   }
@@ -119,5 +119,5 @@ export class MyCalendarComponent implements OnInit {
     this.newEventModal.show();
   }
 
-  
+
 }

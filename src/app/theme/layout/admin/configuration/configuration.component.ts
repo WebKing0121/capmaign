@@ -1,6 +1,6 @@
-import {Component, NgZone, OnInit, ViewEncapsulation} from '@angular/core';
-import {NextConfig} from '../../../../app-config';
-import {Location} from '@angular/common';
+import { Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
+import { NextConfig } from '../../../../app-config';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-configuration',
@@ -49,7 +49,7 @@ export class ConfigurationComponent implements OnInit {
   ngOnInit() {
     this.styleSelectorToggle = false;
 
-    this.layoutType =  this.nextConfig.layoutType;
+    this.layoutType = this.nextConfig.layoutType;
     this.setLayout(this.layoutType);
 
     this.headerBackgroundColor = this.nextConfig.headerBackColor;
@@ -74,7 +74,8 @@ export class ConfigurationComponent implements OnInit {
 
   setThemeLayout() {
     let currentURL = this.location.path();
-    const baseHref = this.location['_baseHref'];
+    const key = '_baseHref';
+    const baseHref = this.location[key];
     if (baseHref) {
       currentURL = baseHref + this.location.path();
     }

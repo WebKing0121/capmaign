@@ -14,14 +14,14 @@
 				<tr *ngFor="let task of tasks" (click)="onClickTask(task)" [ngClass]="{'selected': task.id === selectedTaskId}">
 					<td>{{task.name}}</td>
 					<td>{{task.desc}}</td>
-					<td>{{task.start_date.substring(0, 11)}}</td>
-					<td>{{task.end_date.substring(0, 11)}}</td>
+					<td>{{getDate(task.startDate)}}</td>
+					<td>{{getDate(task.endDate)}}</td>
 					<td class="flex-position-relative">
 						<span class="percent">{{task.percent}}%</span>
 						<ngb-progressbar height="20px" [value]="task.percent"></ngb-progressbar>
 					</td>
-					<td>{{task.esti_hours}}</td>
-					<td>{{getUserName(task.user_id)}}</td>
+					<td>{{task.estiHours}}</td>
+					<td>{{getUserName(task.userId)}}</td>
 				</tr>
 				<tr *ngIf="tasks.length === 0">
 					<td colspan=6 align="center">No data available in table</td>
@@ -34,7 +34,8 @@
 <app-ui-modal #addTaskModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg add-task-modal'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Add Task</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="addTaskModal.hide()">
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="addTaskModal.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -57,7 +58,7 @@
 					<input type="text" class="form-control" [value]="getCampaignName()" readonly />
 				</div>
 			</div>
-		</div> 
+		</div>
 		<div class="row mt-4">
 			<div class="col-md-12 input-group">
 				<div class="input-group-prepend">
@@ -80,7 +81,8 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">Start</span>
 				</div>
-				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker #d_f="ngbDatepicker">
+				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
+					#d_f="ngbDatepicker">
 				<div class="input-group-append">
 					<span class="input-group-text" (click)="d_f.toggle()">
 						<i class="fa fa-calendar"></i>
@@ -91,7 +93,8 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">End</span>
 				</div>
-				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker #d_t="ngbDatepicker">
+				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+					#d_t="ngbDatepicker">
 				<div class="input-group-append">
 					<span class="input-group-text" (click)="d_t.toggle()">
 						<i class="fa fa-calendar"></i>

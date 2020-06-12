@@ -1,11 +1,14 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 
 import 'tinymce/tinymce.min.js';
 import { Observable } from 'rxjs';
 import { AppState, AppTypes, selectSocialAccounts } from '../../../store/app.models';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
 import { SocialLinkSelected } from '../../../_models/social-account';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-social-post',
@@ -13,16 +16,18 @@ import { SocialLinkSelected } from '../../../_models/social-account';
   styleUrls: ['./social-post.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SocialPostComponent implements OnInit {
+export class SocialPostComponent implements OnInit, OnDestroy {
   @ViewChild('newPostModal', { static: false }) newPostModal;
   @ViewChild('addConnection', { static: false }) addConnection;
 
+  private unsubscribe$ = new Subject();
+
   postEnabled: boolean;
   cardActions = [
-    { label: 'Add Connection', icon: 'icon-link-2', action: ()=>this.onAddConnection()}
+    { label: 'Add Connection', icon: 'icon-link-2', action: () => this.onAddConnection() }
   ];
   cardButtons = [
-    { label: 'New Post', icon: 'icon-plus-circle', action: ()=>this.onNewPost()},
+    { label: 'New Post', icon: 'icon-plus-circle', action: () => this.onNewPost() },
   ];
 
   socialAccounts$: Observable<any[]>;
@@ -36,13 +41,19 @@ export class SocialPostComponent implements OnInit {
     this.postEnabled = false;
     this.socialAccounts$ = this.store.select(selectSocialAccounts);
   }
-  
+
   ngOnInit(): void {
     this.newPostContent = '<p>Hello...</p>';
 
-    this.socialAccounts$.pipe(take(1)).subscribe((res) => res === null && this.store.dispatch({
-      type: AppTypes.GetSocialAccounts
-    }));
+    this.socialAccounts$.pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res) => res === null && this.store.dispatch({
+        type: AppTypes.GetSocialAccounts
+      }));
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onAddConnection(): void {
@@ -53,9 +64,9 @@ export class SocialPostComponent implements OnInit {
     this.newPostModal.show();
   }
 
-  onSelectedUsers(users: SocialLinkSelected[] ): void {
+  onSelectedUsers(users: SocialLinkSelected[]): void {
     this.selectedLinks = users;
 
-    this.postEnabled = this.selectedLinks.filter( link => link.selected === 1).length > 0;
+    this.postEnabled = this.selectedLinks.filter(x => x.selected === 1).length > 0;
   }
 }

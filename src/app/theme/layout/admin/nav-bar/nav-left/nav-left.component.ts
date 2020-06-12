@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {NextConfig} from '../../../../../app-config';
+import { NextConfig } from '../../../../../app-config';
 
 @Component({
   selector: 'app-nav-left',

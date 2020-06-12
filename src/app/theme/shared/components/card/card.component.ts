@@ -57,8 +57,8 @@ export class CardComponent implements OnInit {
   public animation: string;
   public fullIcon: string;
   public isAnimating: boolean;
- /* public animator: AnimationBuilder;
-  public animators: AnimationBuilder;*/
+  /* public animator: AnimationBuilder;
+   public animators: AnimationBuilder;*/
 
   public collapsedCard: string;
   public collapsedIcon: string;
@@ -76,7 +76,7 @@ export class CardComponent implements OnInit {
     this.cardTitle = '';
     this.cardActions = [];
     this.cardButtons = [];
-    
+
     /*this.animator = animationService.builder();
     this.animators = animationService.builder();
     this.animator.useVisibility = true;*/
@@ -141,7 +141,7 @@ export class CardComponent implements OnInit {
   cardRefresh() {
     this.loadCard = true;
     this.cardClass = 'card-load';
-    setTimeout( () => {
+    setTimeout(() => {
       this.loadCard = false;
       this.cardClass = 'expanded';
     }, 3000);
