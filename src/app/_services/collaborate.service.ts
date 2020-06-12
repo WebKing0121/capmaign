@@ -33,4 +33,8 @@ export class CollaborateService {
       campaignId
     });
   }
+
+  getChatUsers() {
+    return this.http.get<any>(`${environment.apiUrl}/${this.url}/chat-users`);
+  }
 }

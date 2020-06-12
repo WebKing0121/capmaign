@@ -7,20 +7,20 @@ import * as moment from 'moment';
 import { User } from '../_models/user';
 
 const users: User[] = [
-    { id: 1, username: 'test', password: 'test', firstName: 'Robert', lastName: 'Robertson' },
-    { id: 2, username: 'greyson', password: 'test', firstName: 'Greyson', lastName: 'Wellington' },
-    { id: 3, username: 'zander', password: 'test', firstName: 'Zander', lastName: 'Johnston' },
-    { id: 4, username: 'ayden', password: 'test', firstName: 'Ayden', lastName: 'Bailey' },
-    { id: 5, username: 'jax', password: 'test', firstName: 'Jax', lastName: 'Brook' },
-    { id: 6, username: 'jordan', password: 'test', firstName: 'Jordan', lastName: 'Macdonald' },
-    { id: 7, username: 'malcolm', password: 'test', firstName: 'Malcolm', lastName: 'Watson' },
-    { id: 8, username: 'thomas', password: 'test', firstName: 'Thomas', lastName: 'Sim' },
-    { id: 9, username: 'zayn', password: 'test', firstName: 'Zayn', lastName: 'Davies' },
-    { id: 10, username: 'jack', password: 'test', firstName: 'Jack', lastName: 'Carlson' },
-    { id: 11, username: 'barrett', password: 'test', firstName: 'Barrett', lastName: 'Gale' },
-    { id: 12, username: 'francis', password: 'test', firstName: 'Francis', lastName: 'Burt' },
-    { id: 13, username: 'bentley', password: 'test', firstName: 'Bentley', lastName: 'Withers' },
-    { id: 14, username: 'kayden', password: 'test', firstName: 'Kayden', lastName: 'Carlson' },
+    { id: 1, username: 'test', password: 'test', firstName: 'Robert', lastName: 'Robertson', profileImg: 'assets/images/user/avatar-1.jpg' },
+    { id: 2, username: 'greyson', password: 'test', firstName: 'Greyson', lastName: 'Wellington', profileImg: 'assets/images/user/avatar-2.jpg' },
+    { id: 3, username: 'zander', password: 'test', firstName: 'Zander', lastName: 'Johnston', profileImg: 'assets/images/user/avatar-3.jpg'},
+    { id: 4, username: 'ayden', password: 'test', firstName: 'Ayden', lastName: 'Bailey', profileImg: 'assets/images/user/avatar-4.jpg'},
+    { id: 5, username: 'jax', password: 'test', firstName: 'Jax', lastName: 'Brook', profileImg: 'assets/images/user/avatar-5.jpg'},
+    { id: 6, username: 'jordan', password: 'test', firstName: 'Jordan', lastName: 'Macdonald', profileImg: 'assets/images/user/img-avatar-1.jpg'},
+    { id: 7, username: 'malcolm', password: 'test', firstName: 'Malcolm', lastName: 'Watson', profileImg: 'assets/images/user/img-avatar-2.jpg'},
+    { id: 8, username: 'thomas', password: 'test', firstName: 'Thomas', lastName: 'Sim', profileImg: 'assets/images/user/img-avatar-3.jpg'},
+    { id: 9, username: 'zayn', password: 'test', firstName: 'Zayn', lastName: 'Davies', profileImg: 'assets/images/user/avatar-1.jpg'},
+    { id: 10, username: 'jack', password: 'test', firstName: 'Jack', lastName: 'Carlson', profileImg: 'assets/images/user/avatar-2.jpg'},
+    { id: 11, username: 'barrett', password: 'test', firstName: 'Barrett', lastName: 'Gale', profileImg: 'assets/images/user/avatar-3.jpg'},
+    { id: 12, username: 'francis', password: 'test', firstName: 'Francis', lastName: 'Burt', profileImg: 'assets/images/user/avatar-4.jpg'},
+    { id: 13, username: 'bentley', password: 'test', firstName: 'Bentley', lastName: 'Withers', profileImg: 'assets/images/user/avatar-5.jpg'},
+    { id: 14, username: 'kayden', password: 'test', firstName: 'Kayden', lastName: 'Carlson', profileImg: 'assets/images/user/img-avatar-1.jpg'},
 ];
 
 const campaigns: any[] = [
@@ -202,7 +202,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                     return ok([]);
                 case url.endsWith('/activity') && method === 'POST':
                     return getRecentActivities();
-
+                case url.endsWith('/collaborate/chat-users') && method === 'GET':
+                    return getCollaborateChatUsers();
                 default:
                     // pass through any requests not handled above
                     return next.handle(request);
@@ -516,6 +517,15 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 activity_records --;
             }
             return ok(activities);
+        }
+
+        function getCollaborateChatUsers() {
+            const collaboar_users = users.map((user, index) => ({id: 3+index, name: user.firstName + ' ' + user.lastName, new_messages: 0, type: 'person', last_message: '', last_message_time: '', profileImg: user.profileImg}));
+            return ok([
+                {id: 1, name: 'My team', new_messages: 2, type: 'group', last_message: 'are you around here?', last_message_time: '2020-06-11 10:30:21'},
+                {id: 2, name: 'Digital Marketing Team', new_messages: 0, type: 'group', last_message: 'Sure', last_message_time: '2020-06-10 10:32:21'},
+                ...collaboar_users
+            ]);
         }
     }
 }

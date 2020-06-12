@@ -1,0 +1,69 @@
+<div class="chat-widget-button" (click)="openChatWidget()" *ngIf="!isOpened">
+    <img [src]="'assets/images/widget/chat-icon-normal.png'" />
+    <div class="lds-dual-ring" *ngIf="newMessages>0"></div>
+    <span *ngIf="newMessages>0" class="new-messages">{{newMessages}}</span>
+</div>
+<div class="chat-widget-button" (click)="closeChatWidget()" *ngIf="isOpened">
+    <img [src]="'assets/images/widget/chat-close.png'" />
+</div>
+<div class="chat-widget" *ngIf="isOpened">
+    <span class="chat-widget-title">Chats</span>
+    <div class="input-group col-md-12 search-group">
+        <input class="form-control search-input" type="search"[(ngModel)]="searchKey" (ngModelChange)="onChangeSearchKey()" placeholder="Search..." id="example-search-input">
+        <span class="input-group-prepend search-icon">
+            <i class="fa fa-search"></i>
+        </span>
+  </div>
+    <ul>
+        <li *ngFor="let room of filteredRooms" class="d-flex" (click)="onClickRoom(room)" [ngClass]="{'selected': room.id === selectedRoomId}">
+            <span class="team-icon" *ngIf="room.type==='group'">
+                <i class="fa fa-users fa-lg"></i>
+            </span>
+            <img class="profile-icon" *ngIf="room.type==='person'" [src]="room.profileImg" />
+            <div class="room">
+                <span class='name'>{{room.name}}</span>
+                <span class='message'>{{room.last_message}}</span>
+            </div>
+            <div class="activity">
+                <span class='time-ago'>{{getTimeAgo(room.last_message_time)}}</span>
+                <span class="new-messages" *ngIf="room.new_messages > 0">{{room.new_messages}}</span>
+            </div>
+        </li>
+    </ul>
+</div>
+<div class="chat-widget-details" *ngIf="isOpened && selectedRoomId > 0">
+    
+    <span class="chat-widget-title">
+        <span class="team-icon" *ngIf="selectedRoom.type === 'group'">
+            <i class="fa fa-users fa-lg"></i>
+        </span>
+        <img class="profile-icon" *ngIf="selectedRoom.type==='person'" [src]="selectedRoom.profileImg" />
+        {{selectedRoom.name}}
+        <span class="close-details" (click)="onCloseChatDetails()">
+            <i class="fa fa-window-close"></i>
+        </span>
+    </span>
+    <div class="chat-body">
+        <ul class="chat-messages">
+            <li *ngFor="let message of messages">
+                <div *ngIf="message.mine === 0" class="d-flex">
+                    <img [src]="selectedRoom.profileImg" class="user-avatar" />
+                    <div class="user-message">
+                        <div class="user-o-info">{{selectedRoom.name.split(' ')[0]}}, {{getMessageTime(message.message_time)}}</div>
+                        <p class='user-o-content'>{{message.message}}</p>
+                    </div>
+                </div>
+                <div *ngIf="message.mine === 1" class="d-flex justify-content-end">
+                    <div class="user-message">
+                        <div class="user-m-info">Me, {{getMessageTime(message.message_time)}}</div>
+                        <p class='user-m-content'>{{message.message}}</p>
+                    </div>
+                </div>
+            </li>
+        </ul>
+        <div class="chat-input-box d-flex justify-content-between">
+            <input class="chat-input flex-grow-1" />
+            <button><span><i class="fa fa-paper-plane"></i></span></button>
+        </div>
+    </div>
+</div>

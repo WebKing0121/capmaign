@@ -1,0 +1,46 @@
+.my-calendar {
+    width: calc(100vh - 20px);
+    height: calc(100vh - 150px);
+    .card-body {
+        .fc-toolbar {
+            margin: 0;
+        }
+        .fc-scroller {
+            overflow: auto !important;
+        }
+        // .fc-scroller::-webkit-scrollbar {
+        //     width: 1px;
+        // }
+        .selected {
+            background: #bce8fb;
+        }
+    }
+}
+
+.my-details {
+    .card-body {
+        height: calc(100vh - 210px);
+        
+    }
+}
+.new-event-modal {
+    .input-group-prepend {
+        .input-group-text {
+            width: 120px;
+        }
+    }
+
+    ng-select {
+        width: calc(100% - 120px)!important;
+        min-height: 45px;
+    }
+
+
+    ng-select > div {
+        min-height: 45px !important;
+    }
+    ng-select>div>div.single>div.placeholder, ng-select>div>div.single>div.value {
+        line-height: 45px;
+    }
+
+}
