@@ -9,7 +9,7 @@
 
 	<div class="app-modal-body">
 		<div class="row">
-			<div class="col-4" *ngFor="let social of socialSites$ | async">
+			<div class="col-md-4 col-sm-12 social-connect-card" *ngFor="let social of socialSites$ | async">
 				<app-card [hidHeader]="true" cardClass="text-center social-site">
 					<img [src]="social.normalImg" width="64px" />
 					<div class="card-text">{{social.label}}</div>

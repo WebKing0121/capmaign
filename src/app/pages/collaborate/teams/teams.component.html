@@ -1,5 +1,6 @@
+<div class="container-fluid p-0">
 <div class="row">
-	<div class="col-5 card-teams">
+	<div class="col-md-5 col-sm-12 card-teams">
 		<app-card cardTitle="Collaboration Teams" #cardTeams [cardButtons]="cardButtons" cardClass="card-datatable"
 			[options]="false">
 			<div class="table-responsive">
@@ -28,7 +29,7 @@
 			</div>
 		</app-card>
 	</div>
-	<div class="col-7 card-campaigns">
+	<div class="col-md-7 col-sm-12 card-campaigns">
 		<app-card cardTitle="Assigned Campaign" #cardAssignCampaigns [cardButtons]="cardButtonsInCampaigns"
 			cardClass="card-assigned-campaigns" [options]="false">
 			<div class="table-responsive">
@@ -68,8 +69,7 @@
 		</app-campaign-sub-tasks>
 	</div>
 </div>
-
-
+</div>
 <app-ui-modal #newTeamModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Create a New Team</h5>

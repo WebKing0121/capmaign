@@ -1,5 +1,6 @@
+
 <div class="row">
-  <div class="col-6 card-campaigns">
+  <div class="col-xl-6 col-lg-12 card-campaigns">
     <app-card cardTitle="Campaigns" #cardTeams cardClass="card-datatable" [options]="false">
       <div class="campaign-filter">
         <div class="position-relative">
@@ -88,7 +89,7 @@
       </div>
     </app-card>
   </div>
-  <div class="col-6 card-tasks">
+  <div class="col-xl-6 col-lg-12 card-tasks-section">
     <app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
       [users]="allUsers" (selectRow)="onSelectTask($event)"></app-campaign-tasks>
     <app-campaign-sub-tasks #campaignSubTasks [taskId]="selectedTaskId" [taskName]="selectedTaskName"
@@ -96,7 +97,6 @@
     </app-campaign-sub-tasks>
   </div>
 </div>
-
 <app-ui-modal #assignTeamModal dialogClass="modal-dialog-centered modal-assign-team">
   <div class="app-modal-header">
     <h5 class="modal-title">{{replaceTeam ? 'Replace Team': 'Assign Team'}}</h5>

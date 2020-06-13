@@ -6,7 +6,7 @@
 <div class="chat-widget-button" (click)="closeChatWidget()" *ngIf="isOpened">
     <img [src]="'assets/images/widget/chat-close.png'" />
 </div>
-<div class="chat-widget" *ngIf="isOpened">
+<div class="chat-widget" *ngIf="isOpened" [ngClass]="{'chat-widget-mobile': selectedRoomId > 0}">
     <span class="chat-widget-title">Chats</span>
     <div class="input-group col-md-12 search-group">
         <input class="form-control search-input" type="search" [(ngModel)]="searchKey"

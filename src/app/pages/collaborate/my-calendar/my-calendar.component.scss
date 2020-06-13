@@ -1,6 +1,4 @@
 .my-calendar {
-    width: calc(100vh - 20px);
-    height: calc(100vh - 150px);
     .card-body {
         .fc-toolbar {
             margin: 0;
@@ -43,4 +41,26 @@
         line-height: 45px;
     }
 
+}
+
+@media only screen and (max-width: 575px) {
+    .my-calendar {
+        padding: 0px;
+        .card-body {
+            height: auto;
+            .fc-toolbar {
+                flex-direction: column;
+            }
+        }
+    }
+    .my-details {
+        padding: 0px;
+        .card-body {
+            height: auto;
+            .create-event {
+                margin-top: 15px;
+                text-align: center;
+            }
+        }
+    }
 }

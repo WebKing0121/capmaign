@@ -1,13 +1,13 @@
-<div class="d-flex">
-	<div class="my-calendar">
+<div class="row">
+	<div class="col-md-8 col-sm-12 my-calendar">
 		<app-card cardTitle="My Calendar" #cardAssignCampaigns [options]="false">
 			<full-calendar [options]="calendarOptions"></full-calendar>
 		</app-card>
 	</div>
-	<div class="flex-grow-1 ml-3 my-details">
+	<div class="col-md-4 com-sm-12 my-details">
 		<app-card cardTitle="Details" #cardAssignCampaigns [options]="false">
 			<div class="row">
-				<div class="col-md-6 col-sd-12">
+				<div class="col-md-6 col-sm-12">
 					<div class="filter-date input-group">
 						<div class="input-group-prepend">
 							<span class="input-group-text">
@@ -18,7 +18,7 @@
 							readonly>
 					</div>
 				</div>
-				<div class="col-md-6 col-sd-12 text-align-right">
+				<div class="col-md-6 col-sm-12 create-event">
 					<button class="btn btn-outline-primary" (click)="onClickCreateEvent()">Create Event</button>
 				</div>
 			</div>

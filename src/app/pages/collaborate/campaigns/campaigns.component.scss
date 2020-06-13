@@ -1,12 +1,4 @@
-.card-tasks {
-    padding-left: 0;
-    .card {
-        margin-bottom: 15px;
-        .card-body {
-            height: calc(50vh - 140px);
-        }
-    }
-}
+
 
 .campaign-table-header {
     th {
@@ -63,4 +55,21 @@
     height: calc(100vh - 280px);
     width: 100%;
     overflow: auto;
+}
+
+.card-tasks-section {
+    padding-left: 0;     
+}  
+
+@media only screen and (max-width: 1200px) {
+    .card-campaigns {
+        .card-body {
+            .tab-pane {
+                height: auto;
+            }
+        }
+    }
+    .card-tasks-section {
+        padding-left: 15px;
+    }
 }
