@@ -56,7 +56,7 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     }
 }
 
-.card-campaigns {
+.card-campaigns-1 {
     padding-left: 0px;
     .card-assigned-campaigns {
         margin-bottom: 15px;
@@ -78,7 +78,7 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     }
 }
 @media only screen and (max-width: 575px) {
-    .card-campaigns {
+    .card-campaigns-1 {
         padding-right: 0px;
     }
 }
