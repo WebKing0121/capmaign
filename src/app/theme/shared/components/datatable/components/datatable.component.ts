@@ -21,8 +21,8 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() classes = ['app-datatable-common'];
   @Input() columnMode: ColumnMode = ColumnMode.flex;
   @Input() cssClasses: { [key: string]: string; };
-  @Input() headerHeight = 35;
-  @Input() rowHeight = 45;
+  @Input() headerHeight = 60;
+  @Input() rowHeight = 50;
   @Input() scrollbarV = true;
   @Input() scrollbarH = true;
   @Input() virtualScrolling = true;
@@ -95,6 +95,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
 
   onSelect(event: { selected: any[] }) {
     this.selected = event.selected;
+    this.dataSource.setSelection(this.selected);
   }
 
   onSort(event: { sorts: SortPropDir[] }) {

@@ -6,6 +6,7 @@ import { DatatableClassnamePipe } from './pipes/datatable-classname.pipe';
 import { DatatableConfigPipe } from './pipes/datatable-config.pipe';
 
 import { DatatableComponent } from './components/datatable.component';
+import { DatatablePaginationComponent } from './components/datatable-pagination.component';
 
 @NgModule({
   imports: [
@@ -16,10 +17,12 @@ import { DatatableComponent } from './components/datatable.component';
     DatatableComponent,
 
     DatatableClassnamePipe,
-    DatatableConfigPipe
+    DatatableConfigPipe,
+    DatatablePaginationComponent
   ],
   exports: [
-    DatatableComponent
+    DatatableComponent,
+    DatatablePaginationComponent
   ]
 })
 export class DatatableModule { }

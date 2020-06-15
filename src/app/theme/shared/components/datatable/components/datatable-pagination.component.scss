@@ -1,0 +1,21 @@
+.datatable-pagination {
+  padding: 14px;
+
+  .paginate_button {
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 0 8px;
+    color: black;
+
+    &.page {
+    }
+    &.current {
+      color: blue !important;
+    }
+
+    &.disabled {
+      color: rgba(black, .6);
+    }
+  }
+}

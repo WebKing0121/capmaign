@@ -1,7 +1,23 @@
 :host {
   ::ng-deep {
-    .datatable-header-cell-wrapper {
-      font-weight: bold;
+    .datatable-header {
+      border-top: 1px solid #e2e5e8;
+      background-color: #f5f5f6;
+      display: flex !important;
+      align-items: center;
+
+      .datatable-header-cell-wrapper {
+        font-weight: bold;
+      }
+    }
+    .datatable-row-wrapper {
+      border-top: 1px solid #e2e5e8;
+      background-color: white;
+    }
+
+    .datatable-body-cell {
+      display: flex !important;
+      align-items: center;
     }
     .datatable-body-cell.cell-hyperlink {
       cursor: pointer;

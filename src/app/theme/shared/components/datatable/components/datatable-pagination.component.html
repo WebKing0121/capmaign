@@ -1,0 +1,16 @@
+<div class="datatable-pagination">
+  <a class="paginate_button previous"
+     [class.disabled]="currentPage === 1"
+     (click)="previous()">Previous</a>
+
+  <span>
+    <a class="paginate_button page"
+       [class.current]="currentPage === page.value"
+       (click)="movePage(page.value)"
+       *ngFor="let page of pages">{{page.label}}</a>
+  </span>
+
+  <a class="paginate_button next"
+     [class.disabled]="currentPage === pageCount"
+     (click)="next()">Next</a>
+</div>

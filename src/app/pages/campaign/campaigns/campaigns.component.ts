@@ -32,6 +32,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } }
   ];
 
+  selected: Campaign[] = [];
+
   destroy$ = new Subject();
 
   constructor(
@@ -45,10 +47,18 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
       .subscribe(change => {
+        console.log('Campaign Table Changes: ', change);
+
         this.tableSource.next(
-          CampaignResponseMockData.slice(50 * (change.pagination.pageNumber - 1), 50 * (change.pagination.pageNumber)),
+          CampaignResponseMockData.slice(
+            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
           CampaignResponseMockData.length
         );
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
       });
   }
 
@@ -64,9 +74,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     }
   }
 
-  onTypeSelectionChanged(event) {
-    const type = event.target.value as CampaignType;
-
+  onCampaignTypeClicked(type: CampaignType) {
     switch (type) {
       case CampaignType.Email: {
         this.router.navigate(['new-email'], {relativeTo: this.route});
