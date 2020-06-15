@@ -1,5 +1,8 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+
+import { of, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { Campaign } from '@app-models/campaign';
 import { CampaignType } from '@app-core/enums/campaign-type.enum';
@@ -13,7 +16,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss']
 })
-export class CampaignsComponent implements OnInit {
+export class CampaignsComponent implements OnInit, OnDestroy {
   CampaignType = CampaignType;
 
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
@@ -29,6 +32,8 @@ export class CampaignsComponent implements OnInit {
     { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } }
   ];
 
+  destroy$ = new Subject();
+
   constructor(
     private router: Router,
     private route: ActivatedRoute
@@ -37,12 +42,19 @@ export class CampaignsComponent implements OnInit {
   ngOnInit(): void {
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);
 
-    this.tableSource.changed$.subscribe(change => {
-      this.tableSource.next(
-        CampaignResponseMockData.slice(50 * (change.pagination.pageNumber - 1), 50 * (change.pagination.pageNumber)),
-        CampaignResponseMockData.length
-      );
-    });
+    this.tableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(change => {
+        this.tableSource.next(
+          CampaignResponseMockData.slice(50 * (change.pagination.pageNumber - 1), 50 * (change.pagination.pageNumber)),
+          CampaignResponseMockData.length
+        );
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   onActive(event) {
