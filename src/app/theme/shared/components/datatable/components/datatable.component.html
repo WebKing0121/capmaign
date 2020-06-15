@@ -60,4 +60,4 @@
   </ngx-datatable-column>
 </ngx-datatable>
 
-<div class="empty-message" *ngIf="!(dataSource.totalCount$ | async)">No data to display</div>
+<div class="empty-message" *ngIf="(dataSource.totalCount$ | async) === 0">No data to display</div>
