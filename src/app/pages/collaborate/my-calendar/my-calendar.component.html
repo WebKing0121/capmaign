@@ -1,31 +1,29 @@
-<div class="d-flex">
-    <div class="my-calendar">
-        <app-card cardTitle="My Calendar" #cardAssignCampaigns [options]="false">
-            
-            <full-calendar
-                [options]="calendarOptions"
-            ></full-calendar>
-        </app-card>
-    </div>
-    <div class="flex-grow-1 ml-3 my-details">
-        <app-card cardTitle="Details" #cardAssignCampaigns [options]="false">
-            <div class="row">
-                <div class="col-md-6 col-sd-12">
-                    <div class="filter-date input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">
-                                Date
-                            </span>
-                        </div>
-                        <input type="text" class="form-control" [value]="selectedDate" autocomplete="off" placeholder="YYYY-MM-DD" readonly>
-                    </div>
-                </div>
-                <div class="col-md-6 col-sd-12 text-align-right">
-                    <button class="btn btn-outline-primary" (click)="onClickCreateEvent()">Create Event</button>
-                </div>
-            </div>
-            <div class="mt-4">
-                <table #campaignTable class="table table-striped table-hover">
+<div class="row">
+	<div class="col-md-8 col-sm-12 my-calendar">
+		<app-card cardTitle="My Calendar" #cardAssignCampaigns [options]="false">
+			<full-calendar [options]="calendarOptions"></full-calendar>
+		</app-card>
+	</div>
+	<div class="col-md-4 com-sm-12 my-details">
+		<app-card cardTitle="Details" #cardAssignCampaigns [options]="false">
+			<div class="row">
+				<div class="col-md-6 col-sm-12">
+					<div class="filter-date input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">
+								Date
+							</span>
+						</div>
+						<input type="text" class="form-control" [value]="selectedDate" autocomplete="off" placeholder="YYYY-MM-DD"
+							readonly>
+					</div>
+				</div>
+				<div class="col-md-6 col-sm-12 create-event">
+					<button class="btn btn-outline-primary" (click)="onClickCreateEvent()">Create Event</button>
+				</div>
+			</div>
+			<div class="mt-4">
+				<table #campaignTable class="table table-striped table-hover">
 					<thead class="campaign-table-header">
 						<th>Event Name</th>
 						<th>Start</th>
@@ -35,8 +33,8 @@
 					<tbody class="campaign-table-body">
 						<tr *ngFor="let schedule of schedules">
 							<td>{{schedule.name}}</td>
-							<td>{{schedule.start}}</td>
-							<td>{{schedule.end}}</td>
+							<td>{{schedule.start | date}}</td>
+							<td>{{schedule.end | date}}</td>
 							<td>{{schedule.type}}</td>
 						</tr>
 						<tr *ngIf="schedules.length === 0">
@@ -44,95 +42,100 @@
 						</tr>
 					</tbody>
 				</table>
-            </div>
-        </app-card>
-    </div>
+			</div>
+		</app-card>
+	</div>
 </div>
 
 
 <app-ui-modal #newEventModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg new-event-modal'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Create a New Event</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="newEventModal.hide()">
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="newEventModal.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
 
 	<div class="app-modal-body">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Event Name</span>
-                    </div>
-                    <input type="text" class="form-control" id="event_name">
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Event Type</span>
-                    </div>
-                    <ng-select [ngClass]="'ng-select'" [(ngModel)]="eventType" [options]="eventTypes"></ng-select>
-                </div>
-            </div>  
-        </div>
-        <div class="row mt-4" *ngIf="eventType==='all-day-event'">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Start</span>
-                    </div>
-                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_from" ngbDatepicker #d_f="ngbDatepicker">
-                    <div class="input-group-append">
-                        <span class="input-group-text" (click)="d_f.toggle()">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">End</span>
-                    </div>
-                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_to" ngbDatepicker #d_t="ngbDatepicker">
-                    <div class="input-group-append">
-                        <span class="input-group-text" (click)="d_t.toggle()">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row mt-4" *ngIf="eventType==='time-event'">
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Start</span>
-                    </div>
-                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:ii" name="dp_from" ngbDatepicker #d_f="ngbDatepicker">
-                    <div class="input-group-append">
-                        <span class="input-group-text" (click)="d_f.toggle()">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">End</span>
-                    </div>
-                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:ii" name="dp_to" ngbDatepicker #d_t="ngbDatepicker">
-                    <div class="input-group-append">
-                        <span class="input-group-text" (click)="d_t.toggle()">
-                            <i class="fa fa-calendar"></i>
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Event Name</span>
+					</div>
+					<input type="text" class="form-control" id="event_name">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Event Type</span>
+					</div>
+					<ng-select [ngClass]="'ng-select'" [(ngModel)]="eventType" [options]="eventTypes"></ng-select>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-4" *ngIf="eventType==='all-day-event'">
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Start</span>
+					</div>
+					<input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_from" ngbDatepicker
+						#d_f="ngbDatepicker">
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_f.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">End</span>
+					</div>
+					<input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_to" ngbDatepicker
+						#d_t="ngbDatepicker">
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_t.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-4" *ngIf="eventType==='time-event'">
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Start</span>
+					</div>
+					<input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:ii" name="dp_from" ngbDatepicker
+						#d_f="ngbDatepicker">
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_f.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">End</span>
+					</div>
+					<input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:ii" name="dp_to" ngbDatepicker
+						#d_t="ngbDatepicker">
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_t.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<div class="app-modal-footer">

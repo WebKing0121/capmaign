@@ -1,8 +1,8 @@
-<div class="d-flex">
-    <div class="flex-grow-1 activity-data">
+<div class="row">
+    <div class="col-md-9 col-sm-12 activity-data">
         <app-card cardTitle="Activity Filter" [options]="false" blockClass="p-t-20">
-            <div class="d-flex mb-4">
-                <div class="filter-date input-group">
+            <div class="row mb-4">
+                <div class="col-md-3 col-sd-12 input-group">
                     <input class="form-control" [(ngModel)]="filterDate" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_from" ngbDatepicker #d_f="ngbDatepicker">
                     <div class="input-group-append">
                         <span class="input-group-text" (click)="d_f.toggle()">
@@ -10,7 +10,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="flex-grow-1 ml-3 input-group">
+                <div class="col-md-9 col-sd-12 select-campaign input-group">
                     <div class="input-group-prepend">
                         <span class="input-group-text">Campaign</span>
                     </div>
@@ -65,7 +65,7 @@
 			</div>
         </app-card>
     </div>
-    <div class="activity">
+    <div class="col-md-3 col-sm-12 activity">
         <app-card cardTitle="Recent Activities" [options]="false" blockClass="p-t-20">
             <div
                 class="activity-list"

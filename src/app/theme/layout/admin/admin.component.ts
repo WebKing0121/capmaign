@@ -16,7 +16,8 @@ export class AdminComponent implements OnInit {
   constructor(private zone: NgZone, private location: Location) {
     this.nextConfig = NextConfig.config;
     let currentURL = this.location.path();
-    const baseHerf = this.location['_baseHref'];
+    const key = '_baseHref';
+    const baseHerf = this.location[key];
     if (baseHerf) {
       currentURL = baseHerf + this.location.path();
     }

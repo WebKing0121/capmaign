@@ -1,6 +1,8 @@
 import { Directive, HostListener } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
+import { DynamicConditionModalComponent } from '../components/dynamic-condition-modal/dynamic-condition-modal.component';
+
 @Directive({
   selector: '[appEmailCampaignDynamics]'
 })
@@ -11,6 +13,6 @@ export class EmailCampaignDynamicsDirective {
   ) { }
 
   @HostListener('click') onClick() {
-    console.log('email: dynamics');
+    this.matDialog.open(DynamicConditionModalComponent);
   }
 }

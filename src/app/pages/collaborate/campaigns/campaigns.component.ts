@@ -1,35 +1,41 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 
 import { Subject } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 
 import { CollaborateService } from '../../../_services/collaborate.service';
 import { UserService } from '../../../_services/user.service';
+
+import * as moment from 'moment';
+
 @Component({
   selector: 'app-campaigns',
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CampaignsComponent implements OnInit {
+export class CampaignsComponent implements OnInit, OnDestroy {
   @ViewChild('assignTeamModal', { static: false }) assignTeamModal;
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('campaignTasks', { static: false }) campaignTasks;
   @ViewChild('campaignSubTasks', { static: false }) campaignSubTasks;
-  
+
+  private unsubscribe$ = new Subject();
+
   cardButtonsInTasks = [
-    { label: 'Add Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddTask()},
+    { label: 'Add Tasks', icon: 'icon-plus-circle', action: () => this.onClickAddTask() },
   ];
 
   campaignFilter: any[] = [
-    {value: "All", label: "All Campaigns" },
-    {value: "Email", label: "Email Campaigns" },
-    {value: "Mobile", label: "Mobile Campaigns" },
-    {value: "Social", label: "Social Campaigns" },
-    {value: "Google Ads", label: "Google Ads Campaigns" },
-    {value: "Facebook", label: "Facebook Campaigns" },
+    { value: 'All', label: 'All Campaigns' },
+    { value: 'Email', label: 'Email Campaigns' },
+    { value: 'Mobile', label: 'Mobile Campaigns' },
+    { value: 'Social', label: 'Social Campaigns' },
+    { value: 'Google Ads', label: 'Google Ads Campaigns' },
+    { value: 'Facebook', label: 'Facebook Campaigns' },
   ];
-  selectedFilter: string = 'All';
+
+  selectedFilter: string;
 
   dtCampaignsOption: any = {};
   dtTrigger: Subject<any> = new Subject();
@@ -39,7 +45,7 @@ export class CampaignsComponent implements OnInit {
   teams: any[];
   teamsForNgSelect: any[];
   teamsForNgSelectTemp: any[];
-  replaceTeam: boolean = false;
+  replaceTeam: boolean;
   selectedCampainIdForReplace: number;
   selectedCampaignId: number;
   allUsers: any[];
@@ -48,6 +54,8 @@ export class CampaignsComponent implements OnInit {
   selectedTaskName: string;
   selectedUserId: number;
   selectedUserName: string;
+
+  modalTeamName: string;
 
   constructor(
     private collaborateService: CollaborateService,
@@ -65,44 +73,47 @@ export class CampaignsComponent implements OnInit {
     this.selectedTaskName = '';
     this.selectedUserId = 0;
     this.selectedUserName = '';
+    this.selectedFilter = 'All';
+    this.replaceTeam = false;
+    this.modalTeamName = '';
   }
 
   ngOnInit(): void {
     // load teams
     this.collaborateService.getCollaborateTeams()
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.teams = data;
-        this.teamsForNgSelect = this.teams.map(team=>({value: '' + team.id, label: team.name}));
-      },
-      error => {
-        console.log('error', error)
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.teams = data;
+          this.teamsForNgSelect = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
     // load Campaigns
     this.collaborateService.getCollaborateCampaigns()
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.campaigns = data;
-        this.filteredCampaignsInProgress = data.filter(item=>item.status==='inprogress');
-        this.filteredCampaignsInArchived = data.filter(item=>item.status!=='inprogress');
-      },
-      error => {
-        console.log('error', error)
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.campaigns = data;
+          this.filteredCampaignsInProgress = data.filter(item => item.status === 'inprogress');
+          this.filteredCampaignsInArchived = data.filter(item => item.status !== 'inprogress');
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
     this.userService.getAll()
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.allUsers = data.map(user=>({id: user.id, label: user.firstName + ' ' + user.lastName }));
-      },
-      error => {
-        console.log('error', error)
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
     this.dtCampaignsOption = {
       // data: this.teams,
       columns: [{
@@ -122,16 +133,22 @@ export class CampaignsComponent implements OnInit {
     };
   }
 
-  getTeamName(team_id: number) {
-    const team = this.teams.find(team => team.id === team_id);
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
+  getTeamName(teamId: number) {
+    const team = this.teams.find(x => x.id === teamId);
     if (team) {
       return team.name;
     }
-    return ''
+    return '';
   }
 
+
   get filterLabel() {
-    const filter = this.campaignFilter.find(filter => filter.value === this.selectedFilter);
+    const filter = this.campaignFilter.find(x => x.value === this.selectedFilter);
     if (filter) {
       return filter.label;
     }
@@ -141,42 +158,50 @@ export class CampaignsComponent implements OnInit {
   onClickFilterInCampaigns(filter: string) {
     this.selectedFilter = filter;
     if (filter === 'All') {
-      this.filteredCampaignsInProgress = this.campaigns.filter(item=>item.status==='inprogress');
-      this.filteredCampaignsInArchived = this.campaigns.filter(item=>item.status!=='inprogress');
+      this.filteredCampaignsInProgress = this.campaigns
+        .filter(x => x.status === 'inprogress');
+      this.filteredCampaignsInArchived = this.campaigns
+        .filter(x => x.status !== 'inprogress');
     } else {
-      this.filteredCampaignsInProgress = this.campaigns.filter(campaign => campaign.type === filter).filter(item=>item.status==='inprogress');
-      this.filteredCampaignsInArchived = this.campaigns.filter(campaign => campaign.type === filter).filter(item=>item.status!=='inprogress');
+      this.filteredCampaignsInProgress = this.campaigns
+        .filter(x => x.type === filter)
+        .filter(x => x.status === 'inprogress');
+      this.filteredCampaignsInArchived = this.campaigns
+        .filter(x => x.type === filter)
+        .filter(x => x.status !== 'inprogress');
     }
-    
+
   }
 
-  onClickChangeTeam(campaign_id: number, event) {
+  onClickChangeTeam(campaignId: number, event) {
     event.stopPropagation();
-    this.selectedCampainIdForReplace = campaign_id;
-    const campaign = this.campaigns.find(campaign => campaign.id === this.selectedCampainIdForReplace);
-    this.teamsForNgSelectTemp = this.teamsForNgSelect.filter(team => Number(team.value) !== campaign.team_id )
+    this.selectedCampainIdForReplace = campaignId;
+    const { teamId } = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
+    this.teamsForNgSelectTemp = this.teamsForNgSelect.filter(x => Number(x.value) !== teamId);
     this.replaceTeam = true;
+    this.modalTeamName = this.getCurrentTeamName();
     this.assignTeamModal.show();
   }
 
-  onClickAssignTeam(campaign_id: number, event) {
+  onClickAssignTeam(campaignId: number, event) {
     event.stopPropagation();
-    this.selectedCampainIdForReplace = campaign_id;
+    this.selectedCampainIdForReplace = campaignId;
     this.teamsForNgSelectTemp = this.teamsForNgSelect;
     this.replaceTeam = false;
+    this.modalTeamName = '';
     this.assignTeamModal.show();
   }
-  
+
   getCurrentTeamName() {
-    const campaign = this.campaigns.find(campaign => campaign.id === this.selectedCampainIdForReplace);
-    return this.teamsForNgSelect.filter(team => Number(team.value) === campaign.team_id )[0].label;
+    const campaign = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
+    return this.teamsForNgSelect.find(x => Number(x.value) === campaign.teamId).label;
   }
-  
+
 
   getExistingTeam() {
-    if (this.replaceTeam ) {
-      const campaign = this.campaigns.find(campaign => campaign.id === this.selectedCampainIdForReplace);
-      return this.teamsForNgSelect.filter(team => Number(team.value) !== campaign.team_id )
+    if (this.replaceTeam) {
+      const { teamId } = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
+      return this.teamsForNgSelect.filter(x => Number(x.value) !== teamId);
     } else {
       return this.teamsForNgSelect;
     }
@@ -189,26 +214,26 @@ export class CampaignsComponent implements OnInit {
   }
 
   onSelectTask(task: any) {
-    
+
     this.selectedTaskId = task.id;
     this.selectedTaskName = task.name;
-    this.selectedUserId = task.user_id;
-    const user = this.allUsers.find(user => user.id === this.selectedUserId);
+    this.selectedUserId = task.userId;
+    const user = this.allUsers.find(x => x.id === this.selectedUserId);
     if (user) {
       this.selectedUserName = user.label;
     } else {
       this.selectedUserName = '';
     }
-    this.campaignSubTasks.loadSubTasks(this.selectedTaskId)
+    this.campaignSubTasks.loadSubTasks(this.selectedTaskId);
   }
-  
-   /*********************************************
-   * Click event - Plus icon in Campaigns table *
-   * ------------------------------------------ *
-   *                                            *
-   **********************************************/
+
+  /*********************************************
+  * Click event - Plus icon in Campaigns table *
+  * ------------------------------------------ *
+  *                                            *
+  **********************************************/
   onClickCreateCampaign() {
-      // this.addSubTaskModal.show();
+    // this.addSubTaskModal.show();
   }
 
   /**********************************************
@@ -219,11 +244,13 @@ export class CampaignsComponent implements OnInit {
   onClickAddTask() {
     // if (this.selectedCampaignId > 0) {
     //   const { members } =  this.selectedTeam;
-    //   this.teamMembers = this.allUsers.filter(user => members.indexOf(user.id) >= 0).map(user => ({value: '' + user.id, label: user.label}));
+    //   this.teamMembers = this.allUsers.
+    //      .filter(x => members.indexOf(x.id) >= 0)
+    //      .map(x => ({value: '' + x.id, label: x.label}));
     //   this.addSubTaskModal.show();
     // } else {
     //   this.toastEvent.toast({uid: 'toast1', delay: 3000});
     // }
-    
+
   }
 }

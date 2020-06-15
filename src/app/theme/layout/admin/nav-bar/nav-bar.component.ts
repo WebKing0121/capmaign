@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {NextConfig} from '../../../../app-config';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { NextConfig } from '../../../../app-config';
 
 @Component({
   selector: 'app-nav-bar',
@@ -12,8 +12,8 @@ export class NavBarComponent implements OnInit {
   public collapseStyle: string;
   public windowWidth: number;
 
-  @Output() onNavCollapse = new EventEmitter();
-  @Output() onNavHeaderMobCollapse = new EventEmitter();
+  @Output() navCollapse = new EventEmitter();
+  @Output() navHeaderMobCollapse = new EventEmitter();
 
   constructor() {
     this.nextConfig = NextConfig.config;
@@ -29,11 +29,11 @@ export class NavBarComponent implements OnInit {
     this.collapseStyle = (this.menuClass) ? 'block' : 'none';
   }
 
-  navCollapse() {
+  onNavCollapse() {
     if (this.windowWidth >= 992) {
-      this.onNavCollapse.emit();
+      this.navCollapse.emit();
     } else {
-      this.onNavHeaderMobCollapse.emit();
+      this.navHeaderMobCollapse.emit();
     }
   }
 

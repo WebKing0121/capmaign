@@ -8,7 +8,7 @@ export enum AppFields {
 
 export interface AppState {
   [AppFields.SocialAccounts]: any[];
-  [AppFields.SocialSites]: any[],
+  [AppFields.SocialSites]: any[];
 }
 
 export const InitialState: AppState = {
@@ -27,11 +27,11 @@ export interface GetSocialAccounts { type: AppTypes.GetSocialAccounts; }
 export interface GetSocialSites { type: AppTypes.GetSocialSites; }
 
 export const selectSocialAccounts = createSelector((state: AppState) => {
-  return state[AppFields.App][AppFields.SocialAccounts]
+  return state[AppFields.App][AppFields.SocialAccounts];
 }, res => res);
 
 export const selectSocialSites = createSelector((state: AppState) => {
-  return state[AppFields.App][AppFields.SocialSites]
+  return state[AppFields.App][AppFields.SocialSites];
 }, res => res);
 
 export type AppAction = UpdateState;

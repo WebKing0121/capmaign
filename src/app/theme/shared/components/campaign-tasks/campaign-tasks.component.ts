@@ -1,7 +1,11 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, ViewChild, Input, EventEmitter, Output } from '@angular/core';
 import { CollaborateService } from 'src/app/_services/collaborate.service';
-import { first } from 'rxjs/operators';
 import { ToastService } from '../toast/toast.service';
+import * as moment from 'moment';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-campaign-tasks',
@@ -9,20 +13,27 @@ import { ToastService } from '../toast/toast.service';
   styleUrls: ['./campaign-tasks.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CampaignTasksComponent implements OnInit {
+export class CampaignTasksComponent implements OnInit, OnDestroy {
   @Input() campaignId: number;
   @Input() teams: any[];
   @Input() campaigns: any[];
   @Input() users: any[];
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('addTaskModal', { static: false }) addTaskModal;
-  @Output() onSelectRow: EventEmitter<any> = new EventEmitter();
+  @Output() selectRow: EventEmitter<any> = new EventEmitter();
+
+  private unsubscribe$ = new Subject();
+
   tasks: any[];
   selectedTaskId: number;
 
   cardButtonsInTasks = [
-    { label: 'Add Tasks', icon: 'icon-plus-circle', action: ()=>this.onClickAddTask()},
+    { label: 'Add Tasks', icon: 'icon-plus-circle', action: () => this.onClickAddTask() },
   ];
+
+  modalTeamName: string;
+  modalCampaignName: string;
+  modalTeamMembers: any[];
 
   constructor(
     private collaborateService: CollaborateService,
@@ -30,9 +41,17 @@ export class CampaignTasksComponent implements OnInit {
   ) {
     this.tasks = [];
     this.selectedTaskId = 0;
+    this.modalTeamName = '';
+    this.modalCampaignName = '';
+    this.modalTeamMembers = [];
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   /**********************************************
@@ -42,11 +61,14 @@ export class CampaignTasksComponent implements OnInit {
    **********************************************/
   onClickAddTask() {
     if (this.campaignId > 0) {
+      this.modalTeamName = this.getTeamName();
+      this.modalCampaignName = this.getCampaignName();
+      this.modalTeamMembers = this.getTeamMembers();
       this.addTaskModal.show();
     } else {
-      this.toastEvent.toast({uid: 'toast1', delay: 3000});
+      this.toastEvent.toast({ uid: 'toast1', delay: 3000 });
     }
-    
+
   }
 
   /******************************************************
@@ -54,13 +76,13 @@ export class CampaignTasksComponent implements OnInit {
    * --------------------------------------------------- *
    *                                                     *
    *******************************************************/
-  onClickTask(task: any ) {
+  onClickTask(task: any) {
     this.selectedTaskId = task.id;
-    this.onSelectRow.emit({id: task.id, name: task.name, user_id: task.user_id});
+    this.selectRow.emit({ id: task.id, name: task.name, userId: task.userId });
   }
 
   getUserName(userId: number) {
-    const user = this.users.find(user=>user.id === userId);
+    const user = this.users.find(x => x.id === userId);
     if (user) {
       return user.label;
     } else {
@@ -70,8 +92,8 @@ export class CampaignTasksComponent implements OnInit {
 
   getTeamName() {
     if (this.campaignId > 0) {
-      const campaign = this.campaigns.filter(campaign => campaign.id === this.campaignId)[0];
-      return this.teams.filter(team => team.id === campaign.team_id)[0].name;
+      const { teamId } = this.campaigns.find(x => x.id === this.campaignId);
+      return this.teams.find(x => x.id === teamId).name;
     } else {
       return '';
     }
@@ -79,7 +101,7 @@ export class CampaignTasksComponent implements OnInit {
 
   getCampaignName() {
     if (this.campaignId > 0) {
-      return this.campaigns.filter(campaign => campaign.id === this.campaignId)[0].name;
+      return this.campaigns.find(x => x.id === this.campaignId).name;
     } else {
       return '';
     }
@@ -87,32 +109,32 @@ export class CampaignTasksComponent implements OnInit {
 
   getTeamMembers() {
     if (this.campaignId > 0) {
-      const campaign = this.campaigns.filter(campaign => campaign.id === this.campaignId)[0];
-      const { members } = this.teams.filter(team => team.id === campaign.team_id)[0];
-      return this.users.filter(user => members.indexOf(user.id) >= 0)
-        .map(user => ({value: '' + user.id, label: user.label}));
+      const { teamId } = this.campaigns.find(x => x.id === this.campaignId);
+      const { members } = this.teams.filter(x => x.id === teamId)[0];
+      return this.users.filter(x => members.indexOf(x.id) >= 0)
+        .map(x => ({ value: '' + x.id, label: x.label }));
     } else {
       return [];
     }
   }
 
   loadTasksFromCampaign(campaignId: number) {
-    if(campaignId === 0) {
+    if (campaignId === 0) {
       this.tasks = [];
       return;
     }
 
-    this.cardTasks.setCardRefresh( true );  
+    this.cardTasks.setCardRefresh(true);
     this.collaborateService.getCampaignTasks(campaignId)
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.tasks = data;
-        this.cardTasks.setCardRefresh( false );  
-      },
-      error => {
-        console.log('error', error)
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.tasks = data;
+          this.cardTasks.setCardRefresh(false);
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
   }
 }

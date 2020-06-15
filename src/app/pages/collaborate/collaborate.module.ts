@@ -7,7 +7,11 @@ import { SharedModule } from '../../theme/shared/shared.module';
 import { MyCalendarComponent } from './my-calendar/my-calendar.component';
 import { TeamsComponent } from './teams/teams.component';
 import { SelectModule } from 'ng-select';
-import { NgbProgressbarModule, NgbDatepickerModule, NgbButtonsModule, NgbDropdownModule, NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import {
+  NgbProgressbarModule,
+  NgbDatepickerModule, NgbButtonsModule,
+  NgbDropdownModule, NgbTooltipModule
+} from '@ng-bootstrap/ng-bootstrap';
 
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { CampaignsComponent } from './campaigns/campaigns.component';

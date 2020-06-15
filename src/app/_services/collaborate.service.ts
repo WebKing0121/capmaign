@@ -6,11 +6,11 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class CollaborateService {
-  
+
   private url = 'collaborate';
-  
+
   constructor(private http: HttpClient) { }
-  
+
   getCollaborateTeams() {
     return this.http.get<any>(`${environment.apiUrl}/${this.url}/teams`);
   }
@@ -22,7 +22,7 @@ export class CollaborateService {
   getCampaignTasks(campaignId: number) {
     return this.http.get<any>(`${environment.apiUrl}/${this.url}/campaign/${campaignId}/tasks`);
   }
-  
+
   getCampaignSubTasks(taskId: number) {
     return this.http.get<any>(`${environment.apiUrl}/${this.url}/task/${taskId}/sub-tasks`);
   }

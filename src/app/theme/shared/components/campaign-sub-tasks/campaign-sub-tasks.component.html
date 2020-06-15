@@ -1,4 +1,5 @@
-<app-card cardTitle="Sub Tasks" #cardSubTasks [cardButtons]="cardButtonsInSubTasks" cardClass="card-sub-tasks" [options]="false">
+<app-card #cardSubTasks cardTitle="Sub Tasks" [cardButtons]="cardButtonsInSubTasks" cardClass="card-sub-tasks"
+	[options]="false">
 	<div class="table-responsive">
 		<table class="table table-striped table-hover">
 			<thead class="sub-task-table-header">
@@ -11,16 +12,17 @@
 				<th>Member</th>
 			</thead>
 			<tbody class="sub-task-table-body">
-				<tr *ngFor="let subTask of subTasks" (click)="onClickSubTask(subTask.id)" [ngClass]="{'selected': subTask.id === selectedSubTaskId}">
+				<tr *ngFor="let subTask of subTasks" (click)="onClickSubTask(subTask.id)"
+					[ngClass]="{'selected': subTask.id === selectedSubTaskId}">
 					<td>{{subTask.name}}</td>
 					<td>{{subTask.desc}}</td>
-					<td>{{subTask.start_date.substring(0, 11)}}</td>
-					<td>{{subTask.end_date.substring(0, 11)}}</td>
+					<td>{{subTask.startDate | date}}</td>
+					<td>{{subTask.endDate | date}}</td>
 					<td class="flex-position-relative">
 						<span class="percent">{{subTask.percent}}%</span>
 						<ngb-progressbar height="20px" [value]="subTask.percent"></ngb-progressbar>
 					</td>
-					<td>{{subTask.esti_hours}}</td>
+					<td>{{subTask.estiHours}}</td>
 					<td>{{userName}}</td>
 				</tr>
 				<tr *ngIf="subTasks.length === 0">
@@ -34,7 +36,8 @@
 <app-ui-modal #addSubTaskModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg add-sub-task-modal'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Add Sub Task</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="addSubTaskModal.hide()">
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="addSubTaskModal.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -57,7 +60,7 @@
 					<input type="text" class="form-control" [value]="userName" readonly />
 				</div>
 			</div>
-		</div> 
+		</div>
 		<div class="row mt-4">
 			<div class="col-md-12 input-group">
 				<div class="input-group-prepend">
@@ -80,7 +83,8 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">Start</span>
 				</div>
-				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker #d_f="ngbDatepicker">
+				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
+					#d_f="ngbDatepicker">
 				<div class="input-group-append">
 					<span class="input-group-text" (click)="d_f.toggle()">
 						<i class="fa fa-calendar"></i>
@@ -91,7 +95,8 @@
 				<div class="input-group-prepend">
 					<span class="input-group-text">End</span>
 				</div>
-				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker #d_t="ngbDatepicker">
+				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+					#d_t="ngbDatepicker">
 				<div class="input-group-append">
 					<span class="input-group-text" (click)="d_t.toggle()">
 						<i class="fa fa-calendar"></i>

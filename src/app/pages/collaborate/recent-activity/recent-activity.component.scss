@@ -1,6 +1,5 @@
 .activity {
-    width: 400px;
-    margin-left: 15px;
+    padding-left: 0px;
     .card {
         margin-bottom: 15px;
         .card-body {
@@ -43,13 +42,10 @@
         .card-body {
             height: calc( 100vh - 200px);
             ng-select {
-                width: calc(100% - 110px)!important;
+                width: calc(100% - 104px)!important;
                 min-height: 45px;
             }
-            .filter-date {
-                width: 300px;
-            }
-        
+
             ng-select > div {
                 min-height: 45px !important;
             }
@@ -67,4 +63,23 @@
 .table td, .table th {
     white-space: break-spaces;
     padding: 0.5rem 0.3rem;
+}
+
+@media only screen and (max-width: 575px) {
+    .activity {
+        padding: 0px;
+        .card-body {
+            height: auto;
+        
+        }
+    }
+    .activity-data {
+        padding: 0px;
+        .card-body {
+            // height: auto;
+            .select-campaign {
+                margin-top: 15px;
+            }
+        }
+    }
 }

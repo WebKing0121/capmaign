@@ -1,7 +1,7 @@
-import {Component, Input, NgZone, OnInit} from '@angular/core';
-import {NavigationItem} from '../../navigation';
-import {Location} from '@angular/common';
-import {NextConfig} from '../../../../../../app-config';
+import { Component, Input, NgZone, OnInit } from '@angular/core';
+import { NavigationItem } from '../../navigation';
+import { Location } from '@angular/common';
+import { NextConfig } from '../../../../../../app-config';
 
 @Component({
   selector: 'app-nav-group',
@@ -10,7 +10,7 @@ import {NextConfig} from '../../../../../../app-config';
 })
 export class NavGroupComponent implements OnInit {
   @Input() item: NavigationItem;
-  @Input() layout1: boolean = false;
+  @Input() layout1: boolean;
   @Input() activeId: any;
   public nextConfig: any;
 
@@ -20,31 +20,32 @@ export class NavGroupComponent implements OnInit {
 
   ngOnInit() {
     // at reload time active and trigger link
-    let current_url = this.location.path();
-    if (this.location['_baseHref']) {
-      current_url = this.location['_baseHref'] + this.location.path();
+    let currentUrl = this.location.path();
+    const key = '_baseHref';
+    if (this.location[key]) {
+      currentUrl = this.location[key] + this.location.path();
     }
-    const link = "a.nav-link[ href='" + current_url + "' ]";
+    const link = `a.nav-link[ href='${currentUrl}' ]`;
     const ele = document.querySelector(link);
     if (ele !== null && ele !== undefined) {
       const parent = ele.parentElement;
-      const up_parent = parent.parentElement.parentElement;
-      const last_parent = up_parent.parentElement;
+      const upParent = parent.parentElement.parentElement;
+      const lastParent = upParent.parentElement;
       if (parent.classList.contains('pcoded-hasmenu')) {
-        if (this.nextConfig['layout'] === 'vertical') {
+        if (this.nextConfig.layout === 'vertical') {
           parent.classList.add('pcoded-trigger');
         }
         parent.classList.add('active');
-      } else if(up_parent.classList.contains('pcoded-hasmenu')) {
-        if (this.nextConfig['layout'] === 'vertical') {
-          up_parent.classList.add('pcoded-trigger');
+      } else if (upParent.classList.contains('pcoded-hasmenu')) {
+        if (this.nextConfig.layout === 'vertical') {
+          upParent.classList.add('pcoded-trigger');
         }
-        up_parent.classList.add('active');
-      } else if (last_parent.classList.contains('pcoded-hasmenu')) {
-        if (this.nextConfig['layout'] === 'vertical') {
-          last_parent.classList.add('pcoded-trigger');
+        upParent.classList.add('active');
+      } else if (lastParent.classList.contains('pcoded-hasmenu')) {
+        if (this.nextConfig.layout === 'vertical') {
+          lastParent.classList.add('pcoded-trigger');
         }
-        last_parent.classList.add('active');
+        lastParent.classList.add('active');
       }
     }
   }

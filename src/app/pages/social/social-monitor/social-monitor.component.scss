@@ -23,3 +23,10 @@
         width: 140px;
     }
 } 
+
+@media only screen and (max-width: 575px) {
+    .mornitor-section {
+        padding: 0;
+    }
+}
+

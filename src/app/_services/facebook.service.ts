@@ -8,9 +8,9 @@ import { User } from '../_models/user';
 
 @Injectable({ providedIn: 'root' })
 export class FacebookService {
-    
-    constructor() {
-        
-    }
+
+  constructor() {
+
+  }
 
 }

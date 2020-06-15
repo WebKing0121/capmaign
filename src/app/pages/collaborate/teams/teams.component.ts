@@ -2,11 +2,15 @@ import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@ang
 import { CollaborateService } from '../../../_services/collaborate.service';
 import { DualListComponent } from 'angular-dual-listbox';
 
-import { first } from 'rxjs/operators';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from 'src/app/_services/user.service';
-import { Subject } from 'rxjs';
 import { ToastService } from '../../../theme/shared/components/toast/toast.service';
+
+import * as moment from 'moment';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 @Component({
   selector: 'app-teams',
   templateUrl: './teams.component.html',
@@ -23,29 +27,30 @@ export class TeamsComponent implements OnInit, OnDestroy {
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('campaignTasks', { static: false }) campaignTasks;
   @ViewChild('campaignSubTasks', { static: false }) campaignSubTasks;
-  
+
+  private unsubscribe$ = new Subject();
+
   teamForm: FormGroup;
   loading = false;
   submitted = false;
   previousRow: any;
 
   cardButtons = [
-    { label: 'Create a Team', icon: 'icon-plus-circle', action: ()=>this.onClickCreateTeam()},
+    { label: 'Create a Team', icon: 'icon-plus-circle', action: () => this.onClickCreateTeam() },
   ];
 
   cardButtonsInCampaigns = [
-    { label: 'Assign campaigns', icon: 'icon-plus-circle', action: ()=>this.onClickAssignCampaigns()},
+    { label: 'Assign campaigns', icon: 'icon-plus-circle', action: () => this.onClickAssignCampaigns() },
   ];
 
   cardButtonsInTasks = [
-    { label: 'Add Task', icon: 'icon-plus-circle', action: ()=>this.onClickAddTask()},
+    { label: 'Add Task', icon: 'icon-plus-circle', action: () => this.onClickAddTask() },
   ];
 
   dtTeamsOption: any = {};
   dtTrigger: Subject<any> = new Subject();
   teams: any[];
   campaigns: any[];
-  loadTeams: boolean = false;
   allUsers: any[];
   selectedTeam: any;
 
@@ -59,7 +64,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   teamMembers: any[];
   selectedCampaignId: number;
 
-  
+
 
   // dual list box
   sourceCampaigns: any[];
@@ -78,7 +83,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
     private collaborateService: CollaborateService,
     private userService: UserService,
     private toastEvent: ToastService
-    
+
   ) {
     this.teams = [];
     this.allUsers = [];
@@ -93,46 +98,46 @@ export class TeamsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    
+
     // this.cardTeams.setCardRefresh(true);
     this.collaborateService.getCollaborateTeams()
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.teams = data;
-        this.teamsInAssignCampaign = this.teams.map(team=>({value: '' + team.id, label: team.name}));
-        this.dtTrigger.next();
-        this.getUnassignedCampaigns();
-        // this.cardTeams.setCardRefresh(false);
-      },
-      error => {
-        console.log('error', error)
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.teams = data;
+          this.teamsInAssignCampaign = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
+          this.dtTrigger.next();
+          this.getUnassignedCampaigns();
+          // this.cardTeams.setCardRefresh(false);
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
 
     this.collaborateService.getCollaborateCampaigns()
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.campaigns = data;
-        this.sourceCampaigns = this.campaigns;
-        this.getUnassignedCampaigns();
-      },
-      error => {
-        console.log('error', error)
-      }
-    );
-    
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.campaigns = data;
+          this.sourceCampaigns = this.campaigns;
+          this.getUnassignedCampaigns();
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
+
     this.userService.getAll()
-    .pipe(first())
-    .subscribe(
-      data => {
-        this.allUsers = data.map(user=>({id: user.id, label: user.firstName + ' ' + user.lastName }));
-      },
-      error => {
-        console.log('error', error)
-      }
-    );
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
 
     this.dtTeamsOption = {
       // data: this.teams,
@@ -145,9 +150,9 @@ export class TeamsComponent implements OnInit, OnDestroy {
       }, {
         title: '',
       }],
-      rowCallback: (row: Node, data: any[] | Object, index: number) => {
-        $('td', row).unbind('click');
-        $('td', row).bind('click', ()=> {
+      rowCallback: (row: Node, data: any[] | any, index: number) => {
+        $('td', row).off('click');
+        $('td', row).on('click', () => {
           if (this.previousRow) {
             $(this.previousRow).removeClass('selected');
           }
@@ -157,7 +162,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
         });
         return row;
       }
-      
+
     };
 
     this.teamForm = this.formBuilder.group({
@@ -170,12 +175,14 @@ export class TeamsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   onClickTeam(teamId: number): void {
-    this.selectedTeam = this.teams.filter(team=>team.id === teamId)[0];
+    this.selectedTeam = this.teams.find(x => x.id === teamId);
     this.campaignTasks.loadTasksFromCampaign(0);
-    this.campaignSubTasks.loadSubTasks(0)
+    this.campaignSubTasks.loadSubTasks(0);
   }
 
   // convenience getter for easy access to form fields
@@ -196,35 +203,35 @@ export class TeamsComponent implements OnInit, OnDestroy {
    *                                                     *
    *******************************************************/
   onCreateTeam() {
-    
+
   }
 
-   /******************************************************************
-   * Click event - Plus (+) button in Assigned Campaign table header *
-   * --------------------------------------------------------------- *
-   *                                                                 *
-   *******************************************************************/
+  /******************************************************************
+  * Click event - Plus (+) button in Assigned Campaign table header *
+  * --------------------------------------------------------------- *
+  *                                                                 *
+  *******************************************************************/
   onClickAssignCampaigns() {
-    
+
     if (this.selectedTeam) {
-      this.selectedTeamInAssignCampaigns = this.teams.find(team => team.id === this.selectedTeam.id);
-      const { assigned_campaigns } = this.selectedTeamInAssignCampaigns;
-      this.assignedCampaigns = this.campaigns.filter(campaign => assigned_campaigns.indexOf(campaign.id) >= 0 )
+      this.selectedTeamInAssignCampaigns = this.teams.find(x => x.id === this.selectedTeam.id);
+      const { campaigns } = this.selectedTeamInAssignCampaigns;
+      this.assignedCampaigns = this.campaigns.filter(x => campaigns.indexOf(x.id) >= 0);
       this.sourceCampaigns = [...this.unassignedCampaigns, ...this.assignedCampaigns];
       this.selectedTeamInAssignCampaigns = '' + this.selectedTeam.id;
     } else {
       this.assignedCampaigns = [];
       this.sourceCampaigns = [...this.unassignedCampaigns];
     }
-    
+
     this.assignCampaignModal.show();
   }
 
-   /******************************************************
-   * Click event - select row in Assigned Campaign table *
-   * --------------------------------------------------- *
-   *                                                     *
-   *******************************************************/
+  /******************************************************
+  * Click event - select row in Assigned Campaign table *
+  * --------------------------------------------------- *
+  *                                                     *
+  *******************************************************/
   onClickCampaign(campaignId: number) {
     this.selectedCampaignId = campaignId;
     this.campaignTasks.loadTasksFromCampaign(campaignId);
@@ -234,8 +241,8 @@ export class TeamsComponent implements OnInit, OnDestroy {
   onSelectTask(task: any) {
     this.selectedTaskId = task.id;
     this.selectedTaskName = task.name;
-    this.selectedUserId = task.user_id;
-    const user = this.allUsers.find(user => user.id === this.selectedUserId);
+    this.selectedUserId = task.userId;
+    const user = this.allUsers.find(x => x.id === this.selectedUserId);
     if (user) {
       this.selectedUserName = user.label;
     } else {
@@ -246,15 +253,14 @@ export class TeamsComponent implements OnInit, OnDestroy {
 
   getSelectedCampaigns() {
     if (this.selectedTeam) {
-      
-      return this.campaigns.filter(campaign => this.selectedTeam.assigned_campaigns.indexOf(campaign.id) >= 0 );
+      return this.campaigns.filter(x => this.selectedTeam.campaigns.indexOf(x.id) >= 0);
     } else {
       return [];
     }
   }
 
   getUserName(userId: number) {
-    const user = this.allUsers.find(user=>user.id === userId);
+    const user = this.allUsers.find(x => x.id === userId);
     if (user) {
       return user.label;
     } else {
@@ -272,32 +278,37 @@ export class TeamsComponent implements OnInit, OnDestroy {
 
   getSelectedCampaignName() {
     if (this.selectedCampaignId > 0) {
-      return this.campaigns.filter(campaign => campaign.id === this.selectedCampaignId)[0].name;
+      return this.campaigns.find(x => x.id === this.selectedCampaignId).name;
     } else {
       return '';
     }
   }
 
-  getUnassignedCampaigns() {
-    const all_assigned = [];
-    this.teams.map(team => {
-      all_assigned.push(...team.assigned_campaigns);
-    });
-    this.unassignedCampaigns = this.campaigns.filter(campaign => all_assigned.indexOf(campaign.id) < 0 );
+  getDate(x: string) {
+    return moment(x).format('YYYY-MM-DD');
   }
 
-   /***********************************************************
-   * Change event - Team control(ng-select) in campaign modal *
-   * -------------------------------------------------------- *
-   *                                                          *
-   ************************************************************/
+
+  getUnassignedCampaigns() {
+    const allAssigned = [];
+    this.teams.map(x => {
+      allAssigned.push(...x.campaigns);
+    });
+    this.unassignedCampaigns = this.campaigns.filter(campaign => allAssigned.indexOf(campaign.id) < 0);
+  }
+
+  /***********************************************************
+  * Change event - Team control(ng-select) in campaign modal *
+  * -------------------------------------------------------- *
+  *                                                          *
+  ************************************************************/
   onChangeTeam(event) {
-    this.selectedTeamInAssignCampaigns = this.teams.find(team => team.id === Number(event));
-    const {assigned_campaigns} = this.selectedTeamInAssignCampaigns;
-    this.assignedCampaigns = this.campaigns.filter(campaign => assigned_campaigns.indexOf(campaign.id) >= 0 )
-    
+    this.selectedTeamInAssignCampaigns = this.teams.find(x => x.id === Number(event));
+    const { campaigns } = this.selectedTeamInAssignCampaigns;
+    this.assignedCampaigns = this.campaigns.filter(x => campaigns.indexOf(x.id) >= 0);
+
     this.sourceCampaigns = [...this.unassignedCampaigns, ...this.assignedCampaigns];
-    
+
   }
 
   campaignLabel(campaign: any) {
@@ -311,30 +322,12 @@ export class TeamsComponent implements OnInit, OnDestroy {
    **********************************************/
   onClickAddTask() {
     if (this.selectedCampaignId > 0) {
-      const { members } =  this.selectedTeam;
-      this.teamMembers = this.allUsers.filter(user => members.indexOf(user.id) >= 0).map(user => ({value: '' + user.id, label: user.label}));
+      const { members } = this.selectedTeam;
+      this.teamMembers = this.allUsers.filter(x => members.indexOf(x.id) >= 0)
+        .map(x => ({ value: '' + x.id, label: x.label }));
       this.addTaskModal.show();
     } else {
-      this.toastEvent.toast({uid: 'toast1', delay: 3000});
+      this.toastEvent.toast({ uid: 'toast1', delay: 3000 });
     }
-    
-  }
-
-  /******************************************************
-   * Click event - select row in Assigned Campaign table *
-   * --------------------------------------------------- *
-   *                                                     *
-   *******************************************************/
-  onClickTask(task: any) {
-    this.selectedTaskId = task.id;
-    this.selectedTaskName = task.name;
-    this.selectedUserId = task.user_id;
-    const user = this.allUsers.find(user => user.id === this.selectedUserId);
-    if (user) {
-      this.selectedUserName = user.label;
-    } else {
-      this.selectedUserName = '';
-    }
-    this.campaignSubTasks.loadSubTasks(this.selectedTaskId)
   }
 }

@@ -510,7 +510,8 @@ export const CampaignResponseMockData: Campaign[] = [
     created: '2015-05-25T12:00:00-06:30',
     lastSent: '2015-05-25T12:00:00-06:30',
     scheduled: '2015-05-25T12:00:00-06:30'
-  },{
+  },
+  {
     id: '52',
     name: 'Samir Campaign',
     subject: 'Samir Campaign',

@@ -1,21 +1,30 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {NavigationItem} from '../../../layout/admin/navigation/navigation';
-import {Router} from '@angular/router';
-import {Title} from '@angular/platform-browser';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { NavigationItem } from '../../../layout/admin/navigation/navigation';
+import { Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
+
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-breadcrumb',
   templateUrl: './breadcrumb.component.html',
   styleUrls: ['./breadcrumb.component.scss']
 })
-export class BreadcrumbComponent implements OnInit {
+export class BreadcrumbComponent implements OnInit, OnDestroy {
   @Input() type: string;
+
+  private unsubscribe$ = new Subject();
 
   public navigation: any;
   breadcrumbList: Array<any> = [];
   public navigationList: Array<any> = [];
 
-  constructor(private route: Router, public nav: NavigationItem, private titleService: Title) {
+  constructor(
+    private route: Router,
+    public nav: NavigationItem,
+    private titleService: Title
+  ) {
     this.navigation = this.nav.get();
     this.type = 'theme2';
     this.setBreadcrumb();
@@ -29,9 +38,14 @@ export class BreadcrumbComponent implements OnInit {
     }
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   setBreadcrumb() {
     let routerUrl: string;
-    this.route.events.subscribe((router: any) => {
+    this.route.events.pipe(takeUntil(this.unsubscribe$)).subscribe((router: any) => {
       routerUrl = router.urlAfterRedirects;
       if (routerUrl && typeof routerUrl === 'string') {
         this.breadcrumbList.length = 0;

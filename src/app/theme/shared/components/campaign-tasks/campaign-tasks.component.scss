@@ -1,61 +1,82 @@
 .task-table-header {
-    th {
-        padding: 0.5rem 0.3rem;
-    }
+  th {
+    padding: 0.5rem 0.3rem;
+  }
 }
 .task-table-body {
-    height: 300px;
-    overflow: auto;
+  height: 300px;
+  overflow: auto;
 
-    td {
-        padding: 0.5rem 0.3rem;
-    }
-    .selected {
-        background: #bce8fb !important;
-    }
+  td {
+    padding: 0.5rem 0.3rem;
+  }
+  .selected {
+    background: #bce8fb !important;
+  }
+  .task-progress-bar {
+    position: relative;
+    min-width: 85px;
     .percent {
-        position: absolute;
-        color: black;
-        font-weight: bold;
-        font-size: 14px;
-        padding-left: 20px;
+      position: absolute;
+      color: black;
+      font-weight: bold;
+      font-size: 14px;
+      padding-left: 30px;
     }
+  }
 }
 
 .add-task-modal {
-    .input-group-prepend {
-        .input-group-text {
-            width: 120px;
-        }
+  .input-group-prepend {
+    .input-group-text {
+      width: 120px;
     }
-    
-    .form-control:disabled, .form-control[readonly] {
-        background-color: #f7f7f7;
-    }
+  }
 
-    ng-select {
-        width: calc(100% - 118px)!important;
-        min-height: 45px;
-    }
+  .form-control:disabled,
+  .form-control[readonly] {
+    background-color: #f7f7f7;
+  }
 
+  ng-select {
+    width: calc(100% - 118px) !important;
+    min-height: 45px;
+  }
 
-    ng-select > div {
-        min-height: 45px !important;
-    }
-    ng-select > div >div.single>div.placeholder, ng-select > div > div.single >div.value {
-        line-height: 45px !important;
-    }
-    
+  ng-select > div {
+    min-height: 45px !important;
+  }
+  ng-select > div > div.single > div.placeholder,
+  ng-select > div > div.single > div.value {
+    line-height: 45px !important;
+  }
 }
-
 
 .toast-div {
-    position: absolute;
-    right: 0;
-    bottom: 0;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 
-    .bg-blue-light {
-        background-color: #bce8fb;
-    }
+  .bg-blue-light {
+    background-color: #bce8fb;
+  }
 }
 
+.task-table {
+  height: calc(50vh - 180px);
+}
+
+@media only screen and (max-width: 1200px) {
+  .task-table {
+    height: auto !important;
+  }
+}
+
+.special-show {
+  display: none;
+}
+@media only screen and (min-width: 1600px) {
+  .special-show {
+    display: table-cell;
+  }
+}

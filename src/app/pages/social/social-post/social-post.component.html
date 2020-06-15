@@ -1,10 +1,10 @@
 <div class="margin-minus-for-toolbar">
   <div class="breadcrum-buttons">
-    <button class="btn " (click)="onNewPost()"><i class="feather icon-edit"></i> New Post</button>
-    <button class="btn" (click)="onAddConnection()"><i class="feather icon-plus"></i> Add Connection</button>
+    <button class="btn " (click)="onNewPost()"><i class="feather icon-edit"></i> <span class="btn-label">New Post</span></button>
+    <button class="btn" (click)="onAddConnection()"><i class="feather icon-plus"></i> <span class="btn-label">Add Connection</span></button>
   </div>
-  <div class="d-flex mt-4 flex-wrap">
-    <div class="col-4 social-site-card" *ngFor="let social of socialAccounts$ | async">
+  <div class="row mt-3 flex-wrap social-card">
+    <div class="col-md-4 col-sm-12 social-site-card" *ngFor="let social of socialAccounts$ | async">
       <app-card [cardTitle]="social.type === 'profile' ? social.userProfileName : social.pageName">
         <img class="profile-image" [src]="social.profileImg" [ngClass]="{'disabled': !social.connected}" />
         <img class="brand" [src]="social.img" [ngClass]="{'disabled': !social.connected}" />
@@ -23,7 +23,7 @@
       </button>
     </div>
     <div class="app-modal-body">
-      <app-social-account-list (onAddConnection)="onAddConnection()" (onSelectedUsers)="onSelectedUsers($event)"></app-social-account-list>
+      <app-social-account-list (addConnection)="onAddConnection()" (selectedUsers)="onSelectedUsers($event)"></app-social-account-list>
       <app-tinymce [(ngModel)]='newPostContent' #tinymce='tinymce'></app-tinymce>
     </div>
 

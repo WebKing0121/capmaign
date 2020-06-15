@@ -1,8 +1,11 @@
+<div class="container-fluid p-0">
 <div class="row">
-	<div class="col-5 card-teams">
-		<app-card cardTitle="Collaboration Teams" #cardTeams [cardButtons]="cardButtons" cardClass="card-datatable" [options]="false">
+	<div class="col-md-5 col-sm-12 card-teams">
+		<app-card cardTitle="Collaboration Teams" #cardTeams [cardButtons]="cardButtons" cardClass="card-datatable"
+			[options]="false">
 			<div class="table-responsive">
-				<table datatable #teamsTable [dtOptions]="dtTeamsOption" [dtTrigger]="dtTrigger" class="table table-striped table-hover">
+				<table datatable #teamsTable [dtOptions]="dtTeamsOption" [dtTrigger]="dtTrigger"
+					class="table table-striped table-hover">
 					<thead>
 						<tr>
 							<th>Team name</th>
@@ -15,16 +18,20 @@
 						<tr *ngFor="let team of teams" [id]="team.id">
 							<td>{{ team.name }}</td>
 							<td>{{ team.members.length }}</td>
-							<td>{{ team.assigned_campaigns.length }}</td>
-							<td><button class="btn btn-outline-primary btn-normal-padding">Edit</button><button class="btn btn-danger btn-normal-padding">Delete</button></td>
+							<td>{{ team.campaigns.length }}</td>
+							<td>
+								<button class="btn btn-outline-primary btn-normal-padding">Edit</button>
+								<button class="btn btn-danger btn-normal-padding">Delete</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</app-card>
 	</div>
-	<div class="col-7 card-campaigns">
-		<app-card cardTitle="Assigned Campaign" #cardAssignCampaigns [cardButtons]="cardButtonsInCampaigns" cardClass="card-assigned-campaigns" [options]="false">
+	<div class="col-md-7 col-sm-12 card-campaigns-1">
+		<app-card cardTitle="Assigned Campaign" #cardAssignCampaigns [cardButtons]="cardButtonsInCampaigns"
+			cardClass="card-assigned-campaigns" [options]="false">
 			<div class="table-responsive">
 				<table #campaignTable class="table table-striped table-hover">
 					<thead class="campaign-table-header">
@@ -36,10 +43,11 @@
 						<th>Status</th>
 					</thead>
 					<tbody class="campaign-table-body">
-						<tr *ngFor="let row of getSelectedCampaigns()" (click)="onClickCampaign(row.id)" [ngClass]="{'selected': row.id === selectedCampaignId}">
+						<tr *ngFor="let row of getSelectedCampaigns()" (click)="onClickCampaign(row.id)"
+							[ngClass]="{'selected': row.id === selectedCampaignId}">
 							<td>{{row.name}}</td>
-							<td>{{row.start_date.substring(0, 11)}}</td>
-							<td>{{row.end_date.substring(0, 11)}}</td>
+							<td>{{row.startDate | date}}</td>
+							<td>{{row.endDate | date}}</td>
 							<td>
 								<ngb-progressbar height="20px" [value]="row.percent"></ngb-progressbar>
 							</td>
@@ -53,28 +61,20 @@
 				</table>
 			</div>
 		</app-card>
-		<app-campaign-tasks #campaignTasks
-			[campaignId]="selectedCampaignId"
-			[teams]="teams"
-			[campaigns]="campaigns"
-			[users]="allUsers"
-			(onSelectRow)="onSelectTask($event)"
-		></app-campaign-tasks>
-		<app-campaign-sub-tasks #campaignSubTasks
-            [taskId]="selectedTaskId"
-            [taskName]="selectedTaskName"
-            [userId]="selectedUserId"
-            [userName]="selectedUserName"
-        >
-        </app-campaign-sub-tasks>
+		<app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
+			[users]="allUsers" (selectRow)="onSelectTask($event)">
+		</app-campaign-tasks>
+		<app-campaign-sub-tasks #campaignSubTasks [taskId]="selectedTaskId" [taskName]="selectedTaskName"
+			[userId]="selectedUserId" [userName]="selectedUserName">
+		</app-campaign-sub-tasks>
 	</div>
 </div>
-
-
+</div>
 <app-ui-modal #newTeamModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Create a New Team</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="newTeamModal.hide()">
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="newTeamModal.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -88,7 +88,8 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="feather icon-users"></i></span>
 						</div>
-						<input type="text" class="form-control" id="team_name" placeholder="Team name" formControlName="team_name"  [ngClass]="{ 'is-invalid': submitted && f.team_name.errors }">
+						<input type="text" class="form-control" id="team_name" placeholder="Team name" formControlName="team_name"
+							[ngClass]="{ 'is-invalid': submitted && f.team_name.errors }">
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -97,9 +98,10 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="feather icon-check-square"></i></span>
 						</div>
-						<input type="text" class="form-control" id="team_desc" placeholder="Short Description"  formControlName="team_desc"  [ngClass]="{ 'is-invalid': submitted && f.team_desc.errors }">
+						<input type="text" class="form-control" id="team_desc" placeholder="Short Description"
+							formControlName="team_desc" [ngClass]="{ 'is-invalid': submitted && f.team_desc.errors }">
 					</div>
-				</div>  
+				</div>
 			</div>
 			<div class="row">
 				<div class="col-md-12">
@@ -111,7 +113,7 @@
 						<ng-select [ngClass]="'ng-select'" [options]="allUsers" [multiple]="true"></ng-select>
 					</div>
 				</div>
-			</div> 
+			</div>
 		</form>
 	</div>
 
@@ -124,34 +126,37 @@
 <app-ui-modal #assignCampaignModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Assign Campaigns</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="assignCampaignModal.hide()">
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="assignCampaignModal.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
 
 	<div class="app-modal-body">
-		
+
 		<div class="row">
 			<div class="col-md-12">
 				<div class="input-group assigned_campaigns">
 					<div class="input-group-prepend">
 						<span class="input-group-text"><i class="feather icon-user"></i> Team</span>
 					</div>
-					<ng-select [ngClass]="'ng-select'" [options]="teamsInAssignCampaign" (ngModelChange)="onChangeTeam($event)" [(ngModel)]="selectedTeamInAssignCampaigns"></ng-select>
+					<ng-select [ngClass]="'ng-select'" [options]="teamsInAssignCampaign" (ngModelChange)="onChangeTeam($event)"
+						[(ngModel)]="selectedTeamInAssignCampaigns"></ng-select>
 				</div>
 			</div>
-		</div> 
+		</div>
 		<div class="row mt-4">
 			<div class="col-md-12">
 				<dual-list [sort]="true" [source]="sourceCampaigns" [key]="'id'" [display]="campaignLabel" [filter]="filter"
 					[(destination)]="assignedCampaigns" height="265px" [format]="format"></dual-list>
 			</div>
-		</div> 
-		
+		</div>
+
 	</div>
 
 	<div class="app-modal-footer">
 		<button type="button" class="btn btn-primary" (click)="onCreateTeam()">Assign</button> &nbsp;
-		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="assignCampaignModal.hide()">Close</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal"
+			(click)="assignCampaignModal.hide()">Close</button>
 	</div>
 </app-ui-modal>

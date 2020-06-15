@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'sample-page',
+        redirectTo: 'collaborate',
         pathMatch: 'full'
       },
       {

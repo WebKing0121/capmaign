@@ -1,5 +1,5 @@
-<div class="d-flex">
-	<div class="user-section">
+<div class="row">
+	<div class="col-md-4 col-sd-12 user-section">
 		<app-card cardTitle="Users">
 			<ngb-tabset>
 				<ngb-tab title="Inbox">
@@ -13,7 +13,7 @@
 									<div class="name">
 
 										{{user.profileName}}
-										<span class="float-right created_at">{{user.registeredAt.substring(0, 10)}}</span>
+										<span class="float-right created_at">{{user.registeredAt | date}}</span>
 									</div>
 								</div>
 							</li>
@@ -28,7 +28,7 @@
 			</ngb-tabset>
 		</app-card>
 	</div>
-	<div class="message-section">
+	<div class="col-md-8 col-sm-12 message-section">
 		<app-card cardTitle="Conversation with CampaignToCash">
 			<ul class="chat-messages">
 				<li *ngFor="let message of socialChatMessages">

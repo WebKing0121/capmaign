@@ -16,7 +16,7 @@ export class SocialMonitorComponent implements OnInit {
   @ViewChild('addConnection', { static: false }) addConnection;
 
   confirmButtons = [
-    {label: 'Yes', action: this.closeTab.bind(this), class:'btn-primary'}
+    { label: 'Yes', action: this.closeTab.bind(this), class: 'btn-primary' }
   ];
 
   tabForm: FormGroup;
@@ -25,11 +25,12 @@ export class SocialMonitorComponent implements OnInit {
 
   tabId: number;
   tabs = [
-    {id: 1, label: 'Campaign', streams: []}
+    { id: 1, label: 'Campaign', streams: [] }
   ];
   selectedTabId: number;
 
   selectedLinks: SocialLinkSelected[];
+  modalStreamTitle: string;
 
   constructor(
     private formBuilder: FormBuilder
@@ -37,6 +38,7 @@ export class SocialMonitorComponent implements OnInit {
     this.tabId = 1;
     this.selectedTabId = 0;
     this.selectedLinks = [];
+    this.modalStreamTitle = '';
   }
 
   ngOnInit(): void {
@@ -54,12 +56,12 @@ export class SocialMonitorComponent implements OnInit {
 
   onAddTab() {
     this.submitted = true;
-     // stop here if form is invalid
+    // stop here if form is invalid
     if (this.tabForm.invalid) {
       return;
     }
 
-    this.tabId ++;
+    this.tabId++;
     this.tabs.push({
       id: this.tabId, label: this.f.tabname.value, streams: []
     });
@@ -71,11 +73,11 @@ export class SocialMonitorComponent implements OnInit {
   onCloseTabConfirm(tabId: number) {
     this.selectedTabId = tabId;
     this.confirmModal.show();
-    
+
   }
 
   getStreamModalTitle(): string {
-    const selectedTab = this.tabs.find( tab => tab.id === this.selectedTabId );
+    const selectedTab = this.tabs.find(x => x.id === this.selectedTabId);
     if (selectedTab) {
       return selectedTab.streams.length > 0 ? 'Update Stream' : 'Add Stream';
     } else {
@@ -85,12 +87,12 @@ export class SocialMonitorComponent implements OnInit {
   }
 
   closeTab() {
-    console.log("close tab");
-    this.tabs = this.tabs.filter( tab => tab.id !== this.selectedTabId );
+    this.tabs = this.tabs.filter(tab => tab.id !== this.selectedTabId);
   }
 
   onAddStream(tabId: number) {
     this.selectedTabId = tabId;
+    this.modalStreamTitle = this.getStreamModalTitle();
     this.newStreamModal.show();
   }
 
@@ -98,7 +100,7 @@ export class SocialMonitorComponent implements OnInit {
     this.addConnection.onAddConnection();
   }
 
-  onSelectedUsers(users: SocialLinkSelected[] ): void {
+  onSelectedUsers(users: SocialLinkSelected[]): void {
     this.selectedLinks = users;
   }
 }

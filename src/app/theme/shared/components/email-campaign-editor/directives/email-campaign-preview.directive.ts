@@ -1,13 +1,18 @@
 import { Directive, HostListener } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+
+import { EmailCampaignPreviewModalComponent } from '../components/email-campaign-preview-modal/email-campaign-preview-modal.component';
 
 @Directive({
   selector: '[appEmailCampaignPreview]'
 })
 export class EmailCampaignPreviewDirective {
 
-  constructor() { }
+  constructor(
+    private matDialog: MatDialog
+  ) { }
 
   @HostListener('click') onClick() {
-    console.log('email: preview');
+    this.matDialog.open(EmailCampaignPreviewModalComponent);
   }
 }

@@ -1,8 +1,9 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AppState, AppTypes, selectSocialSites } from '../../../../store/app.models';
 import { Store } from '@ngrx/store';
-import { take } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 @Component({
@@ -11,9 +12,11 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./social-add-connection.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SocialAddConnectionComponent implements OnInit {
+export class SocialAddConnectionComponent implements OnInit, OnDestroy {
   @ViewChild('addConnection', { static: false }) addConnection;
-  
+
+  private unsubscribe$ = new Subject();
+
   socialSites$: Observable<any[]>;
 
   constructor(
@@ -23,11 +26,17 @@ export class SocialAddConnectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.socialSites$.pipe(take(1)).subscribe((res) => res === null && this.store.dispatch({
-      type: AppTypes.GetSocialSites
-    }));
+    this.socialSites$.pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res) => res === null && this.store.dispatch({
+        type: AppTypes.GetSocialSites
+      }));
   }
-  
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   onConnect(socialsite, type) {
     console.log(socialsite, type);
   }
