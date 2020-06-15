@@ -1,0 +1,17 @@
+.app-modal-pane {
+  margin: 1.75rem auto auto;
+
+  .app-modal-container {
+    display: block;
+    position: relative;
+    width: 100%;
+    min-width: 350px;
+
+    .modal-dialog {
+      width: 100%;
+    }
+  }
+}
+.app-modal-pane-backdrop {
+  background-color: rgba(black, .6);
+}

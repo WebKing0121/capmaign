@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { CampaignFromDisplayType } from '@app-core/enums/campaign-type.enum';
 import { CampaignResponseMockData } from '../../../fack-db/campaign-mock';
@@ -19,6 +19,7 @@ export class CampaignComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private route: ActivatedRoute
   ) { }
 
@@ -49,5 +50,13 @@ export class CampaignComponent implements OnInit {
       this.formGroup.controls.emailContent.setValidators(Validators.required);
       this.formGroup.controls.emailContent.updateValueAndValidity();
     }
+  }
+
+  onSave() {
+    console.log('Campaign component.onSave =>', this.formGroup.value);
+  }
+
+  onCancel() {
+    this.router.navigate(['..'], {relativeTo: this.route});
   }
 }

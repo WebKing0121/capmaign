@@ -1,6 +1,6 @@
 <div class="d-inline-block">
-  <select class="form-control" id="personalizationSelect" aria-label="Personalization">
+  <select class="form-control" id="personalizationSelect" aria-label="Personalization" (change)="onSelectionChange($event)">
     <option>Personalization</option>
-    <option [value]="item.key" *ngFor="let item of PersonalizationData">{{item.value}}</option>
+    <option [value]="item.key" *ngFor="let item of EmailCampaignPersonalization">{{item.label}}</option>
   </select>
 </div>

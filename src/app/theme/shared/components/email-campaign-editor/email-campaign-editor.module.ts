@@ -10,14 +10,17 @@ import { EmailCampaignPreviewDirective } from './directives/email-campaign-previ
 import { DynamicConditionModalComponent } from './components/dynamic-condition-modal/dynamic-condition-modal.component';
 import { EmailCampaignTemplateModalComponent } from './components/email-campaign-template-modal/email-campaign-template-modal.component';
 import { EmailCampaignPreviewModalComponent } from './components/email-campaign-preview-modal/email-campaign-preview-modal.component';
+import { FormsModule } from '@angular/forms';
+import { EmailCampaignTemplatePreviewModalComponent } from './components/email-campaign-template-preview-modal/email-campaign-template-preview-modal.component';
 
 @NgModule({
   declarations: [EmailCampaignEditorComponent, PersonalizationSelectorComponent,
     EmailCampaignDynamicsDirective, EmailCampaignTemplatesDirective, EmailCampaignPreviewDirective, DynamicConditionModalComponent,
-    EmailCampaignTemplateModalComponent, EmailCampaignPreviewModalComponent],
+    EmailCampaignTemplateModalComponent, EmailCampaignPreviewModalComponent, EmailCampaignTemplatePreviewModalComponent],
   imports: [
     CommonModule,
-    TinymceModule
+    TinymceModule,
+    FormsModule
   ],
   exports: [
     EmailCampaignEditorComponent,
@@ -25,6 +28,9 @@ import { EmailCampaignPreviewModalComponent } from './components/email-campaign-
     EmailCampaignDynamicsDirective,
     EmailCampaignTemplatesDirective,
     EmailCampaignPreviewDirective
+  ],
+  entryComponents: [
+    DynamicConditionModalComponent, EmailCampaignTemplateModalComponent, EmailCampaignPreviewModalComponent
   ]
 })
 export class EmailCampaignEditorModule { }

@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
+import { ModalRef } from '@app-components/modal/modal-ref';
+
+import { EmailCampaignDynamicCondition } from '../../../../../../fack-db/campaign-personalization-data';
 
 @Component({
   selector: 'app-dynamic-condition-modal',
@@ -6,10 +9,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./dynamic-condition-modal.component.scss']
 })
 export class DynamicConditionModalComponent implements OnInit {
+  EmailCampaignDynamicCondition = EmailCampaignDynamicCondition;
 
-  constructor() { }
+  condition = '';
+
+  constructor(
+    @Inject(ModalRef) private modalRef: ModalRef<DynamicConditionModalComponent>,
+  ) { }
 
   ngOnInit(): void {
   }
 
+  onCancel() {
+    this.modalRef.cancel();
+  }
+
+  onInsert() {
+    const dynamicItem = EmailCampaignDynamicCondition.find(item => item.key === this.condition);
+    this.modalRef.closeWithResult(dynamicItem);
+  }
 }

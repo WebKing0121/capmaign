@@ -1,6 +1,6 @@
 import { Directive, HostListener } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 
+import { ModalService } from '@app-components/modal/modal.service';
 import { EmailCampaignTemplateModalComponent } from '../components/email-campaign-template-modal/email-campaign-template-modal.component';
 
 @Directive({
@@ -9,10 +9,10 @@ import { EmailCampaignTemplateModalComponent } from '../components/email-campaig
 export class EmailCampaignTemplatesDirective {
 
   constructor(
-    private matDialog: MatDialog
+    private modalService: ModalService
   ) { }
 
   @HostListener('click') onClick() {
-    this.matDialog.open(EmailCampaignTemplateModalComponent);
+    this.modalService.openModal(EmailCampaignTemplateModalComponent, { width: '84%' });
   }
 }

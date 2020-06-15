@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
-import { PersonalizationData } from '@app-components/email-campaign-editor/personalization-data';
+import { EmailCampaignPersonalization } from '../../../../../../fack-db/campaign-personalization-data';
+import { EmailCampaignEditorComponent } from '@app-components/email-campaign-editor/email-campaign-editor.component';
 
 @Component({
   selector: 'app-personalization-selector',
@@ -8,11 +9,22 @@ import { PersonalizationData } from '@app-components/email-campaign-editor/perso
   styleUrls: ['./personalization-selector.component.scss']
 })
 export class PersonalizationSelectorComponent implements OnInit {
-  PersonalizationData = PersonalizationData;
+  EmailCampaignPersonalization = EmailCampaignPersonalization;
+
+  @Input() editor: EmailCampaignEditorComponent;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  onSelectionChange(event) {
+    if (event.target.value) {
+      const personalizationItem = EmailCampaignPersonalization.find(item => item.key === event.target.value);
+
+      if (this.editor) {
+        this.editor.addCustomItem(personalizationItem);
+      }
+    }
+  }
 }

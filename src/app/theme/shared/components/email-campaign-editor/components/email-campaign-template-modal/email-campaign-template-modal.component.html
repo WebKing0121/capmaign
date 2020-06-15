@@ -1,1 +1,30 @@
-<p>email-campaign-template-modal works!</p>
+<div class="modal-content">
+  <div class="modal-header">
+    <h2 class="m-0">Templates</h2>
+  </div>
+  <div class="modal-body">
+    <fieldset class="form-group">
+      <div class="row">
+        <div class="col-4 col-lg-2" *ngFor="let item of TEMPLATE_DATA; let i=index;">
+          <div class="preview-template-card card">
+            <div class="card-body d-flex flex-column">
+              <div class="img-wrapper">
+                <img class="w-100" src="./assets/images/campaign/email-campaign-template-sample.jpeg" alt="">
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="previewTemplate" id="{{'previewTemplate' + i}}" [value]="item.value" [checked]="i===0">
+                <label class="form-check-label" for="{{'previewTemplate' + i}}">{{item.label}}</label>
+              </div>
+
+              <button class="btn btn-success mt-3" (click)="preview(item)">Preview</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-sm btn-secondary" type="button" (click)="onCancel()">Close</button>
+    <button class="btn btn-sm btn-primary" type="button" (click)="onSave()">Save</button>
+  </div>
+</div>

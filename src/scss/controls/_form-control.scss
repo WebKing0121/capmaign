@@ -9,3 +9,10 @@
 .form-control.ng-invalid.ng-touched {
   border-color: map_get($theme-colors, 'danger');
 }
+
+.form-group .required-mark-after {
+  &::after {
+    content: '*';
+    color: map_get($theme-colors, 'danger');;
+  }
+}
