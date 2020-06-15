@@ -1,14 +1,17 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CampaignComponent } from './campaign.component';
+
+import { CampaignsComponent } from './campaigns/campaigns.component';
+import { CampaignComponent } from './campaign/campaign.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: CampaignComponent
+    path: '', component: CampaignsComponent
   },
+  {
+    path: ':id', component: CampaignComponent
+  }
 ];
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

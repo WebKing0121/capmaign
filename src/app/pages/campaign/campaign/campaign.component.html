@@ -1,0 +1,61 @@
+<div class="card mt-4">
+  <div class="card-header campaign-header">
+    <h4>Campaign email: {{formGroup.controls.name.value}}</h4>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <span>Campaign Name</span>
+          <div class="input-group">
+            <input class="form-control" formControlName="name">
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <span>Campaign Subject</span>
+          <div class="input-group">
+            <input class="form-control" formControlName="subject">
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <span>From Display</span>
+          <div class="input-group">
+            <select class="form-control">
+              <option>CampaignToCash</option>
+              <option>Palskem</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <span>From Address</span>
+          <div class="input-group">
+            <input class="form-control disabled" formControlName="from-address">
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <span>Reply Address</span>
+          <div class="input-group">
+            <input class="form-control disabled" formControlName="reply-subject">
+          </div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <span>Folder Name</span>
+          <div class="input-group">
+            <select class="form-control">
+              <option>Client 1</option>
+              <option>Dummy</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="modal-header">
+            <div class="container">
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

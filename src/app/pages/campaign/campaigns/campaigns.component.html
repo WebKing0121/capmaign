@@ -1,0 +1,53 @@
+<div class="campaigns-header d-flex">
+  <h2 class="campaigns-header_title">MANAGE CAMPAIGN</h2>
+
+  <span class="campaigns-header_totalNum ml-auto mr-2">Total Campaign: {{tableSource.totalCount$ | async}}</span>
+  <span class="mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
+  <span class="mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
+</div>
+
+<div class="campaigns-table_controls">
+  <div class="md-form">
+    <select class="browser-default campaign-type">
+      <option selected>Select Campaign Type</option>
+      <option value="1">Create Email Campaign</option>
+      <option value="2">Create Mobile Campaign</option>
+      <option value="3">Create Social campaign</option>
+      <option value="4">Create Google Ads campaign</option>
+      <option value="5">Create Facebook campaign</option>
+    </select>
+    <div class="delete-campaign">
+      <button disabled>
+        Delete <i class="far fa-trash-alt"></i>
+      </button>
+    </div>
+    <div class="send-campaign">
+      <button disabled>
+        Send Campaign <i class="far fa-envelope"></i>
+      </button>
+    </div>
+  </div>
+  <div class="search">
+    <div class="search-campaign">
+      <input type="text" placeholder="Search Campaign">
+      <i class="fa fa-search"></i>
+    </div>
+    <div class="refresh-campaign">
+      <i class="fas fa-sync-alt"></i>
+    </div>
+  </div>
+</div>
+
+<div class="campaigns-table">
+  <div class="table-actions-header"></div>
+
+  <app-datatable [dataSource]="tableSource"
+                 [columns]="columns"
+                 [columnMode]="'force'"
+                 (activate)="onActive($event)"
+  ></app-datatable>
+</div>
+
+<ng-template #tableColumnSettings let-column="column">
+  <i class="fa fa-bars" aria-hidden="true"></i>
+</ng-template>

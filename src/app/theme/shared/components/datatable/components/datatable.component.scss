@@ -1,0 +1,12 @@
+:host {
+  ::ng-deep {
+    .datatable-header-cell-wrapper {
+      font-weight: bold;
+    }
+    .datatable-body-cell.cell-hyperlink {
+      cursor: pointer;
+      text-decoration: underline;
+      color: deepskyblue;
+    }
+  }
+}
