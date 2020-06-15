@@ -9,6 +9,9 @@ const routes: Routes = [
     path: '', component: CampaignsComponent
   },
   {
+    path: 'new-email', component: CampaignComponent, data: { mode: 'new' }
+  },
+  {
     path: ':id', component: CampaignComponent
   }
 ];

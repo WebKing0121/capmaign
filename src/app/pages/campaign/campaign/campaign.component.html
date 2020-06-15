@@ -7,13 +7,13 @@
     <form [formGroup]="formGroup">
       <div class="row">
         <div class="col-12 col-lg-6">
-          <span>Campaign Name</span>
+          <span>Campaign Name {{campaignMode === 'new' ? '*' : ''}}</span>
           <div class="input-group">
             <input class="form-control" formControlName="name">
           </div>
         </div>
         <div class="col-12 col-lg-6">
-          <span>Campaign Subject</span>
+          <span>Campaign Subject {{campaignMode === 'new' ? '*' : ''}}</span>
           <div class="input-group">
             <input class="form-control" formControlName="subject">
           </div>
@@ -21,37 +21,33 @@
         <div class="col-12 col-lg-6">
           <span>From Display</span>
           <div class="input-group">
-            <select class="form-control">
-              <option>CampaignToCash</option>
-              <option>Palskem</option>
+            <select class="form-control" formControlName="fromDisplay">
+              <option>Select Display</option>
+              <option [value]="CampaignFromDisplayType.CampaignToCash">CampaignToCash</option>
+              <option [value]="CampaignFromDisplayType.Palskem">Palskem</option>
             </select>
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <span>From Address</span>
           <div class="input-group">
-            <input class="form-control disabled" formControlName="from-address">
+            <input class="form-control disabled" formControlName="fromAddress">
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <span>Reply Address</span>
           <div class="input-group">
-            <input class="form-control disabled" formControlName="reply-subject">
+            <input class="form-control disabled" formControlName="replyAddress">
           </div>
         </div>
         <div class="col-12 col-lg-6">
           <span>Folder Name</span>
-          <div class="input-group">
-            <select class="form-control">
-              <option>Client 1</option>
-              <option>Dummy</option>
-            </select>
-          </div>
+          <select class="form-control" formControlName="folderName">
+          </select>
         </div>
         <div class="col-lg-12">
           <div class="modal-header">
             <div class="container">
-              
             </div>
           </div>
         </div>

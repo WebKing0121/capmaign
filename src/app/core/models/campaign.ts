@@ -9,4 +9,6 @@ export class Campaign {
   created: string;
   lastSent: string;
   scheduled: string;
+  // TODO: Remove later
+  [name: string]: any;
 }

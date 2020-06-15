@@ -8,14 +8,15 @@
 
 <div class="campaigns-table_controls">
   <div class="md-form">
-    <select class="browser-default campaign-type">
+    <select class="browser-default campaign-type" (change)="onTypeSelectionChanged($event)">
       <option selected>Select Campaign Type</option>
-      <option value="1">Create Email Campaign</option>
-      <option value="2">Create Mobile Campaign</option>
-      <option value="3">Create Social campaign</option>
-      <option value="4">Create Google Ads campaign</option>
-      <option value="5">Create Facebook campaign</option>
+      <option [value]="CampaignType.Email">Create Email Campaign</option>
+      <option [value]="CampaignType.Mobile">Create Mobile Campaign</option>
+      <option [value]="CampaignType.Social">Create Social campaign</option>
+      <option [value]="CampaignType.GoogleAds">Create Google Ads campaign</option>
+      <option [value]="CampaignType.Facebook">Create Facebook campaign</option>
     </select>
+
     <div class="delete-campaign">
       <button disabled>
         Delete <i class="far fa-trash-alt"></i>

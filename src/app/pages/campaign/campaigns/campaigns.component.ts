@@ -2,6 +2,7 @@ import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { Campaign } from '@app-models/campaign';
+import { CampaignType } from '@app-core/enums/campaign-type.enum';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 
 import { CampaignResponseMockData } from '../../../fack-db/campaign-mock';
@@ -13,6 +14,8 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
   styleUrls: ['./campaigns.component.scss']
 })
 export class CampaignsComponent implements OnInit {
+  CampaignType = CampaignType;
+
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
@@ -25,14 +28,6 @@ export class CampaignsComponent implements OnInit {
     { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } },
     { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } }
   ];
-
-  mailType: Object[] = [
-    {path: 'email', value: "Create Email Campaign"},
-    {path: 'email', value: "Create Mobile Campaign"},
-    {path: 'email', value: "Create Social Campaign"},
-    {path: 'email', value: "Create Google Ads campaign"},
-    {path: 'email', value: "Create Facebook campaign"}
-  ]
 
   constructor(
     private router: Router,
@@ -51,8 +46,32 @@ export class CampaignsComponent implements OnInit {
   }
 
   onActive(event) {
+    // TODO: Simplify later
     if (event.type === 'click' && event.cellIndex === 1) {
       this.router.navigate([(event.row as Campaign).id], {relativeTo: this.route});
+    }
+  }
+
+  onTypeSelectionChanged(event) {
+    const type = event.target.value as CampaignType;
+
+    switch (type) {
+      case CampaignType.Email: {
+        this.router.navigate(['new-email'], {relativeTo: this.route});
+        return;
+      }
+      case CampaignType.Mobile: {
+        return;
+      }
+      case CampaignType.Social: {
+        return;
+      }
+      case CampaignType.GoogleAds: {
+        return;
+      }
+      case CampaignType.Facebook: {
+        return;
+      }
     }
   }
 }
