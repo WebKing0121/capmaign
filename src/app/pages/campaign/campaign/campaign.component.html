@@ -4,54 +4,71 @@
   </div>
 
   <div class="card-body">
-    <form [formGroup]="formGroup">
-      <div class="row">
-        <div class="col-12 col-lg-6">
-          <span>Campaign Name {{campaignMode === 'new' ? '*' : ''}}</span>
-          <div class="input-group">
-            <input class="form-control" formControlName="name">
+    <div class="email-campaign-form-wrapper">
+      <form [formGroup]="formGroup">
+        <div class="row">
+          <div class="col-12 col-lg-6">
+            <span>Campaign Name {{campaignMode === 'new' ? '*' : ''}}</span>
+            <div class="input-group">
+              <input class="form-control" formControlName="name">
+            </div>
           </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <span>Campaign Subject {{campaignMode === 'new' ? '*' : ''}}</span>
-          <div class="input-group">
-            <input class="form-control" formControlName="subject">
+          <div class="col-12 col-lg-6">
+            <span>Campaign Subject {{campaignMode === 'new' ? '*' : ''}}</span>
+            <div class="input-group">
+              <input class="form-control" formControlName="subject">
+            </div>
           </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <span>From Display</span>
-          <div class="input-group">
-            <select class="form-control" formControlName="fromDisplay">
-              <option>Select Display</option>
-              <option [value]="CampaignFromDisplayType.CampaignToCash">CampaignToCash</option>
-              <option [value]="CampaignFromDisplayType.Palskem">Palskem</option>
+          <div class="col-12 col-lg-6">
+            <span>From Display</span>
+            <div class="input-group">
+              <select class="form-control" formControlName="fromDisplay">
+                <option>Select Display</option>
+                <option [value]="CampaignFromDisplayType.CampaignToCash">CampaignToCash</option>
+                <option [value]="CampaignFromDisplayType.Palskem">Palskem</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <span>From Address</span>
+            <div class="input-group">
+              <input class="form-control disabled" formControlName="fromAddress">
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <span>Reply Address</span>
+            <div class="input-group">
+              <input class="form-control disabled" formControlName="replyAddress">
+            </div>
+          </div>
+          <div class="col-12 col-lg-6">
+            <span>Folder Name</span>
+            <select class="form-control" formControlName="folderName">
             </select>
           </div>
         </div>
-        <div class="col-12 col-lg-6">
-          <span>From Address</span>
-          <div class="input-group">
-            <input class="form-control disabled" formControlName="fromAddress">
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <span>Reply Address</span>
-          <div class="input-group">
-            <input class="form-control disabled" formControlName="replyAddress">
-          </div>
-        </div>
-        <div class="col-12 col-lg-6">
-          <span>Folder Name</span>
-          <select class="form-control" formControlName="folderName">
-          </select>
-        </div>
-        <div class="col-lg-12">
-          <div class="modal-header">
-            <div class="container">
-            </div>
-          </div>
-        </div>
+      </form>
+    </div>
+
+    <div class="email-campaign-preview mt-5">
+      <div class="campaign-preview-header d-flex">
+        <button (click)="onDynamicsClicked()">Dynamics</button>
+        <button (click)="onTemplatesClicked()" class="ml-auto mr-2">Templates</button>
+        <button (click)="onEditClicked()" class="mr-2" *ngIf="campaignMode === 'edit'">Edit</button>
+        <button (click)="onPreviewClicked()" class="">Preview</button>
       </div>
-    </form>
+      <div class="campaign-preview-body mt-1">
+        <form [formGroup]="formGroup">
+          <app-html-input [hasToolbar]="true" formControlName="emailContent"></app-html-input>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="wrapper d-flex">
+      <button class="ml-auto mr-2">Cancel</button>
+      <button class="" [disabled]="formGroup.invalid">Save</button>
+    </div>
   </div>
 </div>

@@ -1,4 +1,11 @@
 
+.form-control {
+  border: none;
+  border-bottom: 1px solid #36c6d3;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
 .form-control.ng-invalid.ng-touched {
   border-color: map_get($theme-colors, 'danger');
 }

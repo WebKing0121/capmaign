@@ -36,7 +36,8 @@ export class CampaignComponent implements OnInit {
       fromDisplay: '',
       fromAddress: data && data.fromAddress,
       replyAddress: data && data.replyAddress,
-      folderName: ''
+      folderName: '',
+      emailContent: ''
     });
 
     if (this.campaignMode === 'new') {
@@ -45,7 +46,23 @@ export class CampaignComponent implements OnInit {
 
       this.formGroup.controls.subject.setValidators(Validators.required);
       this.formGroup.controls.subject.updateValueAndValidity();
+
+      this.formGroup.controls.emailContent.setValidators(Validators.required);
+      this.formGroup.controls.emailContent.updateValueAndValidity();
     }
   }
 
+  onDynamicsClicked() {
+
+  }
+
+  onTemplatesClicked() {
+
+  }
+
+  onPreviewClicked() {
+
+  }
+
+  onEditClicked() {}
 }
