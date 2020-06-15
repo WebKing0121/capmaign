@@ -73,6 +73,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
         return;
       }
       case CampaignType.Mobile: {
+        this.router.navigate(['mobile', 'new-campaign']);
         return;
       }
       case CampaignType.Social: {

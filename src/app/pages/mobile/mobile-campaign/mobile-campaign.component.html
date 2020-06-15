@@ -1,0 +1,57 @@
+<div class="card mt-4">
+  <div class="card-header campaign-header">
+    <h3 class="m-0" *ngIf="campaignMode === 'edit'">Mobile Campaign: <strong class="font-weight-bold">{{formGroup.controls.name.value}}</strong></h3>
+    <h3 class="m-0" *ngIf="campaignMode === 'new'">Create Mobile Campaign</h3>
+  </div>
+
+  <div class="card-body">
+    <div class="email-campaign-form-wrapper">
+      <form [formGroup]="formGroup">
+        <div class="row">
+          <div class="col-12 col-lg-6 form-group">
+            <label>Campaign Name <span class="required-mark-after" *ngIf="campaignMode==='new'"></span></label>
+            <input class="form-control" formControlName="name" aria-label="Campaign Name">
+          </div>
+          <div class="col-12 col-lg-6 form-group">
+            <label>Sender Name</label>
+            <select class="form-control" formControlName="senderName" aria-label="Sender Name">
+              <option></option>
+              <option [value]="CampaignFromDisplayType.CampaignToCash">CampaignToCash</option>
+              <option [value]="CampaignFromDisplayType.Palskem">Palskem</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-6 form-group">
+            <label>Folder Name</label>
+            <select class="form-control" formControlName="folderName" aria-label="Folder Name">
+            </select>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="email-campaign-preview mt-5">
+      <div class="preview-toolbar mb-1 d-flex align-items-center">
+        <div class="btn-group mr-2 dropdown" ngbDropdown placement="bottom-left" *ngIf="campaignMode==='edit'">
+          <button class="btn btn-info" ngbDropdownToggle type="button">Send Mail</button>
+          <div ngbDropdownMenu>
+            <a class="dropdown-item" href="javascript:">Full Send</a>
+            <a class="dropdown-item" href="javascript:">Test Send</a>
+          </div>
+        </div>
+        <app-personalization-selector class="d-block mr-2"></app-personalization-selector>
+        <button class="btn btn-success" appEmailCampaignDynamics>Dynamics</button>
+
+        <button class="btn btn-success ml-auto mr-2" appEmailCampaignTemplates>Templates</button>
+        <button class="btn btn-success mr-2" *ngIf="campaignMode === 'edit'">Edit</button>
+        <button class="btn btn-success" appEmailCampaignPreview>Preview</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="wrapper d-flex">
+      <button class="btn btn-outline-secondary ml-auto mr-2" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-primary" (click)="onSave()">Save</button>
+    </div>
+  </div>
+</div>

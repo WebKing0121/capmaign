@@ -26,6 +26,10 @@ const routes: Routes = [
       {
         path: 'campaign',
         loadChildren: () => import('./pages/campaign/campaign.module').then(module => module.CampaignModule)
+      },
+      {
+        path: 'mobile',
+        loadChildren: () => import('./pages/mobile/mobile.module').then(module => module.MobileModule)
       }
     ]
   },
