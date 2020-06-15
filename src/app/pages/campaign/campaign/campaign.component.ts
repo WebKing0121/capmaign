@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 
 import { CampaignFromDisplayType } from '@app-core/enums/campaign-type.enum';
-
 import { CampaignResponseMockData } from '../../../fack-db/campaign-mock';
 
 @Component({
@@ -51,18 +50,4 @@ export class CampaignComponent implements OnInit {
       this.formGroup.controls.emailContent.updateValueAndValidity();
     }
   }
-
-  onDynamicsClicked() {
-
-  }
-
-  onTemplatesClicked() {
-
-  }
-
-  onPreviewClicked() {
-
-  }
-
-  onEditClicked() {}
 }

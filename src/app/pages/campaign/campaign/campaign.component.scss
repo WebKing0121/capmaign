@@ -1,27 +1,10 @@
 :host {
   .campaign-header {
-    h4 {
-      font-size: 22px;
-      color: #2099f7;
-    }
   }
 
-  .disabled {
-    background: none;
-    border-bottom: 1px dashed #c2cad8;
-    cursor: not-allowed;
-  }
-
-  .card-body {
+  .card-body,
+  .card-footer {
     padding: 20px 10%;
-  }
-
-  .modal-header {
-    background-color: #c9dde1;
-    font-weight: 600;
-    margin-top: 50px;
-    padding: 15px;
-    border-bottom: 1px solid #e5e5e5;
   }
 
   .email-campaign-preview {
