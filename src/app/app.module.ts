@@ -73,7 +73,7 @@ import { AppEffects } from './store/app.effects';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider,
+    // fakeBackendProvider,
     NavigationItem
   ],
   bootstrap: [AppComponent]
