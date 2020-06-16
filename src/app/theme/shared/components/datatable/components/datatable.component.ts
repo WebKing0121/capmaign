@@ -21,8 +21,8 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() classes = ['app-datatable-common'];
   @Input() columnMode: ColumnMode = ColumnMode.flex;
   @Input() cssClasses: { [key: string]: string; };
-  @Input() headerHeight = 60;
-  @Input() rowHeight = 50;
+  @Input() headerHeight = 50;
+  @Input() rowHeight = 40;
   @Input() scrollbarV = true;
   @Input() scrollbarH = true;
   @Input() virtualScrolling = true;

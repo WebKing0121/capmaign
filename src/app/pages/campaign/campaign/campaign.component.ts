@@ -53,7 +53,7 @@ export class CampaignComponent implements OnInit {
   }
 
   onSave() {
-    console.log('Campaign component.onSave =>', this.formGroup.value);
+    this.router.navigate(['..'], {relativeTo: this.route});
   }
 
   onCancel() {

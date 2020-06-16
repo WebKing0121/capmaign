@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-
-import { of, Subject } from 'rxjs';
+import { FormControl } from '@angular/forms';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { Campaign } from '@app-models/campaign';
@@ -35,6 +35,7 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   ];
 
   selected: Campaign[] = [];
+  searchFormControl: FormControl;
 
   destroy$ = new Subject();
 
@@ -52,16 +53,32 @@ export class CampaignsComponent implements OnInit, OnDestroy {
       .subscribe(change => {
         console.log('Campaign Table Changes: ', change);
 
+        let mockData = [];
+        if (change.search) {
+          mockData = CampaignResponseMockData.filter(item =>
+            item.name.includes(change.search) || item.subject.includes(change.search));
+        } else {
+          mockData = CampaignResponseMockData;
+        }
+
         this.tableSource.next(
-          CampaignResponseMockData.slice(
+          mockData.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          CampaignResponseMockData.length
+          mockData.length
         );
       });
+
     this.tableSource.selection$
       .pipe(takeUntil(this.destroy$))
       .subscribe(selected => {
         this.selected = selected;
+      });
+
+    this.searchFormControl = new FormControl();
+    this.searchFormControl.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(searchKey => {
+        this.tableSource.search(searchKey);
       });
   }
 
