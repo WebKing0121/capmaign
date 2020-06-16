@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 
 import { EmailCampaignPersonalization } from '../../../../../../fack-db/campaign-personalization-data';
 import { EmailCampaignEditorComponent } from '@app-components/email-campaign-editor/email-campaign-editor.component';
+import { MobileCampaignEditorComponent } from '@app-components/email-campaign-editor/mobile-campaign-editor.component';
 
 @Component({
   selector: 'app-personalization-selector',
@@ -11,7 +12,7 @@ import { EmailCampaignEditorComponent } from '@app-components/email-campaign-edi
 export class PersonalizationSelectorComponent implements OnInit {
   EmailCampaignPersonalization = EmailCampaignPersonalization;
 
-  @Input() editor: EmailCampaignEditorComponent;
+  @Input() editor: EmailCampaignEditorComponent | MobileCampaignEditorComponent;
 
   constructor() { }
 

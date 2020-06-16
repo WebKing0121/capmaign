@@ -8,7 +8,7 @@ interface ComponentProps {
 @Component({
   selector: 'app-email-campaign-preview-modal',
   templateUrl: './email-campaign-preview-modal.component.html',
-  styleUrls: ['./email-campaign-preview-modal.component.scss']
+  styleUrls: ['./email-campaign-preview-modal.component.scss', '../../email-campaign.scss']
 })
 export class EmailCampaignPreviewModalComponent implements OnInit {
   previewContent: string;

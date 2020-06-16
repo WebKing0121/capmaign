@@ -4,12 +4,13 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { DynamicConditionModalComponent } from '../components/dynamic-condition-modal/dynamic-condition-modal.component';
 
 import { EmailCampaignEditorComponent } from '@app-components/email-campaign-editor/email-campaign-editor.component';
+import { MobileCampaignEditorComponent } from '@app-components/email-campaign-editor/mobile-campaign-editor.component';
 
 @Directive({
   selector: '[appEmailCampaignDynamics]'
 })
 export class EmailCampaignDynamicsDirective {
-  @Input() editor: EmailCampaignEditorComponent;
+  @Input() editor: EmailCampaignEditorComponent | MobileCampaignEditorComponent;
 
   constructor(
     private modalService: ModalService

@@ -1,0 +1,17 @@
+<div class="editor-header pt-2 pb-2 d-flex">
+  <span class="ml-2 mr-3" (click)="onContentEdit()"><i class="fa fa-i-cursor" aria-hidden="true"></i></span>
+  <span class=""><i class="fa fa-link" aria-hidden="true"></i></span>
+</div>
+
+<div class="editor-body">
+  <div class="editor--main"></div>
+
+  <div class="display-within-iphone" #mobileCampaign>
+    <div class="iphone-iframe">
+      <div class="iphone-editor-area d-flex flex-column">
+        <div class="iphone-user-avatar"></div>
+        <p class="mobile-campaign-text">{{campaignText}}</p>
+      </div>
+    </div>
+  </div>
+</div>
