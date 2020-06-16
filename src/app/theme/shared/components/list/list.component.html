@@ -1,0 +1,10 @@
+<div class="list-container"
+     [style.width]="width ? width.toString() + 'px' : 'auto'"
+     [style.height]="height ? height.toString() + 'px' : 'auto'"
+>
+  <div class="list-items-wrapper">
+    <perfect-scrollbar>
+      <ng-content></ng-content>
+    </perfect-scrollbar>
+  </div>
+</div>

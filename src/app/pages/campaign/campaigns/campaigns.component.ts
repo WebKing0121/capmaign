@@ -7,9 +7,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Campaign } from '@app-models/campaign';
 import { CampaignType } from '@app-core/enums/campaign-type.enum';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
+import { ModalService } from '@app-components/modal/modal.service';
 
 import { CampaignResponseMockData } from '../../../fack-db/campaign-mock';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
+import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
 
 @Component({
   selector: 'app-campaigns',
@@ -38,7 +40,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -94,5 +97,14 @@ export class CampaignsComponent implements OnInit, OnDestroy {
         return;
       }
     }
+  }
+
+  onSendClicked() {
+    this.modalService.openModal(CampaignSendModalComponent, {
+      width: '80%',
+      data: {
+        campaign: this.tableSource.selected[0]
+      }
+    });
   }
 }
