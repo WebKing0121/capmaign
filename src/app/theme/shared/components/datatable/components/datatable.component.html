@@ -14,6 +14,7 @@
                [virtualization]="virtualScrolling"
                [loadingIndicator]="dataSource.loading$ | async"
                [limit]="limit"
+               [style.height.px]="tableHeight"
                (activate)="activate.emit($event)"
                (select)="onSelect($event)"
                (sort)="onSort($event)"
