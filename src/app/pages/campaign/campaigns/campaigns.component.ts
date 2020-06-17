@@ -88,7 +88,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       const columns = [
         { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
         { name: 'Subject', prop: 'subject', sortable: true },
-        { name: 'Type', prop: 'type', sortable: true, custom: true, template: this.tableColumnTypeTemplate },
+        { name: 'Type', prop: 'type', sortable: true, maxWidth: 90, custom: true, template: this.tableColumnTypeTemplate },
         { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
         { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
         { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
