@@ -26,8 +26,7 @@
     [resizeable]="false"
     [headerCheckboxable]="true"
     [checkboxable]="true"
-  >
-  </ngx-datatable-column>
+  ></ngx-datatable-column>
 
   <ngx-datatable-column *ngFor="let column of innerColumns"
                         [name]="column.name"
@@ -48,15 +47,14 @@
       <ng-container *ngIf="column.custom === true">
         <ng-container [ngTemplateOutlet]="column.template" [ngTemplateOutletContext]="{ $implicit: value, row: row, column: column }"></ng-container>
       </ng-container>
+
       <ng-container *ngIf="column.custom !== true">
         <ng-container *ngIf="column.pipe">
-          {{ column.pipe.pipe.transform(value, column.pipe.args) }}
-        </ng-container>
-        <ng-container *ngIf="!column.pipe">
-          {{ value }}
-        </ng-container>
+          {{ column.pipe.pipe.transform(value, column.pipe.args) }}</ng-container>
+        <ng-container *ngIf="!column.pipe">{{ value }}</ng-container>
       </ng-container>
     </ng-template>
+
   </ngx-datatable-column>
 </ngx-datatable>
 

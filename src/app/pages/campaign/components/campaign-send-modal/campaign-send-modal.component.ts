@@ -8,6 +8,7 @@ import { CampaignScheduler } from '@app-core/enums/campaign-scheduler.enum';
 
 interface ComponentProps {
   campaign: Campaign;
+  mode?: 'full' | 'test';
 }
 
 const MAILABLE_LIST = [

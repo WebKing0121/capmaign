@@ -21,8 +21,8 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() classes = ['app-datatable-common'];
   @Input() columnMode: ColumnMode = ColumnMode.flex;
   @Input() cssClasses: { [key: string]: string; };
-  @Input() headerHeight = 60;
-  @Input() rowHeight = 50;
+  @Input() headerHeight = 50;
+  @Input() rowHeight = 40;
   @Input() scrollbarV = true;
   @Input() scrollbarH = true;
   @Input() virtualScrolling = true;
@@ -39,7 +39,6 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   innerColumns: DataTableColumn[];
   selected = [];
   sorts: SortPropDir[] = [];
-  checkboxWidth = 44;
   SelectionType = SelectionType;
   SortType = SortType;
 
@@ -50,32 +49,19 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   ngOnInit() {
     this.innerColumns = this.columns;
 
-    if (!this.orderNames.length) {
-      this.columns.forEach(column => {
-        if (column.sortable !== false) {
-          this.orderNames.push(column.prop);
-        }
-      });
-    }
-
     if (this.dataSource) {
       this.dataSource.data$.pipe(
         takeUntil(this.destroy$)
       ).subscribe(data => {
         this.rows = data;
       });
-
-      // this.dataSource.order$.pipe(
-      //   takeUntil(this.destroy$)
-      // ).subscribe(({orderBy, orderByDirection}) => {
-      //   if (orderBy) {
-      //     this.sorts = [
-      //       {prop: orderBy, dir: tableSortDirectionOf(orderByDirection)}
-      //     ];
-      //   } else {
-      //     this.sorts = [];
-      //   }
-      // });
+      this.dataSource.recalculate$.pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(() => {
+        console.log('Datatable recalculate!');
+        this.handle.recalculate();
+        this.handle.recalculatePages();
+      });
     }
   }
 
@@ -88,6 +74,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.innerColumns = this.columns;
   }
 
   ngAfterViewInit() {

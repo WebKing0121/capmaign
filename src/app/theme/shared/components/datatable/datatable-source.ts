@@ -1,7 +1,7 @@
 import { EventEmitter, PipeTransform, TemplateRef } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 
-import { OrderByDirection, OrderProps, Pagination } from '@app-models/pagination';
+import { OrderProps, Pagination } from '@app-models/pagination';
 import { debounceTime, switchMap } from 'rxjs/operators';
 
 const DEFAULT_PAGE_SIZE = 20;
@@ -33,6 +33,7 @@ export class DataTableSource<T> {
 
   alive = true;
   changed$ = new EventEmitter();
+  recalculate$ = new EventEmitter();
 
   get isEmpty(): boolean {
     return this.totalCount === 0;
@@ -54,9 +55,13 @@ export class DataTableSource<T> {
   }
   set pageSize(size: number | string) {
     const sizeVal = typeof size === 'string' ? parseInt(size, 10) || 0 : size;
-    this.pagination.setPageSize(sizeVal);
-    this.pagination.setPageNumber(1);
-    this.emitChange();
+    if (this.pagination.pageSize !== sizeVal) {
+      this.pagination.setPageSize(sizeVal);
+      this.pagination.setPageNumber(1);
+
+      this.emitChange();
+      this.recalculate$.next();
+    }
   }
   get pageCount() {
     if (this.totalCount % this.pagination.pageSize) {
@@ -81,7 +86,10 @@ export class DataTableSource<T> {
 
     this.searchSubject.asObservable().pipe(
       debounceTime(500),
-      switchMap(() => of(this.emitChange()))
+      switchMap(() => {
+        this.pagination.pageNumber = 1;
+        return of(this.emitChange());
+      })
     ).subscribe();
   }
 

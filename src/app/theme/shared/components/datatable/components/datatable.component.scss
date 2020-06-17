@@ -18,6 +18,12 @@
     .datatable-body-cell {
       display: flex !important;
       align-items: center;
+
+      .datatable-body-cell-label {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
     }
     .datatable-body-cell.cell-hyperlink {
       cursor: pointer;
