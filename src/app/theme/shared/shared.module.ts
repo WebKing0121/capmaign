@@ -25,6 +25,8 @@ import { CampaignTasksComponent } from './components/campaign-tasks/campaign-tas
 import { SelectModule } from 'ng-select';
 import { CampaignSubTasksComponent } from './components/campaign-sub-tasks/campaign-sub-tasks.component';
 import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
+import { GoPalleteComponent } from './components/go-pallete/go-pallete.component';
+import { GoDiagramComponent } from './components/go-diagram/go-diagram.component';
 /*import 'hammerjs';
 import 'mousetrap';
 import { GalleryModule } from '@ks89/angular-modal-gallery';*/
@@ -74,7 +76,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TextMaskModule,
     CampaignTasksComponent,
     CampaignSubTasksComponent,
-    ChatWidgetComponent
+    ChatWidgetComponent,
+    GoPalleteComponent,
+    GoDiagramComponent
   ],
   declarations: [
     DataFilterPipe,
@@ -88,7 +92,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SocialAccountListComponent,
     CampaignTasksComponent,
     CampaignSubTasksComponent,
-    ChatWidgetComponent
+    ChatWidgetComponent,
+    GoPalleteComponent,
+    GoDiagramComponent
   ],
   providers: [
     {

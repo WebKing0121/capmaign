@@ -1,4 +1,13 @@
 <div class="datatable-pagination">
+   <label class="ml-auto mr-2 d-flex align-items-center">Show
+      <select [value]="tableSource.pageSize" class="show-entries"
+        (change)="tableSource.pageSize=$event.target.value">
+        <option value="10">10</option>
+        <option value="25">25</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+      </select> entries
+    </label>
   <a class="paginate_button previous"
      [class.disabled]="currentPage === 1"
      (click)="previous()">Previous</a>

@@ -1,0 +1,37 @@
+<div class="row mt-2">
+  <div class="col-12 card-automation">
+    <app-card [cardTitle]="pageTitle" [options]="false">
+      <div class="automation-form-wrapper">
+        <form [formGroup]="formGroup">
+          <div class="row">
+            <div class="col-12 col-lg-6 form-group">
+              <label>Name <span class="required-mark-after"></span></label>
+              <input class="form-control" formControlName="name" aria-label="Campaign Name">
+            </div>
+            <div class="col-12 col-lg-6 form-group">
+              <label>Description</label>
+              <input class="form-control" formControlName="description" aria-label="Campaign Subject">
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="row">
+        <div class="col-xl-3 col-md-6 col-sm-12">
+          <h2>Activities</h2>
+          <app-go-pallete></app-go-pallete>
+        </div>
+        <div class="col-xl-9 col-md-6 col-sm-12">
+          <h2>Automation</h2>
+          <app-go-diagram></app-go-diagram>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <div class="wrapper d-flex">
+          <button class="btn btn-outline-secondary ml-auto mr-2" (click)="onCancel()">Cancel</button>
+          <button class="btn btn-primary" (click)="onSave()">Save</button>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
