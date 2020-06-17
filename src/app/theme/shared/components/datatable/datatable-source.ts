@@ -206,5 +206,6 @@ export interface DataTableColumn {
   template?: TemplateRef<any>;
   headerTemplate?: TemplateRef<any>;
   hidden?: boolean;
+  alwaysVisible?: boolean;
   id?: number;
 }

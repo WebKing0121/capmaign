@@ -85,15 +85,15 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     setTimeout(() => {
-      const columns = [
-        { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
+      const columns: DataTableColumn[] = [
+        { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
         { name: 'Subject', prop: 'subject', sortable: true },
         { name: 'Type', prop: 'type', sortable: true, maxWidth: 90, custom: true, template: this.tableColumnTypeTemplate },
         { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
         { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
         { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
         { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-        { name: 'Settings', headerTemplate: this.tableColumnSettingsTemplate, maxWidth: 30 }
+        { name: 'Settings', headerTemplate: this.tableColumnSettingsTemplate, maxWidth: 30, alwaysVisible: true }
       ];
       this.tableSource.setColumns(columns);
     });
