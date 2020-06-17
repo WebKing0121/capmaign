@@ -26,15 +26,7 @@
       <button type="button" class="btn btn-outline-primary mr-2" [disabled]="selected.length === 0">
         <i class="far fa-trash-alt mr-1"></i> Delete</button>
 
-      <label class="ml-auto mr-4 d-flex align-items-center">Show&nbsp;
-        <select [value]="tableSource.pageSize" (change)="tableSource.pageSize=$event.target.value" [style.height.px]="31">
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select>&nbsp; entries</label>
-
-      <label class="mr-2 d-flex align-items-center">Search:&nbsp;
+      <label class="ml-auto mr-2 d-flex align-items-center">Search:&nbsp;
         <input type="search" class="" [style.height.px]="25" placeholder="" [formControl]="searchFormControl"></label>
     </div>
 
