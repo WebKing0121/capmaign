@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -17,7 +18,8 @@ export class GoogleAdsCreateComponent implements OnInit {
   siteLinksFormArray: FormArray;
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -54,6 +56,10 @@ export class GoogleAdsCreateComponent implements OnInit {
 
   save() {
     console.log('GoogleAdsCreate.Save => ', this.formGroup.value);
+  }
+
+  cancel() {
+    this.location.back();
   }
 
   createNewSiteLink() {
