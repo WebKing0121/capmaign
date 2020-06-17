@@ -22,7 +22,6 @@ export class CheckListComponent implements OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("change")
     const dataProp = 'data';
     if (changes[dataProp] && !changes[dataProp].firstChange) {
       this.items = JSON.parse(JSON.stringify(changes[dataProp].currentValue || {}));
