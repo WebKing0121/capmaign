@@ -823,3 +823,29 @@ pre[class*=language-]:before {
 .form-control:disabled, .form-control[readonly] {
     background: #f6f6f6;
 }
+
+.table-search {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: 150px;
+}
+.show-entries {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 5px;
+    background: #fff;
+}
+.total-counts {
+    position: absolute;
+    right: 10px;
+    top: 13px;
+}
+.btn-icon-normal-size {
+    width: 30px !important;
+    height: 30px !important;
+}

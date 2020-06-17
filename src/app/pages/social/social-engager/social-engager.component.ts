@@ -1,57 +1,53 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from '../../../_services/validation.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
+import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
+import { SocialEngager } from '@app-models/social-engager';
+import { SocialEngagersMockData } from '../../../fack-db/social-engagers-mock';
+import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
+
+
 @Component({
   selector: 'app-social-engager',
   templateUrl: './social-engager.component.html',
   styleUrls: ['./social-engager.component.scss']
 })
-export class SocialEngagerComponent implements OnInit {
+export class SocialEngagerComponent implements OnInit, OnDestroy {
   @ViewChild('newEngagerModal', { static: false }) newEngagerModal;
 
   cardButtons = [
     { label: 'New Engager', icon: 'icon-plus-circle', action: () => this.onNewEngager() },
   ];
 
-  engagers = [
-    {
-      id: 1,
-      first_name: 'David',
-      last_name: 'Wilson',
-      company: 'Kensington Brewing',
-      phone_number: '+1 647-628-6062',
-      zip: 'M4W 2L8',
-      lead_source: ''
-    },
-    {
-      id: 2,
-      first_name: 'Drew',
-      last_name: 'Hamilton',
-      company: 'Attix Pharmaceuticals',
-      phone_number: '+1 416-603-2912',
-      zip: 'M5T 1T1',
-      lead_source: ''
-    },
-    {
-      id: 3,
-      first_name: 'Kaden',
-      last_name: 'Anderson',
-      company: 'Paper Bag Records Inc',
-      phone_number: '+1 416-901-7470',
-      zip: 'M6E 1A5',
-      lead_source: ''
-    }
-  ];
+  showSearch: boolean;
+
   lastId = 3;
   createEnabled = false;
   public maskMobileNo = [/\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
 
   engagerForm: FormGroup;
 
+  destroy$ = new Subject();
+
   loading = false;
   submitted = false;
   error = '';
+
+  tableSource: DataTableSource<SocialEngager> = new DataTableSource<SocialEngager>(50);
+  columns: DataTableColumn[] = [
+    { name: 'First name', prop: 'first_name', sortable: true },
+    { name: 'Last name', prop: 'last_name', sortable: true },
+    { name: 'Company', prop: 'company', sortable: true },
+    { name: 'Phone number', prop: 'phone_number', sortable: true },
+    { name: 'Corporate Address Zip', prop: 'zip', sortable: true },
+    { name: 'Lead Source', prop: 'lead_source', sortable: true },
+  ];
+
+  selected: SocialEngager[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -60,6 +56,28 @@ export class SocialEngagerComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.showSearch = false;
+
+    this.tableSource.next(SocialEngagersMockData.slice(0, 50), SocialEngagersMockData.length);
+
+    this.tableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(change => {
+        console.log('Campaign Table Changes: ', change);
+
+        this.tableSource.next(
+          SocialEngagersMockData.slice(
+            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+            SocialEngagersMockData.length
+        );
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+
+
     this.engagerForm = this.formBuilder.group({
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
@@ -68,6 +86,16 @@ export class SocialEngagerComponent implements OnInit {
       mobile_number: ['', Validators.required],
       zip: ['', Validators.required],
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+  }
+
+  onActive(event) {
+    // TODO: Simplify later
+   
   }
 
   // convenience getter for easy access to form fields
@@ -83,18 +111,12 @@ export class SocialEngagerComponent implements OnInit {
     if (this.engagerForm.invalid) {
       return;
     }
-    this.lastId++;
-    this.engagers.push({
-      id: 3,
-      first_name: this.f.first_name.value,
-      last_name: this.f.last_name.value,
-      company: this.f.company.value,
-      phone_number: this.f.mobile_number.value,
-      zip: this.f.zip.value,
-      lead_source: ''
-    });
     this.submitted = false;
     this.engagerForm.reset();
     this.newEngagerModal.hide();
+  }
+
+  onClickSearchShow() {
+    this.showSearch = !this.showSearch;
   }
 }
