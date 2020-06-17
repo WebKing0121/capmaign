@@ -58,7 +58,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
         this.innerColumns = columns;
       });
       this.limit = this.dataSource.pageSize;
-      this.tableHeight = this.headerHeight + this.rowHeight * this.limit + 10;
+      this.tableHeight = this.headerHeight + this.rowHeight * this.limit + 30;
 
       this.dataSource.data$.pipe(
         takeUntil(this.destroy$)
@@ -71,7 +71,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
       ).subscribe(() => {
         this.limit = this.dataSource.pageSize;
         this.handle.limit = this.limit;
-        this.tableHeight = this.headerHeight + this.rowHeight * this.limit + 10;
+        this.tableHeight = this.headerHeight + this.rowHeight * this.limit + 30;
         this.handle.recalculate();
         this.handle.recalculatePages();
       });

@@ -10,3 +10,14 @@ export enum CampaignFromDisplayType {
   CampaignToCash = 'campaign-to-cash',
   Palskem = 'palskem'
 }
+
+export enum CampaignSendAsType {
+  Commercial = 'commercial',
+  Transactional = 'transactional'
+}
+
+export enum CampaignLeadGradingType {
+  DefaultGrading = 'default-grading',
+  LeadGradingProfile = 'lead-grading-profile',
+  RecordsGrading = 'records-grading'
+}
