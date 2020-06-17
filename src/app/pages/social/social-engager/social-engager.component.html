@@ -12,17 +12,14 @@
         </div>
       </div>
       <div class="d-flex">
-        <button class="btn btn-outline-primary btn-normal-padding" (click)="onNewEngager()">New Engager</button>
-        <label class="ml-auto mr-2 d-flex align-items-center">Show
-          <select [value]="tableSource.pageSize" class="show-entries"
-            (change)="tableSource.pageSize=$event.target.value">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select> entries
-        </label>
-        <div class="search-section">
+        <button class="btn btn-outline-primary btn-normal-padding" (click)="onNewEngager()">
+          <i class="fa fa-plus"></i> New Engager
+        </button>
+        <button type="button" class="btn btn-outline-primary mr-2  btn-normal-padding"
+          [disabled]="selected.length === 0" (click)="onDeleteEngager()">
+          <i class="far fa-trash-alt mr-1"></i> Delete
+        </button>
+        <div class="search-section ml-auto">
           <label class="mr-2 ml-10 d-flex align-items-center" *ngIf="showSearch">
             <input type="search" class="table-search" [style.height.px]="25" placeholder="Search"
               (keypress)="tableSource.search($event.target.value)">
@@ -34,12 +31,12 @@
         </button>
       </div>
 
-      <div class="campaigns-table mt-2">
+      <div class="social-engagers-table mt-2">
         <app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [columns]="columns"
           [columnMode]="'force'" (activate)="onActive($event)"></app-datatable>
 
-        <div class="d-flex">
-          <app-datatable-pagination class="ml-auto mr-5" [tableSource]="tableSource"></app-datatable-pagination>
+        <div class="w-100">
+          <app-datatable-pagination [tableSource]="tableSource"></app-datatable-pagination>
         </div>
       </div>
 
@@ -52,7 +49,7 @@
   <i class="fa fa-bars" aria-hidden="true"></i>
 </ng-template>
 
-<app-ui-modal #newEngagerModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl'">
+<app-ui-modal #newEngagerModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
   <div class="app-modal-header">
     <h5 class="modal-title">Create a New Social Engager</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
@@ -66,68 +63,49 @@
       <div class="row">
         <div class="col-md-6">
           <label for="first_name">First name</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-user"></i></span>
-            </div>
-            <input type="text" class="form-control" id="first_name" placeholder="First name"
-              formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
-          </div>
+          <input type="text" class="form-control" id="first_name" placeholder="First name" formControlName="first_name"
+            [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
+
         </div>
         <div class="col-md-6">
           <label for="last_name">Last name</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-user"></i></span>
-            </div>
-            <input type="text" class="form-control" id="last_name" placeholder="Last name" formControlName="last_name"
-              [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
-          </div>
+
+          <input type="text" class="form-control" id="last_name" placeholder="Last name" formControlName="last_name"
+            [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+
         </div>
       </div>
       <div class="row mt-4">
         <div class="col-md-6">
           <label for="compnay">Company</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-tag"></i></span>
-            </div>
-            <input type="text" class="form-control" id="compnay" placeholder="Company" formControlName="company"
-              [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
-          </div>
+
+          <input type="text" class="form-control" id="compnay" placeholder="Company" formControlName="company"
+            [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
+
         </div>
         <div class="col-md-6">
           <label for="email_address">Email address</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-at-sign"></i></span>
-            </div>
-            <input type="email" class="form-control" id="email_address" placeholder="Email Address"
-              formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-          </div>
+
+          <input type="email" class="form-control" id="email_address" placeholder="Email Address"
+            formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+
         </div>
       </div>
       <div class="row mt-4">
         <div class="col-md-6">
           <label for="phone_number">Personal Phone number</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-phone"></i></span>
-            </div>
-            <input [textMask]="{mask: maskMobileNo}" type="text" class="form-control" id="phone_number"
-              placeholder="9999-999-999" formControlName="mobile_number"
-              [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
-          </div>
+
+          <input [textMask]="{mask: maskMobileNo}" type="text" class="form-control" id="phone_number"
+            placeholder="9999-999-999" formControlName="mobile_number"
+            [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
+
         </div>
         <div class="col-md-6">
           <label for="zip">Company Zip</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-map-pin"></i></span>
-            </div>
-            <input type="text" class="form-control" id="zip" placeholder="Zip" formControlName="zip"
-              [ngClass]="{ 'is-invalid': submitted && f.zip.errors }">
-          </div>
+
+          <input type="text" class="form-control" id="zip" placeholder="Zip" formControlName="zip"
+            [ngClass]="{ 'is-invalid': submitted && f.zip.errors }">
+
         </div>
       </div>
     </form>
@@ -138,3 +116,5 @@
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="newEngagerModal.hide()">Close</button>
   </div>
 </app-ui-modal>
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
+	[buttons]="confirmButtons"></app-confirm-modal>

@@ -5,13 +5,13 @@
                [headerHeight]="headerHeight"
                [rowHeight]="rowHeight"
                [selected]="selected"
-               [selectionType]="SelectionType.checkbox"
+               [selectionType]="selectionType"
                [sorts]="sorts"
                [sortType]="SortType.multi"
                [externalSorting]="externalSorting"
                [scrollbarV]="scrollbarV"
                [scrollbarH]="scrollbarH"
-               [virtualization]="virtualScrolling"
+               
                [loadingIndicator]="dataSource.loading$ | async"
                (activate)="activate.emit($event)"
                (select)="onSelect($event)"
@@ -26,8 +26,7 @@
     [resizeable]="false"
     [headerCheckboxable]="true"
     [checkboxable]="true"
-  >
-  </ngx-datatable-column>
+  ></ngx-datatable-column>
 
   <ngx-datatable-column *ngFor="let column of innerColumns"
                         [name]="column.name"
@@ -35,6 +34,7 @@
                         [cellClass]="column.cellClass | datatableClassname"
                         [headerClass]="column.headerClass | datatableClassname"
                         [headerTemplate]="column.headerTemplate"
+                        [cellTemplate]="column.template"
                         [flexGrow]="column.flexGrow"
                         [minWidth]="column.minWidth"
                         [maxWidth]="column.maxWidth"
@@ -48,16 +48,15 @@
       <ng-container *ngIf="column.custom === true">
         <ng-container [ngTemplateOutlet]="column.template" [ngTemplateOutletContext]="{ $implicit: value, row: row, column: column }"></ng-container>
       </ng-container>
+
       <ng-container *ngIf="column.custom !== true">
         <ng-container *ngIf="column.pipe">
-          {{ column.pipe.pipe.transform(value, column.pipe.args) }}
-        </ng-container>
-        <ng-container *ngIf="!column.pipe">
-          {{ value }}
-        </ng-container>
+          {{ column.pipe.pipe.transform(value, column.pipe.args) }}</ng-container>
+        <ng-container *ngIf="!column.pipe">{{ value }}</ng-container>
       </ng-container>
     </ng-template>
+
   </ngx-datatable-column>
 </ngx-datatable>
 
-<div class="empty-message" *ngIf="(dataSource.totalCount$ | async) === 0">No data to display</div>
+<!-- <div class="empty-message" *ngIf="(dataSource.totalCount$ | async) === 0">No data to display</div> -->

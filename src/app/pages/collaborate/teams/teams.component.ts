@@ -150,18 +150,18 @@ export class TeamsComponent implements OnInit, OnDestroy {
       }, {
         title: '',
       }],
-      rowCallback: (row: Node, data: any[] | any, index: number) => {
-        $('td', row).off('click');
-        $('td', row).on('click', () => {
-          if (this.previousRow) {
-            $(this.previousRow).removeClass('selected');
-          }
-          $(row).addClass('selected');
-          this.previousRow = row;
-          this.onClickTeam(Number($(row).attr('id')));
-        });
-        return row;
-      }
+      // rowCallback: (row: Node, data: any[] | any, index: number) => {
+      //   $('td', row).off('click');
+      //   $('td', row).on('click', () => {
+      //     if (this.previousRow) {
+      //       $(this.previousRow).removeClass('selected');
+      //     }
+      //     $(row).addClass('selected');
+      //     this.previousRow = row;
+      //     this.onClickTeam(Number($(row).attr('id')));
+      //   });
+      //   return row;
+      // }
 
     };
 

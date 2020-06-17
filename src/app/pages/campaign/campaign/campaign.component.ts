@@ -3,7 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CampaignFromDisplayType } from '@app-core/enums/campaign-type.enum';
+import { ModalService } from '@app-components/modal/modal.service';
+import { Campaign } from '@app-models/campaign';
 import { CampaignResponseMockData } from '../../../fack-db/campaign-mock';
+import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
 
 @Component({
   selector: 'app-campaign',
@@ -13,6 +16,7 @@ import { CampaignResponseMockData } from '../../../fack-db/campaign-mock';
 export class CampaignComponent implements OnInit {
   CampaignFromDisplayType = CampaignFromDisplayType;
 
+  campaign: Campaign;
   campaignMode: 'new' | 'edit';
 
   formGroup: FormGroup;
@@ -20,7 +24,8 @@ export class CampaignComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private modalService: ModalService
   ) { }
 
   ngOnInit(): void {
@@ -28,6 +33,7 @@ export class CampaignComponent implements OnInit {
     const { mode } = this.route.snapshot.data;
 
     const data = CampaignResponseMockData.find(d => d.id === id);
+    this.campaign = data;
     this.campaignMode = mode === 'new' ? 'new' : 'edit';
 
     this.formGroup = this.fb.group({
@@ -53,10 +59,24 @@ export class CampaignComponent implements OnInit {
   }
 
   onSave() {
-    console.log('Campaign component.onSave =>', this.formGroup.value);
+    this.router.navigate(['..'], {relativeTo: this.route});
   }
 
   onCancel() {
     this.router.navigate(['..'], {relativeTo: this.route});
+  }
+
+  sendEmail(mode: 'full' | 'test') {
+    if (!this.campaign) {
+      return;
+    }
+
+    this.modalService.openModal(CampaignSendModalComponent, {
+      width: '80%',
+      data: {
+        campaign: null,
+        mode
+      }
+    });
   }
 }

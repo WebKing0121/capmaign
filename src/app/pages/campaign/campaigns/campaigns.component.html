@@ -1,41 +1,33 @@
-<div class="card">
+<div class="card mb-5">
   <div class="card-header d-flex align-items-center">
     <h2 class="m-0">MANAGE CAMPAIGN</h2>
     <div class="ml-auto">
-      <span class="campaigns-header_totalNum ml-auto mr-2">Total Campaign: {{tableSource.totalCount$ | async}}</span>
-      <span class="mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
-      <span class="mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
+      <span class="text-primary ml-auto mr-3">Total Campaign: {{tableSource.totalCount$ | async}}</span>
+      <span class="text-primary mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
+      <span class="text-primary mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
     </div>
   </div>
+
   <div class="card-body">
     <div class="d-flex">
       <div class="btn-group mr-5 dropdown" ngbDropdown placement="bottom-left">
-        <button class="btn btn-info" ngbDropdownToggle type="button">Send Mail</button>
+        <button class="btn btn-primary" ngbDropdownToggle type="button">Create Campaign</button>
         <div ngbDropdownMenu>
-          <div class="dropdown-item" (click)="onCampaignTypeClicked(CampaignType.Email)">Create Email Campaign</div>
-          <div class="dropdown-item" (click)="onCampaignTypeClicked(CampaignType.Mobile)">Create Mobile Campaign</div>
-          <div class="dropdown-item" (click)="onCampaignTypeClicked(CampaignType.Social)">Create Social Campaign</div>
-          <div class="dropdown-item" (click)="onCampaignTypeClicked(CampaignType.GoogleAds)">Create Google Ads Campaign</div>
-          <div class="dropdown-item" (click)="onCampaignTypeClicked(CampaignType.Facebook)">Create Facebook Campaign</div>
+          <div class="dropdown-item cursor-pointer" (click)="onCampaignTypeClicked(CampaignType.Email)">Create Email Campaign</div>
+          <div class="dropdown-item cursor-pointer" (click)="onCampaignTypeClicked(CampaignType.Mobile)">Create Mobile Campaign</div>
+          <div class="dropdown-item cursor-pointer" (click)="onCampaignTypeClicked(CampaignType.Social)">Create Social Campaign</div>
+          <div class="dropdown-item cursor-pointer" (click)="onCampaignTypeClicked(CampaignType.GoogleAds)">Create Google Ads Campaign</div>
+          <div class="dropdown-item cursor-pointer" (click)="onCampaignTypeClicked(CampaignType.Facebook)">Create Facebook Campaign</div>
         </div>
       </div>
 
-      <button type="button" class="btn btn-primary mr-2" [disabled]="selected.length !== 1" (click)="onSendClicked()">
-        <i class="far fa-envelope mr-1"></i> Send Campaign</button>
-      <button type="button" class="btn btn-outline-danger mr-2" [disabled]="selected.length === 0">
+      <button type="button" class="btn btn-outline-primary mr-2" [disabled]="selected.length !== 1" (click)="onSendClicked()">
+        <i class="far fa-envelope mr-1"></i> Send Email</button>
+      <button type="button" class="btn btn-outline-primary mr-2" [disabled]="selected.length === 0">
         <i class="far fa-trash-alt mr-1"></i> Delete</button>
 
-      <label class="ml-auto mr-2 d-flex align-items-center">Show
-        <select [value]="tableSource.pageSize" (change)="tableSource.pageSize=$event.target.value">
-          <option value="10">10</option>
-          <option value="25">25</option>
-          <option value="50">50</option>
-          <option value="100">100</option>
-        </select> entries</label>
-      <label class="mr-2 d-flex align-items-center">Search:
-        <input type="search" class="" [style.height.px]="25" placeholder="" (keypress)="tableSource.search($event.target.value)"></label>
-
-      <button type="button" class="btn btn-sm btn-icon btn-outline-primary"><i class="fas fa-sync-alt"></i></button>
+      <label class="ml-auto mr-2 d-flex align-items-center">Search:&nbsp;
+        <input type="search" class="" [style.height.px]="25" placeholder="" [formControl]="searchFormControl"></label>
     </div>
 
     <div class="campaigns-table mt-2">
@@ -49,9 +41,13 @@
         <app-datatable-pagination class="ml-auto mr-5" [tableSource]="tableSource"></app-datatable-pagination>
       </div>
     </div>
-
-    <ng-template #tableColumnSettings let-column="column">
-      <i class="fa fa-bars" aria-hidden="true"></i>
-    </ng-template>
   </div>
 </div>
+
+<ng-template #tableColumnSettings let-column="column">
+  <i class="fa fa-bars" aria-hidden="true"></i>
+</ng-template>
+
+<ng-template #tableColumnType let-value let-column="column">
+  {{value === CampaignType.Email ? 'Email' : 'SMS' }}
+</ng-template>

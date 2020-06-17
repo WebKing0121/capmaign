@@ -3,6 +3,7 @@ import { SocialEngager } from '@app-models/social-engager';
 export const SocialEngagersMockData: SocialEngager[] = [
   {
     id: 1,
+    email: 'david.wilson@outlook.com',
     first_name: 'David',
     last_name: 'Wilson',
     company: 'Kensington Brewing',
@@ -14,6 +15,7 @@ export const SocialEngagersMockData: SocialEngager[] = [
   },
   {
     id: 2,
+    email: 'drew.hamilton@outlook.com',
     first_name: 'Drew',
     last_name: 'Hamilton',
     company: 'Attix Pharmaceuticals',
@@ -25,6 +27,7 @@ export const SocialEngagersMockData: SocialEngager[] = [
   },
   {
     id: 3,
+    email: 'kaden.anderson@outlook.com',
     first_name: 'Kaden',
     last_name: 'Anderson',
     company: 'Paper Bag Records Inc',

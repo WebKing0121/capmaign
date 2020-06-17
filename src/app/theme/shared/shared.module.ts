@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AlertModule, BreadcrumbModule, CardModule, ModalModule } from './components';
+import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { DataFilterPipe } from './components/data-table/data-filter.pipe';
 import { TodoListRemoveDirective } from './components/todo/todo-list-remove.directive';
 import { TodoCardCompleteDirective } from './components/todo/todo-card-complete.directive';
@@ -50,7 +51,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TextMaskModule,
     NgbProgressbarModule,
     NgbDatepickerModule,
-    SelectModule
+    SelectModule,
+    DatatableModule
   ],
   exports: [
     CommonModule,

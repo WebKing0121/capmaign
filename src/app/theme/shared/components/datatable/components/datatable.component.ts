@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit,
-  Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterViewInit, Component, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit,
+  Output, SimpleChanges, ViewChild, ViewEncapsulation
+} from '@angular/core';
 import { ColumnMode, DatatableComponent as NgxDataTableComponent, SelectionType, SortPropDir, SortType } from '@swimlane/ngx-datatable';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -11,23 +13,24 @@ import { DataTableSource, DataTableColumn } from '../datatable-source';
 @Component({
   selector: 'app-datatable',
   templateUrl: './datatable.component.html',
-  styleUrls: ['./datatable.component.scss']
+  styleUrls: ['./datatable.component.scss'],
 })
 export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
   @HostBinding('class.app-datatable') hostClassName = true;
 
-  @ViewChild(NgxDataTableComponent, {static: false}) handle: NgxDataTableComponent;
+  @ViewChild(NgxDataTableComponent, { static: false }) handle: NgxDataTableComponent;
 
-  @Input() classes = ['app-datatable-common'];
+  @Input() classes = ['app-datatable-common', 'bootstrap'];
   @Input() columnMode: ColumnMode = ColumnMode.flex;
   @Input() cssClasses: { [key: string]: string; };
-  @Input() headerHeight = 60;
-  @Input() rowHeight = 50;
+  @Input() headerHeight = 50;
+  @Input() rowHeight = 40;
   @Input() scrollbarV = true;
   @Input() scrollbarH = true;
   @Input() virtualScrolling = true;
   @Input() externalSorting = false;
   @Input() selective = false;
+  @Input() selectionType = SelectionType.checkbox;
 
   @Input() columns: DataTableColumn[] = [];
   @Input() dataSource: DataTableSource<any>;
@@ -39,24 +42,15 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   innerColumns: DataTableColumn[];
   selected = [];
   sorts: SortPropDir[] = [];
-  checkboxWidth = 44;
-  SelectionType = SelectionType;
+
   SortType = SortType;
 
   destroy$ = new Subject<boolean>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     this.innerColumns = this.columns;
-
-    if (!this.orderNames.length) {
-      this.columns.forEach(column => {
-        if (column.sortable !== false) {
-          this.orderNames.push(column.prop);
-        }
-      });
-    }
 
     if (this.dataSource) {
       this.dataSource.data$.pipe(
@@ -64,18 +58,13 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
       ).subscribe(data => {
         this.rows = data;
       });
-
-      // this.dataSource.order$.pipe(
-      //   takeUntil(this.destroy$)
-      // ).subscribe(({orderBy, orderByDirection}) => {
-      //   if (orderBy) {
-      //     this.sorts = [
-      //       {prop: orderBy, dir: tableSortDirectionOf(orderByDirection)}
-      //     ];
-      //   } else {
-      //     this.sorts = [];
-      //   }
-      // });
+      this.dataSource.recalculate$.pipe(
+        takeUntil(this.destroy$)
+      ).subscribe(() => {
+        console.log('Datatable recalculate!');
+        this.handle.recalculate();
+        this.handle.recalculatePages();
+      });
     }
   }
 
@@ -88,9 +77,14 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.innerColumns = this.columns;
+    this.handle.recalculate();
+    this.handle.recalculatePages();
   }
 
   ngAfterViewInit() {
+    console.log("View inited");
+    this.handle.recalculate();
   }
 
   onSelect(event: { selected: any[] }) {

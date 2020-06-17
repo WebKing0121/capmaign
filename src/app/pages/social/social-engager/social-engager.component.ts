@@ -18,7 +18,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 })
 export class SocialEngagerComponent implements OnInit, OnDestroy {
   @ViewChild('newEngagerModal', { static: false }) newEngagerModal;
-
+  @ViewChild('confirmModal', { static: false }) confirmModal;
   cardButtons = [
     { label: 'New Engager', icon: 'icon-plus-circle', action: () => this.onNewEngager() },
   ];
@@ -39,7 +39,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy {
 
   tableSource: DataTableSource<SocialEngager> = new DataTableSource<SocialEngager>(50);
   columns: DataTableColumn[] = [
-    { name: 'First name', prop: 'first_name', sortable: true },
+    { name: 'First name', prop: 'first_name', sortable: true, cellClass: ['cell-hyperlink'] },
     { name: 'Last name', prop: 'last_name', sortable: true },
     { name: 'Company', prop: 'company', sortable: true },
     { name: 'Phone number', prop: 'phone_number', sortable: true },
@@ -48,6 +48,10 @@ export class SocialEngagerComponent implements OnInit, OnDestroy {
   ];
 
   selected: SocialEngager[] = [];
+
+  confirmButtons = [
+    { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -79,6 +83,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy {
 
 
     this.engagerForm = this.formBuilder.group({
+      id: 0,
       first_name: ['', Validators.required],
       last_name: ['', Validators.required],
       company: ['', Validators.required],
@@ -95,13 +100,26 @@ export class SocialEngagerComponent implements OnInit, OnDestroy {
 
   onActive(event) {
     // TODO: Simplify later
-   
+    if (event.type === 'click' && event.cellIndex === 1) {
+      const engager = event.row as SocialEngager;
+      this.engagerForm.setValue({
+        id: engager.id,
+        first_name: engager.first_name,
+        last_name: engager.last_name,
+        company: engager.company,
+        email: engager.email,
+        mobile_number: engager.phone_number,
+        zip: engager.zip,
+      });
+      this.newEngagerModal.show();
+    }
   }
 
   // convenience getter for easy access to form fields
   get f() { return this.engagerForm.controls; }
 
   onNewEngager() {
+    this.engagerForm.reset();
     this.newEngagerModal.show();
   }
 
@@ -118,5 +136,13 @@ export class SocialEngagerComponent implements OnInit, OnDestroy {
 
   onClickSearchShow() {
     this.showSearch = !this.showSearch;
+  }
+
+  onConfirmDelete() {
+
+  }
+
+  onDeleteEngager() {
+    this.confirmModal.show();
   }
 }

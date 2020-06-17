@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FullCalendarModule } from '@fullcalendar/angular';
-import { DataTablesModule } from 'angular-datatables';
+import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { CollaborateRoutingModule } from './collaborate-routing.module';
 import { SharedModule } from '../../theme/shared/shared.module';
 import { MyCalendarComponent } from './my-calendar/my-calendar.component';
@@ -30,7 +30,7 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
     FullCalendarModule,
     CollaborateRoutingModule,
     SharedModule,
-    DataTablesModule,
+    DatatableModule,
     SelectModule,
     NgbProgressbarModule,
     NgbDatepickerModule,

@@ -4,7 +4,7 @@
 		<app-card cardTitle="Collaboration Teams" #cardTeams [cardButtons]="cardButtons" cardClass="card-datatable"
 			[options]="false">
 			<div class="table-responsive">
-				<table datatable #teamsTable [dtOptions]="dtTeamsOption" [dtTrigger]="dtTrigger"
+				<table datatable #teamsTable
 					class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -61,12 +61,12 @@
 				</table>
 			</div>
 		</app-card>
-		<app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
+		<!-- <app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
 			[users]="allUsers" (selectRow)="onSelectTask($event)">
 		</app-campaign-tasks>
 		<app-campaign-sub-tasks #campaignSubTasks [taskId]="selectedTaskId" [taskName]="selectedTaskName"
 			[userId]="selectedUserId" [userName]="selectedUserName">
-		</app-campaign-sub-tasks>
+		</app-campaign-sub-tasks> -->
 	</div>
 </div>
 </div>

@@ -6,8 +6,22 @@
       display: flex !important;
       align-items: center;
 
+      .datatable-checkbox {
+        margin-left: 10px;
+      }
       .datatable-header-cell-wrapper {
-        font-weight: bold;
+        // font-weight: bold;
+        .datatable-header-cell-label {
+          text-transform: uppercase;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          width: 100%;
+          padding: 0 10px;
+          position:relative;
+          font-size: 14px;
+          color: black;
+        }
       }
     }
     .datatable-row-wrapper {
@@ -18,6 +32,16 @@
     .datatable-body-cell {
       display: flex !important;
       align-items: center;
+
+      .datatable-body-cell-label {
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 100%;
+        padding: 0 10px;
+        position:relative;
+        font-size: 13px;
+      }
     }
     .datatable-body-cell.cell-hyperlink {
       cursor: pointer;
@@ -25,4 +49,9 @@
       color: deepskyblue;
     }
   }
+}
+
+.app-datatable-common {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
 }
