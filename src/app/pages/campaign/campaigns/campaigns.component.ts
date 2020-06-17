@@ -134,9 +134,11 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
       case CampaignType.GoogleAds: {
+        this.router.navigate(['advertising', 'google-ads', 'new-ads']);
         return;
       }
       case CampaignType.Facebook: {
+        this.router.navigate(['advertising', 'facebook-ads', 'new-ads']);
         return;
       }
     }
