@@ -1,14 +1,11 @@
 <div class="check-list">
-  <cdk-virtual-scroll-viewport #scrollViewport
-                               class="scope-scroll-list"
-                               [style.height]="height"
-                               itemSize="24"
-                               minBufferPx="240"
-                               maxBufferPx="240"
-                               (scrolledIndexChange)="scrolledIndexChange($event)">
-    <div class="rule-scope-item" *cdkVirtualFor="let item of items">
-      <input type="checkbox" [value]="item.checked" (change)="onCheckChange(item, $event.target.checked)" aria-label="Checkbox">
-      {{item.label}}
+  <div class="scope-scroll-list"
+       [style.height]="height">
+    <div class="rule-scope-item" *ngFor="let item of items">
+      <label>
+        <input [id]="item.label" class="mr-1" type="checkbox" [checked]="item.checked" (change)="onCheckChange(item, $event.target.checked)" aria-label="Checkbox" [disabled]="item.disabled">
+        {{item.label}}
+      </label>
     </div>
-  </cdk-virtual-scroll-viewport>
+  </div>
 </div>

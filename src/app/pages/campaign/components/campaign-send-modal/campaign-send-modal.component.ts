@@ -1,14 +1,19 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+
+import { NgbDatepicker, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 import { MODAL_DATA, ModalRef } from '@app-components/modal/modal-ref';
 import { CheckListItem } from '@app-components/list/interface';
 import { Campaign } from '@app-models/campaign';
 import { CampaignScheduler } from '@app-core/enums/campaign-scheduler.enum';
+import { CampaignSendAsType } from '@app-core/enums/campaign-type.enum';
+import { CampaignLeadGradingType } from '@app-core/enums/campaign-type.enum';
 
+import { CampaignResponseMockData } from '../../../../fack-db/campaign-mock';
+import { WizardComponent } from 'angular-archwizard';
 interface ComponentProps {
   campaign: Campaign;
-  mode?: 'full' | 'test';
 }
 
 const MAILABLE_LIST = [
@@ -28,14 +33,43 @@ const INCLUDE_FILTERS = [
   templateUrl: './campaign-send-modal.component.html',
   styleUrls: ['./campaign-send-modal.component.scss']
 })
+
 export class CampaignSendModalComponent implements OnInit {
+
   CampaignScheduler = CampaignScheduler;
+  CampaignSendAsType = CampaignSendAsType;
+  CampaignLeadGradingType = CampaignLeadGradingType;
+
 
   formGroup: FormGroup;
   sendOnFormControl: FormControl;
 
-  mailableList: CheckListItem[] = [];
+  includeMailableList: CheckListItem[] = [];
   includeFiltersList: CheckListItem[] = [];
+  excludeMailableList: CheckListItem[] = [];
+  excludeFiltersList: CheckListItem[] = [];
+
+  checkedIncludeMailableList: CheckListItem[] = [];
+  checkedIncludeFiltersList: CheckListItem[] = [];
+  checkedExcludeMailableList: CheckListItem[] = [];
+  checkedExcludeFiltersList: CheckListItem[] = [];
+
+  campaignNameList: string[];
+  emailCampaignType: any;
+  navigateForward: string;
+
+  sendOnFlag: boolean;
+  selectedDate: NgbDate;
+  public model: any = {};
+
+  sendAsOption: CampaignSendAsType;
+  leadGradingOption: CampaignLeadGradingType;
+
+  @ViewChild(WizardComponent)
+  wizard: WizardComponent;
+
+  @ViewChild(NgbDatepicker)
+  datePicker: NgbDatepicker;
 
   constructor(
     private fb: FormBuilder,
@@ -44,19 +78,86 @@ export class CampaignSendModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.mailableList = MAILABLE_LIST.map(item => ({
+    this.includeMailableList = MAILABLE_LIST.map(item => ({
       ...item,
-      checked: false
+      checked: false, disabled: false
     }));
     this.includeFiltersList = INCLUDE_FILTERS.map(item => ({
       ...item,
-      checked: false
+      checked: false, disabled: false
+    }));
+    this.excludeMailableList = MAILABLE_LIST.map(item => ({
+      ...item,
+      checked: false, disabled: false
+    }));
+    this.excludeFiltersList = INCLUDE_FILTERS.map(item => ({
+      ...item,
+      checked: false, disabled: false
     }));
 
+    this.campaignNameList = CampaignResponseMockData.map(campaign => campaign.name);
+
+    this.sendAsOption = CampaignSendAsType.Commercial;
+    this.leadGradingOption = CampaignLeadGradingType.DefaultGrading;
+
+    this.formGroup = this.fb.group({
+      name: this.props && this.props.campaign.name,
+      subject: this.props && this.props.campaign.subject,
+      fromAddress: '',
+      replyAddress: '',
+      fromName: '',
+      sendAs: '',
+      leadScoring: '',
+      leadGrading: '',
+      dp_to: ''
+    });
+    this.sendOnFlag = false;
+    this.emailCampaignType = this.campaignNameList;
     this.sendOnFormControl = this.fb.control(CampaignScheduler.SendNow, Validators.required);
   }
 
   onCancel() {
     this.modalRef.cancel();
+  }
+
+  onEmailCampaignTypeChange(value) {
+    const campaign = CampaignResponseMockData.find(campaign => {return campaign.name === value;})
+    this.formGroup.controls['name'].setValue(campaign.name);
+    this.formGroup.controls['subject'].setValue(campaign.subject);
+  }
+
+  onNextClick() {
+    const nextFlag = this.includeMailableList.find(item => {return item.checked === true}) || this.includeFiltersList.find(item => {return item.checked === true});
+    if(!nextFlag) {
+      alert("Please select at least one list/filter to send/schedule email.");
+    } else {
+      this.checkedIncludeMailableList = this.includeMailableList.filter(item => item.checked);
+      this.checkedIncludeMailableList = this.checkedIncludeMailableList.map(item => ({...item, disabled: true}));
+      this.checkedIncludeFiltersList = this.includeFiltersList.filter(item => item.checked);
+      this.checkedIncludeFiltersList = this.checkedIncludeFiltersList.map(item => ({...item, disabled: true}));
+      this.checkedExcludeMailableList = this.excludeMailableList.filter(item => item.checked);
+      this.checkedExcludeMailableList = this.checkedExcludeMailableList.map(item => ({...item, disabled: true}));
+      this.checkedExcludeFiltersList = this.excludeFiltersList.filter(item => item.checked);
+      this.checkedExcludeFiltersList = this.checkedExcludeFiltersList.map(item => ({...item, disabled: true}));
+      this.wizard.goToNextStep();
+    }
+  }
+
+  sendNowClick(evt) {
+    const target = evt.target;
+    if(target.checked) {
+      this.sendOnFlag = false;
+    }
+  }
+
+  sendOnClick(evt) {
+    const target = evt.target;
+    if(target.checked) {
+      this.sendOnFlag = true;
+    }
+  }
+
+  onSelect(event): void {
+    this.selectedDate = event;
   }
 }

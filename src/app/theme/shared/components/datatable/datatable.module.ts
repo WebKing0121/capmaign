@@ -7,6 +7,9 @@ import { DatatableConfigPipe } from './pipes/datatable-config.pipe';
 
 import { DatatableComponent } from './components/datatable.component';
 import { DatatablePaginationComponent } from './components/datatable-pagination.component';
+import { DatatableHeaderMenuDirective } from './directives/datatable-header-menu.directive';
+import { DatatableColumnsMenuComponent } from './menus/datatable-columns-menu/datatable-columns-menu.component';
+import { DatatableSortMenuComponent } from './menus/datatable-sort-menu/datatable-sort-menu.component';
 
 @NgModule({
   imports: [
@@ -15,14 +18,17 @@ import { DatatablePaginationComponent } from './components/datatable-pagination.
   ],
   declarations: [
     DatatableComponent,
-
     DatatableClassnamePipe,
     DatatableConfigPipe,
-    DatatablePaginationComponent
+    DatatablePaginationComponent,
+    DatatableHeaderMenuDirective,
+    DatatableColumnsMenuComponent,
+    DatatableSortMenuComponent
   ],
   exports: [
     DatatableComponent,
-    DatatablePaginationComponent
+    DatatablePaginationComponent,
+    DatatableHeaderMenuDirective
   ]
 })
 export class DatatableModule { }

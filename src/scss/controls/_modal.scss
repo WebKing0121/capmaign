@@ -6,9 +6,14 @@
     position: relative;
     width: 100%;
     min-width: 350px;
+    max-height: calc(100vh - 3.5rem);
 
-    .modal-dialog {
-      width: 100%;
+    .modal-content {
+      max-height: 100%;
+
+      .modal-body {
+        overflow-y: auto;
+      }
     }
   }
 }

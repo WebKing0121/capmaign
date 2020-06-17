@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CheckListItem } from '@app-components/list/interface';
 
 @Component({
@@ -19,6 +19,14 @@ export class CheckListComponent implements OnInit {
 
   ngOnInit(): void {
     this.items = JSON.parse(JSON.stringify(this.data));
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("change")
+    const dataProp = 'data';
+    if (changes[dataProp] && !changes[dataProp].firstChange) {
+      this.items = JSON.parse(JSON.stringify(changes[dataProp].currentValue || {}));
+    }
   }
 
   onCheckChange(item: CheckListItem, checked: boolean) {

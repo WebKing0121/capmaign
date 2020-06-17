@@ -25,15 +25,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tableColumnType') tableColumnTypeTemplate: TemplateRef<any>;
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
-  columns: DataTableColumn[] = [
-    { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
-    { name: 'Subject', prop: 'subject', sortable: true },
-    { name: 'Type', prop: 'type', sortable: true, custom: true },
-    { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-    { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-    { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-    { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } }
-  ];
 
   selected: Campaign[] = [];
   searchFormControl: FormControl;
@@ -56,19 +47,21 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(change => {
         console.log('Campaign Table Changes: ', change);
 
-        let mockData = [];
-        if (change.search) {
-          mockData = CampaignResponseMockData.filter(item =>
-            item.name.includes(change.search) || item.subject.includes(change.search));
-        } else {
-          mockData = CampaignResponseMockData;
-        }
+        setTimeout(() => {
+          let mockData = [];
+          if (change.search) {
+            mockData = CampaignResponseMockData.filter(item =>
+              item.name.includes(change.search) || item.subject.includes(change.search));
+          } else {
+            mockData = CampaignResponseMockData;
+          }
 
-        this.tableSource.next(
-          mockData.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          mockData.length
-        );
+          this.tableSource.next(
+            mockData.slice(
+              change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+            mockData.length
+          );
+        }, 600);
       });
 
     this.tableSource.selection$
@@ -91,15 +84,19 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.columns = [
-      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
-      { name: 'Subject', prop: 'subject', sortable: true },
-      { name: 'Type', prop: 'type', sortable: true, custom: true, template: this.tableColumnTypeTemplate },
-      { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } }
-    ];
+    setTimeout(() => {
+      const columns: DataTableColumn[] = [
+        { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
+        { name: 'Subject', prop: 'subject', sortable: true },
+        { name: 'Type', prop: 'type', sortable: true, maxWidth: 90, custom: true, template: this.tableColumnTypeTemplate },
+        { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+        { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+        { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+        { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+        { name: 'Settings', headerTemplate: this.tableColumnSettingsTemplate, maxWidth: 30, alwaysVisible: true }
+      ];
+      this.tableSource.setColumns(columns);
+    });
   }
 
   onActive(event) {
