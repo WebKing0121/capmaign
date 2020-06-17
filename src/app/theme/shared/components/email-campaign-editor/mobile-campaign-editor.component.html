@@ -3,8 +3,10 @@
   <span class=""><i class="fa fa-link" aria-hidden="true"></i></span>
 </div>
 
-<div class="editor-body">
-  <div class="editor--main"></div>
+<div class="editor-body d-flex">
+  <div class="editor--main mt-4 mr-3" *ngIf="editMode">
+    <textarea aria-label="Campaign Editor" [style.width.px]="300" rows="6" [(ngModel)]="campaignText"></textarea>
+  </div>
 
   <div class="display-within-iphone" #mobileCampaign>
     <div class="iphone-iframe">

@@ -17,6 +17,8 @@ export class MobileCampaignEditorComponent implements OnInit, ControlValueAccess
   @ViewChild('mobileCampaign') mobileCampaign: ElementRef<HTMLDivElement>;
   campaignText = '';
 
+  editMode = false;
+
   constructor() { }
 
   ngOnInit(): void {
@@ -35,6 +37,7 @@ export class MobileCampaignEditorComponent implements OnInit, ControlValueAccess
   }
 
   onContentEdit() {
+    this.editMode = !this.editMode;
   }
 
   addCustomItem(item: any) {

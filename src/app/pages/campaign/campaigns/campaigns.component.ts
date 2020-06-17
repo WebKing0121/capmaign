@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl } from '@angular/forms';
 import { Subject } from 'rxjs';
@@ -18,20 +18,21 @@ import { CampaignSendModalComponent } from '../components/campaign-send-modal/ca
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss']
 })
-export class CampaignsComponent implements OnInit, OnDestroy {
+export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   CampaignType = CampaignType;
 
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
+  @ViewChild('tableColumnType') tableColumnTypeTemplate: TemplateRef<any>;
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   columns: DataTableColumn[] = [
     { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
     { name: 'Subject', prop: 'subject', sortable: true },
-    { name: 'Type', prop: 'type', sortable: true },
-    { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } },
-    { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } },
-    { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } },
-    { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } }
+    { name: 'Type', prop: 'type', sortable: true, custom: true },
+    { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+    { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+    { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+    { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } }
   ];
 
   selected: Campaign[] = [];
@@ -46,6 +47,8 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // Update column custom templates
+
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);
 
     this.tableSource.changed$
@@ -87,10 +90,33 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 
+  ngAfterViewInit(): void {
+    this.columns = [
+      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Subject', prop: 'subject', sortable: true },
+      { name: 'Type', prop: 'type', sortable: true, custom: true, template: this.tableColumnTypeTemplate },
+      { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } }
+    ];
+  }
+
   onActive(event) {
     // TODO: Simplify later
     if (event.type === 'click' && event.cellIndex === 1) {
-      this.router.navigate([(event.row as Campaign).id], {relativeTo: this.route});
+      const campaign = event.row as Campaign;
+
+      switch (campaign.type) {
+        case CampaignType.Email: {
+          this.router.navigate([campaign.id], {relativeTo: this.route});
+          return;
+        }
+        case CampaignType.Mobile: {
+          this.router.navigate(['mobile', campaign.id]);
+          return;
+        }
+      }
     }
   }
 

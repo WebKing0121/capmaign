@@ -55,3 +55,7 @@
 <ng-template #tableColumnSettings let-column="column">
   <i class="fa fa-bars" aria-hidden="true"></i>
 </ng-template>
+
+<ng-template #tableColumnType let-value let-column="column">
+  {{value === CampaignType.Email ? 'Email' : 'SMS' }}
+</ng-template>
