@@ -13,6 +13,7 @@
                [scrollbarH]="scrollbarH"
                [virtualization]="virtualScrolling"
                [loadingIndicator]="dataSource.loading$ | async"
+               [limit]="limit"
                (activate)="activate.emit($event)"
                (select)="onSelect($event)"
                (sort)="onSort($event)"
@@ -26,36 +27,36 @@
     [resizeable]="false"
     [headerCheckboxable]="true"
     [checkboxable]="true"
+    *ngIf="selectable"
   ></ngx-datatable-column>
 
-  <ngx-datatable-column *ngFor="let column of innerColumns"
-                        [name]="column.name"
-                        [prop]="column.prop"
-                        [cellClass]="column.cellClass | datatableClassname"
-                        [headerClass]="column.headerClass | datatableClassname"
-                        [headerTemplate]="column.headerTemplate"
-                        [flexGrow]="column.flexGrow"
-                        [minWidth]="column.minWidth"
-                        [maxWidth]="column.maxWidth"
-                        [resizeable]="column.resizeable | datatableConfig"
-                        [sortable]="column.sortable | datatableConfig"
-                        [draggable]="column.draggable | datatableConfig"
-                        [canAutoResize]="column.canAutoResize | datatableConfig">
-  <!--                        [width]="column.width"-->
+  <ng-container *ngFor="let column of innerColumns">
+    <ngx-datatable-column *ngIf="column.hidden !== true"
+      [name]="column.name"
+      [prop]="column.prop"
+      [cellClass]="column.cellClass | datatableClassname"
+      [headerClass]="column.headerClass | datatableClassname"
+      [headerTemplate]="column.headerTemplate"
+      [flexGrow]="column.flexGrow"
+      [minWidth]="column.minWidth"
+      [maxWidth]="column.maxWidth"
+      [resizeable]="column.resizeable | datatableConfig"
+      [sortable]="column.sortable | datatableConfig"
+      [draggable]="column.draggable | datatableConfig"
+      [canAutoResize]="column.canAutoResize | datatableConfig">
 
-    <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-      <ng-container *ngIf="column.custom === true">
-        <ng-container [ngTemplateOutlet]="column.template" [ngTemplateOutletContext]="{ $implicit: value, row: row, column: column }"></ng-container>
-      </ng-container>
+      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+        <ng-container *ngIf="column.custom === true">
+          <ng-container [ngTemplateOutlet]="column.template" [ngTemplateOutletContext]="{ $implicit: value, row: row, column: column }"></ng-container>
+        </ng-container>
 
-      <ng-container *ngIf="column.custom !== true">
-        <ng-container *ngIf="column.pipe">
-          {{ column.pipe.pipe.transform(value, column.pipe.args) }}</ng-container>
-        <ng-container *ngIf="!column.pipe">{{ value }}</ng-container>
-      </ng-container>
-    </ng-template>
+        <ng-container *ngIf="column.custom !== true">
+          <ng-container *ngIf="column.pipe">
+            {{ column.pipe.pipe.transform(value, column.pipe.args) }}</ng-container>
+          <ng-container *ngIf="!column.pipe">{{ value }}</ng-container>
+        </ng-container>
+      </ng-template>
 
-  </ngx-datatable-column>
+    </ngx-datatable-column>
+  </ng-container>
 </ngx-datatable>
-
-<div class="empty-message" *ngIf="(dataSource.totalCount$ | async) === 0">No data to display</div>

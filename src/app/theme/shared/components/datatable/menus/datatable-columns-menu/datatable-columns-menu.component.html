@@ -1,0 +1,9 @@
+<div class="datatable-columns-menu">
+  Columns:
+  <ul class="list-unstyled">
+    <li *ngFor="let item of columns">
+      <input type="checkbox" [checked]="item.hidden !== true" (change)="onCheckChange(item, $event.target.checked)" aria-label="Checkbox">
+      {{item.name}}
+    </li>
+  </ul>
+</div>
