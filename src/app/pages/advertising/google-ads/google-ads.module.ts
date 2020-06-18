@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import {
+  NgbProgressbarModule,
+  NgbDatepickerModule, NgbButtonsModule,
+  NgbDropdownModule, NgbTooltipModule
+} from '@ng-bootstrap/ng-bootstrap';
 
 import { GoogleAdsRoutingModule } from './google-ads-routing.module';
 import { GoogleAdsComponent } from './google-ads/google-ads.component';
@@ -11,7 +17,13 @@ import { GoogleAdsCreateComponent } from './google-ads-create/google-ads-create.
   imports: [
     CommonModule,
     GoogleAdsRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    NgbProgressbarModule,
+    NgbDatepickerModule,
+    NgbButtonsModule,
+    NgbDropdownModule,
+    NgbTooltipModule
   ]
 })
 export class GoogleAdsModule { }
