@@ -1,4 +1,4 @@
-import { SocialEngager } from '@app-models/social-engager';
+import { SocialEngager } from '@app-models/social';
 
 export const SocialEngagersMockData: SocialEngager[] = [
   {

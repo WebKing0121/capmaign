@@ -1,7 +1,7 @@
 <div class="card" [ngClass]="cardClass" [@cardRemove]="cardRemove" #toAnimate> <!-- animates animatesInitMode="show" [animatesOnInit]="{useVisibility: false, disabled: true}" -->
   <div class="card-header" *ngIf="!hidHeader" [ngClass]="headerClass">
     <h5 *ngIf="!customHeader">{{ cardTitle }}
-      <ul *ngIf="cardButtons.length > 0" class="ul-header-button">
+      <ul *ngIf="cardButtons && cardButtons.length > 0" class="ul-header-button">
         <li *ngFor="let button of cardButtons" (click)="button.action()"><i class="feather" [ngClass]="button.icon"></i></li>
       </ul>
     </h5>

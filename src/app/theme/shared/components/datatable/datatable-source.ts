@@ -12,7 +12,6 @@ export class DataTableSource<T> {
   pagination: Pagination = new Pagination(DEFAULT_PAGE_SIZE, 1);
 
   columns: DataTableColumn[] = [];
-  activeColumns: DataTableColumnShortened[] = [];
 
   protected dataSubject = new BehaviorSubject<T[]>([]);
   data$ = this.dataSubject.asObservable();
@@ -34,6 +33,7 @@ export class DataTableSource<T> {
   alive = true;
   changed$ = new EventEmitter();
   recalculate$ = new EventEmitter();
+  columnsChanged$ = new EventEmitter();
 
   get isEmpty(): boolean {
     return this.totalCount === 0;
@@ -53,15 +53,12 @@ export class DataTableSource<T> {
   get pageSize() {
     return this.pagination.pageSize;
   }
-  set pageSize(size: number | string) {
-    const sizeVal = typeof size === 'string' ? parseInt(size, 10) || 0 : size;
-    if (this.pagination.pageSize !== sizeVal) {
-      this.pagination.setPageSize(sizeVal);
-      this.pagination.setPageNumber(1);
+  set pageSize(size: number) {
+    this.pagination.setPageSize(size);
+    this.pagination.setPageNumber(1);
 
-      this.emitChange();
-      this.recalculate$.next();
-    }
+    this.emitChange();
+    this.recalculate$.next();
   }
   get pageCount() {
     if (this.totalCount % this.pagination.pageSize) {
@@ -140,22 +137,29 @@ export class DataTableSource<T> {
   }
 
   setColumns(columns: DataTableColumn[]) {
-    this.columns = columns;
-    this.activeColumns = this.columns.map(column => ({
-      name: column.name,
-      prop: column.prop
+    this.columns = columns.map((column, index) => ({
+      ...column,
+      id: index
     }));
+    this.columnsChanged$.emit(this.columns);
   }
-  hideColumn(column: DataTableColumnShortened) {
-    this.activeColumns = this.activeColumns.filter(ac =>
-      !Boolean(ac.name === column.name || ac.prop === column.prop)
-    );
+  showColumn(column: DataTableColumn) {
+    const focus = this.columns.find(fc => fc.id === column.id);
+    if (focus) {
+      focus.hidden = false;
+    }
+    this.columnsChanged$.emit(this.columns);
+  }
+  hideColumn(column: DataTableColumn) {
+    const focus = this.columns.find(fc => fc.id === column.id);
+    if (focus) {
+      focus.hidden = true;
+    }
+    this.columnsChanged$.emit(this.columns);
   }
   resetColumns() {
-    this.activeColumns = this.columns.map(column => ({
-      name: column.name,
-      prop: column.prop
-    }));
+    this.columns.forEach(c => c.hidden = false);
+    this.columnsChanged$.emit(this.columns);
   }
 
   nextPage() {
@@ -201,6 +205,7 @@ export interface DataTableColumn {
   custom?: boolean;
   template?: TemplateRef<any>;
   headerTemplate?: TemplateRef<any>;
+  hidden?: boolean;
+  alwaysVisible?: boolean;
+  id?: number;
 }
-
-export type DataTableColumnShortened = Partial<Pick<DataTableColumn, 'name'|'prop'>>;

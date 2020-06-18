@@ -18,7 +18,8 @@ export class AutomationService {
       sortDirection,
       skipCount,
       maxResultCount,
-    }
+    };
+
     return this.http.post<any>(`${environment.apiUrl}/${this.url}/getAllAutomations`, postData);
   }
 }

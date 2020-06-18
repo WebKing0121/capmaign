@@ -1,5 +1,5 @@
 
-import { CollaborateCampaignSubtask } from '@app-models/collaborate-campaign-subtask';
+import { CollaborateCampaignSubtask } from '@app-models/collaborate';
 
 export const CollaborateCampaignsSubtasksMockData: CollaborateCampaignSubtask[] = [
   {
@@ -23,7 +23,6 @@ export const CollaborateCampaignsSubtasksMockData: CollaborateCampaignSubtask[] 
     id: 5, task_id: 3, name: 'Sub Task - 5 ', user_id: 5, percent: 1,
     desc: 'Sub Task - 5 Description', started: 'Jun 16, 2019 2:00:00 AM', ended: 'Aug 23, 2019 2:00:00 AM', esti_hours: 120,
   },
-
   {
     id: 6, task_id: 4, name: 'Sub Task - 6', user_id: 6, percent: 13,
     desc: 'Sub Task - 6 Description', started: 'Mar 15, 2019 1:00:00 AM', ended: 'Jul 27, 2019 2:00:00 AM', esti_hours: 147,

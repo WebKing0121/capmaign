@@ -13,9 +13,9 @@ import { CollaborateTeamsMockData } from '../../../fack-db/collaborate-teams-moc
 import { UsersMockData } from '../../../fack-db/users-mock';
 
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
-import { CollaborateCampaign } from '@app-models/collaborate-campaign';
+import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CollaborateTeam } from '@app-core/models/collaborate-team';
+import { User } from '@app-core/models/user';
 
 @Component({
   selector: 'app-campaigns',
@@ -51,18 +51,14 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   teamsInAssignModel: any[];
 
   selectedCampaign: CollaborateCampaign;
-  selectedTaskId: number;
-  selectedTaskName: string;
-  selectedUserId: number;
-  selectedUserName: string;
-
+  selectedTask: CollaborateCampaignTask;
+  selectedUser: any;
   // modalTeamName: string;
 
   // Colaborate Campaigns Table;
-  tableSourceCampaigns: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
-  columnsCampaigns: DataTableColumn[];
+  tableSource: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
 
-  selectedCampaigns: CollaborateCampaign[] = [];
+  selected: CollaborateCampaign[] = [];
   showSearchCampaigns: boolean;
 
   teamsForm: FormGroup;
@@ -103,30 +99,28 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.filteredCampaignsInProgress = [];
     // this.filteredCampaignsInArchived = [];
 
-    this.selectedTaskId = 0;
-    this.selectedTaskName = '';
-    this.selectedUserId = 0;
-    this.selectedUserName = '';
     this.selectedFilter = 'All';
     this.selectedStatus = 'in-progress';
     // this.replaceTeam = false;
     // this.modalTeamName = '';
-    this.columnsCampaigns = [];
 
     this.filterLabel = 'All Campaigns';
     this.statusLabel = 'In Progress';
   }
 
   ngAfterViewInit() {
-    this.columnsCampaigns = [
+    const columns = [
       { name: 'Campaign', prop: 'name', sortable: true },
-      { name: 'Assigned Team', prop: 'team_id', sortable: true, template: this.teamTemplate, cellClass: ['cell-hyperlink'] },
+      { name: 'Assigned Team', prop: 'team_id', sortable: true, custom: true, template: this.teamTemplate, cellClass: ['cell-hyperlink'] },
       { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'Progress', prop: 'percent', sortable: true, template: this.progressTemplate, maxWidth: 120 },
+      { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
       { name: 'Type', prop: 'type', sortable: true, maxWidth: 80 },
       { name: 'Status', prop: 'status', sortable: true, maxWidth: 100 },
     ];
+
+    this.tableSource.setColumns(columns);
+
   }
 
   ngOnInit(): void {
@@ -189,7 +183,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       const campaign = event.row as CollaborateCampaign;
       this.selectedCampaign = campaign;
       this.campaignTasks.loadTasksFromCampaign(campaign.id);
-      if (event.cellIndex === 2) {
+      this.campaignSubTasks.loadSubTasks(0);
+      if (event.cellIndex === 1) {
         this.teamsForm.setValue({
           current_team: campaign.team_id === 0 ? '' : this.getTeamName(campaign.team_id),
           new_team: ''
@@ -208,7 +203,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   }
 
-  
+
 
   getTeamName(teamId: number) {
     const team = this.teams.find(x => x.id === teamId);
@@ -218,7 +213,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     return '';
   }
 
-  
+
 
   onClickFilterInCampaigns(filter: any) {
     this.selectedFilter = filter.value;
@@ -272,18 +267,12 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   //   this.campaignSubTasks.loadSubTasks(0);
   // }
 
-  onSelectTask(task: any) {
+  onSelectTask(task: CollaborateCampaignTask) {
 
-    this.selectedTaskId = task.id;
-    this.selectedTaskName = task.name;
-    this.selectedUserId = task.userId;
-    const user = this.allUsers.find(x => x.id === this.selectedUserId);
-    if (user) {
-      this.selectedUserName = user.label;
-    } else {
-      this.selectedUserName = '';
-    }
-    this.campaignSubTasks.loadSubTasks(this.selectedTaskId);
+    this.selectedTask = task;
+    this.selectedUser = this.allUsers.find((x: User) => x.id === task.user_id);
+
+    this.campaignSubTasks.loadSubTasks(task.id);
   }
 
   /*********************************************
@@ -334,20 +323,20 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   _updateTable(filteredCampaigns: CollaborateCampaign[]) {
-    this.tableSourceCampaigns.next(filteredCampaigns.slice(0, 50), filteredCampaigns.length);
-    this.tableSourceCampaigns.changed$
+    this.tableSource.next(filteredCampaigns.slice(0, 50), filteredCampaigns.length);
+    this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSourceCampaigns.next(
+        this.tableSource.next(
           filteredCampaigns.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
           filteredCampaigns.length
         );
       });
-    this.tableSourceCampaigns.selection$
+    this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
-        this.selectedCampaigns = selected;
+        this.selected = selected;
       });
   }
 }

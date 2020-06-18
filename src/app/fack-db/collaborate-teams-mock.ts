@@ -1,4 +1,4 @@
-import { CollaborateTeam } from '@app-models/collaborate-team';
+import { CollaborateTeam } from '@app-models/collaborate';
 
 export const CollaborateTeamsMockData: CollaborateTeam[] = [
   {

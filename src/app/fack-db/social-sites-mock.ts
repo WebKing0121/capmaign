@@ -1,6 +1,6 @@
 import { SocialAccountType, SocialType, SocialLabelType } from '@app-core/enums/social-type.enum';
+import { SocialSite } from '@app-models/social';
 
-import { SocialSite } from '@app-models/social-site';
 export const SocialSitesMockData: SocialSite[] = [
   {
     id: SocialType.Facebook,
@@ -10,7 +10,7 @@ export const SocialSitesMockData: SocialSite[] = [
     img: 'assets/images/social-icons/facebook.png',
     buttons: [
       { label: 'Connect Profile', icon: 'icon-user', type: SocialAccountType.Profile },
-      { label: 'Connect Page', icon: 'icon-user', type: SocialAccountType.Page},
+      { label: 'Connect Page', icon: 'icon-user', type: SocialAccountType.Page },
       { label: 'Connect Group', icon: 'icon-user', type: SocialAccountType.Group },
     ]
   },
@@ -22,7 +22,7 @@ export const SocialSitesMockData: SocialSite[] = [
     img: 'assets/images/social-icons/linkedin.png',
     buttons: [
       { label: 'Connect Profile', icon: 'icon-user', type: SocialAccountType.Profile },
-      { label: 'Connect Page', icon: 'icon-user', type: SocialAccountType.Page},
+      { label: 'Connect Page', icon: 'icon-user', type: SocialAccountType.Page },
     ]
   },
   {
@@ -35,4 +35,4 @@ export const SocialSitesMockData: SocialSite[] = [
       { label: 'Connect Profile', icon: 'icon-user', type: SocialAccountType.Profile },
     ]
   },
-]
+];

@@ -1,5 +1,5 @@
-import { SocialType, SocialLabelType, SocialAccountType } from '@app-core/enums/social-type.enum'
-import { SocialAccount } from '@app-models/social-account';
+import { SocialType, SocialLabelType, SocialAccountType } from '@app-core/enums/social-type.enum';
+import { SocialAccount } from '@app-models/social';
 
 export const SocialAccountsMockData: SocialAccount[] = [
   {

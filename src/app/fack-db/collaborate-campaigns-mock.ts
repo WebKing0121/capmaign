@@ -1,4 +1,4 @@
-import { CollaborateCampaign } from '@app-models/collaborate-campaign';
+import { CollaborateCampaign } from '@app-models/collaborate';
 
 export const CollaborateCampaignsMockData: CollaborateCampaign[] = [
   {
@@ -37,5 +37,4 @@ export const CollaborateCampaignsMockData: CollaborateCampaign[] = [
     ended: 'May 7, 2019 2:00:00 AM',
     percent: 66.0, type: 'SMS', status: 'completed', team_id: 0
   },
-
 ];

@@ -8,44 +8,134 @@
         <div class="row">
           <section class="col-sm-12">
             <h3>Campaign Information</h3>
+            <form [formGroup]="formGroup">
+              <div class="row">
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Email Campaign <span class="required-mark-after"></span></label>
+                  <select class="form-control" formControlName="name" [value]="this.formGroup.controls.name" (change)="onEmailCampaignTypeChange($event.target.value)">
+                    <option *ngFor="let emailCampaign of emailCampaignType" [value]="emailCampaign">{{emailCampaign}}</option>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Subject Line <span class="required-mark-after"></span></label>
+                  <input class="form-control" formControlName="subject" disabled>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>From Address</label>
+                  <input class="form-control" disabled formControlName="fromAddress">
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Reply Address</label>
+                  <input class="form-control" disabled formControlName="replyAddress">
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>From Name</label>
+                  <input class="form-control" disabled formControlName="fromName">
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Send as</label>
+                  <select [(ngModel)]="sendAsOption" class="form-control" formControlName="sendAs">
+                    <option [value]="CampaignSendAsType.Commercial" selected>Commercial</option>
+                    <option [value]="CampaignSendAsType.Transactional">Transactional</option>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Lead Scoring</label>
+                  <select class="form-control" formControlName="leadScoring">
+                    <option>WebAnalytics</option>
+                    <option>Social</option>
+                    <option>Web</option>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Lead Grading</label>
+                  <select [(ngModel)]="leadGradingOption" class="form-control" formControlName="leadGrading">
+                    <option [value]="CampaignLeadGradingType.DefaultGrading">Default Grading</option>
+                    <option [value]="CampaignLeadGradingType.LeadGradingProfile">Lead grading profile</option>
+                    <option [value]="CampaignLeadGradingType.RecordsGrading">Records Grading</option>
+                  </select>
+                </div>
+              </div>
+            </form>
           </section>
           <section class="col-sm-12 segmentation">
             <h3>Segmentation</h3>
-
             <div class="d-flex">
-              <label class="mr-3">Audience to Include</label>
+              <label class="col-md-2 col-sm-12 mr-3">Ad-hoc Records</label>
 
               <div class="list-wrapper mr-2" [style.width.px]="300">
-                <h5>Mailable List</h5>
-                <app-check-list [(data)]="mailableList"></app-check-list>
+                <app-check-list></app-check-list>
               </div>
-              <div class="list-wrapper mr" [style.width.px]="300">
-                <h5>Filters</h5>
-                <app-check-list [(data)]="includeFiltersList"></app-check-list>
+            </div>
+            <div class="d-flex">
+              <label class="col-md-2 col-sm-12 mr-3">Audience to Include</label>
+              <div class="d-flex flex-wrap">
+                <div class="list-wrapper mr-2" [style.width.px]="300">
+                  <h5>Mailable List</h5>
+                  <app-check-list [(data)]="includeMailableList"></app-check-list>
+                </div>
+                <div class="list-wrapper mr" [style.width.px]="300">
+                  <h5>Filters</h5>
+                  <app-check-list [(data)]="includeFiltersList"></app-check-list>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <label class="col-md-2 col-sm-12 mr-3">Audience to Exclude</label>
+              <div class="d-flex flex-wrap">
+                <div class="list-wrapper mr-2" [style.width.px]="300">
+                  <h5>Mailable List</h5>
+                  <app-check-list [(data)]="excludeMailableList"></app-check-list>
+                </div>
+                <div class="list-wrapper mr-2" [style.width.px]="300">
+                  <h5>Exclusion Lists</h5>
+                  <app-check-list></app-check-list>
+                </div>
+                <div class="list-wrapper mr" [style.width.px]="300">
+                  <h5>Filters</h5>
+                  <app-check-list [(data)]="excludeFiltersList"></app-check-list>
+                </div>
               </div>
             </div>
           </section>
           <section class="col-sm-12 send-on">
             <h3>Scheduler</h3>
 
-            <div class="ml-3">
+            <div class="ml-3 d-flex align-items-center">
               <div class="form-check d-inline mr-3">
-                <input type="radio" id="gridRadios1"
-                       class="form-check-input"
-                       [value]="CampaignScheduler.SendNow" [formControl]="sendOnFormControl">
-                <label for="gridRadios1" class="form-check-label">Send Now</label>
+                <label class="form-check-label">
+                  <input type="radio" id="gridRadios1"
+                    class="form-check-input"
+                    (change)="sendNowClick($event)"
+                    [value]="CampaignScheduler.SendNow" [formControl]="sendOnFormControl">
+                  <span class="m-t-1">Send Now</span>
+                </label>
               </div>
-              <div class="form-check d-inline">
-                <input type="radio" id="gridRadios2"
-                       class="form-check-input"
-                       [value]="CampaignScheduler.SendOn" [formControl]="sendOnFormControl">
-                <label for="gridRadios2" class="form-check-label">Send On</label>
+              <div class="form-check d-flex align-items-center">
+                <label for="gridRadios2" class="form-check-label m-r-10">
+                  <input type="radio" id="gridRadios2"
+                    class="form-check-input"
+                    (change)="sendOnClick($event)"
+                    [value]="CampaignScheduler.SendOn" [formControl]="sendOnFormControl">
+                  Send On
+                </label>
+                <div *ngIf="sendOnFlag">
+                  <div class="input-group">
+                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM" name="dp_to" ngbDatepicker [(ngModel)]="model"
+                      #datePicker="ngbDatepicker" [(ngModel)]="model" (dateSelect) = "onSelect($event)">
+                    <div class="input-group-append">
+                      <span class="input-group-text" (click)="datePicker.toggle()">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
           <div class="col-sm-12 centered-content">
             <div class="btn-group mt-10">
-              <button type="button" class="btn btn-primary btn-sm" awNextStep>Next</button>
+              <button type="button" class="btn btn-primary btn-sm m-t-20" (click)="onNextClick()">Next</button>
             </div>
           </div>
         </div>
@@ -53,10 +143,125 @@
 
       <aw-wizard-step stepTitle="Send">
         <div class="row">
+          <section class="col-sm-12">
+            <h3>Campaign Information</h3>
+            <form [formGroup]="formGroup">
+              <div class="row">
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Email Campaign <span class="required-mark-after"></span></label>
+                  <select class="form-control" formControlName="name" [value]="this.formGroup.controls.name" disabled>
+                    <option *ngFor="let emailCampaign of emailCampaignType" [value]="emailCampaign">{{emailCampaign}}</option>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Subject Line <span class="required-mark-after"></span></label>
+                  <input class="form-control" formControlName="subject" disabled>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>From Address</label>
+                  <input class="form-control" formControlName="fromAddress" disabled>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Reply Address</label>
+                  <input class="form-control" formControlName="replyAddress" disabled>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>From Name</label>
+                  <input class="form-control" formControlName="fromName" disabled>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Send as</label>
+                  <select [(ngModel)]="sendAsOption" class="form-control" formControlName="sendAs"  disabled>
+                    <option [value]="CampaignSendAsType.Commercial" selected>Commercial</option>
+                    <option [value]="CampaignSendAsType.Transactional">Transactional</option>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Lead Scoring</label>
+                  <select class="form-control" formControlName="leadScoring" disabled>
+                    <option>WebAnalytics</option>
+                    <option>Social</option>
+                    <option>Web</option>
+                  </select>
+                </div>
+                <div class="col-12 col-lg-6 form-group">
+                  <label>Lead Grading</label>
+                  <select [(ngModel)]="leadGradingOption" class="form-control" formControlName="leadGrading" disabled>
+                    <option [value]="CampaignLeadGradingType.DefaultGrading">Default Grading</option>
+                    <option [value]="CampaignLeadGradingType.LeadGradingProfile">Lead grading profile</option>
+                    <option [value]="CampaignLeadGradingType.RecordsGrading">Records Grading</option>
+                  </select>
+                </div>
+              </div>
+            </form>
+          </section>
+          <section class="col-sm-12 segmentation">
+            <h3>Segmentation</h3>
+            <div class="d-flex">
+              <label class="col-md-2 col-sm-12 mr-3">Ad-hoc Records</label>
+
+              <div class="list-wrapper mr-2" [style.width.px]="300">
+                <app-check-list></app-check-list>
+              </div>
+            </div>
+            <div class="d-flex">
+              <label class="col-md-2 col-sm-12 mr-3">Audience to Include</label>
+              <div class="d-flex flex-wrap">
+                <div class="list-wrapper mr-2" [style.width.px]="300">
+                  <h5>Mailable List</h5>
+                  <app-check-list [(data)]="checkedIncludeMailableList"></app-check-list>
+                </div>
+                <div class="list-wrapper mr" [style.width.px]="300">
+                  <h5>Filters</h5>
+                  <app-check-list [(data)]="checkedIncludeFiltersList"></app-check-list>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex">
+              <label class="col-md-2 col-sm-12 mr-3">Audience to Exclude</label>
+              <div class="d-flex flex-wrap">
+                <div class="list-wrapper mr-2" [style.width.px]="300">
+                  <h5>Mailable List</h5>
+                  <app-check-list [(data)]="checkedExcludeMailableList"></app-check-list>
+                </div>
+                <div class="list-wrapper mr-2" [style.width.px]="300">
+                  <h5>Exclusion Lists</h5>
+                  <app-check-list></app-check-list>
+                </div>
+                <div class="list-wrapper mr" [style.width.px]="300">
+                  <h5>Filters</h5>
+                  <app-check-list [(data)]="checkedExcludeFiltersList"></app-check-list>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="col-sm-12 send-on">
+            <h3>Scheduler</h3>
+
+            <div class="ml-3">
+              <div *ngIf="!sendOnFlag" class="form-check d-inline mr-3">
+                <label for="gridRadios1" class="form-check-label" disabled>
+                  <input type="radio" id="gridRadios1"
+                    class="form-check-input"
+                    [value]="CampaignScheduler.SendNow" [formControl]="sendOnFormControl">
+                  Send Now
+                </label>
+              </div>
+              <div *ngIf="sendOnFlag" class="form-check d-inline">
+                <label for="gridRadios2" class="form-check-label m-r-10" disabled>
+                  <input type="radio" id="gridRadios2"
+                    class="form-check-input"
+                    [value]="CampaignScheduler.SendOn" [formControl]="sendOnFormControl">
+                  Send On
+                </label>
+                <span *ngIf="selectedDate">{{selectedDate.year}}-{{selectedDate.month}}-{{selectedDate.day}}</span>
+              </div>
+            </div>
+          </section>
           <div class="col-sm-12 centered-content">
             <div class="btn-group mt-10">
               <button type="button" class="btn btn-secondary btn-sm" awPreviousStep>Back</button>
-              <button type="button" class="btn btn-primary btn-sm" awNextStep>Continue</button>
+              <button type="button" class="btn btn-primary btn-sm" (click)="onCancel()">Send</button>
             </div>
           </div>
         </div>

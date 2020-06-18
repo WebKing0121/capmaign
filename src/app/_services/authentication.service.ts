@@ -25,23 +25,23 @@ export class AuthenticationService {
       returnUrlHash: '',
       tenancyName: tenancyname,
       usernameOrEmailAddress: username,
-      password: password
+      password
     })
       .pipe(map(res => {
         // store user details and jwt token in local storage to keep user logged in between page refreshes
         console.log(res);
         if (res.success) {
-          const user = new User;
+          const user = new User();
           user.id = 1;
           user.username = username;
           user.firstName = '';
-          user.lastName='';
-          user.profileImg='';
+          user.lastName = '';
+          user.profileImg = '';
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
           return {
             success: true,
-            user: user
+            user
           };
         } else {
           return {
@@ -49,7 +49,7 @@ export class AuthenticationService {
             message: res.error.message
           };
         }
-        
+
       }));
   }
 

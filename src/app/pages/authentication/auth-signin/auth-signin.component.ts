@@ -79,7 +79,7 @@ export class AuthSigninComponent implements OnInit, OnDestroy {
             this.error = data.message;
             this.loading = false;
           }
-          
+
         },
         error => {
           this.error = error;

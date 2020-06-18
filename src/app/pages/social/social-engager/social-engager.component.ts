@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
-import { SocialEngager } from '@app-models/social-engager';
+import { SocialEngager } from '@app-models/social';
 import { SocialEngagersMockData } from '../../../fack-db/social-engagers-mock';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 

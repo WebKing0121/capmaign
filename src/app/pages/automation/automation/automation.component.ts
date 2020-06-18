@@ -8,7 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./automation.component.scss']
 })
 export class AutomationComponent implements OnInit {
-  
+
   automationMode: 'new' | 'edit';
   formGroup: FormGroup;
 
@@ -22,7 +22,7 @@ export class AutomationComponent implements OnInit {
 
   ngOnInit(): void {
     const { id } = this.route.snapshot.params;
-    const {path} = this.route.snapshot.url[0];
+    const { path } = this.route.snapshot.url[0];
     // console.log(path);
     this.automationMode = path === 'new' ? 'new' : 'edit';
     this.pageTitle = path === 'new' ? 'Create Automation' : 'Update Automation';
@@ -49,7 +49,7 @@ export class AutomationComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['..'], {relativeTo: this.route});
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
 }

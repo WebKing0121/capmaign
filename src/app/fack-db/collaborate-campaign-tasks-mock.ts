@@ -1,4 +1,4 @@
-import { CollaborateCampaignTask } from '@app-models/collaborate-campaign-task';
+import { CollaborateCampaignTask } from '@app-models/collaborate';
 
 export const CollaborateCampaignsTasksMockData: CollaborateCampaignTask[] = [
   {

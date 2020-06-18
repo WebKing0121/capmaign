@@ -1,5 +1,5 @@
-import { SocialType } from '@app-core/enums/social-type.enum'
-import { SocialChatUser } from '@app-models/social-chat-user';
+import { SocialType } from '@app-core/enums/social-type.enum';
+import { SocialChatUser } from '@app-models/social';
 export const SocialChatUsersMockData: SocialChatUser[] = [
   {
     id: 1,
@@ -37,4 +37,4 @@ export const SocialChatUsersMockData: SocialChatUser[] = [
     profile_image: 'http://abs.twimg.com/sticky/default_profile_images/default_profile_normal.png',
     created: '2020/06/05 10:22:30',
   },
-]
+];

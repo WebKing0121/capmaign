@@ -15,7 +15,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 })
 export class AutomationsComponent implements OnInit, OnDestroy {
   @ViewChild('automationModal', { static: false }) automationModal;
-  
+
   private unsubscribe$ = new Subject();
 
   tableSource: DataTableSource<Automation> = new DataTableSource<Automation>(50);
@@ -25,11 +25,11 @@ export class AutomationsComponent implements OnInit, OnDestroy {
     { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } },
     { name: 'Description', prop: 'subject', sortable: true },
     { name: 'Status', prop: 'status', sortable: true },
-    { name: 'Type', prop: 'type', sortable: true},
-    
+    { name: 'Type', prop: 'type', sortable: true },
+
   ];
   selected: Automation[] = [];
-  
+
   searchString: string;
   displayLimit: number;
   sortField: string;
@@ -40,7 +40,7 @@ export class AutomationsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private automationService: AutomationService
   ) {
-    
+
     this.searchString = '';
     this.displayLimit = 50;
     this.sortField = '';
@@ -67,7 +67,7 @@ export class AutomationsComponent implements OnInit, OnDestroy {
   onActive(event) {
     // TODO: Simplify later
     if (event.type === 'click' && event.cellIndex === 1) {
-      this.router.navigate([(event.row as Automation).id], {relativeTo: this.route});
+      this.router.navigate([(event.row as Automation).id], { relativeTo: this.route });
     }
   }
 

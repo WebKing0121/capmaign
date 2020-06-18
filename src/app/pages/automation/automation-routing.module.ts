@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AutomationsComponent } from './automations/automations.component';
 import { AutomationComponent } from './automation/automation.component';
+
 const routes: Routes = [
-  
   {
     path: 'automations',
     component: AutomationsComponent
@@ -20,7 +20,6 @@ const routes: Routes = [
     path: '**',
     redirectTo: 'automations'
   },
-  
 ];
 
 @NgModule({

@@ -8,9 +8,7 @@ import { DataTableColumn, DataTableSource } from '@app-components/datatable/data
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CollaborateCampaign } from '@app-core/models/collaborate-campaign';
-import { CollaborateTeam } from '@app-core/models/collaborate-team';
-import { CollaborateCampaignTask } from '@app-models/collaborate-campaign-task';
+import { CollaborateCampaign, CollaborateTeam, CollaborateCampaignTask } from '@app-core/models/collaborate';
 
 import { CollaborateCampaignsTasksMockData } from '../../../../fack-db/collaborate-campaign-tasks-mock';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
@@ -29,6 +27,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('addTaskModal', { static: false }) addTaskModal;
   @ViewChild('progressTemplate') progressTemplate: TemplateRef<any>;
+  @ViewChild('userNameTemplate') userNameTemplate: TemplateRef<any>;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
 
   @Output() selectRow: EventEmitter<any> = new EventEmitter();
 
@@ -37,8 +37,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   tasks: CollaborateCampaignTask[];
   selectedTaskId: number;
 
-  cardButtonsInTasks = [
-    { label: 'Add Tasks', icon: 'icon-plus-circle', action: () => this.onClickAddTask() },
+  confirmButtons = [
+    { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
   modalTeamName: string;
@@ -46,7 +46,6 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   modalTeamMembers: any[];
 
   tableSource: DataTableSource<CollaborateCampaignTask> = new DataTableSource<CollaborateCampaignTask>(50);
-  columns: DataTableColumn[];
   selected: CollaborateCampaignTask[] = [];
 
 
@@ -62,10 +61,10 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   ngOnInit(): void {
-    this.updateTable([]);
+    this._updateTable([]);
   }
 
-  updateTable(tasks: CollaborateCampaignTask[]) {
+  _updateTable(tasks: CollaborateCampaignTask[]) {
     this.tableSource.next(tasks.slice(0, 50), tasks.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
@@ -85,15 +84,18 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit() {
 
-    this.columns = [
-      { name: 'Task', prop: 'name', sortable: true },
-      { name: 'Description', prop: 'team_id', sortable: true },
+    const columns: DataTableColumn[] = [
+      { name: 'Task', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Description', prop: 'desc', sortable: true },
       { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'Progress', prop: 'percent', sortable: true, template: this.progressTemplate, maxWidth: 120 },
-      { name: 'Est.', prop: 'type', sortable: true, maxWidth: 80 },
-      { name: 'Member', prop: 'status', sortable: true, maxWidth: 100 },
+      { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
+      { name: 'Est.', prop: 'esti_hours', sortable: true, maxWidth: 80 },
+      { name: 'Member', prop: 'user_id', sortable: true, custom: true, template: this.userNameTemplate, maxWidth: 150 },
     ];
+
+    this.tableSource.setColumns(columns);
+
   }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -127,8 +129,32 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
    *                                                     *
    *******************************************************/
   onClickTask(event) {
-    // this.selectedTaskId = task.id;
-    // this.selectRow.emit({ id: task.id, name: task.name, userId: task.userId });
+    if (event.type === 'click') {
+      const task = event.row as CollaborateCampaignTask;
+      this.selectRow.emit(task);
+
+      if (event.cellIndex === 1) {
+        // this.teamsForm.setValue({
+        //   current_team: campaign.team_id === 0 ? '' : this.getTeamName(campaign.team_id),
+        //   new_team: ''
+        // });
+
+        // this.teamsInAssignModel = campaign.team_id === 0 ?
+        //   this.teams.map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })) :
+        //   this.teams.filter((x: CollaborateTeam) => x.id !== campaign.team_id)
+        //     .map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })),
+        //   this.assignTeamModal.show();
+
+      }
+    }
+  }
+
+  onClickDelete() {
+    this.confirmModal.show();
+  }
+
+  onConfirmDelete() {
+
   }
 
   getUserName(userId: number) {
@@ -175,8 +201,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
     } else {
       tasksFromServer = this.tasks.filter((x: CollaborateCampaignTask) => x.campaign_id === campaignId);
     }
-
-    this.updateTable(tasksFromServer);
+    this._updateTable(tasksFromServer);
+    this.selected = [];
     // this.cardTasks.setCardRefresh(true);
     // this.collaborateService.getCampaignTasks(campaignId)
     //   .pipe(takeUntil(this.unsubscribe$))

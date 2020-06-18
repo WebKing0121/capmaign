@@ -1,4 +1,4 @@
-<app-card cardTitle="Tasks" #cardTasks [cardButtons]="cardButtonsInTasks" [cardClass]="'card-tasks'" [options]="false">
+<app-card cardTitle="Tasks" #cardTasks [cardClass]="'card-tasks'" [options]="false">
 	<div class="total-counts">
 		<div class="position-relative">
 			<div class="ml-auto">
@@ -10,15 +10,16 @@
 		</div>
 	</div>
 	<div class="d-flex">
-		<button type="button" class="btn btn-outline-primary btn-normal-padding"
-			(click)="onClickAddTask()">
+		<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickAddTask()">
 			<i class="fa fa-plus"></i> New Task
+		</button>
+		<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickDelete()" *ngIf="selected.length > 0">
+			<i class="fa fa-trash"></i> Delete
 		</button>
 	</div>
 	<div class="task-table mt-2">
-		<app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40"
-			[selectionType]="'checkbox'"
-			[columns]="columns" [columnMode]="'force'" (activate)="onClickTask($event)"></app-datatable>
+		<app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
+			[selectable]="true" (activate)="onClickTask($event)"></app-datatable>
 
 		<div class="w-100">
 			<app-datatable-pagination [tableSource]="tableSource"></app-datatable-pagination>
@@ -126,7 +127,16 @@
 </div>
 
 
-<ng-template #progressTemplate let-row="row" let-value="value" let-i="index">
-  <span class="percent">{{value}}%</span>
-  <ngb-progressbar height="20px" [value]="value"></ngb-progressbar>
+<ng-template #progressTemplate let-row="row" let-value let-i="index">
+	<span class="percent">{{value}}%</span>
+	<ngb-progressbar height="20px" [value]="value"></ngb-progressbar>
 </ng-template>
+
+
+<ng-template #userNameTemplate let-row="row" let-value let-i="index">
+  <span *ngIf="value > 0">{{ getUserName(value) }}</span>
+  <span class="btn btn-outline-primary btn-normal-padding" *ngIf="value === 0">Assign Team</span>
+</ng-template>
+
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
+	[buttons]="confirmButtons"></app-confirm-modal>

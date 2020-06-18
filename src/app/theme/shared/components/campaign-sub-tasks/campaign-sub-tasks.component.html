@@ -1,35 +1,30 @@
-<app-card #cardSubTasks cardTitle="Sub Tasks" [cardButtons]="cardButtonsInSubTasks" cardClass="card-sub-tasks"
+<app-card #cardSubTasks cardTitle="Sub Tasks" [cardButtons]="[]" cardClass="card-sub-tasks"
 	[options]="false">
-	<div class="table-responsive">
-		<table class="table table-striped table-hover">
-			<thead class="sub-task-table-header">
-				<th>Task Name</th>
-				<th>Description</th>
-				<th>Start Date</th>
-				<th>End Date</th>
-				<th>Progress</th>
-				<th>Est.</th>
-				<th>Member</th>
-			</thead>
-			<tbody class="sub-task-table-body">
-				<tr *ngFor="let subTask of subTasks" (click)="onClickSubTask(subTask.id)"
-					[ngClass]="{'selected': subTask.id === selectedSubTaskId}">
-					<td>{{subTask.name}}</td>
-					<td>{{subTask.desc}}</td>
-					<td>{{subTask.startDate | date}}</td>
-					<td>{{subTask.endDate | date}}</td>
-					<td class="flex-position-relative">
-						<span class="percent">{{subTask.percent}}%</span>
-						<ngb-progressbar height="20px" [value]="subTask.percent"></ngb-progressbar>
-					</td>
-					<td>{{subTask.estiHours}}</td>
-					<td>{{userName}}</td>
-				</tr>
-				<tr *ngIf="subTasks.length === 0">
-					<td colspan=6 align="center">No data available in table</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="total-counts">
+		<div class="position-relative">
+			<div class="ml-auto">
+				<span class="campaigns-header_totalNum ml-auto mr-2">Total Sub Tasks:
+					{{tableSource.totalCount$ | async}}</span>
+				<span class="mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
+				<span class="mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
+			</div>
+		</div>
+	</div>
+	<div class="d-flex">
+		<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickAddTask()">
+			<i class="fa fa-plus"></i> New Subtask
+		</button>
+		<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickDelete()" *ngIf="selected.length > 0">
+			<i class="fa fa-trash"></i> Delete
+		</button>
+	</div>
+	<div class="sub-task-table mt-2">
+		<app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
+			[selectable]="true" (activate)="onClickSubTask($event)"></app-datatable>
+
+		<div class="w-100">
+			<app-datatable-pagination [tableSource]="tableSource"></app-datatable-pagination>
+		</div>
 	</div>
 </app-card>
 
@@ -49,7 +44,7 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text">Task</span>
 					</div>
-					<input type="text" class="form-control" [value]="taskName" readonly />
+					<input type="text" class="form-control" readonly />
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -57,7 +52,7 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text">User</span>
 					</div>
-					<input type="text" class="form-control" [value]="userName" readonly />
+					<input type="text" class="form-control" readonly />
 				</div>
 			</div>
 		</div>
@@ -125,3 +120,14 @@
 		Please Select Task.
 	</app-toast>
 </div>
+<ng-template #progressTemplate let-row="row" let-value let-i="index">
+	<span class="percent">{{value}}%</span>
+	<ngb-progressbar height="20px" [value]="value"></ngb-progressbar>
+</ng-template>
+
+
+<ng-template #userNameTemplate let-row="row" let-value let-i="index">
+  <span>{{ user.name }}</span>
+</ng-template>
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
+	[buttons]="confirmButtons"></app-confirm-modal>
