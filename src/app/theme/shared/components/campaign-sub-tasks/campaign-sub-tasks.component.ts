@@ -14,7 +14,7 @@ import { CollaborateCampaignTask, CollaborateCampaignSubtask } from '@app-core/m
 
 import { CollaborateCampaignsSubtasksMockData } from '../../../../fack-db/collaborate-campaign-subtasks-mock';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
-import { User } from '@app-core/models/user';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-campaign-sub-tasks',
@@ -46,7 +46,10 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
   tableSource: DataTableSource<CollaborateCampaignTask> = new DataTableSource<CollaborateCampaignTask>(50);
   selected: CollaborateCampaignTask[] = [];
 
+  subTaskForm: FormGroup;
+
   constructor(
+    private fb: FormBuilder,
     private collaborateService: CollaborateService,
     private toastEvent: ToastService
   ) {
@@ -56,6 +59,14 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngOnInit(): void {
     this._updateTable([]);
+    this.subTaskForm = this.fb.group({
+      id: 0,
+      subtask_name: ['', Validators.required],
+      desc: ['', Validators.required],
+      start: ['', Validators.required],
+      end: ['', Validators.required],
+      esti_hours: ['', Validators.required],
+    });
   }
 
   ngAfterViewInit() {
@@ -104,6 +115,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
    **********************************************/
   onClickAddTask() {
     if (this.task && this.task.id > 0) {
+      this.subTaskForm.reset();
       this.addSubTaskModal.show();
     } else {
       this.toastEvent.toast({ uid: 'toast2', delay: 3000 });
@@ -116,14 +128,35 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
   onConfirmDelete() {
 
   }
+
+  onCreateSubTask() {
+
+  }
   /******************************************************
    * Click event - select row in Assigned Campaign table *
    * --------------------------------------------------- *
    *                                                     *
    *******************************************************/
-  onClickSubTask(subTaskId: number) {
+  onClickSubTask(event) {
     // this.selectedSubTaskId = subTaskId;
     // this.selectRow.emit(this.selectedSubTaskId);
+    if (event.type === 'click') {
+      const subTask = event.row as CollaborateCampaignSubtask;
+      this.selectRow.emit(subTask);
+
+      if (event.cellIndex === 1) {
+
+        this.subTaskForm.setValue({
+          id: subTask.id,
+          subtask_name: subTask.name,
+          desc: subTask.desc,
+          start: subTask.started,
+          end: subTask.ended,
+          esti_hours: subTask.esti_hours,
+        });
+        this.addSubTaskModal.show();
+      }
+    }
   }
 
   loadSubTasks(taskId: number) {

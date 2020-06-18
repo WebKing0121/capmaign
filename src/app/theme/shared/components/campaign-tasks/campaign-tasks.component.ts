@@ -12,6 +12,7 @@ import { CollaborateCampaign, CollaborateTeam, CollaborateCampaignTask } from '@
 
 import { CollaborateCampaignsTasksMockData } from '../../../../fack-db/collaborate-campaign-tasks-mock';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-campaign-tasks',
@@ -47,9 +48,10 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   tableSource: DataTableSource<CollaborateCampaignTask> = new DataTableSource<CollaborateCampaignTask>(50);
   selected: CollaborateCampaignTask[] = [];
-
+  taskForm: FormGroup;
 
   constructor(
+    private fb: FormBuilder,
     private collaborateService: CollaborateService,
     private toastEvent: ToastService
   ) {
@@ -62,6 +64,15 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnInit(): void {
     this._updateTable([]);
+    this.taskForm = this.fb.group({
+      id: 0,
+      task_name: ['', Validators.required],
+      desc: ['', Validators.required],
+      start: ['', Validators.required],
+      end: ['', Validators.required],
+      user: ['', Validators.required],
+      esti_hours: ['', Validators.required],
+    });
   }
 
   _updateTable(tasks: CollaborateCampaignTask[]) {
@@ -116,6 +127,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
       this.modalTeamName = this.getTeamName();
       this.modalCampaignName = this.getCampaignName();
       this.modalTeamMembers = this.getTeamMembers();
+      this.taskForm.reset();
       this.addTaskModal.show();
     } else {
       this.toastEvent.toast({ uid: 'toast1', delay: 3000 });
@@ -134,19 +146,26 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
       this.selectRow.emit(task);
 
       if (event.cellIndex === 1) {
-        // this.teamsForm.setValue({
-        //   current_team: campaign.team_id === 0 ? '' : this.getTeamName(campaign.team_id),
-        //   new_team: ''
-        // });
-
-        // this.teamsInAssignModel = campaign.team_id === 0 ?
-        //   this.teams.map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })) :
-        //   this.teams.filter((x: CollaborateTeam) => x.id !== campaign.team_id)
-        //     .map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })),
-        //   this.assignTeamModal.show();
-
+        this.modalTeamName = this.getTeamName();
+        this.modalCampaignName = this.getCampaignName();
+        this.modalTeamMembers = this.getTeamMembers();
+        this.taskForm.setValue({
+          id: task.id,
+          task_name: task.name,
+          desc: task.desc,
+          start: task.started,
+          end: task.ended,
+          user: `${task.user_id}`,
+          esti_hours: task.esti_hours,
+        });
+        this.addTaskModal.show();
       }
     }
+  }
+
+  onCreateTask() {
+    this.taskForm.reset();
+    this.addTaskModal.hide();
   }
 
   onClickDelete() {

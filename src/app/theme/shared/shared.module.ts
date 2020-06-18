@@ -19,6 +19,8 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { TinymceModule } from 'angular2-tinymce';
 import { NgbTabsetModule, NgbProgressbarModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
+
 import { SocialAddConnectionComponent } from './components/social-add-connection/social-add-connection.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SocialAccountListComponent } from './components/social-account-list/social-account-list.component';
@@ -52,7 +54,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     NgbProgressbarModule,
     NgbDatepickerModule,
     SelectModule,
-    DatatableModule
+    DatatableModule,
+    AmazingTimePickerModule
   ],
   exports: [
     CommonModule,

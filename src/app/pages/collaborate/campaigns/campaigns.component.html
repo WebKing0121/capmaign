@@ -13,14 +13,12 @@
       </div>
       <div class="d-flex">
         <div class="campaign-filter">
-          <div class="position-relative">
-            <div class="btn-group dropdown" ngbDropdown>
-              <button class="btn btn-outline-primary  btn-normal-padding" ngbDropdownToggle
-                type="button">{{filterLabel}}</button>
-              <div ngbDropdownMenu>
-                <a *ngFor="let filter of campaignFilter" class="dropdown-item"
-                  (click)="onClickFilterInCampaigns(filter)">{{filter.label}}</a>
-              </div>
+          <div class="btn-group dropdown" ngbDropdown>
+            <button class="btn btn-outline-primary  btn-normal-padding" ngbDropdownToggle
+              type="button">{{filterLabel}}</button>
+            <div ngbDropdownMenu>
+              <a *ngFor="let filter of campaignFilter" class="dropdown-item"
+                (click)="onClickFilterInCampaigns(filter)">{{filter.label}}</a>
             </div>
           </div>
         </div>

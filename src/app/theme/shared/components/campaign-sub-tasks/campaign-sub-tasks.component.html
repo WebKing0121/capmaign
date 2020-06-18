@@ -1,5 +1,4 @@
-<app-card #cardSubTasks cardTitle="Sub Tasks" [cardButtons]="[]" cardClass="card-sub-tasks"
-	[options]="false">
+<app-card #cardSubTasks cardTitle="Sub Tasks" [cardButtons]="[]" cardClass="card-sub-tasks" [options]="false">
 	<div class="total-counts">
 		<div class="position-relative">
 			<div class="ml-auto">
@@ -14,7 +13,8 @@
 		<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickAddTask()">
 			<i class="fa fa-plus"></i> New Subtask
 		</button>
-		<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickDelete()" *ngIf="selected.length > 0">
+		<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickDelete()"
+			*ngIf="selected.length > 0">
 			<i class="fa fa-trash"></i> Delete
 		</button>
 	</div>
@@ -44,7 +44,7 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text">Task</span>
 					</div>
-					<input type="text" class="form-control" readonly />
+					<input *ngIf="task" type="text" class="form-control" [value]="task.name" readonly />
 				</div>
 			</div>
 			<div class="col-md-6">
@@ -52,61 +52,63 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text">User</span>
 					</div>
-					<input type="text" class="form-control" readonly />
+					<input *ngIf="task" type="text" class="form-control" [value]="user.label" readonly />
 				</div>
 			</div>
 		</div>
-		<div class="row mt-4">
-			<div class="col-md-12 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">Sub Task</span>
+		<form [formGroup]="subTaskForm" (ngSubmit)="onCreateSubTask()">
+			<div class="row mt-4">
+				<div class="col-md-12 input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Sub Task</span>
+					</div>
+					<input type="text" class="form-control" formControlName="subtask_name" />
 				</div>
-				<input type="text" class="form-control" />
 			</div>
-		</div>
-		<div class="row mt-2">
-			<div class="col-md-12 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">Description</span>
+			<div class="row mt-2">
+				<div class="col-md-12 input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Description</span>
+					</div>
+					<input type="text" class="form-control" formControlName="desc" />
 				</div>
-				<input type="text" class="form-control" />
 			</div>
-		</div>
 
-		<div class="row mt-2">
-			<div class="col-md-6 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">Start</span>
+			<div class="row mt-2">
+				<div class="col-md-6 input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Start</span>
+					</div>
+					<input class="form-control" formControlName="start" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from"
+						ngbDatepicker #d_f="ngbDatepicker" />
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_f.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
 				</div>
-				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
-					#d_f="ngbDatepicker">
-				<div class="input-group-append">
-					<span class="input-group-text" (click)="d_f.toggle()">
-						<i class="fa fa-calendar"></i>
-					</span>
+				<div class="col-md-6 input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">End</span>
+					</div>
+					<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+						#d_t="ngbDatepicker" formControlName="end" />
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_t.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-6 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">End</span>
-				</div>
-				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
-					#d_t="ngbDatepicker">
-				<div class="input-group-append">
-					<span class="input-group-text" (click)="d_t.toggle()">
-						<i class="fa fa-calendar"></i>
-					</span>
+			<div class="row mt-2">
+				<div class="col-md-12 input-group">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Estimation</span>
+					</div>
+					<input type="text" class="form-control" formControlName="esti_hours" />
 				</div>
 			</div>
-		</div>
-		<div class="row mt-2">
-			<div class="col-md-12 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">Estimation</span>
-				</div>
-				<input type="text" class="form-control" />
-			</div>
-		</div>
+		</form>
 	</div>
 
 	<div class="app-modal-footer">
@@ -127,7 +129,7 @@
 
 
 <ng-template #userNameTemplate let-row="row" let-value let-i="index">
-  <span>{{ user.name }}</span>
+	<span>{{ user.name }}</span>
 </ng-template>
 <app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
 	[buttons]="confirmButtons"></app-confirm-modal>

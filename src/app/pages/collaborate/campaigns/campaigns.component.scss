@@ -46,6 +46,7 @@
 }
 @media only screen and (max-width: 1200px) {
     .card-campaigns {
+        padding: 0px;
         .card-body {
  
             height: auto;
@@ -53,7 +54,7 @@
         }
     }
     .card-tasks-section {
-        padding-left: 15px;
+        padding: 0px;
     }
 }
 
