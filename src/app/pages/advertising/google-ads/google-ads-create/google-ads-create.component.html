@@ -105,8 +105,8 @@
               </div>
             </div>
             <div class="col-12 col-lg-6 form-group m-l-auto">
-              <div class="text-secondary m-t-30">
-                <label>
+              <div class="text-secondary m-t-20">
+                <label class="text-primary font-weight-bold">
                   Language
                 </label>
                 <div class="input-group">
@@ -126,7 +126,7 @@
                     Daily Budget<span class="text-danger">*</span>
                   </label>
                   <div class="input-group m-t-20">
-                    <input class="form-control" placeholder="Daily Budget" autocomplete="off" name="exclude">
+                    <input type="text" class="form-control" placeholder="Daily Budget" autocomplete="off" name="exclude">
                     <div class="input-group-append">
                       <span class="input-group-text text-primary">
                         <i class="fa fa-usd">$</i>
@@ -176,11 +176,11 @@
               </div>
               <div class="col-lg-12 p-0 d-flex">
                 <label class="col-lg-3 border border-1 border-primary p-10 m-l-16 m-t-20 m-r-10">
-                  <input id="radio1" type="radio" name="Delivery" value="1" ng-model="vm.Standard"
+                  <input id="radio1" type="radio" name="BidStrategy" value="1" ng-model="vm.Standard"
                     class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">Maximum Conversation
                 </label>
                 <label class="col-lg-3 border border-1 border-primary p-10 m-l-16 m-t-20">
-                  <input id="radio2" type="radio" name="Delivery" value="1" ng-model="vm.Accelerated"
+                  <input id="radio2" type="radio" name="BidStrategy" value="1" ng-model="vm.Accelerated"
                     class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched"> Maximum Clicks
                 </label>
               </div>
@@ -208,7 +208,7 @@
       <div class="row">
         <div class="col-12 col-lg-6 d-flex flex-column">
           <form [formGroup]="siteLinkCreateForm" (ngSubmit)="createNewSiteLink()">
-            <div class="form-group">
+            <div class="form-group m-t-20">
               <label class="required-mark-after">Sitelink Text</label>
               <input class="form-control" formControlName="text" aria-label="Site Link">
             </div>
