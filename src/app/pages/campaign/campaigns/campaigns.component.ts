@@ -38,8 +38,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    // Update column custom templates
-
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);
 
     this.tableSource.changed$

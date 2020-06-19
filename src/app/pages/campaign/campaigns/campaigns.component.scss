@@ -1,6 +1,11 @@
 :host {
   .campaigns-table {
     position: relative;
+    height: calc(100% - 80px);
+  }
+
+  .card-body {
+    height: calc(100vh - 220px);
   }
 }
 
