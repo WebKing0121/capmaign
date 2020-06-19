@@ -23,6 +23,11 @@ export class SocialAccount {
   posts?: any[];
 }
 
+export interface SocialLinkSelected {
+  id: number;
+  selected: number;
+}
+
 export class SocialChatMessage {
   id?: number;
   message: string;

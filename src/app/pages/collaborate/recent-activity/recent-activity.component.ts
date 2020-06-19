@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation, HostListener, ViewChild } from '@angular/core';
-import { CollaborateService } from 'src/app/_services/collaborate.service';
+
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
-import { UsersMockData } from 'src/app/fack-db/users-mock';
-import { CollaborateCampaignsMockData } from 'src/app/fack-db/collaborate-campaigns-mock';
-
+import { UsersMockData } from '@app-fake-db/users-mock';
+import { CollaborateCampaignsMockData } from '@app-fake-db/collaborate-campaigns-mock';
+import { CollaborateService } from '@app-services/collaborate.service';
 
 @Component({
   selector: 'app-recent-activity',

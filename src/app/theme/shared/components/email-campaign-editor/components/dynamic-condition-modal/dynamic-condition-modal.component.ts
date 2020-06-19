@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ModalRef } from '@app-components/modal/modal-ref';
 
-import { EmailCampaignDynamicCondition } from '../../../../../../fack-db/campaign-personalization-data';
+import { EmailCampaignDynamicCondition } from '@app-fake-db/campaign-personalization-data';
 
 @Component({
   selector: 'app-dynamic-condition-modal',

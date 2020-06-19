@@ -1,13 +1,13 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ValidationService } from '../../../_services/validation.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { SocialEngager } from '@app-models/social';
-import { SocialEngagersMockData } from '../../../fack-db/social-engagers-mock';
+import { SocialEngagersMockData } from '@app-fake-db/social-engagers-mock';
+import { ValidationService } from '@app-services/validation.service';
 
 
 @Component({

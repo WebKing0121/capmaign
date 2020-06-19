@@ -1,21 +1,26 @@
-import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation, OnDestroy, TemplateRef } from '@angular/core';
+import {
+  Component, OnInit, ViewChild, AfterViewInit,
+  ViewEncapsulation, OnDestroy, TemplateRef
+} from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { CollaborateService } from '../../../_services/collaborate.service';
-import { UserService } from '../../../_services/user.service';
+import { CollaborateService } from '@app-services/collaborate.service';
+import { UserService } from '@app-services/user.service';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 
-import { CollaborateCampaignsMockData } from '../../../fack-db/collaborate-campaigns-mock';
-import { CollaborateTeamsMockData } from '../../../fack-db/collaborate-teams-mock';
-import { UsersMockData } from '../../../fack-db/users-mock';
 import { CampaignFilterType } from '@app-core/enums/campaign-type.enum';
-import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from '@app-core/models/user';
+import { User } from '@app-models/user';
+
+import { CollaborateCampaignsMockData } from '@app-fake-db/collaborate-campaigns-mock';
+import { CollaborateTeamsMockData } from '@app-fake-db/collaborate-teams-mock';
+import { UsersMockData } from '@app-fake-db/users-mock';
+
+import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 @Component({
   selector: 'app-campaigns',

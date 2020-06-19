@@ -1,25 +1,25 @@
 import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, TemplateRef, AfterViewInit } from '@angular/core';
-import { CollaborateService } from '../../../_services/collaborate.service';
+
 import { DualListComponent } from 'angular-dual-listbox';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { UserService } from 'src/app/_services/user.service';
-import { ToastService } from '../../../theme/shared/components/toast/toast.service';
-
-import * as moment from 'moment';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
+import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
+import { User } from '@app-models/user';
 
-import { CollaborateCampaignsMockData } from '../../../fack-db/collaborate-campaigns-mock';
-import { CollaborateTeamsMockData } from '../../../fack-db/collaborate-teams-mock';
-import { UsersMockData } from '../../../fack-db/users-mock';
+import { CollaborateCampaignsMockData } from '@app-fake-db/collaborate-campaigns-mock';
+import { CollaborateTeamsMockData } from '@app-fake-db/collaborate-teams-mock';
+import { UsersMockData } from '@app-fake-db/users-mock';
 
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
-import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
-import { User } from '@app-core/models/user';
+import { UserService } from '@app-services/user.service';
+import { CollaborateService } from '@app-services/collaborate.service';
+import { ToastService } from '../../../theme/shared/components/toast/toast.service';
+
 
 @Component({
   selector: 'app-teams',

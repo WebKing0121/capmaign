@@ -5,9 +5,9 @@ import { DataTableColumn, DataTableSource } from '@app-components/datatable/data
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { AutomationService } from 'src/app/_services/automation.service';
+import { AutomationService } from '@app-core/services/automation.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
-import { AutomationsMockData } from '../../../fack-db/automation-mock';
+import { AutomationsMockData } from '@app-fake-db/automation-mock';
 
 @Component({
   selector: 'app-automations',

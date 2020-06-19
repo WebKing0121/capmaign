@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { CollaborateService } from 'src/app/_services/collaborate.service';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CollaborateChatRoom } from '@app-core/models/collaborate';
-import { CollaborateChatRoomsMockData } from 'src/app/fack-db/collaborate-chat-users-mock';
+
+import { CollaborateChatRoom } from '@app-models/collaborate';
+import { CollaborateChatRoomsMockData } from '@app-fake-db/collaborate-chat-users-mock';
+import { CollaborateService } from '@app-services/collaborate.service';
 
 @Component({
   selector: 'app-chat-widget',

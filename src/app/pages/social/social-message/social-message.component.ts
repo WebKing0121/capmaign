@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { SocialService } from '../../../_services/social.service';
+import { SocialService } from '@app-services/social.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

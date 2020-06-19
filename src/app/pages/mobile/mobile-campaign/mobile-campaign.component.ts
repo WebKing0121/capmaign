@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CampaignFromDisplayType } from '@app-core/enums/campaign-type.enum';
-import { CampaignResponseMockData } from '../../../fack-db/campaign-mock';
+import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 
 @Component({
   selector: 'app-mobile-campaign',

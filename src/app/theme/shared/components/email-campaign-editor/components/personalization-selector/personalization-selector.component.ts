@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { EmailCampaignPersonalization } from '../../../../../../fack-db/campaign-personalization-data';
+import { EmailCampaignPersonalization } from '@app-fake-db/campaign-personalization-data';
 import { EmailCampaignEditorComponent } from '@app-components/email-campaign-editor/email-campaign-editor.component';
 import { MobileCampaignEditorComponent } from '@app-components/email-campaign-editor/mobile-campaign-editor.component';
 

@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
-import { AuthenticationService } from '../../../../../_services/authentication.service';
+import { AuthenticationService } from '@app-services/authentication.service';
 import { User } from '@app-models/user';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

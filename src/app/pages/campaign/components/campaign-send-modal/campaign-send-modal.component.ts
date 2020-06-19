@@ -10,7 +10,7 @@ import { CampaignScheduler } from '@app-core/enums/campaign-scheduler.enum';
 import { CampaignSendAsType } from '@app-core/enums/campaign-type.enum';
 import { CampaignLeadGradingType } from '@app-core/enums/campaign-type.enum';
 
-import { CampaignResponseMockData } from '../../../../fack-db/campaign-mock';
+import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { WizardComponent } from 'angular-archwizard';
 interface ComponentProps {
   campaign: Campaign;

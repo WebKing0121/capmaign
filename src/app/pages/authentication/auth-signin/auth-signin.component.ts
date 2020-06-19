@@ -5,8 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-import { AuthenticationService } from '../../../_services/authentication.service';
-import { AppState, AppTypes } from '../../../store/app.models';
+import { AuthenticationService } from '@app-services/authentication.service';
+import { AppState, AppTypes } from '@app-store/app.models';
 import { Store } from '@ngrx/store';
 
 @Component({

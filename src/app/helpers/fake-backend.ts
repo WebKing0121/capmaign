@@ -3,15 +3,15 @@ import { HttpRequest, HttpResponse, HttpHandler, HttpEvent, HttpInterceptor, HTT
 import { Observable, of, throwError } from 'rxjs';
 import { delay, mergeMap, materialize, dematerialize } from 'rxjs/operators';
 import * as moment from 'moment';
-import { UsersMockData } from '../fack-db/users-mock';
-import { CollaborateCampaignsMockData } from '../fack-db/collaborate-campaigns-mock';
-import { CollaborateCampaignsTasksMockData } from '../fack-db/collaborate-campaign-tasks-mock';
-import { CollaborateCampaignsSubtasksMockData } from '../fack-db/collaborate-campaign-subtasks-mock';
-import { CollaborateTeamsMockData } from '../fack-db/collaborate-teams-mock';
-import { SocialAccountsMockData } from '../fack-db/social-accounts-mock';
-import { SocialSitesMockData } from '../fack-db/social-sites-mock';
-import { SocialChatUsersMockData } from '../fack-db/social-chat-users-mock';
-import { SocialChatMessagesMockData } from '../fack-db/social-chat-messages-mock';
+import { UsersMockData } from '@app-fake-db/users-mock';
+import { CollaborateCampaignsMockData } from '@app-fake-db/collaborate-campaigns-mock';
+import { CollaborateCampaignsTasksMockData } from '@app-fake-db/collaborate-campaign-tasks-mock';
+import { CollaborateCampaignsSubtasksMockData } from '@app-fake-db/collaborate-campaign-subtasks-mock';
+import { CollaborateTeamsMockData } from '@app-fake-db/collaborate-teams-mock';
+import { SocialAccountsMockData } from '@app-fake-db/social-accounts-mock';
+import { SocialSitesMockData } from '@app-fake-db/social-sites-mock';
+import { SocialChatUsersMockData } from '@app-fake-db/social-chat-users-mock';
+import { SocialChatMessagesMockData } from '@app-fake-db/social-chat-messages-mock';
 let lastActivityTime = '';
 
 @Injectable()
