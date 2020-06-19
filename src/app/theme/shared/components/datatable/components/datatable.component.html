@@ -1,61 +1,74 @@
-<ngx-datatable #table
-               [className]="classes | datatableClassname: ['ngx-datatable']"
-               [columnMode]="columnMode"
-               [rows]="rows"
-               [headerHeight]="headerHeight"
-               [rowHeight]="rowHeight"
-               [selected]="selected"
-               [selectionType]="selectionType"
-               [sorts]="sorts"
-               [sortType]="SortType.multi"
-               [externalSorting]="externalSorting"
-               [scrollbarV]="scrollbarV"
-               [scrollbarH]="scrollbarH"
-               [loadingIndicator]="dataSource.loading$ | async"
-               [limit]="limit"
-               (activate)="activate.emit($event)"
-               (select)="onSelect($event)"
-               (sort)="onSort($event)"
-               (page)="onPage($event, table.bodyComponent.indexes)"
->
-  <ngx-datatable-column
-    [width]="30"
-    [sortable]="false"
-    [canAutoResize]="false"
-    [draggable]="false"
-    [resizeable]="false"
-    [headerCheckboxable]="true"
-    [checkboxable]="true"
-    *ngIf="selectable"
-  ></ngx-datatable-column>
+<app-card [cardTitle]="title" [cardButtons]="buttons" [cardClass]="'table-card'" [options]="false">
+    <div *ngIf="filter.length > 0" class="table-toolbar">
+      <div class="d-flex position-relative">
+        <div class="btn-group dropdown" ngbDropdown>
+          <button class="filter-dropdown" ngbDropdownToggle type="button">
+            <i class="fa fa-filter"></i>
+          </button>
+          <div ngbDropdownMenu>
+            <a *ngFor="let filterOption of filter" class="dropdown-item">
+              <i class="fa fa-caret-left" *ngIf="filterOption.filter && filterOption.filter.length > 0"></i> &nbsp;
+              {{filterOption.name}}
+              <ul class="filter-sub-menu" *ngIf="filterOption.filter && filterOption.filter.length > 0">
+                <li *ngFor="let opt of filterOption.filter" [ngClass]="{'checked': opt.label === filterOption.name}"
+                  (click)="filterOption.onClick(filterOption, opt)"
+                >
+                  <span *ngIf="opt.label === filterOption.name"><i class="fa fa-check"></i></span>
+                  {{opt.label}}
+                </li>
+              </ul>
+             </a>  
+          </div>
+        </div>
+      </div>
+    </div>
+    <ngx-datatable #table
+      [className]="classes | datatableClassname: ['ngx-datatable', 'material']"
+      [columnMode]="columnMode"
+      [rows]="rows"
+      [headerHeight]="headerHeight"
+      [rowHeight]="rowHeight"
+      [selected]="selected"
+      [selectionType]="selectionType"
+      [sorts]="sorts"
+      [sortType]="SortType.multi"
+      [externalSorting]="externalSorting"
+      [scrollbarV]="scrollbarV"
+      [scrollbarH]="scrollbarH"
+      [loadingIndicator]="dataSource.loading$ | async"
+      [limit]="limit"
+      (activate)="activate.emit($event)"
+      (select)="onSelect($event)" (sort)="onSort($event)"
+      (page)="onPage($event, table.bodyComponent.indexes)"
+      >
+      <ngx-datatable-column [width]="30" [sortable]="false" [canAutoResize]="false" [draggable]="false"
+        [resizeable]="false" [headerCheckboxable]="true" [checkboxable]="true" *ngIf="selectable">
+      </ngx-datatable-column>
 
-  <ng-container *ngFor="let column of innerColumns">
-    <ngx-datatable-column *ngIf="column.hidden !== true"
-      [name]="column.name"
-      [prop]="column.prop"
-      [cellClass]="column.cellClass | datatableClassname"
-      [headerClass]="column.headerClass | datatableClassname"
-      [headerTemplate]="column.headerTemplate"
-      [flexGrow]="column.flexGrow"
-      [minWidth]="column.minWidth"
-      [maxWidth]="column.maxWidth"
-      [resizeable]="column.resizeable | datatableConfig"
-      [sortable]="column.sortable | datatableConfig"
-      [draggable]="column.draggable | datatableConfig"
-      [canAutoResize]="column.canAutoResize | datatableConfig">
+      <ng-container *ngFor="let column of innerColumns">
+        <ngx-datatable-column *ngIf="column.hidden !== true" [name]="column.name" [prop]="column.prop"
+          [cellClass]="column.cellClass | datatableClassname" [headerClass]="column.headerClass | datatableClassname"
+          [headerTemplate]="column.headerTemplate" [flexGrow]="column.flexGrow" [minWidth]="column.minWidth"
+          [maxWidth]="column.maxWidth" [resizeable]="column.resizeable | datatableConfig"
+          [sortable]="column.sortable | datatableConfig" [draggable]="column.draggable | datatableConfig"
+          [frozenLeft]="column.frozenLeft" [frozenRight]="column.frozenRight"
+          [canAutoResize]="column.canAutoResize | datatableConfig">
 
-      <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
-        <ng-container *ngIf="column.custom === true">
-          <ng-container [ngTemplateOutlet]="column.template" [ngTemplateOutletContext]="{ $implicit: value, row: row, column: column }"></ng-container>
-        </ng-container>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <ng-container *ngIf="column.custom === true">
+              <ng-container [ngTemplateOutlet]="column.template"
+                [ngTemplateOutletContext]="{ $implicit: value, row: row, column: column }"></ng-container>
+            </ng-container>
 
-        <ng-container *ngIf="column.custom !== true">
-          <ng-container *ngIf="column.pipe">
-            {{ column.pipe.pipe.transform(value, column.pipe.args) }}</ng-container>
-          <ng-container *ngIf="!column.pipe">{{ value }}</ng-container>
-        </ng-container>
-      </ng-template>
+            <ng-container *ngIf="column.custom !== true">
+              <ng-container *ngIf="column.pipe">
+                {{ column.pipe.pipe.transform(value, column.pipe.args) }}</ng-container>
+              <ng-container *ngIf="!column.pipe">{{ value }}</ng-container>
+            </ng-container>
+          </ng-template>
 
-    </ngx-datatable-column>
-  </ng-container>
-</ngx-datatable>
+        </ngx-datatable-column>
+      </ng-container>
+    </ngx-datatable>
+    <app-datatable-pagination [tableSource]="dataSource"></app-datatable-pagination>
+</app-card>

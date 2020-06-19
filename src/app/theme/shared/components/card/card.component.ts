@@ -52,7 +52,7 @@ export class CardComponent implements OnInit {
   @Input() isCardFooter: boolean;
   @Input() footerClass: string;
   @Input() cardActions: [];
-  @Input() cardButtons: [];
+  @Input() cardButtons = [];
 
   public animation: string;
   public fullIcon: string;
@@ -75,7 +75,6 @@ export class CardComponent implements OnInit {
     this.isCardFooter = false;
     this.cardTitle = '';
     this.cardActions = [];
-    this.cardButtons = [];
 
     /*this.animator = animationService.builder();
     this.animators = animationService.builder();

@@ -1,6 +1,6 @@
 import {
   AfterContentInit, AfterViewInit, Component, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit,
-  Output, SimpleChanges, ViewChild
+  Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { ColumnMode, DatatableComponent as NgxDataTableComponent, SelectionType, SortPropDir, SortType } from '@swimlane/ngx-datatable';
 import { Subject } from 'rxjs';
@@ -22,8 +22,9 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @HostBinding('class.app-datatable') hostClassName = true;
 
   @ViewChild(NgxDataTableComponent, { static: false }) handle: NgxDataTableComponent;
-
+  @Input() title = '';
   @Input() classes = ['app-datatable-common'];
+  @Input() buttons = [];
   @Input() columnMode: ColumnMode = ColumnMode.force;
   @Input() cssClasses: { [key: string]: string; };
   @Input() headerHeight = 50;
@@ -34,7 +35,8 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() externalSorting = false;
   @Input() selectable = false;
   @Input() limit = 20;
-
+  @Input() selectionType = SelectionType.single;
+  @Input() filter = [];
   @Input() columns: DataTableColumn[] = [];
   @Input() dataSource: DataTableSource<any>;
 

@@ -1,55 +1,16 @@
 <div class="row">
   <div class="col-xl-6 col-lg-12 card-campaigns">
-    <app-card cardTitle="Campaigns" #cardTeams cardClass="card-datatable" [options]="false">
-      <div class="total-counts">
-        <div class="position-relative">
-          <div class="ml-auto">
-            <span class="campaigns-header_totalNum ml-auto mr-2">Total Campaigns:
-              {{tableSource.totalCount$ | async}}</span>
-            <span class="mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
-            <span class="mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
-          </div>
-        </div>
-      </div>
-      <div class="d-flex">
-        <div class="campaign-filter">
-          <div class="btn-group dropdown" ngbDropdown>
-            <button class="btn btn-outline-primary  btn-normal-padding" ngbDropdownToggle
-              type="button">{{filterLabel}}</button>
-            <div ngbDropdownMenu>
-              <a *ngFor="let filter of campaignFilter" class="dropdown-item"
-                (click)="onClickFilterInCampaigns(filter)">{{filter.label}}</a>
-            </div>
-          </div>
-        </div>
-        <div class="btn-group dropdown" ngbDropdown>
-          <button class="btn btn-outline-primary  btn-normal-padding" ngbDropdownToggle
-            type="button">{{statusLabel}}</button>
-          <div ngbDropdownMenu>
-            <a *ngFor="let status of statusFilter" class="dropdown-item"
-              (click)="onClickStatusInCampaigns(status)">{{status.label}}</a>
-          </div>
-        </div>
-        <div class="search-section ml-auto">
-          <label class="mr-2 ml-10 d-flex align-items-center" *ngIf="showSearchCampaigns">
-            <input type="search" class="table-search" [style.height.px]="25" placeholder="Search"
-              (keypress)="tableSource.search($event.target.value)">
-          </label>
-        </div>
-        <button type="button" class="btn btn-sm btn-icon btn-outline-primary btn-icon-normal-size"
-          (click)="onClickSearchShowCampaigns()">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-      <div class="collaborate-campaigns-table mt-2">
-        <app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
-          [selectable]="false" (activate)="onActiveCampaigns($event)"></app-datatable>
-
-        <div class="w-100">
-          <app-datatable-pagination [tableSource]="tableSource"></app-datatable-pagination>
-        </div>
-      </div>
-    </app-card>
+    <app-datatable 
+      [title]="'Campaigns'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      [selectionType]="'single'"
+      [selectable]="false"
+      [filter]="campaignFilter"
+      (activate)="onActiveCampaigns($event)"
+    ></app-datatable>
   </div>
   <div class="col-xl-6 col-lg-12 card-tasks-section">
     <app-campaign-tasks #campaignTasks [campaign]="selectedCampaign" [teams]="teams" [campaigns]="campaigns"
@@ -101,7 +62,7 @@
 
 <ng-template #teamTemplate let-row="row" let-value let-i="index">
   <span *ngIf="value > 0">{{ getTeamName(value) }}</span>
-  <span class="btn btn-outline-primary btn-normal-padding" *ngIf="value === 0">Assign Team</span>
+  <span class="" *ngIf="value === 0"><i class="fa fa-plus"></i> New</span>
 </ng-template>
 
 <ng-template #progressTemplate let-row="row" let-value let-i="index">

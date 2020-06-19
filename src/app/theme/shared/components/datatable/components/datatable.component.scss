@@ -1,8 +1,10 @@
 :host {
   .ngx-datatable {
-    height: 100%;
+    height: calc(100% - 42px);
+    box-shadow: none;
   }
 
+  
   ::ng-deep {
     .datatable-header {
       border-top: 1px solid #e2e5e8;
@@ -16,15 +18,13 @@
       .datatable-header-cell-wrapper {
         // font-weight: bold;
         .datatable-header-cell-label {
-          text-transform: uppercase;
           overflow: hidden;
           white-space: nowrap;
           text-overflow: ellipsis;
           width: 100%;
-          padding: 0 10px;
           position:relative;
           font-size: 14px;
-          color: black;
+          // color: #ddd;
         }
       }
     }
@@ -36,13 +36,12 @@
     .datatable-body-cell {
       display: flex !important;
       align-items: center;
-
+      padding: 0;
       .datatable-body-cell-label {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         width: 100%;
-        padding: 0 10px;
         position:relative;
         font-size: 13px;
       }
@@ -50,7 +49,7 @@
     .datatable-body-cell.cell-hyperlink {
       cursor: pointer;
       text-decoration: underline;
-      color: deepskyblue;
+      color: deepskyblue !important;
     }
 
     .empty-row {
@@ -58,8 +57,82 @@
     }
   }
 }
-
-.app-datatable-common {
-  border-left: 1px solid #ddd;
-  border-right: 1px solid #ddd;
+.table-toolbar {
+  position: absolute;
+  right: 0;
+  top: 0px;
+  .filter-dropdown {
+    display: inline-block;
+    padding: 7px;
+    border-radius: 5px;
+    margin-right: 5px;
+    margin-top: 8px;
+    background: none;
+    border: 1px solid #fff;
+    font-size: 12px;
+    
+  }
+  .filter-dropdown:hover {
+    border: 1px solid #c29239;
+    background-color: #ffd86b;
+  }
+  .filter-dropdown::after {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+  }
+  .show {
+    .filter-dropdown {
+      border: 1px solid #c29239;
+      background-color: #ffd86b;
+    }
+  }
+  .dropdown-menu {
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
+    padding: 0;
+    font-size: 12px;
+    & > .dropdown-item {
+      padding: 10px 10px;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+      .filter-sub-menu {
+        visibility: hidden;
+        padding-left: 0;
+        list-style-type: none;
+        position: absolute;
+        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
+        margin-right: 20px;
+        transform: translate(calc(-100% - 11px));
+        border: 1px solid #ddd;
+        background: #fff;
+        top: 0px;
+        li {
+          padding: 10px 10px 10px 28px;
+          border-bottom: 1px solid #ddd;
+        }
+        li:last-child {
+          border-bottom: none;
+        }
+        li:hover{
+          background: #ddd;
+        }
+        li.checked {
+          padding: 10px;
+          span {
+            margin-right: 3px;
+          }
+        }
+      }
+    }
+    & > .dropdown-item:last-child {
+      border-bottom: 0px solid #ddd;
+    }
+    & > .dropdown-item:hover {
+      .filter-sub-menu{
+        visibility: visible;
+      }
+    }
+  }
+  
+  
 }

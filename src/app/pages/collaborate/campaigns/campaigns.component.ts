@@ -11,7 +11,7 @@ import { DataTableColumn, DataTableSource } from '@app-components/datatable/data
 import { CollaborateCampaignsMockData } from '../../../fack-db/collaborate-campaigns-mock';
 import { CollaborateTeamsMockData } from '../../../fack-db/collaborate-teams-mock';
 import { UsersMockData } from '../../../fack-db/users-mock';
-
+import { CampaignFilterType } from '@app-core/enums/campaign-type.enum';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -57,33 +57,54 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // Colaborate Campaigns Table;
   tableSource: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
-
   selected: CollaborateCampaign[] = [];
+  tableButtons = [
+    {
+      label: 'Create', icon: 'fa fa-plus', click: () => this.clickTemplate, childs: [
+        { label: 'Create a Email Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
+        { label: 'Create a SMS Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
+        { label: 'Create a Mobile Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
+      ]
+    },
+    { label: 'Delete', icon: 'fa fa-clone', click: () => this.clickTemplate },
+    { label: 'Assign', icon: 'fa fa-crop', click: () => this.clickTemplate },
+    { label: 'Send', icon: 'fa fa-download', click: () => this.clickTemplate },
+  ];
+
   showSearchCampaigns: boolean;
 
   teamsForm: FormGroup;
 
   // Colaborate Campaigns Table Type Filter;
   campaignFilter: any[] = [
-    { value: 'All', label: 'All Campaigns' },
-    { value: 'Email', label: 'Email Campaigns' },
-    { value: 'SMS', label: 'Mobile Campaigns' },
-    { value: 'Social', label: 'Social Campaigns' },
-    { value: 'Google Ads', label: 'Google Ads Campaigns' },
-    { value: 'Facebook', label: 'Facebook Campaigns' },
+    {
+      name: 'All Campaigns',
+      value: 'All',
+      key: CampaignFilterType.Type,
+      onClick: (opt, filter) => this.onClickFilter(opt, filter),
+      filter: [
+        { value: 'All', label: 'All Campaigns' },
+        { value: 'Email', label: 'Email Campaigns' },
+        { value: 'SMS', label: 'Mobile Campaigns' },
+        { value: 'Social', label: 'Social Campaigns' },
+        { value: 'Google Ads', label: 'Google Ads Campaigns' },
+        { value: 'Facebook', label: 'Facebook Campaigns' },
+      ]
+    },
+    {
+      name: 'In Progress',
+      value: 'in-progress',
+      key: CampaignFilterType.Status,
+      onClick: (opt, filter) => this.onClickFilter(opt, filter),
+      filter: [
+        { value: 'in-progress', label: 'In Progress' },
+        { value: 'archived', label: 'Archived' },
+      ]
+    }
   ];
 
   selectedFilter: string;
-  filterLabel: string;
-
-  // Colaborate Campaigns Table Status Filter;
-  statusFilter: any[] = [
-    { value: 'in-progress', label: 'In Progress' },
-    { value: 'archived', label: 'Archived' },
-  ];
-
   selectedStatus: string;
-  statusLabel: string;
 
   constructor(
     private fb: FormBuilder,
@@ -104,18 +125,16 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.replaceTeam = false;
     // this.modalTeamName = '';
 
-    this.filterLabel = 'All Campaigns';
-    this.statusLabel = 'In Progress';
   }
 
   ngAfterViewInit() {
     const columns = [
-      { name: 'Campaign', prop: 'name', sortable: true },
+      { name: 'Campaign', prop: 'name', sortable: true, frozenLeft: true },
       { name: 'Assigned Team', prop: 'team_id', sortable: true, custom: true, template: this.teamTemplate, cellClass: ['cell-hyperlink'] },
       { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
-      { name: 'Type', prop: 'type', sortable: true, maxWidth: 80 },
+      { name: 'Type', prop: 'type', sortable: true, maxWidth: 80, fronzenRight: true },
       { name: 'Status', prop: 'status', sortable: true, maxWidth: 100 },
     ];
 
@@ -182,9 +201,9 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event.type === 'click') {
       const campaign = event.row as CollaborateCampaign;
       this.selectedCampaign = campaign;
-      this.campaignTasks.loadTasksFromCampaign(campaign.id);
-      this.campaignSubTasks.loadSubTasks(0);
-      if (event.cellIndex === 1) {
+      // this.campaignTasks.loadTasksFromCampaign(campaign.id);
+      // this.campaignSubTasks.loadSubTasks(0);
+      if (event.cellIndex === 0) {
         this.teamsForm.setValue({
           current_team: campaign.team_id === 0 ? '' : this.getTeamName(campaign.team_id),
           new_team: ''
@@ -197,6 +216,11 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       }
     }
+  }
+
+  // button click template
+  clickTemplate() {
+
   }
 
   onAssignTeam() {
@@ -215,57 +239,19 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
 
-  onClickFilterInCampaigns(filter: any) {
-    this.selectedFilter = filter.value;
-    this.filterLabel = filter.label;
+  onClickFilter(opt: any, filter: any) {
+    console.log(opt, filter);
+    opt.name = filter.label;
+    opt.value = filter.value;
+
+    // filter data
+    if (opt.key === CampaignFilterType.Type) {
+      this.selectedFilter = filter.value;
+    } else if (opt.key === CampaignFilterType.Status) {
+      this.selectedStatus = filter.value;
+    }
     this._updateTable(this._filterCampaigns());
   }
-
-  onClickStatusInCampaigns(status: any) {
-    this.selectedStatus = status.value;
-    this.statusLabel = status.label;
-    this._updateTable(this._filterCampaigns());
-  }
-
-  // onClickChangeTeam(campaignId: number, event) {
-  //   event.stopPropagation();
-  //   this.selectedCampainIdForReplace = campaignId;
-  //   const { teamId } = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
-  //   this.teamsForNgSelectTemp = this.teamsForNgSelect.filter(x => Number(x.value) !== teamId);
-  //   this.replaceTeam = true;
-  //   this.modalTeamName = this.getCurrentTeamName();
-  //   this.assignTeamModal.show();
-  // }
-
-  // onClickAssignTeam(campaignId: number, event) {
-  //   event.stopPropagation();
-  //   this.selectedCampainIdForReplace = campaignId;
-  //   this.teamsForNgSelectTemp = this.teamsForNgSelect;
-  //   this.replaceTeam = false;
-  //   this.modalTeamName = '';
-  //   this.assignTeamModal.show();
-  // }
-
-  // getCurrentTeamName() {
-  //   const campaign = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
-  //   return this.teamsForNgSelect.find(x => Number(x.value) === campaign.teamId).label;
-  // }
-
-
-  // getExistingTeam() {
-  //   if (this.replaceTeam) {
-  //     const { teamId } = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
-  //     return this.teamsForNgSelect.filter(x => Number(x.value) !== teamId);
-  //   } else {
-  //     return this.teamsForNgSelect;
-  //   }
-  // }
-
-  // onClickCampaign(campaignId: number) {
-  //   this.selectedCampaignId = campaignId;
-  //   this.campaignTasks.loadTasksFromCampaign(campaignId);
-  //   this.campaignSubTasks.loadSubTasks(0);
-  // }
 
   onSelectTask(task: CollaborateCampaignTask) {
 
@@ -303,7 +289,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   _filterCampaigns(): CollaborateCampaign[] {
-
+    console.log(this.selectedFilter, this.selectedStatus);
     if (this.selectedFilter === 'All') {
       if (this.selectedStatus === 'in-progress') {
         return this.campaigns.filter((x: CollaborateCampaign) => x.status === 'in-progress');

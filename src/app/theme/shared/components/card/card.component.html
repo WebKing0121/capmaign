@@ -1,10 +1,21 @@
 <div class="card" [ngClass]="cardClass" [@cardRemove]="cardRemove" #toAnimate> <!-- animates animatesInitMode="show" [animatesOnInit]="{useVisibility: false, disabled: true}" -->
-  <div class="card-header" *ngIf="!hidHeader" [ngClass]="headerClass">
-    <h5 *ngIf="!customHeader">{{ cardTitle }}
-      <ul *ngIf="cardButtons && cardButtons.length > 0" class="ul-header-button">
-        <li *ngFor="let button of cardButtons" (click)="button.action()"><i class="feather" [ngClass]="button.icon"></i></li>
-      </ul>
-    </h5>
+  <div class="card-header d-flex" *ngIf="!hidHeader" [ngClass]="headerClass">
+    <h5 *ngIf="!customHeader">{{ cardTitle }}</h5>
+    <div *ngIf="cardButtons.length > 0" class="header-button">
+      <div *ngFor="let button of cardButtons" [title]="button.label">
+        <span *ngIf="!button.childs || button.childs.length === 0"><i [ngClass]="button.icon"></i></span>
+        <div *ngIf="button.childs && button.childs.length > 0" ngbDropdown  class="btn-group dropdown dropright"  >
+          <button class="button-dropdown" ngbDropdownToggle type="button">
+            <i [ngClass]="button.icon"></i>
+          </button>
+          <div ngbDropdownMenu class="drop-down-menu-my">
+            <a *ngFor="let sub_button of button.childs" class="dropdown-item" (click)="sub_button.click()">
+              {{sub_button.label}}
+             </a>  
+          </div>
+        </div>
+      </div>
+    </div>
     <p *ngIf="!customHeader && cardCaption" [ngClass]="captionClass">{{cardCaption}}</p>
     <div class="card-header-right" *ngIf="this.options && !customHeader">
       <div class="btn-group card-option dropdown" ngbDropdown placement="auto">
