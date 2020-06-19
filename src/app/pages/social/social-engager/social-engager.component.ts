@@ -8,7 +8,6 @@ import { takeUntil } from 'rxjs/operators';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { SocialEngager } from '@app-models/social';
 import { SocialEngagersMockData } from '../../../fack-db/social-engagers-mock';
-import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 
 @Component({
@@ -38,7 +37,10 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
   error = '';
 
   tableSource: DataTableSource<SocialEngager> = new DataTableSource<SocialEngager>(50);
-
+  tableButtons = [
+    { label: 'Create a new Engager', icon: 'fa fa-plus', click: () => this.onNewEngager() },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEngager(), color: 'red', hide: true },
+  ];
   selected: SocialEngager[] = [];
 
   confirmButtons = [
@@ -64,7 +66,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
         this.tableSource.next(
           SocialEngagersMockData.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-            SocialEngagersMockData.length
+          SocialEngagersMockData.length
         );
       });
     this.tableSource.selection$
@@ -87,7 +89,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit() {
     const columns: DataTableColumn[] = [
-      { name: 'First name', prop: 'first_name', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'First name', prop: 'first_name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Last name', prop: 'last_name', sortable: true },
       { name: 'Company', prop: 'company', sortable: true },
       { name: 'Phone number', prop: 'phone_number', sortable: true },
@@ -104,18 +106,22 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
 
   onActive(event) {
     // TODO: Simplify later
-    if (event.type === 'click' && event.cellIndex === 1) {
+    if (event.type === 'click') {
       const engager = event.row as SocialEngager;
-      this.engagerForm.setValue({
-        id: engager.id,
-        first_name: engager.first_name,
-        last_name: engager.last_name,
-        company: engager.company,
-        email: engager.email,
-        mobile_number: engager.phone_number,
-        zip: engager.zip,
-      });
-      this.newEngagerModal.show();
+      this.tableButtons[1].hide = false;
+      if (event.cellIndex === 0 && event.column.frozenLeft) {
+        this.engagerForm.setValue({
+          id: engager.id,
+          first_name: engager.first_name,
+          last_name: engager.last_name,
+          company: engager.company,
+          email: engager.email,
+          mobile_number: engager.phone_number,
+          zip: engager.zip,
+        });
+        this.newEngagerModal.show();
+      }
+
     }
   }
 
