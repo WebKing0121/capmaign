@@ -1,5 +1,7 @@
-import { AfterViewInit, Component, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit,
-  Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  AfterContentInit, AfterViewInit, Component, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit,
+  Output, SimpleChanges, ViewChild
+} from '@angular/core';
 import { ColumnMode, DatatableComponent as NgxDataTableComponent, SelectionType, SortPropDir, SortType } from '@swimlane/ngx-datatable';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -13,7 +15,7 @@ import { DataTableSource, DataTableColumn } from '../datatable-source';
   templateUrl: './datatable.component.html',
   styleUrls: ['./datatable.component.scss']
 })
-export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit {
+export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit, AfterContentInit {
   SelectionType = SelectionType;
   SortType = SortType;
 
@@ -31,6 +33,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() virtualScrolling = true;
   @Input() externalSorting = false;
   @Input() selectable = false;
+  @Input() limit = 20;
 
   @Input() columns: DataTableColumn[] = [];
   @Input() dataSource: DataTableSource<any>;
@@ -39,7 +42,6 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
 
   innerColumns: DataTableColumn[] = [];
   tableHeight = this.headerHeight;
-  limit = 20;
 
   rows: any[];
   selected = [];
@@ -58,7 +60,6 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
         this.innerColumns = columns;
       });
       this.limit = this.dataSource.pageSize;
-      this.tableHeight = this.headerHeight + this.rowHeight * this.limit + 30;
 
       this.dataSource.data$.pipe(
         takeUntil(this.destroy$)
@@ -71,7 +72,6 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
       ).subscribe(() => {
         this.limit = this.dataSource.pageSize;
         this.handle.limit = this.limit;
-        this.tableHeight = this.headerHeight + this.rowHeight * this.limit + 30;
         this.handle.recalculate();
         this.handle.recalculatePages();
       });
@@ -90,6 +90,14 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   }
 
   ngAfterViewInit() {
+  }
+
+  ngAfterContentInit(): void {
+    setTimeout(() => {
+      this.handle.recalculate();
+      this.handle.recalculatePages();
+      this.handle.recalculateColumns();
+    }, 800);
   }
 
   onSelect(event: { selected: any[] }) {

@@ -1,4 +1,8 @@
 :host {
+  .ngx-datatable {
+    height: 100%;
+  }
+
   ::ng-deep {
     .datatable-header {
       border-top: 1px solid #e2e5e8;
