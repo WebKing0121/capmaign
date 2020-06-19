@@ -329,14 +329,14 @@
               <label class="text-primary font-weight-bold">Gender</label>
               <div class="radio-group-multitoggle m-b-0">
                 <input id="toggle_gender1" class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty"
-                  name="toggle_gender" ng-model="vm.campaign.gender" value="all" type="radio" checked>
+                  name="toggle_gender" value="all" type="radio" checked>
                 <label for="toggle_gender1" class="lblmultitoggle bold">All</label>
                 <input id="toggle_gender2" class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty"
-                  name="toggle_gender" ng-model="vm.campaign.gender" value="male" type="radio">
+                  name="toggle_gender" value="male" type="radio">
                 <label for="toggle_gender2" class="lblmultitoggle bold">Male</label>
                 <input id="toggle_gender3"
                   class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" name="toggle_gender"
-                  ng-model="vm.campaign.gender" value="female" type="radio">
+                  value="female" type="radio">
                 <label for="toggle_gender3" class="lblmultitoggle bold">Female</label>
               </div>
             </div>
@@ -383,103 +383,119 @@
               <div class="form-group form-md-line-input form-md-floating-label no-hint">
                 <label class="text-primary font-weight-bold m-t-20">Placements</label>
                 <div class="radio radio-primary text-primary m-t-20 m-l-20">
-                  <input type="radio" id="adscheduling1" name="adscheduling" value="allthetime">
-                  <label class="text-primary" for="adscheduling1">Automatic</label>
+                  <label class="text-primary">
+                    <input type="radio" id="automatic" name="placements" value="automatic"
+                      (click)="onEditPlacementsClick(false)">
+                    Automatic
+                  </label>
                 </div>
                 <div class="radio radio-primary text-primary m-l-20">
-                  <label class="text-primary" for="adscheduling2" (click)="onEditPlacementsClick()">
-                    <input type="radio" id="adscheduling2" name="adscheduling" value="onschedule">
+                  <label class="text-primary">
+                    <input type="radio" id="editPlacement" name="placements" value="editPlacement"
+                      (click)="onEditPlacementsClick(true)">
                     Edit Placements
                   </label>
                 </div>
               </div>
             </div>
             <div *ngIf="editPlacementsFlag">
-              <div class="col-lg-12" style="margin-top: 20px;" ng-show="vm.campaign.placement">
-                <div class="col-lg-12">
+              <div class="col-lg-12 d-flex flex-wrap m-t-20">
+                <div class="col-lg-12 p-0">
                   <div class="form-group placement_devices form-md-line-input form-md-floating-label no-hint">
-                    <label class="font-blue bold">Devices</label><br>
-                    <div class="btn-group " data-toggle="buttons">
-                      <label class="chkbtn btn_devices btn_desktop btn btn-primary bold"
-                        ng-click="vm.d_deviceToggle()"><span class="md-click-circle md-click-animate"
-                          style="height: 98px; width: 98px; top: -24.3229px; left: 7.56943px;"></span>
-                        <input type="checkbox" class="dev_desktop ng-pristine ng-untouched ng-valid ng-empty"
-                          ng-model="vm.campaign.device.desktop" value="desktop" checked="" style="">Desktop
-                        <span class="fa fa-check"></span>
-                      </label>
-                      <label class="chkbtn btn_devices btn_mobile btn btn-primary bold active"
-                        ng-click="vm.m_deviceToggle()">
-                        <input type="checkbox" class="dev_mobile ng-pristine ng-untouched ng-valid ng-not-empty"
-                          ng-model="vm.campaign.device.mobile" value="mobile" checked="" style="">Mobile
-                        <span class="fa fa-check"></span>
-                      </label>
+                    <label class="text-primary font-weight-bold">Devices</label><br>
+                    <div class="card-body ng-tns-c111-113 ng-star-inserted">
+                      <div data-toggle="buttons" class="btn-group btn-group-toggle ng-tns-c111-113">
+                        <label class="btn btn-primary">
+                          <input type="checkbox" (click)="onDesktopModeClick()">
+                          Desktop
+                          <span>
+                            <i *ngIf="desktopMode" class="fa fa-check" style="opacity: 1;"></i>
+                            <i *ngIf="!desktopMode" class="fa fa-check" style="opacity: 0;"></i>
+                          </span>
+                        </label>
+                        <label class="btn btn-primary">
+                          <input type="checkbox" (click)="onMobileModeClick()">
+                          Mobile
+                          <span>
+                            <i *ngIf="mobileMode" class="fa fa-check" style="opacity: 1;"></i>
+                            <i *ngIf="!mobileMode" class="fa fa-check" style="opacity: 0;"></i>
+                          </span>
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-12">
+                <div class="col-lg-12 p-0">
                   <div class="form-group form-md-line-input form-md-floating-label no-hint obj_platforms">
-                    <label class="font-blue bold">Platforms</label><br>
-                    <div class="btn-group " data-toggle="buttons">
-                      <label class="chkbtn btn_facebook btn btn-primary bold" ng-click="vm.facebookToggleAll()">
-                        <input type="checkbox"
-                          class="facebook obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                          ng-model="vm.campaign.facebook.all" style="">Facebook
-                        <span class="fa fa-check"></span>
-                      </label>
-                      <label class="chkbtn btn_audience btn btn-primary bold" ng-click="vm.audienceToggleAll()"><span
-                          class="md-click-circle md-click-animate"
-                          style="height: 159px; width: 159px; top: -58.6944px; left: -17.3195px;"></span>
-                        <input type="checkbox"
-                          class="audience obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                          ng-model="vm.campaign.audience.all" style=""> Audience Network
-                        <span class="fa fa-check"></span>
-                      </label>
-                      <label class="chkbtn btn_instagram btn btn-primary bold" ng-click="vm.instagramToggleAll()">
-                        <input type="checkbox"
-                          class="instagram obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                          ng-model="vm.campaign.instagram.all" style=""> Instagram
-                        <span class="fa fa-check"></span>
-                      </label>
-                      <label class="chkbtn btn_messenger btn btn-primary bold" ng-click="vm.messengerToggleAll()">
-                        <input type="checkbox"
-                          class="messenger obj1 obj2 obj3 obj5 obj8 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                          ng-model="vm.campaign.messenger.all" style=""> Messenger
-                        <span class="fa fa-check"></span>
-                      </label>
+                    <div class="form-group placement_devices form-md-line-input form-md-floating-label no-hint">
+                      <label class="text-primary font-weight-bold">Devices</label><br>
+                      <div class="card-body ng-tns-c111-113 ng-star-inserted">
+                        <div data-toggle="buttons" class="btn-group btn-group-toggle ng-tns-c111-113">
+                          <label class="btn btn-primary">
+                            <input type="checkbox" (click)="onFacebookClick()">
+                            <span>
+                              <i *ngIf="facebook" class="fa fa-check" style="opacity: 1;"></i>
+                              <i *ngIf="!facebook" class="fa fa-check" style="opacity: 0;"></i>
+                            </span>
+                            Facebook
+                          </label>
+                          <label class="btn btn-primary">
+                            <input type="checkbox" (click)="onAudienceNetworkClick()">
+                            Audience Network
+                            <span>
+                              <i *ngIf="audienceNetwork" class="fa fa-check" style="opacity: 1;"></i>
+                              <i *ngIf="!audienceNetwork" class="fa fa-check" style="opacity: 0;"></i>
+                            </span>
+                          </label>
+                          <label class="btn btn-primary">
+                            <input type="checkbox" (click)="onInstagramClick()">
+                            Instagram
+                            <span>
+                              <i *ngIf="instagram" class="fa fa-check" style="opacity: 1;"></i>
+                              <i *ngIf="!instagram" class="fa fa-check" style="opacity: 0;"></i>
+                            </span>
+                          </label>
+                          <label class="btn btn-primary">
+                            <input type="checkbox" (click)="onMessengerClick()">
+                            Messenger
+                            <span>
+                              <i *ngIf="messenger" class="fa fa-check" style="opacity: 1;"></i>
+                              <i *ngIf="!messenger" class="fa fa-check" style="opacity: 0;"></i>
+                            </span>
+                          </label>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6">
-                  <label class="bold font-blue margin-bottom-10">Placements</label>
+                <div class="col-lg-6 p-0">
+                  <label class="font-weight-bold text-primary margin-bottom-10">Placements</label>
                 </div>
-                <div class="clearfix"></div>
-                <div class="col-lg-12 obj_placements">
-                  <div class="col-lg-6">
-                    <label class="font-blue bold"><u>Feeds</u><br><small>(Get high visibility for your business with
-                        ads in feeds)</small></label><br>
-                    <label class="containerCheck" id="facebook_newsfeed" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/yc/r/SL2k5fllWu5.jpg" data-original-title=""
-                      title="">
+                <div class="col-lg-12 obj_placements d-flex flex-wrap p-0">
+                  <div class="col-lg-6 d-flex flex-column">
+                    <label class="text-primary font-weight-bold">
+                      <u>Feeds</u>
+                      <small>(Get high visibility for your business with ads in feeds)</small>
+                    </label>
+                    <label class="btn btn-primary">
+                      <input type="checkbox" (click)="onMessengerClick()">
                       Facebook News Feed
-                      <input type="checkbox"
-                        class="mobile desktop obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.newsfeed" style=""><span class="checkmark"></span>
+                      <span>
+                        <i *ngIf="messenger" class="fa fa-check" style="opacity: 1;"></i>
+                        <i *ngIf="!messenger" class="fa fa-check" style="opacity: 0;"></i>
+                      </span>
                     </label>
                     <label class="containerCheck" id="instagram_feed" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/yA/r/bCv_O9cJjYo.jpg" data-original-title=""
-                      title="">
+                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/yA/r/bCv_O9cJjYo.jpg">
                       Instagram Feed
-                      <input type="checkbox"
-                        class="mobile obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.instagram.feed" style=""><span class="checkmark"></span>
+                      <input type="checkbox" class="mobile">
+                      <span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="facebook_marketplace" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/yh/r/9Us3QXc4ZJy.jpg" data-original-title=""
-                      title="">
+                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/yh/r/9Us3QXc4ZJy.jpg">
                       Facebook Marketplace
-                      <input type="checkbox"
-                        class="mobile desktop obj1 obj2 obj3 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.marketplace" style=""><span class="checkmark"></span>
+                      <input type="checkbox" class="mobile desktop">
+                      <span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="facebook_videofeed" data-toggle="popover" data-type="img"
                       data-full="https://static.xx.fbcdn.net/rsrc.php/v1/ye/r/z24MsSer0jU.jpg" data-original-title=""
@@ -487,16 +503,14 @@
                       Facebook video feeds
                       <input type="checkbox"
                         class="mobile obj1 obj2 obj3 obj4 obj5 obj6 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.videofeed" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.facebook.videofeed"><span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="facebook_rightcolumn" data-toggle="popover" data-type="img"
                       data-full="https://static.xx.fbcdn.net/rsrc.php/v1/ya/r/1mlV-W-aJI9.jpg" data-original-title=""
                       title="">
                       Facebook right column
-                      <input type="checkbox"
-                        class="desktop obj3 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.rightcolumn" disabled="" style=""><span
-                        class="checkmark disabled"></span>
+                      <input type="checkbox" class="desktop obj3 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
+                        ng-model="vm.campaign.facebook.rightcolumn"><span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="instagram_explore" data-toggle="popover" data-type="img"
                       data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yJ/r/tLKfIjndg33.png" data-original-title=""
@@ -504,7 +518,7 @@
                       Instagram Explore
                       <input type="checkbox"
                         class="mobile obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj8 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.instagram.explore" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.instagram.explore"><span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="messenger_inbox" data-toggle="popover" data-type="video"
                       data-full="https://www.facebook.com/d260de32-181e-4611-870d-7f8dc2dce3e9" data-original-title=""
@@ -512,11 +526,12 @@
                       Messenger Inbox
                       <input type="checkbox"
                         class="mobile obj3 obj5 obj8 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.messenger.inbox" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.messenger.inbox"><span class="checkmark"></span>
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <label class="font-blue bold"><u>Stories</u><br><small>(Tell a rich, visual story with immersive,
+                    <label class="text-primary font-weight-bold"><u>Stories</u><br><small>(Tell a rich, visual story
+                        with immersive,
                         full screen vertical ads)</small></label>
                     <label class="containerCheck" id="facebook_stories" data-toggle="popover" data-type="img"
                       data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yz/r/VdDR8oIXa5l.png" data-original-title=""
@@ -524,7 +539,7 @@
                       Facebook Stories
                       <input type="checkbox"
                         class="mobile obj1 obj2 obj3 obj5 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.stories" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.facebook.stories"><span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="instagram_stories" data-toggle="popover" data-type="img"
                       data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yz/r/ys1sO1FBnCH.png" data-original-title=""
@@ -532,7 +547,7 @@
                       Instagram Stories
                       <input type="checkbox"
                         class="mobile obj1 obj2 obj3 obj5 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.instagram.stories" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.instagram.stories"><span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="messenger_stories" data-toggle="popover" data-type="img"
                       data-full="https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/RQr1S3E83kn.png" data-original-title=""
@@ -540,11 +555,12 @@
                       Messenger Stories
                       <input type="checkbox"
                         class="mobile obj1 obj2 obj3 obj5 obj8 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.messenger.stories" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.messenger.stories"><span class="checkmark"></span>
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <label class="font-blue bold"><u>In-stream</u><br><small>(Quickly capture people's attention while
+                    <label class="text-primary font-weight-bold"><u>In-stream</u><br><small>(Quickly capture people's
+                        attention while
                         they're watching videos)</small></label>
                     <label class="containerCheck" id="facebook_instream" data-toggle="popover" data-type="video"
                       data-full="https://www.facebook.com/73a5c50c-c2fa-4815-abf3-a4a3f807c5e0" data-original-title=""
@@ -552,33 +568,36 @@
                       Facebook in-stream videos
                       <input type="checkbox"
                         class="mobile desktop obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.instream" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.facebook.instream"><span class="checkmark"></span>
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <label class="font-blue bold"><u>Search</u><br><small>(Get visibility for your business as people
+                    <label class="text-primary font-weight-bold"><u>Search</u><br><small>(Get visibility for your
+                        business as people
                         search on Facebook)</small></label>
                     <label class="containerCheck" id="facebook_search" data-toggle="popover" data-type="img"
                       data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yw/r/MONDE1H8gS4.png" data-original-title=""
                       title="">
                       Facebook Search Results
                       <input type="checkbox" class="mobile obj3 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.search" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.facebook.search"><span class="checkmark"></span>
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <label class="font-blue bold"><u>Messages</u><br><small>(Send offers or updates to people who are
+                    <label class="text-primary font-weight-bold"><u>Messages</u><br><small>(Send offers or updates to
+                        people who are
                         already connected to your business)</small></label>
                     <label class="containerCheck" id="messenger_messages" data-toggle="popover" data-type="video"
                       data-full="https://business.facebook.com/31916d2a-cd15-4268-a79d-397681ece82c"
                       data-original-title="" title="">
                       Messenger sponsored messages
                       <input type="checkbox" class="mobile desktop ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.messenger.messages" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.messenger.messages"><span class="checkmark"></span>
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <label class="font-blue bold"><u>In-Article</u><br><small>(Engage with people who are reading
+                    <label class="text-primary font-weight-bold"><u>In-Article</u><br><small>(Engage with people who are
+                        reading
                         content from publishers)</small></label>
                     <label class="containerCheck" id="facebook_articles" data-toggle="popover" data-type="video"
                       data-full="https://business.facebook.com/a82e017b-ccb2-4db2-a5d9-cf57b7945135"
@@ -586,11 +605,12 @@
                       Facebook Instant Articles
                       <input type="checkbox"
                         class="mobile obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.articles" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.facebook.articles"><span class="checkmark"></span>
                     </label>
                   </div>
                   <div class="col-lg-6">
-                    <label class="font-blue bold"><u>Apps and sites</u><br><small>(Expand your reach with ads in
+                    <label class="text-primary font-weight-bold"><u>Apps and sites</u><br><small>(Expand your reach with
+                        ads in
                         external apps and websites)</small></label>
                     <label class="containerCheck" id="audience_classicgroup" data-toggle="popover" data-type="img"
                       data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/HCtJqSQ13l2.png" data-original-title=""
@@ -598,7 +618,7 @@
                       Audience Network native, banner and interstitial
                       <input type="checkbox"
                         class="mobile obj2 obj3 obj5 obj6 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.audience.classicgroup" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.audience.classicgroup"><span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="audience_rewarded_video_group" data-toggle="popover"
                       data-type="img" data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/RbGZHFNttoD.png"
@@ -606,7 +626,7 @@
                       Audience Network rewarded videos
                       <input type="checkbox"
                         class="mobile obj3 obj5 obj6 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.audience.rewarded_video_group" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.audience.rewarded_video_group"><span class="checkmark"></span>
                     </label>
                     <label class="containerCheck" id="audience_instream_video_group" data-toggle="popover"
                       data-type="video" data-full="https://business.facebook.com/450d6c6b-93eb-4d0a-aa90-dcde9ee527c9"
@@ -614,7 +634,7 @@
                       Audience Network in-stream videos
                       <input type="checkbox"
                         class="mobile desktop obj1 obj2 obj4 obj6 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.audience.instream_video_group" style=""><span class="checkmark"></span>
+                        ng-model="vm.campaign.audience.instream_video_group"><span class="checkmark"></span>
                     </label>
                   </div>
                 </div>

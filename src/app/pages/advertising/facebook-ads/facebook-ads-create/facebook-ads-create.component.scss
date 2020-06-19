@@ -61,9 +61,9 @@
 
   .radio-group-multitoggle {
     border: solid 3px #3598dc;
-    display: inline-block;
+    width: 215px;
     margin: 20px;
-    border-radius: 10px;
+    border-radius: 4px;
     overflow: hidden;
 
     label {
@@ -98,6 +98,27 @@
 
     label + input[type="radio"].multitoggle + label {
       border-left: solid 3px #3598dc;
+    }
+  }
+
+  [data-toggle="buttons"] > .btn input[type="checkbox"],
+  [data-toggle="buttons"] > .btn input[type="radio"],
+  [data-toggle="buttons"] > .btn-group > .btn input[type="checkbox"],
+  [data-toggle="buttons"] > .btn-group > .btn input[type="radio"] {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+  }
+
+  .chkbtn.btn {
+    span.fa-check {
+      opacity: 0 !important;
+    }
+
+    &:active {
+      span.fa-check {
+        opacity: 1 !important;
+      }
     }
   }
 }

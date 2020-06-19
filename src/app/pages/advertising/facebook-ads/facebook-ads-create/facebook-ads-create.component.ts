@@ -18,6 +18,12 @@ export class FacebookAdsCreateComponent implements OnInit {
   campaignAdsArr: CampaignAdSets[];
   campaignBudgetOptimisationFlag: boolean;
   editPlacementsFlag: boolean;
+  desktopMode: boolean;
+  mobileMode: boolean;
+  facebook: boolean;
+  audienceNetwork: boolean;
+  instagram: boolean;
+  messenger: boolean;
 
   constructor(
     private fb: FormBuilder
@@ -75,8 +81,39 @@ export class FacebookAdsCreateComponent implements OnInit {
     this.campaignBudgetOptimisationFlag = !this.campaignBudgetOptimisationFlag;
   }
 
-  onEditPlacementsClick() {
-    console.log("wowowowo");
-    this.editPlacementsFlag = !this.editPlacementsFlag;
+  onEditPlacementsClick(flag) {
+    this.editPlacementsFlag = flag;
+  }
+
+  onDesktopModeClick() {
+    this.desktopMode = !this.desktopMode;
+
+    if(!this.mobileMode) {
+      this.desktopMode = true;
+    }
+  }
+
+  onMobileModeClick() {
+    this.mobileMode = !this.mobileMode;
+
+    if(!this.desktopMode) {
+      this.mobileMode = true;
+    }
+  }
+
+  onFacebookClick() {
+    this.facebook = !this.facebook;
+  }
+
+  onAudienceNetworkClick() {
+    this.audienceNetwork = !this.audienceNetwork;
+  }
+
+  onInstagramClick() {
+    this.instagram = !this.instagram;
+  }
+
+  onMessengerClick() {
+    this.messenger = !this.messenger;
   }
 }
