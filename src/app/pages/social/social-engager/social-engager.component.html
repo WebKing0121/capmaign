@@ -1,39 +1,15 @@
 <div class="row">
-  <div class="col-12 social-engagers">
-    <app-card cardTitle="Social Engagers" [cardButtons]="cardButtons">
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th width="40">#</th>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Company</th>
-              <th>Phone Number</th>
-              <th>Corporate Address Zip</th>
-              <th>Lead Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let engager of engagers; index as i;">
-              <td><input type="checkbox" /></td>
-              <td>{{engager.first_name}}</td>
-              <td>{{engager.last_name}}</td>
-              <td>{{engager.company}}</td>
-              <td>{{engager.phone_number}}</td>
-              <td>{{engager.zip}}</td>
-              <td>{{engager.lead_source}}</td>
-            </tr>
-          </tbody>
-        </table>
-        <button class="btn btn-danger float-right"><i class="feather icon-trash-2"></i> Delete</button>
-      </div>
-
-
-    </app-card>
+  <div class="col-12 card-social-engagers">
+    <app-datatable [title]="'Social Engagers'" [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40"
+          [columnMode]="'force'" (activate)="onActive($event)"></app-datatable>
   </div>
+
 </div>
-<app-ui-modal #newEngagerModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl'">
+<ng-template #tableColumnSettings let-column="column">
+  <i class="fa fa-bars" aria-hidden="true"></i>
+</ng-template>
+
+<app-ui-modal #newEngagerModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
   <div class="app-modal-header">
     <h5 class="modal-title">Create a New Social Engager</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
@@ -47,68 +23,49 @@
       <div class="row">
         <div class="col-md-6">
           <label for="first_name">First name</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-user"></i></span>
-            </div>
-            <input type="text" class="form-control" id="first_name" placeholder="First name"
-              formControlName="first_name" [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
-          </div>
+          <input type="text" class="form-control" id="first_name" placeholder="First name" formControlName="first_name"
+            [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
+
         </div>
         <div class="col-md-6">
           <label for="last_name">Last name</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-user"></i></span>
-            </div>
-            <input type="text" class="form-control" id="last_name" placeholder="Last name" formControlName="last_name"
-              [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
-          </div>
+
+          <input type="text" class="form-control" id="last_name" placeholder="Last name" formControlName="last_name"
+            [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+
         </div>
       </div>
       <div class="row mt-4">
         <div class="col-md-6">
           <label for="compnay">Company</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-tag"></i></span>
-            </div>
-            <input type="text" class="form-control" id="compnay" placeholder="Company" formControlName="company"
-              [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
-          </div>
+
+          <input type="text" class="form-control" id="compnay" placeholder="Company" formControlName="company"
+            [ngClass]="{ 'is-invalid': submitted && f.company.errors }">
+
         </div>
         <div class="col-md-6">
           <label for="email_address">Email address</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-at-sign"></i></span>
-            </div>
-            <input type="email" class="form-control" id="email_address" placeholder="Email Address"
-              formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
-          </div>
+
+          <input type="email" class="form-control" id="email_address" placeholder="Email Address"
+            formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+
         </div>
       </div>
       <div class="row mt-4">
         <div class="col-md-6">
           <label for="phone_number">Personal Phone number</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-phone"></i></span>
-            </div>
-            <input [textMask]="{mask: maskMobileNo}" type="text" class="form-control" id="phone_number"
-              placeholder="9999-999-999" formControlName="mobile_number"
-              [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
-          </div>
+
+          <input [textMask]="{mask: maskMobileNo}" type="text" class="form-control" id="phone_number"
+            placeholder="9999-999-999" formControlName="mobile_number"
+            [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
+
         </div>
         <div class="col-md-6">
           <label for="zip">Company Zip</label>
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text"><i class="feather icon-map-pin"></i></span>
-            </div>
-            <input type="text" class="form-control" id="zip" placeholder="Zip" formControlName="zip"
-              [ngClass]="{ 'is-invalid': submitted && f.zip.errors }">
-          </div>
+
+          <input type="text" class="form-control" id="zip" placeholder="Zip" formControlName="zip"
+            [ngClass]="{ 'is-invalid': submitted && f.zip.errors }">
+
         </div>
       </div>
     </form>
@@ -119,3 +76,5 @@
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="newEngagerModal.hide()">Close</button>
   </div>
 </app-ui-modal>
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
+	[buttons]="confirmButtons"></app-confirm-modal>

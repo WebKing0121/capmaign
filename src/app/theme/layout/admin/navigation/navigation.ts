@@ -299,8 +299,8 @@ const NavigationItems = [
         title: 'Automation',
         type: 'item',
         icon: 'feather icon-monitor',
-        url: 'javascript:',
-        external: true
+        url: '/automation/automations',
+        external: false
       }, {
         id: 'collaborate',
         title: 'Collaborate',

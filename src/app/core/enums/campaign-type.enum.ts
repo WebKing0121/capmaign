@@ -6,6 +6,11 @@ export enum CampaignType {
   Facebook = 'facebook'
 }
 
+export enum CampaignFilterType {
+  Type = 'campaign-type',
+  Status = 'campaign-status'
+}
+
 export enum CampaignFromDisplayType {
   CampaignToCash = 'campaign-to-cash',
   Palskem = 'palskem'

@@ -25,6 +25,21 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tableColumnType') tableColumnTypeTemplate: TemplateRef<any>;
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
+  
+  tableButtons = [
+    {
+      label: 'Create', icon: 'fa fa-plus', click: () => this.clickTemplate(),
+      childs: [
+        { label: 'Create Email Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Email) },
+        { label: 'Create Mobile Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Mobile) },
+        { label: 'Create Social Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Social) },
+        { label: 'Create Google Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.GoogleAds) },
+        { label: 'Create Facebook Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
+      ]
+    },
+    { label: 'Delete', icon: 'fa fa-clone', click: () => this.clickTemplate() },
+    { label: 'Send', icon: 'fa fa-download', click: () => this.clickTemplate() },
+  ];
 
   selected: Campaign[] = [];
   searchFormControl: FormControl;
@@ -36,6 +51,10 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private modalService: ModalService
   ) { }
+
+  clickTemplate() {
+
+  }
 
   ngOnInit(): void {
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);

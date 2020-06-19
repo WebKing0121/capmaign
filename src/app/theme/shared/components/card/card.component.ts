@@ -52,7 +52,7 @@ export class CardComponent implements OnInit {
   @Input() isCardFooter: boolean;
   @Input() footerClass: string;
   @Input() cardActions: [];
-  @Input() cardButtons: [];
+  @Input() cardButtons = [];
 
   public animation: string;
   public fullIcon: string;
@@ -75,7 +75,6 @@ export class CardComponent implements OnInit {
     this.isCardFooter = false;
     this.cardTitle = '';
     this.cardActions = [];
-    this.cardButtons = [];
 
     /*this.animator = animationService.builder();
     this.animators = animationService.builder();
@@ -99,6 +98,10 @@ export class CardComponent implements OnInit {
     if (!this.options || this.hidHeader || this.customHeader) {
       this.collapsedCard = 'false';
     }
+  }
+
+  getActiveButtons() {
+    return this.cardButtons.filter(x => !x.hide);
   }
 
   public fullCardToggle(element: HTMLElement, animation: string, status: boolean) {

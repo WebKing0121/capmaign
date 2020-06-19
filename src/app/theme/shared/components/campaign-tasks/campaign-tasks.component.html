@@ -1,57 +1,8 @@
-<app-card cardTitle="Tasks" #cardTasks [cardButtons]="cardButtonsInTasks" [cardClass]="'card-tasks'" [options]="false">
-	<div class="table-responsive task-table">
-		<table class="table table-striped table-bordered table-hover mb-0">
-			<colgroup>
-				<col width="25%">
-				<col width="25%">
-				<col width="15%">
-				<col width="10%">
-				<col width="10%">
-				<col width="10%">
-				<col width="10%">
-			</colgroup>
-			<thead class="task-table-header">
-				<th>Task</th>
-				<th>Description</th>
-				<th>Start</th>
-				<th>End</th>
-				<th>%</th>
-				<th>Est.</th>
-				<th>Member</th>
-			</thead>
-		</table>
-		<div class="task-list">
-			<table class="table table-striped table-hover">
-				<colgroup>
-					<col width="25%">
-					<col width="25%">
-					<col width="15%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-					<col width="10%">
-				</colgroup>
-				<tbody class="task-table-body">
-					<tr *ngFor="let task of tasks" (click)="onClickTask(task)" [ngClass]="{'selected': task.id === selectedTaskId}">
-						<td>{{task.name}}</td>
-						<td class="special-show">{{task.desc}}</td>
-						<td>{{task.startDate | date}}</td>
-						<td>{{task.endDate | date}}</td>
-						<td class="task-progress-bar">
-							<span class="percent">{{task.percent}}%</span>
-							<ngb-progressbar height="20px" [value]="task.percent"></ngb-progressbar>
-						</td>
-						<td class="special-show">{{task.estiHours}}</td>
-						<td>{{getUserName(task.userId)}}</td>
-					</tr>
-					<tr *ngIf="tasks.length === 0">
-						<td colspan=7 align="center">No data available in table</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-</app-card>
+<app-datatable
+	[title]="'Tasks'"
+	 [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
+	[buttons]="tableButtons"
+	[selectable]="false" (activate)="onClickTask($event)"></app-datatable>
 
 <app-ui-modal #addTaskModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg add-task-modal'">
 	<div class="app-modal-header">
@@ -64,80 +15,110 @@
 
 	<div class="app-modal-body">
 		<div class="row">
-			<div class="col-md-6">
+
+			<div class="col-md-6 col-sm-12 mt-2">
+				<div class="input-group mobile-input-view">
+					<label>Team</label>
+				</div>
 				<div class="input-group">
-					<div class="input-group-prepend">
+					<div class="input-group-prepend mobile-input-group">
 						<span class="input-group-text">Team</span>
 					</div>
 					<input type="text" class="form-control" [value]="modalTeamName" readonly />
 				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6 col-sm-12 mt-2">
+				<div class="input-group mobile-input-view">
+					<label>Campaign</label>
+				</div>
 				<div class="input-group">
-					<div class="input-group-prepend">
-						<span class="input-group-text">Campaigns</span>
+					<div class="input-group-prepend mobile-input-group">
+						<span class="input-group-text">Campaign</span>
 					</div>
 					<input type="text" class="form-control" [value]="modalCampaignName" readonly />
 				</div>
 			</div>
 		</div>
-		<div class="row mt-4">
-			<div class="col-md-12 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">Task Name</span>
+		<form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
+			<div class="row mt-4">
+				<div class="col-md-12 input-group">
+					<div class="input-group mobile-input-view">
+						<label>Task Name</label>
+					</div>
+					<div class="input-group-prepend mobile-input-group">
+						<span class="input-group-text">Task Name</span>
+					</div>
+					<input type="text" class="form-control" formControlName="task_name" />
 				</div>
-				<input type="text" class="form-control" />
 			</div>
-		</div>
-		<div class="row mt-2">
-			<div class="col-md-12 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">Description</span>
+			<div class="row mt-2">
+				<div class="col-md-12 input-group">
+					<div class="input-group mobile-input-view">
+						<label>Description</label>
+					</div>
+					<div class="input-group-prepend mobile-input-group">
+						<span class="input-group-text">Description</span>
+					</div>
+					<input type="text" class="form-control" formControlName="desc" />
 				</div>
-				<input type="text" class="form-control" />
 			</div>
-		</div>
 
-		<div class="row mt-2">
-			<div class="col-md-6 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">Start</span>
+			<div class="row">
+				<div class="col-md-6 col-sm-12 input-group  mt-2">
+					<div class="input-group mobile-input-view">
+						<label>Start</label>
+					</div>
+					<!-- <div class="input-group-prepend mobile-input-group">
+						<span class="input-group-text">Start</span>
+					</div> -->
+					<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
+						#d_f="ngbDatepicker" formControlName="start">
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_f.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+					<input type="time" class="form-control" placeholder="Date" value="20:55">
 				</div>
-				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
-					#d_f="ngbDatepicker">
-				<div class="input-group-append">
-					<span class="input-group-text" (click)="d_f.toggle()">
-						<i class="fa fa-calendar"></i>
-					</span>
+				<div class="col-md-6 col-sm-12 input-group  mt-2">
+					<div class="input-group mobile-input-view">
+						<label>End</label>
+					</div>
+					<!-- <div class="input-group-prepend mobile-input-group">
+						<span class="input-group-text">End</span>
+					</div> -->
+					<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+						#d_t="ngbDatepicker" formControlName="end">
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_t.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+					<input type="time" class="form-control" placeholder="Date" value="20:55">
 				</div>
 			</div>
-			<div class="col-md-6 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">End</span>
+			<div class="row">
+
+				<div class="col-md-6 col-sm-12 input-group mt-2">
+					<div class="input-group mobile-input-view">
+						<label>User</label>
+					</div>
+					<div class="input-group-prepend mobile-input-group">
+						<span class="input-group-text">User</span>
+					</div>
+					<ng-select [ngClass]="'ng-select'" formControlName="user" [options]="modalTeamMembers"></ng-select>
 				</div>
-				<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
-					#d_t="ngbDatepicker">
-				<div class="input-group-append">
-					<span class="input-group-text" (click)="d_t.toggle()">
-						<i class="fa fa-calendar"></i>
-					</span>
+				<div class="col-md-6 col-sm-12 input-group mt-2">
+					<div class="input-group mobile-input-view">
+						<label>Estimation</label>
+					</div>
+					<div class="input-group-prepend mobile-input-group">
+						<span class="input-group-text">Estimation</span>
+					</div>
+					<input type="text" class="form-control" formControlName="esti_hours" />
 				</div>
 			</div>
-		</div>
-		<div class="row mt-2">
-			<div class="col-md-6 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">User</span>
-				</div>
-				<ng-select [ngClass]="'ng-select'" [options]="modalTeamMembers"></ng-select>
-			</div>
-			<div class="col-md-6 input-group">
-				<div class="input-group-prepend">
-					<span class="input-group-text">Estimation</span>
-				</div>
-				<input type="text" class="form-control" />
-			</div>
-		</div>
+		</form>
 	</div>
 
 	<div class="app-modal-footer">
@@ -151,3 +132,18 @@
 		Please Select Campaign.
 	</app-toast>
 </div>
+
+
+<ng-template #progressTemplate let-row="row" let-value let-i="index">
+	<span class="percent">{{value}}%</span>
+	<ngb-progressbar height="20px" [value]="value"></ngb-progressbar>
+</ng-template>
+
+
+<ng-template #userNameTemplate let-row="row" let-value let-i="index">
+	<span *ngIf="value > 0">{{ getUserName(value) }}</span>
+	<span class="btn btn-outline-primary btn-normal-padding" *ngIf="value === 0">Assign Team</span>
+</ng-template>
+
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected task?"
+	[buttons]="confirmButtons"></app-confirm-modal>

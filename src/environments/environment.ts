@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:4000',
+  // apiUrl: 'http://localhost:4000',
+  apiUrl: 'https://c2cstaging.azurewebsites.net',
   facebook: {
     key: '207295506697224',
     secret: '3bc0fa39d51400b541e81ea6dc43d9ae',

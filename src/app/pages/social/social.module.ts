@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { DatatableModule } from '@app-components/datatable/datatable.module';
+
 import { SocialRoutingModule } from './social-routing.module';
 import { SocialPostComponent } from './social-post/social-post.component';
 import { SharedModule } from '../../theme/shared/shared.module';
@@ -22,7 +24,8 @@ import { SocialMessageComponent } from './social-message/social-message.componen
   imports: [
     CommonModule,
     SocialRoutingModule,
-    SharedModule
+    SharedModule,
+    DatatableModule
   ]
 })
 export class SocialModule { }

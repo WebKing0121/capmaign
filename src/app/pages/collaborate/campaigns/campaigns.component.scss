@@ -1,29 +1,6 @@
 
-
-.campaign-table-header {
-    th {
-        padding: 0.5rem 0.75rem;
-    }
-}
-.campaign-table-body {
-
-    td {
-        padding: 0.5rem 0.75rem;
-    }
-    .selected {
-        background: #bce8fb !important;
-    }
-}
-
-.margin-top-up-10 {
-    margin-top: -15px;
-}
 .campaign-filter {
-    position: absolute;
-    height: 40px;
-    width: 220px;
-    right: 0px;
-    top: 8px;
+    width: 210px;
     .btn-group {
         width: 100%;
         .dropdown-toggle {
@@ -60,16 +37,22 @@
 .card-tasks-section {
     padding-left: 0;     
 }  
+.card-campaigns {
+    height: calc(100vh - 130px);
+}
+.card-tasks {
+    height: calc(50vh - 60px);
+}
+.card-sub-tasks {
+    height: calc(50vh - 70px);
+}
 
 @media only screen and (max-width: 1200px) {
     .card-campaigns {
-        .card-body {
-            .tab-pane {
-                height: auto;
-            }
-        }
+        padding: 0px;
     }
     .card-tasks-section {
-        padding-left: 15px;
+        padding: 0px;
     }
 }
+

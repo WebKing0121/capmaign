@@ -75,7 +75,7 @@ import { DemoMaterialModule } from './theme/shared/material/material.module';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    fakeBackendProvider,
+    // fakeBackendProvider,
     NavigationItem
   ],
   bootstrap: [AppComponent]

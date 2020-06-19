@@ -3,7 +3,7 @@ import { NgbDropdownConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Router } from '@angular/router';
 
 import { AuthenticationService } from '../../../../../_services/authentication.service';
-import { User } from '../../../../../_models/user';
+import { User } from '@app-models/user';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 

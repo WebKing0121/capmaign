@@ -1,6 +1,6 @@
 import {
   AfterContentInit, AfterViewInit, Component, EventEmitter, HostBinding, Input, OnChanges, OnDestroy, OnInit,
-  Output, SimpleChanges, ViewChild
+  Output, SimpleChanges, ViewChild, ViewEncapsulation
 } from '@angular/core';
 import { ColumnMode, DatatableComponent as NgxDataTableComponent, SelectionType, SortPropDir, SortType } from '@swimlane/ngx-datatable';
 import { Subject } from 'rxjs';
@@ -13,7 +13,7 @@ import { DataTableSource, DataTableColumn } from '../datatable-source';
 @Component({
   selector: 'app-datatable',
   templateUrl: './datatable.component.html',
-  styleUrls: ['./datatable.component.scss']
+  styleUrls: ['./datatable.component.scss'],
 })
 export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterViewInit, AfterContentInit {
   SelectionType = SelectionType;
@@ -21,9 +21,10 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
 
   @HostBinding('class.app-datatable') hostClassName = true;
 
-  @ViewChild(NgxDataTableComponent, {static: false}) handle: NgxDataTableComponent;
-
+  @ViewChild(NgxDataTableComponent, { static: false }) handle: NgxDataTableComponent;
+  @Input() title = '';
   @Input() classes = ['app-datatable-common'];
+  @Input() buttons = [];
   @Input() columnMode: ColumnMode = ColumnMode.force;
   @Input() cssClasses: { [key: string]: string; };
   @Input() headerHeight = 50;
@@ -34,8 +35,8 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() externalSorting = false;
   @Input() selectable = false;
   @Input() limit = 20;
-
-  @Input() columns: DataTableColumn[] = [];
+  @Input() selectionType = SelectionType.single;
+  @Input() filter = [];
   @Input() dataSource: DataTableSource<any>;
 
   @Output() activate: EventEmitter<any> = new EventEmitter<any>();
@@ -49,7 +50,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
 
   destroy$ = new Subject<boolean>();
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     if (this.dataSource) {

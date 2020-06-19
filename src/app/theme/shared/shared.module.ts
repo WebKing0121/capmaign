@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AlertModule, BreadcrumbModule, CardModule, ModalModule } from './components';
+import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { DataFilterPipe } from './components/data-table/data-filter.pipe';
 import { TodoListRemoveDirective } from './components/todo/todo-list-remove.directive';
 import { TodoCardCompleteDirective } from './components/todo/todo-card-complete.directive';
@@ -18,6 +19,8 @@ import { GalleryComponent } from './components/gallery/gallery.component';
 import { LightboxModule } from 'ngx-lightbox';
 import { TinymceModule } from 'angular2-tinymce';
 import { NgbTabsetModule, NgbProgressbarModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
+
 import { SocialAddConnectionComponent } from './components/social-add-connection/social-add-connection.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SocialAccountListComponent } from './components/social-account-list/social-account-list.component';
@@ -25,6 +28,8 @@ import { CampaignTasksComponent } from './components/campaign-tasks/campaign-tas
 import { SelectModule } from 'ng-select';
 import { CampaignSubTasksComponent } from './components/campaign-sub-tasks/campaign-sub-tasks.component';
 import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
+import { GoPalleteComponent } from './components/go-pallete/go-pallete.component';
+import { GoDiagramComponent } from './components/go-diagram/go-diagram.component';
 /*import 'hammerjs';
 import 'mousetrap';
 import { GalleryModule } from '@ks89/angular-modal-gallery';*/
@@ -48,7 +53,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TextMaskModule,
     NgbProgressbarModule,
     NgbDatepickerModule,
-    SelectModule
+    SelectModule,
+    DatatableModule,
+    AmazingTimePickerModule
   ],
   exports: [
     CommonModule,
@@ -74,7 +81,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     TextMaskModule,
     CampaignTasksComponent,
     CampaignSubTasksComponent,
-    ChatWidgetComponent
+    ChatWidgetComponent,
+    GoPalleteComponent,
+    GoDiagramComponent
   ],
   declarations: [
     DataFilterPipe,
@@ -88,7 +97,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SocialAccountListComponent,
     CampaignTasksComponent,
     CampaignSubTasksComponent,
-    ChatWidgetComponent
+    ChatWidgetComponent,
+    GoPalleteComponent,
+    GoDiagramComponent
   ],
   providers: [
     {

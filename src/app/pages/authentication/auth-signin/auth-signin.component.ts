@@ -62,17 +62,24 @@ export class AuthSigninComponent implements OnInit, OnDestroy {
     }
 
     this.loading = true;
-    this.authenticationService.login(this.f.username.value, this.f.password.value)
+    this.authenticationService.login(this.f.tenancyname.value, this.f.username.value, this.f.password.value)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.store.dispatch({
-            type: AppTypes.GetSocialAccounts
-          });
-          this.store.dispatch({
-            type: AppTypes.GetSocialSites
-          });
-          this.router.navigate([this.returnUrl]);
+          if (data.success) {
+            // this.store.dispatch({
+            //   type: AppTypes.GetSocialAccounts
+            // });
+            // this.store.dispatch({
+            //   type: AppTypes.GetSocialSites
+            // });
+            this.loading = false;
+            this.router.navigate([this.returnUrl]);
+          } else {
+            this.error = data.message;
+            this.loading = false;
+          }
+
         },
         error => {
           this.error = error;

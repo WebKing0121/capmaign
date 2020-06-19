@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, ViewEncapsulation, OnDestroy, TemplateRef } from '@angular/core';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -6,7 +6,16 @@ import { takeUntil } from 'rxjs/operators';
 import { CollaborateService } from '../../../_services/collaborate.service';
 import { UserService } from '../../../_services/user.service';
 
-import * as moment from 'moment';
+import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
+
+import { CollaborateCampaignsMockData } from '../../../fack-db/collaborate-campaigns-mock';
+import { CollaborateTeamsMockData } from '../../../fack-db/collaborate-teams-mock';
+import { UsersMockData } from '../../../fack-db/users-mock';
+import { CampaignFilterType } from '@app-core/enums/campaign-type.enum';
+import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
+import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { User } from '@app-core/models/user';
 
 @Component({
   selector: 'app-campaigns',
@@ -14,11 +23,13 @@ import * as moment from 'moment';
   styleUrls: ['./campaigns.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CampaignsComponent implements OnInit, OnDestroy {
+export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('assignTeamModal', { static: false }) assignTeamModal;
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('campaignTasks', { static: false }) campaignTasks;
   @ViewChild('campaignSubTasks', { static: false }) campaignSubTasks;
+  @ViewChild('teamTemplate') teamTemplate: TemplateRef<any>;
+  @ViewChild('progressTemplate') progressTemplate: TemplateRef<any>;
 
   private unsubscribe$ = new Subject();
 
@@ -26,117 +37,199 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     { label: 'Add Tasks', icon: 'icon-plus-circle', action: () => this.onClickAddTask() },
   ];
 
+  campaigns: any[];
+  // filteredCampaignsInProgress: any[];
+  // filteredCampaignsInArchived: any[];
+
+  teams: any[];
+  // teamsForNgSelect: any[];
+  // teamsForNgSelectTemp: any[];
+  // replaceTeam: boolean;
+  // selectedCampainIdForReplace: number;
+
+  allUsers: any[];
+  teamsInAssignModel: any[];
+
+  selectedCampaign: CollaborateCampaign;
+  selectedTask: CollaborateCampaignTask;
+  selectedUser: any;
+  // modalTeamName: string;
+
+  // Colaborate Campaigns Table;
+  tableSource: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
+  selected: CollaborateCampaign[] = [];
+  tableButtons = [
+    {
+      label: 'Create', icon: 'fa fa-plus', click: () => this.clickTemplate, childs: [
+        { label: 'Create a Email Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
+        { label: 'Create a SMS Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
+        { label: 'Create a Mobile Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
+      ]
+    },
+    { label: 'Delete', icon: 'fa fa-clone', click: () => this.clickTemplate },
+    { label: 'Assign', icon: 'fa fa-crop', click: () => this.clickTemplate },
+    { label: 'Send', icon: 'fa fa-download', click: () => this.clickTemplate },
+  ];
+
+  showSearchCampaigns: boolean;
+
+  teamsForm: FormGroup;
+
+  // Colaborate Campaigns Table Type Filter;
   campaignFilter: any[] = [
-    { value: 'All', label: 'All Campaigns' },
-    { value: 'Email', label: 'Email Campaigns' },
-    { value: 'Mobile', label: 'Mobile Campaigns' },
-    { value: 'Social', label: 'Social Campaigns' },
-    { value: 'Google Ads', label: 'Google Ads Campaigns' },
-    { value: 'Facebook', label: 'Facebook Campaigns' },
+    {
+      name: 'All Campaigns',
+      value: 'All',
+      key: CampaignFilterType.Type,
+      onClick: (opt, filter) => this.onClickFilter(opt, filter),
+      filter: [
+        { value: 'All', label: 'All Campaigns' },
+        { value: 'Email', label: 'Email Campaigns' },
+        { value: 'SMS', label: 'Mobile Campaigns' },
+        { value: 'Social', label: 'Social Campaigns' },
+        { value: 'Google Ads', label: 'Google Ads Campaigns' },
+        { value: 'Facebook', label: 'Facebook Campaigns' },
+      ]
+    },
+    {
+      name: 'In Progress',
+      value: 'in-progress',
+      key: CampaignFilterType.Status,
+      onClick: (opt, filter) => this.onClickFilter(opt, filter),
+      filter: [
+        { value: 'in-progress', label: 'In Progress' },
+        { value: 'archived', label: 'Archived' },
+      ]
+    }
   ];
 
   selectedFilter: string;
-
-  dtCampaignsOption: any = {};
-  dtTrigger: Subject<any> = new Subject();
-  campaigns: any[];
-  filteredCampaignsInProgress: any[];
-  filteredCampaignsInArchived: any[];
-  teams: any[];
-  teamsForNgSelect: any[];
-  teamsForNgSelectTemp: any[];
-  replaceTeam: boolean;
-  selectedCampainIdForReplace: number;
-  selectedCampaignId: number;
-  allUsers: any[];
-
-  selectedTaskId: number;
-  selectedTaskName: string;
-  selectedUserId: number;
-  selectedUserName: string;
-
-  modalTeamName: string;
+  selectedStatus: string;
 
   constructor(
+    private fb: FormBuilder,
     private collaborateService: CollaborateService,
     private userService: UserService
   ) {
-    this.campaigns = [];
-    this.teams = [];
-    this.teamsForNgSelect = [];
-    this.teamsForNgSelectTemp = [];
-    this.allUsers = [];
-    this.filteredCampaignsInProgress = [];
-    this.filteredCampaignsInArchived = [];
+    this.campaigns = CollaborateCampaignsMockData;
+    this.teams = CollaborateTeamsMockData;
 
-    this.selectedTaskId = 0;
-    this.selectedTaskName = '';
-    this.selectedUserId = 0;
-    this.selectedUserName = '';
+    this.teamsInAssignModel = [];
+    // this.teamsForNgSelectTemp = [];
+    this.allUsers = UsersMockData.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
+    // this.filteredCampaignsInProgress = [];
+    // this.filteredCampaignsInArchived = [];
+
     this.selectedFilter = 'All';
-    this.replaceTeam = false;
-    this.modalTeamName = '';
+    this.selectedStatus = 'in-progress';
+    // this.replaceTeam = false;
+    // this.modalTeamName = '';
+
+  }
+
+  ngAfterViewInit() {
+    const columns = [
+      { name: 'Campaign', prop: 'name', sortable: true, frozenLeft: true },
+      { name: 'Assigned Team', prop: 'team_id', sortable: true, custom: true, template: this.teamTemplate, cellClass: ['cell-hyperlink'] },
+      { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
+      { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
+      { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
+      { name: 'Type', prop: 'type', sortable: true, maxWidth: 80, fronzenRight: true },
+      { name: 'Status', prop: 'status', sortable: true, maxWidth: 100 },
+    ];
+
+    this.tableSource.setColumns(columns);
+
   }
 
   ngOnInit(): void {
+
+    this.teamsForm = this.fb.group({
+      current_team: [''],
+      new_team: ['', Validators.required],
+    });
+    this._updateTable(this._filterCampaigns());
     // load teams
-    this.collaborateService.getCollaborateTeams()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.teams = data;
-          this.teamsForNgSelect = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
+    // this.collaborateService.getCollaborateTeams()
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe(
+    //     data => {
+    //       this.teams = data;
+    //       this.teamsForNgSelect = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
+    //     },
+    //     error => {
+    //       console.log('error', error);
+    //     }
+    //   );
     // load Campaigns
-    this.collaborateService.getCollaborateCampaigns()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.campaigns = data;
-          this.filteredCampaignsInProgress = data.filter(item => item.status === 'inprogress');
-          this.filteredCampaignsInArchived = data.filter(item => item.status !== 'inprogress');
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-    this.userService.getAll()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-    this.dtCampaignsOption = {
-      // data: this.teams,
-      columns: [{
-        title: 'Campaign Name',
-      }, {
-        title: 'Start Date',
-      }, {
-        title: 'End Date',
-      }, {
-        title: 'Progress',
-      }, {
-        title: 'Type',
-      }, {
-        title: 'Status',
-      }],
-      responsive: true,
-    };
+    // this.collaborateService.getCollaborateCampaigns()
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe(
+    //     data => {
+    //       this.campaigns = data;
+    //       this.filteredCampaignsInProgress = data.filter(item => item.status === 'inprogress');
+    //       this.filteredCampaignsInArchived = data.filter(item => item.status !== 'inprogress');
+    //     },
+    //     error => {
+    //       console.log('error', error);
+    //     }
+    //   );
+    // this.userService.getAll()
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe(
+    //     data => {
+    //       this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
+    //     },
+    //     error => {
+    //       console.log('error', error);
+    //     }
+    //   );
+
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
+
+  onClickSearchShowCampaigns() {
+    this.showSearchCampaigns = !this.showSearchCampaigns;
+  }
+
+  onActiveCampaigns(event) {
+    // TODO: Simplify later
+    if (event.type === 'click') {
+
+      const campaign = event.row as CollaborateCampaign;
+      this.selectedCampaign = campaign;
+      this.campaignTasks.loadTasksFromCampaign(campaign.id);
+      this.campaignSubTasks.loadSubTasks(0);
+
+      if (event.cellIndex === 0 && !event.column.frozenLeft) {
+        this.teamsForm.setValue({
+          current_team: campaign.team_id === 0 ? '' : this.getTeamName(campaign.team_id),
+          new_team: ''
+        });
+
+        this.teamsInAssignModel = campaign.team_id === 0 ? this.teams.map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })) :
+          this.teams.filter((x: CollaborateTeam) => x.id !== campaign.team_id)
+            .map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })),
+          this.assignTeamModal.show();
+
+      }
+    }
+  }
+
+  // button click template
+  clickTemplate() {
+
+  }
+
+  onAssignTeam() {
+
+  }
+
+
 
   getTeamName(teamId: number) {
     const team = this.teams.find(x => x.id === teamId);
@@ -147,84 +240,27 @@ export class CampaignsComponent implements OnInit, OnDestroy {
   }
 
 
-  get filterLabel() {
-    const filter = this.campaignFilter.find(x => x.value === this.selectedFilter);
-    if (filter) {
-      return filter.label;
+
+  onClickFilter(opt: any, filter: any) {
+    console.log(opt, filter);
+    opt.name = filter.label;
+    opt.value = filter.value;
+
+    // filter data
+    if (opt.key === CampaignFilterType.Type) {
+      this.selectedFilter = filter.value;
+    } else if (opt.key === CampaignFilterType.Status) {
+      this.selectedStatus = filter.value;
     }
-    return 'All Campaigns';
+    this._updateTable(this._filterCampaigns());
   }
 
-  onClickFilterInCampaigns(filter: string) {
-    this.selectedFilter = filter;
-    if (filter === 'All') {
-      this.filteredCampaignsInProgress = this.campaigns
-        .filter(x => x.status === 'inprogress');
-      this.filteredCampaignsInArchived = this.campaigns
-        .filter(x => x.status !== 'inprogress');
-    } else {
-      this.filteredCampaignsInProgress = this.campaigns
-        .filter(x => x.type === filter)
-        .filter(x => x.status === 'inprogress');
-      this.filteredCampaignsInArchived = this.campaigns
-        .filter(x => x.type === filter)
-        .filter(x => x.status !== 'inprogress');
-    }
+  onSelectTask(task: CollaborateCampaignTask) {
 
-  }
+    this.selectedTask = task;
+    this.selectedUser = this.allUsers.find((x: User) => x.id === task.user_id);
 
-  onClickChangeTeam(campaignId: number, event) {
-    event.stopPropagation();
-    this.selectedCampainIdForReplace = campaignId;
-    const { teamId } = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
-    this.teamsForNgSelectTemp = this.teamsForNgSelect.filter(x => Number(x.value) !== teamId);
-    this.replaceTeam = true;
-    this.modalTeamName = this.getCurrentTeamName();
-    this.assignTeamModal.show();
-  }
-
-  onClickAssignTeam(campaignId: number, event) {
-    event.stopPropagation();
-    this.selectedCampainIdForReplace = campaignId;
-    this.teamsForNgSelectTemp = this.teamsForNgSelect;
-    this.replaceTeam = false;
-    this.modalTeamName = '';
-    this.assignTeamModal.show();
-  }
-
-  getCurrentTeamName() {
-    const campaign = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
-    return this.teamsForNgSelect.find(x => Number(x.value) === campaign.teamId).label;
-  }
-
-
-  getExistingTeam() {
-    if (this.replaceTeam) {
-      const { teamId } = this.campaigns.find(x => x.id === this.selectedCampainIdForReplace);
-      return this.teamsForNgSelect.filter(x => Number(x.value) !== teamId);
-    } else {
-      return this.teamsForNgSelect;
-    }
-  }
-
-  onClickCampaign(campaignId: number) {
-    this.selectedCampaignId = campaignId;
-    this.campaignTasks.loadTasksFromCampaign(campaignId);
-    this.campaignSubTasks.loadSubTasks(0);
-  }
-
-  onSelectTask(task: any) {
-
-    this.selectedTaskId = task.id;
-    this.selectedTaskName = task.name;
-    this.selectedUserId = task.userId;
-    const user = this.allUsers.find(x => x.id === this.selectedUserId);
-    if (user) {
-      this.selectedUserName = user.label;
-    } else {
-      this.selectedUserName = '';
-    }
-    this.campaignSubTasks.loadSubTasks(this.selectedTaskId);
+    this.campaignSubTasks.loadSubTasks(task.id);
   }
 
   /*********************************************
@@ -252,5 +288,43 @@ export class CampaignsComponent implements OnInit, OnDestroy {
     //   this.toastEvent.toast({uid: 'toast1', delay: 3000});
     // }
 
+  }
+
+  _filterCampaigns(): CollaborateCampaign[] {
+    console.log(this.selectedFilter, this.selectedStatus);
+    if (this.selectedFilter === 'All') {
+      if (this.selectedStatus === 'in-progress') {
+        return this.campaigns.filter((x: CollaborateCampaign) => x.status === 'in-progress');
+      } else {
+        return this.campaigns.filter((x: CollaborateCampaign) => x.status !== 'in-progress');
+      }
+
+    } else {
+      if (this.selectedStatus === 'in-progress') {
+        return this.campaigns.filter((x: CollaborateCampaign) => x.type === this.selectedFilter)
+          .filter((x: CollaborateCampaign) => x.status === 'in-progress');
+      } else {
+        return this.campaigns.filter((x: CollaborateCampaign) => x.type === this.selectedFilter)
+          .filter((x: CollaborateCampaign) => x.status !== 'in-progress');
+      }
+    }
+  }
+
+  _updateTable(filteredCampaigns: CollaborateCampaign[]) {
+    this.tableSource.next(filteredCampaigns.slice(0, 50), filteredCampaigns.length);
+    this.tableSource.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(change => {
+        this.tableSource.next(
+          filteredCampaigns.slice(
+            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+          filteredCampaigns.length
+        );
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
   }
 }

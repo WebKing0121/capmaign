@@ -118,38 +118,39 @@ export class CampaignSendModalComponent implements OnInit {
   }
 
   onEmailCampaignTypeChange(value) {
-    const campaign = CampaignResponseMockData.find(campaign => {return campaign.name === value;})
-    this.formGroup.controls['name'].setValue(campaign.name);
-    this.formGroup.controls['subject'].setValue(campaign.subject);
+    const campaign = CampaignResponseMockData.find(x => x.name === value);
+    this.formGroup.controls.name.setValue(campaign.name);
+    this.formGroup.controls.subject.setValue(campaign.subject);
   }
 
   onNextClick() {
-    const nextFlag = this.includeMailableList.find(item => {return item.checked === true}) || this.includeFiltersList.find(item => {return item.checked === true});
-    if(!nextFlag) {
-      alert("Please select at least one list/filter to send/schedule email.");
+    const nextFlag = this.includeMailableList.find(item => item.checked === true) ||
+      this.includeFiltersList.find(item => item.checked === true);
+    if (!nextFlag) {
+      alert('Please select at least one list/filter to send/schedule email.');
     } else {
       this.checkedIncludeMailableList = this.includeMailableList.filter(item => item.checked);
-      this.checkedIncludeMailableList = this.checkedIncludeMailableList.map(item => ({...item, disabled: true}));
+      this.checkedIncludeMailableList = this.checkedIncludeMailableList.map(item => ({ ...item, disabled: true }));
       this.checkedIncludeFiltersList = this.includeFiltersList.filter(item => item.checked);
-      this.checkedIncludeFiltersList = this.checkedIncludeFiltersList.map(item => ({...item, disabled: true}));
+      this.checkedIncludeFiltersList = this.checkedIncludeFiltersList.map(item => ({ ...item, disabled: true }));
       this.checkedExcludeMailableList = this.excludeMailableList.filter(item => item.checked);
-      this.checkedExcludeMailableList = this.checkedExcludeMailableList.map(item => ({...item, disabled: true}));
+      this.checkedExcludeMailableList = this.checkedExcludeMailableList.map(item => ({ ...item, disabled: true }));
       this.checkedExcludeFiltersList = this.excludeFiltersList.filter(item => item.checked);
-      this.checkedExcludeFiltersList = this.checkedExcludeFiltersList.map(item => ({...item, disabled: true}));
+      this.checkedExcludeFiltersList = this.checkedExcludeFiltersList.map(item => ({ ...item, disabled: true }));
       this.wizard.goToNextStep();
     }
   }
 
   sendNowClick(evt) {
     const target = evt.target;
-    if(target.checked) {
+    if (target.checked) {
       this.sendOnFlag = false;
     }
   }
 
   sendOnClick(evt) {
     const target = evt.target;
-    if(target.checked) {
+    if (target.checked) {
       this.sendOnFlag = true;
     }
   }

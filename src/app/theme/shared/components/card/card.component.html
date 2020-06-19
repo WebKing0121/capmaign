@@ -1,10 +1,26 @@
-<div class="card" [ngClass]="cardClass" [@cardRemove]="cardRemove" #toAnimate> <!-- animates animatesInitMode="show" [animatesOnInit]="{useVisibility: false, disabled: true}" -->
-  <div class="card-header" *ngIf="!hidHeader" [ngClass]="headerClass">
-    <h5 *ngIf="!customHeader">{{ cardTitle }}
-      <ul *ngIf="cardButtons.length > 0" class="ul-header-button">
-        <li *ngFor="let button of cardButtons" (click)="button.action()"><i class="feather" [ngClass]="button.icon"></i></li>
-      </ul>
-    </h5>
+<div class="card" [ngClass]="cardClass" [@cardRemove]="cardRemove" #toAnimate>
+  <!-- animates animatesInitMode="show" [animatesOnInit]="{useVisibility: false, disabled: true}" -->
+  <div class="card-header d-flex" *ngIf="!hidHeader" [ngClass]="headerClass">
+    <h5 *ngIf="!customHeader">{{ cardTitle }}</h5>
+    <div *ngIf="cardButtons.length > 0" class="header-button">
+      <div *ngFor="let button of getActiveButtons()" [title]="button.label"
+        [ngStyle]="{'color': button.color ? button.color: '#5e7d8a'}"
+      >
+        <span *ngIf="(!button.childs || button.childs.length === 0)" (click)="button.click()">
+          <i [ngClass]="button.icon"></i>
+        </span>
+        <div *ngIf="button.childs && button.childs.length > 0" ngbDropdown class="btn-group dropdown dropright">
+          <button class="button-dropdown" ngbDropdownToggle type="button">
+            <i [ngClass]="button.icon"></i>
+          </button>
+          <div ngbDropdownMenu class="drop-down-menu-my">
+            <a *ngFor="let sub_button of button.childs" class="dropdown-item" (click)="sub_button.click()">
+              {{sub_button.label}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
     <p *ngIf="!customHeader && cardCaption" [ngClass]="captionClass">{{cardCaption}}</p>
     <div class="card-header-right" *ngIf="this.options && !customHeader">
       <div class="btn-group card-option dropdown" ngbDropdown placement="auto">
@@ -12,10 +28,15 @@
           <i class="feather icon-more-horizontal"></i>
         </button>
         <ul class="list-unstyled card-option dropdown-menu dropdown-menu-right" ngbDropdownMenu>
-          <li class="dropdown-item full-card" (click)="fullCardToggle(toAnimate, '', true)"><a href="javascript:"><span><i class="feather" [ngClass]="fullIcon"></i> {{this.cardClass === 'full-card' ? 'Restore' : 'Maximize'}}</span></a></li>
-          <li class="dropdown-item minimize-card" (click)="collapsedCardToggle()"><a href="javascript:"><span><i class="feather" [ngClass]="collapsedIcon"></i> {{this.collapsedCard === 'collapsed' ? 'Expand' : 'Collapse'}} </span>
-            <span style="display:none"><i class="feather icon-plus"></i></span></a></li>
-          <li class="dropdown-item reload-card" (click)="cardRefresh()"><a href="javascript:"><i class="feather icon-refresh-cw"></i> Reload</a></li>
+          <li class="dropdown-item full-card" (click)="fullCardToggle(toAnimate, '', true)"><a
+              href="javascript:"><span><i class="feather" [ngClass]="fullIcon"></i>
+                {{this.cardClass === 'full-card' ? 'Restore' : 'Maximize'}}</span></a></li>
+          <li class="dropdown-item minimize-card" (click)="collapsedCardToggle()"><a href="javascript:"><span><i
+                  class="feather" [ngClass]="collapsedIcon"></i>
+                {{this.collapsedCard === 'collapsed' ? 'Expand' : 'Collapse'}} </span>
+              <span style="display:none"><i class="feather icon-plus"></i></span></a></li>
+          <li class="dropdown-item reload-card" (click)="cardRefresh()"><a href="javascript:"><i
+                class="feather icon-refresh-cw"></i> Reload</a></li>
           <li class="dropdown-item" *ngFor="let cardAction of cardActions" (click)="cardAction.action()">
             <a href="javascript:"><i class="feather" [ngClass]="cardAction.icon"></i> {{cardAction.label}}</a>
           </li>

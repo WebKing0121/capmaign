@@ -24,6 +24,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/collaborate/collaborate.module').then(module => module.CollaborateModule)
       },
       {
+        path: 'automation',
+        loadChildren: () => import('./pages/automation/automation.module').then(module => module.AutomationModule)
+      },
+      {
         path: 'campaign',
         loadChildren: () => import('./pages/campaign/campaign.module').then(module => module.CampaignModule)
       },
