@@ -1,47 +1,7 @@
 <div class="row">
-  <div class="col-12 card-automation">
-    <app-card cardTitle="Social Engagers" [options]="false">
-      <div class="total-counts">
-        <div class="position-relative">
-          <div class="ml-auto">
-            <span class="campaigns-header_totalNum ml-auto mr-2">Total Engagers:
-              {{tableSource.totalCount$ | async}}</span>
-            <span class="mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
-            <span class="mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
-          </div>
-        </div>
-      </div>
-      <div class="d-flex">
-        <button class="btn btn-outline-primary btn-normal-padding" (click)="onNewEngager()">
-          <i class="fa fa-plus"></i> New Engager
-        </button>
-        <button type="button" class="btn btn-outline-primary mr-2  btn-normal-padding"
-          [disabled]="selected.length === 0" (click)="onDeleteEngager()">
-          <i class="far fa-trash-alt mr-1"></i> Delete
-        </button>
-        <div class="search-section ml-auto">
-          <label class="mr-2 ml-10 d-flex align-items-center" *ngIf="showSearch">
-            <input type="search" class="table-search" [style.height.px]="25" placeholder="Search"
-              (keypress)="tableSource.search($event.target.value)">
-          </label>
-        </div>
-        <button type="button" class="btn btn-sm btn-icon btn-outline-primary btn-icon-normal-size"
-          (click)="onClickSearchShow()">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-
-      <div class="social-engagers-table mt-2">
-        <app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [columns]="columns"
+  <div class="col-12 card-social-engagers">
+    <app-datatable [title]="'Social Engagers'" [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40"
           [columnMode]="'force'" (activate)="onActive($event)"></app-datatable>
-
-        <div class="w-100">
-          <app-datatable-pagination [tableSource]="tableSource"></app-datatable-pagination>
-        </div>
-      </div>
-
-
-    </app-card>
   </div>
 
 </div>

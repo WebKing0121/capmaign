@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, TemplateRef, AfterViewInit } from '@angular/core';
 import { CollaborateService } from '../../../_services/collaborate.service';
 import { DualListComponent } from 'angular-dual-listbox';
 
@@ -27,7 +27,7 @@ import { User } from '@app-core/models/user';
   styleUrls: ['./teams.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TeamsComponent implements OnInit, OnDestroy {
+export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('teamModal', { static: false }) teamModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('progressTemplate') progressTemplate: TemplateRef<any>;
@@ -246,7 +246,7 @@ export class TeamsComponent implements OnInit, OnDestroy {
   }
 
   _campaignsOfSelectedTeam() {
-    return this.campaigns.filter((x: CollaborateCampaign)=> this.selectedTeam.campaigns.indexOf(x.id) >=0);
+    return this.campaigns.filter((x: CollaborateCampaign) => this.selectedTeam.campaigns.indexOf(x.id) >= 0);
   }
 
   // convenience getter for easy access to form fields

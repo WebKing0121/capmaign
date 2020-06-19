@@ -143,6 +143,11 @@ export class DataTableSource<T> {
     }));
     this.columnsChanged$.emit(this.columns);
   }
+
+  getColumns(): DataTableColumn[] {
+    return this.columns;
+  }
+
   showColumn(column: DataTableColumn) {
     const focus = this.columns.find(fc => fc.id === column.id);
     if (focus) {

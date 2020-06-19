@@ -1,7 +1,7 @@
 <app-card [cardTitle]="title" [cardButtons]="buttons" [cardClass]="'table-card'" [options]="false">
-    <div *ngIf="filter.length > 0" class="table-toolbar">
+    <div class="table-toolbar">
       <div class="d-flex position-relative">
-        <div class="btn-group dropdown" ngbDropdown>
+        <div *ngIf="filter.length > 0"  class="btn-group dropdown" ngbDropdown>
           <button class="filter-dropdown" ngbDropdownToggle type="button">
             <i class="fa fa-filter"></i>
           </button>
@@ -20,6 +20,22 @@
              </a>  
           </div>
         </div>
+        <div class="btn-group dropdown" ngbDropdown>
+          <button class="show-columns" ngbDropdownToggle type="button">
+            <i class="fa fa-th-list"></i>
+          </button>
+          <div ngbDropdownMenu>
+            <span class="column-title">Columns</span>
+            <a *ngFor="let column of dataSource.getColumns()" class="dropdown-item"
+              (click)="column.hidden = !column.hidden"
+            >
+              <i class="fa fa-check-square" *ngIf="!column.hidden"></i>
+              <i class="fa fa-square" [ngStyle]="{'color': 'wheat'}" *ngIf="column.hidden"></i> &nbsp;
+              {{column.name}}
+             </a>
+          </div>
+        </div>
+        
       </div>
     </div>
     <ngx-datatable #table

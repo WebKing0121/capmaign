@@ -58,7 +58,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } },
       { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' } },
       { name: 'Description', prop: 'description', sortable: true },

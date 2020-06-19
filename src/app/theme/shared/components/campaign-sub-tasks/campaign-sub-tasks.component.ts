@@ -150,7 +150,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
     if (event.type === 'click') {
       const subTask = event.row as CollaborateCampaignSubtask;
       this.selectRow.emit(subTask);
-
+      this.tableButtons[1].hide = false;
       if (event.cellIndex === 0 && event.column.frozonLeft ) {
 
         this.subTaskForm.setValue({
@@ -168,6 +168,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
 
   loadSubTasks(taskId: number) {
     let subtasksFromServer;
+    this.tableButtons[1].hide = true;
     if (taskId === 0) {
       subtasksFromServer = [];
     } else {

@@ -199,12 +199,12 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   onActiveCampaigns(event) {
     // TODO: Simplify later
     if (event.type === 'click') {
-      
+
       const campaign = event.row as CollaborateCampaign;
       this.selectedCampaign = campaign;
       this.campaignTasks.loadTasksFromCampaign(campaign.id);
       this.campaignSubTasks.loadSubTasks(0);
-      
+
       if (event.cellIndex === 0 && !event.column.frozenLeft) {
         this.teamsForm.setValue({
           current_team: campaign.team_id === 0 ? '' : this.getTeamName(campaign.team_id),

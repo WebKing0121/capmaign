@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from '../../../_services/validation.service';
@@ -16,7 +16,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
   templateUrl: './social-engager.component.html',
   styleUrls: ['./social-engager.component.scss']
 })
-export class SocialEngagerComponent implements OnInit, OnDestroy {
+export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('newEngagerModal', { static: false }) newEngagerModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   cardButtons = [
@@ -38,14 +38,6 @@ export class SocialEngagerComponent implements OnInit, OnDestroy {
   error = '';
 
   tableSource: DataTableSource<SocialEngager> = new DataTableSource<SocialEngager>(50);
-  columns: DataTableColumn[] = [
-    { name: 'First name', prop: 'first_name', sortable: true, cellClass: ['cell-hyperlink'] },
-    { name: 'Last name', prop: 'last_name', sortable: true },
-    { name: 'Company', prop: 'company', sortable: true },
-    { name: 'Phone number', prop: 'phone_number', sortable: true },
-    { name: 'Corporate Address Zip', prop: 'zip', sortable: true },
-    { name: 'Lead Source', prop: 'lead_source', sortable: true },
-  ];
 
   selected: SocialEngager[] = [];
 
@@ -91,6 +83,18 @@ export class SocialEngagerComponent implements OnInit, OnDestroy {
       mobile_number: ['', Validators.required],
       zip: ['', Validators.required],
     });
+  }
+
+  ngAfterViewInit() {
+    const columns: DataTableColumn[] = [
+      { name: 'First name', prop: 'first_name', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Last name', prop: 'last_name', sortable: true },
+      { name: 'Company', prop: 'company', sortable: true },
+      { name: 'Phone number', prop: 'phone_number', sortable: true },
+      { name: 'Corporate Address Zip', prop: 'zip', sortable: true },
+      { name: 'Lead Source', prop: 'lead_source', sortable: true },
+    ];
+    this.tableSource.setColumns(columns);
   }
 
   ngOnDestroy(): void {

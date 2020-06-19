@@ -7,6 +7,7 @@ export class CardSubButton {
   color?: string;
   disabled?: boolean;
 }
+
 export class CardButton {
   label: string;
   icon: string;
@@ -14,5 +15,5 @@ export class CardButton {
   hide?: boolean;
   color?: string;
   disabled?: boolean;
-  child?: CardSubButton[]
+  child?: CardSubButton[];
 }

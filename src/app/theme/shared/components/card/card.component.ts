@@ -101,7 +101,7 @@ export class CardComponent implements OnInit {
   }
 
   getActiveButtons() {
-    return this.cardButtons.filter(x=>!x.hide)
+    return this.cardButtons.filter(x => !x.hide);
   }
 
   public fullCardToggle(element: HTMLElement, animation: string, status: boolean) {

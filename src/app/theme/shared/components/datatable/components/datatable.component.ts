@@ -37,7 +37,6 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() limit = 20;
   @Input() selectionType = SelectionType.single;
   @Input() filter = [];
-  @Input() columns: DataTableColumn[] = [];
   @Input() dataSource: DataTableSource<any>;
 
   @Output() activate: EventEmitter<any> = new EventEmitter<any>();
