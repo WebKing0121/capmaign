@@ -68,9 +68,6 @@ export class CampaignSendModalComponent implements OnInit {
   @ViewChild(WizardComponent)
   wizard: WizardComponent;
 
-  @ViewChild(NgbDatepicker)
-  datePicker: NgbDatepicker;
-
   constructor(
     private fb: FormBuilder,
     @Inject(ModalRef) private modalRef: ModalRef<CampaignSendModalComponent>,

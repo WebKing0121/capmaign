@@ -11,10 +11,8 @@
                [externalSorting]="externalSorting"
                [scrollbarV]="scrollbarV"
                [scrollbarH]="scrollbarH"
-               
                [loadingIndicator]="dataSource.loading$ | async"
                [limit]="limit"
-               [style.minHeight.px]="tableHeight"
                (activate)="activate.emit($event)"
                (select)="onSelect($event)"
                (sort)="onSort($event)"

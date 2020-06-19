@@ -121,8 +121,7 @@
                 </label>
                 <div *ngIf="sendOnFlag">
                   <div class="input-group">
-                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM" name="dp_to" ngbDatepicker [(ngModel)]="model"
-                      #datePicker="ngbDatepicker" [(ngModel)]="model" (dateSelect) = "onSelect($event)">
+                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM" name="dp_to" ngbDatepicker [(ngModel)]="model" #datePicker="ngbDatepicker" (dateSelect) = "onSelect($event)">
                     <div class="input-group-append">
                       <span class="input-group-text" (click)="datePicker.toggle()">
                         <i class="fa fa-calendar"></i>
