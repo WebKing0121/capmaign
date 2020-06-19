@@ -1,4 +1,3 @@
-
 .show-entries {
   border: 1px solid #ddd;
   border-radius: 5px;
@@ -18,14 +17,21 @@
     padding: 0 8px;
     color: black;
 
-    &.page {
-    }
     &.current {
       color: blue !important;
     }
 
     &.disabled {
-      color: rgba(black, .6);
+      color: rgba(black, 0.6);
     }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .mobile-hide {
+    display: none;
+  }
+  .show-entries {
+    margin: 0;
   }
 }

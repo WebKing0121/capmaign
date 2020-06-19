@@ -33,27 +33,15 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private unsubscribe$ = new Subject();
 
-  cardButtonsInTasks = [
-    { label: 'Add Tasks', icon: 'icon-plus-circle', action: () => this.onClickAddTask() },
-  ];
-
   campaigns: any[];
-  // filteredCampaignsInProgress: any[];
-  // filteredCampaignsInArchived: any[];
-
   teams: any[];
-  // teamsForNgSelect: any[];
-  // teamsForNgSelectTemp: any[];
-  // replaceTeam: boolean;
-  // selectedCampainIdForReplace: number;
-
   allUsers: any[];
+
   teamsInAssignModel: any[];
 
   selectedCampaign: CollaborateCampaign;
   selectedTask: CollaborateCampaignTask;
   selectedUser: any;
-  // modalTeamName: string;
 
   // Colaborate Campaigns Table;
   tableSource: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
@@ -115,16 +103,10 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.teams = CollaborateTeamsMockData;
 
     this.teamsInAssignModel = [];
-    // this.teamsForNgSelectTemp = [];
     this.allUsers = UsersMockData.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
-    // this.filteredCampaignsInProgress = [];
-    // this.filteredCampaignsInArchived = [];
 
     this.selectedFilter = 'All';
     this.selectedStatus = 'in-progress';
-    // this.replaceTeam = false;
-    // this.modalTeamName = '';
-
   }
 
   ngAfterViewInit() {
@@ -270,24 +252,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   **********************************************/
   onClickCreateCampaign() {
     // this.addSubTaskModal.show();
-  }
-
-  /**********************************************
-   * Click event - Plus icon in sub tasks table *
-   * ------------------------------------------ *
-   *                                            *
-   **********************************************/
-  onClickAddTask() {
-    // if (this.selectedCampaignId > 0) {
-    //   const { members } =  this.selectedTeam;
-    //   this.teamMembers = this.allUsers.
-    //      .filter(x => members.indexOf(x.id) >= 0)
-    //      .map(x => ({value: '' + x.id, label: x.label}));
-    //   this.addSubTaskModal.show();
-    // } else {
-    //   this.toastEvent.toast({uid: 'toast1', delay: 3000});
-    // }
-
   }
 
   _filterCampaigns(): CollaborateCampaign[] {
