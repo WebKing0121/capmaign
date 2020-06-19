@@ -13,6 +13,7 @@ import { CollaborateCampaign, CollaborateTeam, CollaborateCampaignTask } from '@
 import { CollaborateCampaignsTasksMockData } from '../../../../fack-db/collaborate-campaign-tasks-mock';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CardButton } from '@app-models/card';
 
 @Component({
   selector: 'app-campaign-tasks',
@@ -48,6 +49,12 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   tableSource: DataTableSource<CollaborateCampaignTask> = new DataTableSource<CollaborateCampaignTask>(50);
   selected: CollaborateCampaignTask[] = [];
+  tableButtons: CardButton[] = [
+    {
+      label: 'Create a new Task', icon: 'fa fa-edit', click: () => this.onClickAddTask()
+    },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true},
+  ];
   taskForm: FormGroup;
 
   constructor(
@@ -95,8 +102,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit() {
 
-    const columns: DataTableColumn[] = [
-      { name: 'Task', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
+    const columns = [
+      { name: 'Task', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Description', prop: 'desc', sortable: true },
       { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
@@ -144,8 +151,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
     if (event.type === 'click') {
       const task = event.row as CollaborateCampaignTask;
       this.selectRow.emit(task);
-
-      if (event.cellIndex === 1) {
+      this.tableButtons[1].hide = false;
+      if (event.cellIndex === 0 && event.column.frozenLeft) {
         this.modalTeamName = this.getTeamName();
         this.modalCampaignName = this.getCampaignName();
         this.modalTeamMembers = this.getTeamMembers();
@@ -215,6 +222,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   loadTasksFromCampaign(campaignId: number) {
     let tasksFromServer;
+    this.tableButtons[1].hide = true;
     if (campaignId === 0) {
       tasksFromServer = [];
     } else {

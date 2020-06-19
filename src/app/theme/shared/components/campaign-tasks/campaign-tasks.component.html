@@ -1,5 +1,8 @@
-<app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
-	[selectable]="true" (activate)="onClickTask($event)"></app-datatable>
+<app-datatable
+	[title]="'Tasks'"
+	 [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
+	[buttons]="tableButtons"
+	[selectable]="false" (activate)="onClickTask($event)"></app-datatable>
 
 <app-ui-modal #addTaskModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg add-task-modal'">
 	<div class="app-modal-header">

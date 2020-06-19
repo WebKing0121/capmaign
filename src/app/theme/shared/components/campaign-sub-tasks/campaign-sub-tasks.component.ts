@@ -15,6 +15,7 @@ import { CollaborateCampaignTask, CollaborateCampaignSubtask } from '@app-core/m
 import { CollaborateCampaignsSubtasksMockData } from '../../../../fack-db/collaborate-campaign-subtasks-mock';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { CardButton } from '@app-models/card';
 
 @Component({
   selector: 'app-campaign-sub-tasks',
@@ -45,6 +46,12 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
 
   tableSource: DataTableSource<CollaborateCampaignTask> = new DataTableSource<CollaborateCampaignTask>(50);
   selected: CollaborateCampaignTask[] = [];
+  tableButtons: CardButton[] = [
+    {
+      label: 'Create a new Task', icon: 'fa fa-edit', click: () => this.onClickAddTask()
+    },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true},
+  ];
 
   subTaskForm: FormGroup;
 
@@ -71,8 +78,8 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
 
   ngAfterViewInit() {
 
-    const columns: DataTableColumn[] = [
-      { name: 'Task', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
+    const columns = [
+      { name: 'Sub Task', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Description', prop: 'desc', sortable: true },
       { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
@@ -144,7 +151,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
       const subTask = event.row as CollaborateCampaignSubtask;
       this.selectRow.emit(subTask);
 
-      if (event.cellIndex === 1) {
+      if (event.cellIndex === 0 && event.column.frozonLeft ) {
 
         this.subTaskForm.setValue({
           id: subTask.id,

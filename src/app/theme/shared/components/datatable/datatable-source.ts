@@ -208,4 +208,5 @@ export interface DataTableColumn {
   hidden?: boolean;
   alwaysVisible?: boolean;
   id?: number;
+  frozenLeft?: boolean;
 }

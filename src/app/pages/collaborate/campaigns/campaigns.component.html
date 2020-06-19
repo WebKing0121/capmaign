@@ -13,10 +13,21 @@
     ></app-datatable>
   </div>
   <div class="col-xl-6 col-lg-12 card-tasks-section">
-    <app-campaign-tasks #campaignTasks [campaign]="selectedCampaign" [teams]="teams" [campaigns]="campaigns"
-      [users]="allUsers" (selectRow)="onSelectTask($event)"></app-campaign-tasks>
-    <app-campaign-sub-tasks #campaignSubTasks [task]="selectedTask" [user]="selectedUser">
-    </app-campaign-sub-tasks>
+    <div class="card-tasks">
+      <app-campaign-tasks #campaignTasks
+        [campaign]="selectedCampaign"
+        [teams]="teams"
+        [campaigns]="campaigns"
+        [users]="allUsers"
+        (selectRow)="onSelectTask($event)">
+      </app-campaign-tasks>
+    </div>
+    <div class="card-sub-tasks">
+      <app-campaign-sub-tasks #campaignSubTasks
+        [task]="selectedTask"
+        [user]="selectedUser"
+      ></app-campaign-sub-tasks>
+    </div>
   </div>
 </div>
 <app-ui-modal #assignTeamModal dialogClass="modal-dialog-centered modal-assign-team">

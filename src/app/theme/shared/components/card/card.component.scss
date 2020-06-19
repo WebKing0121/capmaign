@@ -22,7 +22,6 @@
     background: none;
     border: 1px solid #fff;
     font-size: 14px;
-    margin-left: 5px;
     .button-dropdown {
       background: transparent;
       border: none;
@@ -37,7 +36,7 @@
 
   & > div:hover {
     border: 1px solid #c29239;
-    background-color: #ffd86b;
+    background-color: #ffd86b !important;
   }
   .drop-down-menu-my {
     margin-left: 150px;

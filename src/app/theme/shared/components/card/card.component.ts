@@ -100,6 +100,10 @@ export class CardComponent implements OnInit {
     }
   }
 
+  getActiveButtons() {
+    return this.cardButtons.filter(x=>!x.hide)
+  }
+
   public fullCardToggle(element: HTMLElement, animation: string, status: boolean) {
     animation = this.cardClass === 'full-card' ? 'zoomOut' : 'zoomIn';
     this.fullIcon = this.cardClass === 'full-card' ? 'icon-maximize' : 'icon-minimize';
