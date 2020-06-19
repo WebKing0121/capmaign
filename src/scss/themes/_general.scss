@@ -846,3 +846,11 @@ pre[class*=language-]:before {
 .datatable-body-row.active {
     background: azure;
 }
+
+.percent {
+    position: absolute;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: black;
+}

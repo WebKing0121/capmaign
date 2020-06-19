@@ -43,6 +43,7 @@ export class CollaborateCampaign {
 export class CollaborateTeam {
   id: number;
   name: string;
+  desc: string;
   created: string;
   members: number[] | null;
   campaigns: number[] | null;

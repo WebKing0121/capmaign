@@ -1,0 +1,58 @@
+import {Automation} from '@app-models/automation';
+
+export const AutomationsMockData: Automation[] = [
+  {
+    id: 1,
+    name: 'welcome email ua',
+    description: 'welcome email ua',
+    type: 'Email',
+    status: 'Paused',
+    created: 'Apr 29, 2020 1:27:20 PM',
+    updated: 'Apr 29, 2020 1:23:29 PM',
+  },
+  {
+    id: 2,
+    name: 'Demo Automation Sample',
+    description: '',
+    type: 'SMS',
+    status: 'InActive',
+    created: 'Apr 27, 2020 12:16:43 PM',
+    updated: 'Apr 27, 2020 12:16:43 PM',
+  },
+  {
+    id: 3,
+    name: 'Spring Summer Collection',
+    description: 'An email campaign for spring summer collection',
+    type: 'Email',
+    status: 'InActive',
+    created: 'Apr 27, 2020 11:30:18 AM',
+    updated: 'Apr 27, 2020 11:30:18 AM',
+  },
+  {
+    id: 4,
+    name: 'Test 17 April UA',
+    description: '',
+    type: 'Email',
+    status: 'Paused',
+    created: 'Apr 17, 2020 10:09:17 AM',
+    updated: 'Apr 17, 2020 11:28:31 AM',
+  },
+  {
+    id: 5,
+    name: 'Test 17 April UA',
+    description: '',
+    type: 'Email',
+    status: 'Failed',
+    created: 'Apr 17, 2020 11:50:42 AM',
+    updated: 'May 26, 2020 7:25:03 AM',
+  },
+  {
+    id: 6,
+    name: 'Test Demo123',
+    description: '',
+    type: 'Email',
+    status: 'InActive',
+    created: 'Jan 15, 2020 10:31:10 AM',
+    updated: 'Jan 15, 2020 10:31:10 AM',
+  },
+];

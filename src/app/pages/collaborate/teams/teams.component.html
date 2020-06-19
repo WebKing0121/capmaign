@@ -1,80 +1,85 @@
 <div class="container-fluid p-0">
-<div class="row">
-	<div class="col-md-5 col-sm-12 card-teams">
-		<app-card cardTitle="Collaboration Teams" #cardTeams [cardButtons]="cardButtons" cardClass="card-datatable"
-			[options]="false">
-			<div class="table-responsive">
-				<table datatable #teamsTable
-					class="table table-striped table-hover">
-					<thead>
-						<tr>
-							<th>Team name</th>
-							<th>Members</th>
-							<th>Campaigns</th>
-							<th> </th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr *ngFor="let team of teams" [id]="team.id">
-							<td>{{ team.name }}</td>
-							<td>{{ team.members.length }}</td>
-							<td>{{ team.campaigns.length }}</td>
-							<td>
-								<button class="btn btn-outline-primary btn-normal-padding">Edit</button>
-								<button class="btn btn-danger btn-normal-padding">Delete</button>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</app-card>
-	</div>
-	<div class="col-md-7 col-sm-12 card-campaigns-1">
-		<app-card cardTitle="Assigned Campaign" #cardAssignCampaigns [cardButtons]="cardButtonsInCampaigns"
-			cardClass="card-assigned-campaigns" [options]="false">
-			<div class="table-responsive">
-				<table #campaignTable class="table table-striped table-hover">
-					<thead class="campaign-table-header">
-						<th>Campaign Name</th>
-						<th>Start Date</th>
-						<th>End Date</th>
-						<th>Progress</th>
-						<th>Type</th>
-						<th>Status</th>
-					</thead>
-					<tbody class="campaign-table-body">
-						<tr *ngFor="let row of getSelectedCampaigns()" (click)="onClickCampaign(row.id)"
-							[ngClass]="{'selected': row.id === selectedCampaignId}">
-							<td>{{row.name}}</td>
-							<td>{{row.startDate | date}}</td>
-							<td>{{row.endDate | date}}</td>
-							<td>
-								<ngb-progressbar height="20px" [value]="row.percent"></ngb-progressbar>
-							</td>
-							<td>{{row.type}}</td>
-							<td>{{row.status}}</td>
-						</tr>
-						<tr *ngIf="getSelectedCampaigns().length === 0">
-							<td colspan=6 align="center">No data available in table.</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</app-card>
-		<!-- <app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
+	<div class="row">
+		<div class="col-md-5 col-sm-12 card-teams">
+			<app-card cardTitle="Collaboration Teams" #cardTeams cardClass="card-datatable" [options]="false">
+				<div class="total-counts">
+					<div class="position-relative">
+						<div class="ml-auto">
+							<span class="campaigns-header_totalNum ml-auto mr-2">Total Teams:
+								{{tableSource.totalCount$ | async}}</span>
+							<span class="mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
+							<span class="mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex">
+					<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickCreateTeam()">
+						<i class="fa fa-plus"></i> Create a team
+					</button>
+					<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickDelete()"
+						*ngIf="selected.length > 0">
+						<i class="fa fa-trash"></i> Delete
+					</button>
+				</div>
+				<div class="task-table mt-2">
+					<app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
+						[selectable]="false" (activate)="onClickTeam($event)"></app-datatable>
+
+					<div class="w-100">
+						<app-datatable-pagination [tableSource]="tableSource"></app-datatable-pagination>
+					</div>
+				</div>
+			</app-card>
+			<!-- <app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
 			[users]="allUsers" (selectRow)="onSelectTask($event)">
 		</app-campaign-tasks>
 		<app-campaign-sub-tasks #campaignSubTasks [taskId]="selectedTaskId" [taskName]="selectedTaskName"
 			[userId]="selectedUserId" [userName]="selectedUserName">
 		</app-campaign-sub-tasks> -->
+		</div>
+		<div class="col-md-7 col-sm-12 card-campaigns">
+			<app-card cardTitle="Assigned Campaigns" cardClass="card-datatable" [options]="false">
+				<div class="total-counts">
+					<div class="position-relative">
+						<div class="ml-auto">
+							<span class="campaigns-header_totalNum ml-auto mr-2">Total Campaigns:
+								{{tableSourceCampaigns.totalCount$ | async}}</span>
+							<span class="mr-2" (click)="tableSourceCampaigns.prevPage()"><i class="fa fa-chevron-left"></i></span>
+							<span class="mr-2" (click)="tableSourceCampaigns.nextPage()"><i class="fa fa-chevron-right"></i></span>
+						</div>
+					</div>
+				</div>
+				<div class="d-flex">
+					<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickAssignCampaign()">
+						<i class="fa fa-plus"></i> Assign Campaign
+					</button>
+					<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickUnassignCampaign()"
+						*ngIf="selectedCampaigns.length > 0">
+						<i class="fa fa-trash"></i> Unassign Campaign
+					</button>
+				</div>
+				<div class="task-table mt-2">
+					<app-datatable [dataSource]="tableSourceCampaigns" [rowHeight]="35" [headerHeight]="40"
+						[selectionType]="'single'" [selectable]="false" (activate)="onClickCampaign($event)"></app-datatable>
+
+					<div class="w-100">
+						<app-datatable-pagination [tableSource]="tableSourceCampaigns"></app-datatable-pagination>
+					</div>
+				</div>
+			</app-card>
+			<!-- <app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
+			[users]="allUsers" (selectRow)="onSelectTask($event)">
+		</app-campaign-tasks>
+		<app-campaign-sub-tasks #campaignSubTasks [taskId]="selectedTaskId" [taskName]="selectedTaskName"
+			[userId]="selectedUserId" [userName]="selectedUserName">
+		</app-campaign-sub-tasks> -->
+		</div>
 	</div>
 </div>
-</div>
-<app-ui-modal #newTeamModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
+<app-ui-modal #teamModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
 	<div class="app-modal-header">
-		<h5 class="modal-title">Create a New Team</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
-			(click)="newTeamModal.hide()">
+		<h5 class="modal-title">{{isNew? 'Create a New Team' : 'Update Team'}}</h5>
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="teamModal.hide()">
 			<span aria-hidden="true">&times;</span>
 		</button>
 	</div>
@@ -110,7 +115,8 @@
 						<div class="input-group-prepend">
 							<span class="input-group-text"><i class="feather icon-user"></i></span>
 						</div>
-						<ng-select [ngClass]="'ng-select'" [options]="allUsers" [multiple]="true"></ng-select>
+						<ng-select [ngClass]="'ng-select'" formControlName="members" [options]="allUsers" [multiple]="true">
+						</ng-select>
 					</div>
 				</div>
 			</div>
@@ -119,10 +125,10 @@
 
 	<div class="app-modal-footer">
 		<button type="button" class="btn btn-primary" (click)="onCreateTeam()">Create</button> &nbsp;
-		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="newTeamModal.hide()">Close</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="teamModal.hide()">Close</button>
 	</div>
 </app-ui-modal>
-
+<!-- 
 <app-ui-modal #assignCampaignModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Assign Campaigns</h5>
@@ -159,4 +165,11 @@
 		<button type="button" class="btn btn-secondary" data-dismiss="modal"
 			(click)="assignCampaignModal.hide()">Close</button>
 	</div>
-</app-ui-modal>
+</app-ui-modal> -->
+
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
+	[buttons]="confirmButtons"></app-confirm-modal>
+<ng-template #progressTemplate let-row="row" let-value let-i="index">
+	<span class="percent">{{value}}%</span>
+	<ngb-progressbar height="20px" [value]="value"></ngb-progressbar>
+</ng-template>

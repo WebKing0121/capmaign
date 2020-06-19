@@ -1,21 +1,27 @@
-<div class="row mt-2">
+<div class="row mt-3">
   <div class="col-12 card-automation">
     <app-card [cardTitle]="pageTitle" [options]="false">
       <div class="automation-form-wrapper">
         <form [formGroup]="formGroup">
           <div class="row">
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-lg-6 col-md-6 col-xm-12 form-group">
+              <label>Automation Type <span class="required-mark-after"></span></label>
+              <input class="form-control" formControlName="name" aria-label="Campaign Name">
+            </div>
+            <div class="col-lg-6 col-md-6 col-xm-12 form-group">
               <label>Name <span class="required-mark-after"></span></label>
               <input class="form-control" formControlName="name" aria-label="Campaign Name">
             </div>
-            <div class="col-12 col-lg-6 form-group">
+          </div>
+          <div class="row">
+            <div class="col-12">
               <label>Description</label>
               <input class="form-control" formControlName="description" aria-label="Campaign Subject">
             </div>
           </div>
         </form>
       </div>
-      <div class="row">
+      <div class="row mt-4">
         <div class="col-xl-3 col-md-6 col-sm-12">
           <h2>Activities</h2>
           <app-go-pallete></app-go-pallete>

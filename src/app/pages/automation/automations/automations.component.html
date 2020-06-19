@@ -1,10 +1,11 @@
-<div class="row">
+<div class="row mt-3">
   <div class="col-12 card-automation">
     <app-card cardTitle="Automations" [options]="false">
       <div class="total-counts">
         <div class="position-relative">
           <div class="ml-auto">
-            <span class="campaigns-header_totalNum ml-auto mr-2">Total Automations: {{tableSource.totalCount$ | async}}</span>
+            <span class="campaigns-header_totalNum ml-auto mr-2">Total Automations:
+              {{tableSource.totalCount$ | async}}</span>
             <span class="mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
             <span class="mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
           </div>
@@ -12,15 +13,8 @@
       </div>
       <div class="d-flex">
         <button class="btn btn-primary btn-normal-padding" (click)="onCreateAutomation()">Create Automation</button>
-        <label class="ml-auto mr-2 d-flex align-items-center">Show
-          <select [value]="tableSource.pageSize" class="show-entries"
-            (change)="tableSource.pageSize=$event.target.value">
-            <option value="10">10</option>
-            <option value="25">25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select> entries</label>
-        <label class="mr-2 ml-10 d-flex align-items-center">Search:
+
+        <label class="mr-2 ml-auto d-flex align-items-center">Search:
           <input type="search" class="table-search" [style.height.px]="25" placeholder=""
             (keypress)="tableSource.search($event.target.value)"></label>
 
@@ -28,8 +22,8 @@
       </div>
 
       <div class="campaigns-table mt-2">
-        <app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [columns]="columns"
-          [columnMode]="'force'" (activate)="onActive($event)"></app-datatable>
+        <app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" (activate)="onActive($event)">
+        </app-datatable>
 
         <div class="d-flex">
           <app-datatable-pagination class="ml-auto mr-5" [tableSource]="tableSource"></app-datatable-pagination>
