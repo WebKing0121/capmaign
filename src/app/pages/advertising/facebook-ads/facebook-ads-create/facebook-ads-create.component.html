@@ -7,17 +7,17 @@
       <form [formGroup]="formGroup">
         <div class="" formGroupName="details">
           <div class="row">
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 col-md-6 form-group">
               <label class="required-mark-after">Campaign Name</label>
               <input class="form-control" formControlName="name" aria-label="Campaign Name">
             </div>
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 col-md-6 form-group">
               <label class="required-mark-after">Ad Account</label>
               <select class="form-control" formControlName="adAccount">
                 <option></option>
               </select>
             </div>
-            <div class="col-12 col-lg-6 form-group m-l-auto">
+            <div class="col-12 col-md-6 form-group m-l-auto">
               <label class="required-mark-after">Ad Label</label>
               <input class="form-control" formControlName="adLabel" aria-label="Campaign Name">
             </div>
@@ -27,7 +27,7 @@
               </div>
             </div>
             <div class="col-12 col-lg-12 m-t-20 d-flex p-0">
-              <div class="col-lg-4 margin-top-20">
+              <div class="col-lg-4 m-t-20">
                 <div class="border border-primary">
                   <div class="padding-10px bg-blue text-center">
                     <label class="bg-primary text-white d-flex justify-content-center p-10">AWARENESS</label>
@@ -47,7 +47,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 margin-top-20">
+              <div class="col-lg-4 m-t-20">
                 <div class="border border border-primary">
                   <div class="padding-10px bg-blue text-center">
                     <label class="bg-primary text-white d-flex justify-content-center p-10">CONSIDERATION</label>
@@ -86,7 +86,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 margin-top-20">
+              <div class="col-lg-4 m-t-20">
                 <div class="border border-primary">
                   <div class="padding-10px bg-blue text-center">
                     <label class="bg-primary text-white d-flex justify-content-center p-10">CONVERSION</label>
@@ -121,9 +121,9 @@
               </label>
             </div>
             <div *ngIf="spliteTestFlag" class="col-lg-12 d-flex flex-wrap m-t-10">
-              <div class="col-lg-6">
+              <div class="col-md-6">
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                  <label class="text-primary bold">Variable</label>
+                  <label class="text-primary font-weight-bold">Variable</label>
                   <select class="form-control  ng-pristine ng-untouched ng-valid ng-empty">
                     <option value="? string: ?"></option>
                     <option class="text-primary" value="1">Creative</option>
@@ -133,9 +133,9 @@
                   </select>
                 </div>
               </div>
-              <div class="col-lg-6">
+              <div class="col-md-6">
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                  <label class="text-primary bold">Number of ad sets</label>
+                  <label class="text-primary font-weight-bold">Number of ad sets</label>
                   <select class="form-control" (change)="onSetTestNum($event.target.value)">
                     <option value="1"></option>
                     <option class="text-primary" value="2">2</option>
@@ -147,21 +147,21 @@
               </div>
               <!-- ngRepeat: n in adsetarray -->
               <div *ngFor="let ad of campaignAdsArr" class="col-lg-12 divadsets d-flex p-0">
-                <div class="col-lg-6">
-                  <label class="text-primary bold ng-binding">Ad Set {{ad.id}} Name</label>
+                <div class="col-md-6">
+                  <label class="text-primary font-weight-bold ng-binding">Ad Set {{ad.id}} Name</label>
                   <div class="form-group form-md-line-input form-md-floating-label no-hint">
                     <input type="text" class="form-control" name="adsetname" id="adsetname1">
                   </div>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-md-6">
                   <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                    <label class="text-primary bold ng-binding">Ad {{ad.id}} Name</label>
+                    <label class="text-primary font-weight-bold ng-binding">Ad {{ad.id}} Name</label>
                     <input type="text" class="form-control" name="adname" id="adname1">
                   </div>
                 </div>
               </div><!-- end ngRepeat: n in adsetarray -->
               <div class="clearfix"></div>
-              <div class="col-lg-6">
+              <div class="col-md-6">
                 <a class="bold ng-binding">Creating 1 campaign, {{campaignAdsArr.length}} ad set and
                   {{campaignAdsArr.length}} ad</a>
               </div>
@@ -174,7 +174,7 @@
               </label>
             </div>
             <div *ngIf="campaignBudgetOptimisationFlag" class="col-lg-12 d-flex flex-wrap m-t-20">
-              <div class="col-lg-6">
+              <div class="col-md-6">
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                   <label class="text-primary font-weight-bold">Campaign budget</label>
                   <select id="selectBudget" class="form-control">
@@ -184,7 +184,7 @@
                   </select>
                 </div>
               </div>
-              <div class="col-lg-6">
+              <div class="col-md-6">
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                   <label></label>
                   <input type="number" min="0" max="99999"
@@ -192,7 +192,7 @@
                     placeholder="20,000">
                 </div>
               </div>
-              <div class="col-lg-6">
+              <div class="col-md-6">
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                   <label class="text-primary font-weight-bold">Campaign Bid Strategy</label>
                   <select id="selectBidStrategy" ng-model="vm.campaign.bidstrategy" class="form-control">
@@ -217,7 +217,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 col-md-6 form-group">
               <div class="text-primary m-t-30">
                 <label class="font-weight-bold">
                   Location
@@ -245,7 +245,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 col-md-6 form-group">
               <div class="text-primary m-t-30">
                 <label class="font-weight-bold">
                   Location (Exclude)
@@ -263,7 +263,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 col-md-6 form-group">
               <div class="text-primary m-t-20">
                 <label class="font-weight-bold">
                   Currency
@@ -281,7 +281,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-lg-6 form-group">
+            <div class="col-12 col-md-6 form-group">
               <div class="text-primary m-t-20">
                 <label class="font-weight-bold">
                   Languages
@@ -313,7 +313,7 @@
                 </label>
               </div>
             </div>
-            <div class="col-lg-6 form-group form-md-line-input form-md-floating-label no-hint m-t-20">
+            <div class="col-md-6 form-group form-md-line-input form-md-floating-label no-hint m-t-20">
               <label class="text-primary font-weight-bold">Age Range</label>
               <div class="input-group d-flex align-items-center">
                 <select ng-model="vm.campaign.agemin" ng-change="vm.updateagerange()" class="form-control">
@@ -330,20 +330,20 @@
               <div class="radio-group-multitoggle m-b-0">
                 <input id="toggle_gender1" class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty"
                   name="toggle_gender" value="all" type="radio" checked>
-                <label for="toggle_gender1" class="lblmultitoggle bold">All</label>
+                <label for="toggle_gender1" class="lblmultitoggle font-weight-bold">All</label>
                 <input id="toggle_gender2" class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty"
                   name="toggle_gender" value="male" type="radio">
-                <label for="toggle_gender2" class="lblmultitoggle bold">Male</label>
+                <label for="toggle_gender2" class="lblmultitoggle font-weight-bold">Male</label>
                 <input id="toggle_gender3"
                   class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" name="toggle_gender"
                   value="female" type="radio">
-                <label for="toggle_gender3" class="lblmultitoggle bold">Female</label>
+                <label for="toggle_gender3" class="lblmultitoggle font-weight-bold">Female</label>
               </div>
             </div>
             <div class="col-lg-12">
               <span class="text-primary font-weight-bold">Targetting</span>
             </div>
-            <div class="col-12 col-lg-4 form-group">
+            <div class="col-12 col-md-4 form-group">
               <div class="text-primary m-t-30">
                 <div class="input-group">
                   <input class="form-control" placeholder="Interest" autocomplete="off" name="interest">
@@ -355,7 +355,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-lg-4 form-group">
+            <div class="col-12 col-md-4 form-group">
               <div class="text-primary m-t-30">
                 <div class="input-group">
                   <input class="form-control" placeholder="Behavior" autocomplete="off" name="behavior">
@@ -367,7 +367,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-12 col-lg-4 form-group">
+            <div class="col-12 col-md-4 form-group">
               <div class="text-primary m-t-30">
                 <div class="input-group">
                   <input class="form-control" placeholder="Demographic" autocomplete="off" name="demographic">
@@ -402,7 +402,7 @@
               <div class="col-lg-12 d-flex flex-wrap m-t-20">
                 <div class="col-lg-12 p-0">
                   <div class="form-group placement_devices form-md-line-input form-md-floating-label no-hint">
-                    <label class="text-primary font-weight-bold">Devices</label><br>
+                    <label class="text-primary font-weight-bold">Devices</label>
                     <div class="card-body ng-tns-c111-113 ng-star-inserted">
                       <div data-toggle="buttons" class="btn-group btn-group-toggle ng-tns-c111-113">
                         <label class="btn btn-primary">
@@ -428,16 +428,16 @@
                 <div class="col-lg-12 p-0">
                   <div class="form-group form-md-line-input form-md-floating-label no-hint obj_platforms">
                     <div class="form-group placement_devices form-md-line-input form-md-floating-label no-hint">
-                      <label class="text-primary font-weight-bold">Devices</label><br>
+                      <label class="text-primary font-weight-bold">Devices</label>
                       <div class="card-body ng-tns-c111-113 ng-star-inserted">
                         <div data-toggle="buttons" class="btn-group btn-group-toggle ng-tns-c111-113">
                           <label class="btn btn-primary">
-                            <input type="checkbox" (click)="onFacebookClick()">
+                            Facebook
+                            <input type="checkbox" name="facebook" (click)="onFacebookClick()">
                             <span>
                               <i *ngIf="facebook" class="fa fa-check" style="opacity: 1;"></i>
                               <i *ngIf="!facebook" class="fa fa-check" style="opacity: 0;"></i>
                             </span>
-                            Facebook
                           </label>
                           <label class="btn btn-primary">
                             <input type="checkbox" (click)="onAudienceNetworkClick()">
@@ -468,175 +468,165 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6 p-0">
+                <div class="col-md-6 p-0">
                   <label class="font-weight-bold text-primary margin-bottom-10">Placements</label>
                 </div>
-                <div class="col-lg-12 obj_placements d-flex flex-wrap p-0">
-                  <div class="col-lg-6 d-flex flex-column">
-                    <label class="text-primary font-weight-bold">
-                      <u>Feeds</u>
-                      <small>(Get high visibility for your business with ads in feeds)</small>
-                    </label>
-                    <label class="btn btn-primary">
-                      <input type="checkbox" (click)="onMessengerClick()">
-                      Facebook News Feed
-                      <span>
-                        <i *ngIf="messenger" class="fa fa-check" style="opacity: 1;"></i>
-                        <i *ngIf="!messenger" class="fa fa-check" style="opacity: 0;"></i>
-                      </span>
-                    </label>
-                    <label class="containerCheck" id="instagram_feed" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/yA/r/bCv_O9cJjYo.jpg">
-                      Instagram Feed
-                      <input type="checkbox" class="mobile">
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="facebook_marketplace" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/yh/r/9Us3QXc4ZJy.jpg">
-                      Facebook Marketplace
-                      <input type="checkbox" class="mobile desktop">
-                      <span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="facebook_videofeed" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/ye/r/z24MsSer0jU.jpg" data-original-title=""
-                      title="">
-                      Facebook video feeds
-                      <input type="checkbox"
-                        class="mobile obj1 obj2 obj3 obj4 obj5 obj6 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.videofeed"><span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="facebook_rightcolumn" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v1/ya/r/1mlV-W-aJI9.jpg" data-original-title=""
-                      title="">
-                      Facebook right column
-                      <input type="checkbox" class="desktop obj3 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.rightcolumn"><span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="instagram_explore" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yJ/r/tLKfIjndg33.png" data-original-title=""
-                      title="">
-                      Instagram Explore
-                      <input type="checkbox"
-                        class="mobile obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj8 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.instagram.explore"><span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="messenger_inbox" data-toggle="popover" data-type="video"
-                      data-full="https://www.facebook.com/d260de32-181e-4611-870d-7f8dc2dce3e9" data-original-title=""
-                      title="">
-                      Messenger Inbox
-                      <input type="checkbox"
-                        class="mobile obj3 obj5 obj8 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.messenger.inbox"><span class="checkmark"></span>
-                    </label>
+                <div class="col-lg-12 obj_placements d-flex flex-wrap p-0 m-t-20 m-b-20">
+                  <div class="col-lg-12 obj_placements d-flex flex-wrap">
+                    <div class="col-lg-6">
+                      <label class="text-primary font-weight-bold">
+                        <u>Feeds</u>
+                        <small>
+                          (Get high visibility for your business with ads in feeds)</small>
+                        </label>
+                      <label class="containerCheck" id="facebook_newsfeed">
+                        <input type="checkbox" (click)="onFacebookNewsFeed()">
+                        <span>
+                          <i *ngIf="facebookNewsFeed" class="fa fa-check" style="opacity: 1;"></i>
+                          <i *ngIf="facebookNewsFeed" class="fa fa-check" style="opacity: 0;"></i>
+                        </span>
+                        Facebook News Feed
+                      </label>
+                      <label class="containerCheck" id="instagram_feed">
+                        <input type="checkbox">
+                        Instagram Feed
+                      </label>
+                      <label class="containerCheck" id="facebook_marketplace">
+                        <input type="checkbox">
+                        Facebook Marketplace
+                      </label>
+                      <label class="containerCheck" id="facebook_videofeed">
+                        <input type="checkbox">
+                        Facebook video feeds
+                      </label>
+                      <label class="containerCheck" id="facebook_rightcolumn">
+                        <input type="checkbox">
+                        Facebook right column
+                      </label>
+                      <label class="containerCheck" id="instagram_explore">
+                        <input type="checkbox">
+                        Instagram Explore
+                      </label>
+                      <label class="containerCheck" id="messenger_inbox">
+                        <input type="checkbox">
+                        Messenger Inbox
+                      </label>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="text-primary font-weight-bold"><u>Stories</u><small>(Tell a rich, visual story with immersive,
+                          full screen vertical ads)</small></label>
+                      <label class="containerCheck" id="facebook_stories">
+                        <input type="checkbox">
+                        Facebook Stories
+                      </label>
+                      <label class="containerCheck" id="instagram_stories">
+                        <input type="checkbox">
+                        Instagram Stories
+                      </label>
+                      <label class="containerCheck" id="messenger_stories">
+                        <input type="checkbox">
+                        Messenger Stories
+                      </label>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="text-primary font-weight-bold"><u>In-stream</u><small>(Quickly capture people's attention while
+                          they're watching videos)</small></label>
+                      <label class="containerCheck" id="facebook_instream">
+                        <input type="checkbox">
+                        Facebook in-stream videos
+                      </label>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="text-primary font-weight-bold"><u>Search</u><small>(Get visibility for your business as people
+                          search on Facebook)</small></label>
+                      <label class="containerCheck" id="facebook_search">
+                        <input type="checkbox">
+                        Facebook Search Results
+                      </label>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="text-primary font-weight-bold"><u>Messages</u><small>(Send offers or updates to people who are
+                          already connected to your business)</small></label>
+                      <label class="containerCheck" id="messenger_messages">
+                        <input type="checkbox">
+                        Messenger sponsored messages
+                      </label>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="text-primary font-weight-bold"><u>In-Article</u><small>(Engage with people who are reading
+                          content from publishers)</small></label>
+                      <label class="containerCheck" id="facebook_articles">
+                        <input type="checkbox">
+                        Facebook Instant Articles
+                      </label>
+                    </div>
+                    <div class="col-lg-6">
+                      <label class="text-primary font-weight-bold"><u>Apps and sites</u><small>(Expand your reach with ads in
+                          external apps and websites)</small></label>
+                      <label class="containerCheck" id="audience_classicgroup" data-toggle="popover" data-type="img"
+                        data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/HCtJqSQ13l2.png" data-original-title=""
+                        title="">
+                        <input type="checkbox">
+                        Audience Network native, banner and interstitial
+                      </label>
+                      <label class="containerCheck" id="audience_rewarded_video_group" data-toggle="popover"
+                        data-type="img" data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/RbGZHFNttoD.png"
+                        data-original-title="" title="">
+                        <input type="checkbox">
+                        Audience Network rewarded videos
+                      </label>
+                      <label class="containerCheck" id="audience_instream_video_group" data-toggle="popover"
+                        data-type="video" data-full="https://business.facebook.com/450d6c6b-93eb-4d0a-aa90-dcde9ee527c9"
+                        data-original-title="" title="">
+                        <input type="checkbox">
+                        Audience Network in-stream videos
+                      </label>
+                    </div>
                   </div>
-                  <div class="col-lg-6">
-                    <label class="text-primary font-weight-bold"><u>Stories</u><br><small>(Tell a rich, visual story
-                        with immersive,
-                        full screen vertical ads)</small></label>
-                    <label class="containerCheck" id="facebook_stories" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yz/r/VdDR8oIXa5l.png" data-original-title=""
-                      title="">
-                      Facebook Stories
-                      <input type="checkbox"
-                        class="mobile obj1 obj2 obj3 obj5 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.stories"><span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="instagram_stories" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yz/r/ys1sO1FBnCH.png" data-original-title=""
-                      title="">
-                      Instagram Stories
-                      <input type="checkbox"
-                        class="mobile obj1 obj2 obj3 obj5 obj6 obj7 obj8 obj9 obj10 obj11 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.instagram.stories"><span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="messenger_stories" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/RQr1S3E83kn.png" data-original-title=""
-                      title="">
-                      Messenger Stories
-                      <input type="checkbox"
-                        class="mobile obj1 obj2 obj3 obj5 obj8 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.messenger.stories"><span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <div class="col-lg-6">
-                    <label class="text-primary font-weight-bold"><u>In-stream</u><br><small>(Quickly capture people's
-                        attention while
-                        they're watching videos)</small></label>
-                    <label class="containerCheck" id="facebook_instream" data-toggle="popover" data-type="video"
-                      data-full="https://www.facebook.com/73a5c50c-c2fa-4815-abf3-a4a3f807c5e0" data-original-title=""
-                      title="">
-                      Facebook in-stream videos
-                      <input type="checkbox"
-                        class="mobile desktop obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.instream"><span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <div class="col-lg-6">
-                    <label class="text-primary font-weight-bold"><u>Search</u><br><small>(Get visibility for your
-                        business as people
-                        search on Facebook)</small></label>
-                    <label class="containerCheck" id="facebook_search" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yw/r/MONDE1H8gS4.png" data-original-title=""
-                      title="">
-                      Facebook Search Results
-                      <input type="checkbox" class="mobile obj3 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.search"><span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <div class="col-lg-6">
-                    <label class="text-primary font-weight-bold"><u>Messages</u><br><small>(Send offers or updates to
-                        people who are
-                        already connected to your business)</small></label>
-                    <label class="containerCheck" id="messenger_messages" data-toggle="popover" data-type="video"
-                      data-full="https://business.facebook.com/31916d2a-cd15-4268-a79d-397681ece82c"
-                      data-original-title="" title="">
-                      Messenger sponsored messages
-                      <input type="checkbox" class="mobile desktop ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.messenger.messages"><span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <div class="col-lg-6">
-                    <label class="text-primary font-weight-bold"><u>In-Article</u><br><small>(Engage with people who are
-                        reading
-                        content from publishers)</small></label>
-                    <label class="containerCheck" id="facebook_articles" data-toggle="popover" data-type="video"
-                      data-full="https://business.facebook.com/a82e017b-ccb2-4db2-a5d9-cf57b7945135"
-                      data-original-title="" title="">
-                      Facebook Instant Articles
-                      <input type="checkbox"
-                        class="mobile obj1 obj2 obj3 obj4 obj5 obj6 obj7 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.facebook.articles"><span class="checkmark"></span>
-                    </label>
-                  </div>
-                  <div class="col-lg-6">
-                    <label class="text-primary font-weight-bold"><u>Apps and sites</u><br><small>(Expand your reach with
-                        ads in
-                        external apps and websites)</small></label>
-                    <label class="containerCheck" id="audience_classicgroup" data-toggle="popover" data-type="img"
-                      data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yd/r/HCtJqSQ13l2.png" data-original-title=""
-                      title="">
-                      Audience Network native, banner and interstitial
-                      <input type="checkbox"
-                        class="mobile obj2 obj3 obj5 obj6 obj9 obj10 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.audience.classicgroup"><span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="audience_rewarded_video_group" data-toggle="popover"
-                      data-type="img" data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/RbGZHFNttoD.png"
-                      data-original-title="" title="">
-                      Audience Network rewarded videos
-                      <input type="checkbox"
-                        class="mobile obj3 obj5 obj6 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.audience.rewarded_video_group"><span class="checkmark"></span>
-                    </label>
-                    <label class="containerCheck" id="audience_instream_video_group" data-toggle="popover"
-                      data-type="video" data-full="https://business.facebook.com/450d6c6b-93eb-4d0a-aa90-dcde9ee527c9"
-                      data-original-title="" title="">
-                      Audience Network in-stream videos
-                      <input type="checkbox"
-                        class="mobile desktop obj1 obj2 obj4 obj6 obj9 ng-pristine ng-untouched ng-valid ng-empty"
-                        ng-model="vm.campaign.audience.instream_video_group"><span class="checkmark"></span>
-                    </label>
-                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-12 d-flex flex-wrap p-0" style="m-t: 20px" ng-show="!showhidebudget">
+            <div class="col-md-6">
+              <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                <label class="text-primary font-weight-bold">Campaign budget</label>
+                <select id="selectBudget1" class="form-control">
+                  <option class="text-primary" value="daily_budget">Daily Budget</option>
+                  <option class="text-primary" value="lifetime_budget">Lifetime Budget</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                <label></label>
+                <input type="number" min="0" max="99999" class="form-control" placeholder="20,000">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                <label class="text-primary font-weight-bold">Campaign Bid Strategy</label>
+                <select id="selectBidStrategy1" class="form-control">
+                  <option value=""></option>
+                  <option class="text-primary" value="LOWEST_COST_WITHOUT_CAP">Lowest Cost</option>
+                  <option class="text-primary" value="LOWEST_COST_WITH_BID_CAP">Bid Cap</option>
+                  <option class="text-primary" value="TARGET_COST">Cost Cap</option>
+                </select>
+              </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="col-lg-12">
+              <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                <label class="text-primary font-weight-bold">Ad Scheduling</label>
+                <div class="radio radio-primary text-primary m-t-10 m-l-30">
+                  <input type="radio" id="adscheduling3" ng-model="vm.campaign.pacing" name="adschedulingN"
+                    value="standard" class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
+                  <label class="text-primary" for="adscheduling3">Run ads all the time</label>
+                </div>
+                <div class="radio radio-primary text-primary m-t-10 m-l-30">
+                  <input type="radio" id="adscheduling4" ng-model="vm.campaign.pacing" name="adschedulingN"
+                    value="day_parting" class="ng-valid ng-not-empty ng-dirty ng-touched">
+                  <label class="text-primary" for="adscheduling4">Run ads on a schedule</label>
                 </div>
               </div>
             </div>
@@ -646,7 +636,185 @@
               <span class="text-primary font-weight-bold">Budget & schedule</span>
             </div>
             <div class="col-lg-12 m-t-20">
-
+              <label class="text-primary font-family-bold">
+                Optimisation for ad delivery
+                <select class="form-control">
+                  <option class="text-primary" value="IMPRESSIONS">Impressions</option>
+                  <option class="text-primary" value="POST_ENGAGEMENT">Post Engagement</option>
+                  <option class="text-primary" value="CLICKS">Daily unique reach</option>
+                  <option class="text-primary" value="REACH">Reach</option>
+                  <option class="text-primary" value="CLICKS">Ad Recall Lift</option>
+                  <option class="text-primary" value="CLICKS">Landing Page Views</option>
+                  <option class="text-primary" value="CLICKS">Link Clicks</option>
+                  <option class="text-primary" value="CLICKS">App Events</option>
+                  <option class="text-primary" value="CLICKS">App Installs</option>
+                  <option class="text-primary" value="CLICKS">ThruPlay</option>
+                  <option class="text-primary" value="CLICKS">2-Second Continuous Video Views</option>
+                  <option class="text-primary" value="CLICKS">Leads</option>
+                  <option class="text-primary" value="CLICKS">Conversations</option>
+                  <option class="text-primary" value="CLICKS">Conversions</option>
+                  <option class="text-primary" value="CLICKS">Conversion Events</option>
+                </select>
+              </label>
+            </div>
+            <div class="col-lg-12">
+              <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                <label class="text-primary font-weight-bold m-t-20">Traffic</label>
+                <div class="radio radio-primary text-primary m-t-20 m-l-20">
+                  <label class="text-primary">
+                    <input type="radio" id="automatic" name="placements" value="automatic"
+                      (click)="onSetContinuouslyStartingToday()">
+                    Run my ad set continuously starting today
+                  </label>
+                </div>
+                <div class="col-radio radio-primary text-primary m-t-10 m-l-20">
+                  <label class="text-primary">
+                    <input type="radio" id="editPlacement" name="placements" value="editPlacement"
+                      (click)="onSetTrafficStartEndDate()">
+                    Set a start and end date
+                  </label>
+                  <div *ngIf="setTrafficStartEndDate">
+                    <div class="">
+                      <div class="input-group">
+                        <label class="col-md-4 d-flex align-items-center">Start Date <span class="text-danger"> *
+                          </span> : </label>
+                        <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM" name="dp_to"
+                          ngbDatepicker [(ngModel)]="model" #datePickerStart="ngbDatepicker"
+                          (dateSelect)="onStartSelect($event)">
+                        <div class="input-group-append">
+                          <span class="input-group-text" (click)="datePickerStart.toggle()">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="input-group m-t-15">
+                        <label class="col-md-4 d-flex align-items-center">End Date <span class="text-danger"> *
+                          </span> : </label>
+                        <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM" name="dp_to"
+                          ngbDatepicker [(ngModel)]="model" #datePickerEnd="ngbDatepicker"
+                          (dateSelect)="onEndSelect($event)">
+                        <div class="input-group-append">
+                          <span class="input-group-text" (click)="datePickerEnd.toggle()">
+                            <i class="fa fa-calendar"></i>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12 p-0">
+              <label class="col-md-6 text-primary font-weight-bold">Facebook Page Selection
+                <select id="fb_page" class="form-control ng-pristine ng-valid ng-empty edited ng-touched">
+                  <option value=""></option>
+                </select>
+              </label>
+              <label class="col-md-6 text-primary font-weight-bold">Facebook Page Selection
+                <select id="fb_page" class="form-control ng-pristine ng-valid ng-empty edited ng-touched">
+                  <option value=""></option>
+                </select>
+              </label>
+            </div>
+            <div class="col-lg-12 d-flex flex-wrap p-20">
+              <div class="col-lg-12 p-0">
+                <label class="text-primary font-weight-bold p-b-10">Primary Text</label>
+                <textarea rows="15" style="width: 100%"></textarea>
+              </div>
+              <div class="col-lg-12 p-t-20 p-l-0 d-flex">
+                <div class="col-md-6 d-flex flex-column p-0">
+                  <div>
+                    <label class="text-primary">Website URL</label>
+                    <input class="form-control" formControlName="websiteUrl" aria-label="websiteUrl">
+                  </div>
+                  <div class="m-t-10">
+                    <label class="text-primary">Call to Action
+                      <select id="calltoaction" class="form-control" style="width: 100%;">
+                        <option value=""></option>
+                        <option class="text-primary" value="LEARN_MORE">Learn more</option>
+                        <option class="text-primary" value="SHOP_NOW">Shop now</option>
+                        <option class="text-primary" value="BOOK_NOW">Book now</option>
+                        <option class="text-primary" value="SIGN_UP">Sign Up</option>
+                        <option class="text-primary" value="DOWNLOAD">Download</option>
+                        <option class="text-primary" value="WATCH_MORE">Watch more</option>
+                        <option class="text-primary" value="LISTEN_NOW">Listen Now</option>
+                        <option class="text-primary" value="INSTALL_APP">Install App</option>
+                        <option class="text-primary" value="USE_APP">Use App</option>
+                        <option class="text-primary" value="APPLY_NOW">Apply Now</option>
+                        <option class="text-primary" value="SELL_NOW">Sell Now</option>
+                        <option class="text-primary" value="DONATE_NOW">Donate Now</option>
+                        <option class="text-primary" value="CONTACT_US">Contact Us</option>
+                        <option class="text-primary" value="SEE_MENU">See Menu</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <button class="btn-success border-0 p-10 m-10">Generate UTM</button>
+                </div>
+              </div>
+              <div class="col-md-6 m-t-20 p-0">
+                <div class="form-group d-flex flex-column">
+                  <label class="text-primary font-weight-bold">Format</label>
+                  <label for="toggle_cta1" class="toggle_btn text-primary p-t-10">
+                    <input id="toggle_cta1" value="standard" name="toggle_cta" type="radio">
+                    Standard Link</label>
+                  <label for="toggle_cta2" class="toggle_btn text-primary p-t-10">
+                    <input id="toggle_cta2" value="instant" name="toggle_cta" type="radio">
+                    Facebook Instant Experience
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-6 m-t-20 p-0">
+                <div class="form-group d-flex flex-column">
+                  <label class="text-primary font-weight-bold">Media</label>
+                  <label class="toggle_btn text-primary p-t-10">
+                    <input id="toggle_cta3" value="pictures" name="toggle_ctm" type="radio">
+                    Pictures
+                  </label>
+                  <label class="toggle_btn text-primary p-t-10">
+                    <input id="toggle_cta4" value="videoSlideshare" name="toggle_ctm" type="radio">
+                    Video/Slideshare
+                  </label>
+                </div>
+              </div>
+              <div class="col-lg-12">
+                <div id="mediaupload" class="container">
+                  <div class="row">
+                    <div class="col-sm-2 imgUp">
+                      <div class="mediaPreview"></div>
+                      <label class="btn btn-primary">
+                        Upload from Local Drive
+                        <input type="file" class="uploadFile img" value="Upload Media"
+                          style="width: 0px;height: 0px;overflow: hidden;">
+                      </label>
+                    </div><!-- col-2 -->
+                    <i class="fa fa-plus imgAdd"></i>
+                  </div><!-- row -->
+                </div><!-- container -->
+              </div>
+              <div class="col-lg-12 m-t-20">
+                <label class="text-primary col-md-6">Select Image for Ad
+                  <select class="form-control col-md-6" formControlName="websiteUrl">
+                    <option></option>
+                  </select>
+                  <button class="btn-success m-t-10 border-0">Save Ad</button>
+                </label>
+              </div>
+              <div class="col-lg-12 m-t-20">
+                <label class="text-primary">Select Image for Ad</label>
+                <select class="form-control col-md-6 p-1" formControlName="websiteUrl">
+                  <option></option>
+                </select>
+                <button class="btn-success border-0 m-t-10 p-1">Create Lead Generation Form</button>
+              </div>
+              <div class="col-lg-12 m-t-20">
+                <div class="d-flex flex-end m-l-auto">
+                  <button class="btn-success p-1 border-0">Cancel</button>
+                  <button class="btn-success p-1 border-0 m-l-5">Preview AD</button>
+                  <button class="btn-success p-1 border-0 m-l-5">Create Campaign</button>
+                </div>
+              </div>
             </div>
           </div>
         </div>

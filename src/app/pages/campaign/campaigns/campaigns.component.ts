@@ -37,8 +37,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         { label: 'Create Facebook Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
       ]
     },
-    { label: 'Delete', icon: 'fa fa-clone', click: () => this.clickTemplate() },
-    { label: 'Send', icon: 'fa fa-download', click: () => this.clickTemplate() },
+    { label: 'Send', icon: 'far fa-envelope', click: () => this.clickTemplate() },
   ];
 
   selected: Campaign[] = [];

@@ -61,7 +61,7 @@
 
   .radio-group-multitoggle {
     border: solid 3px #3598dc;
-    width: 215px;
+    width: 230px;
     margin: 20px;
     border-radius: 4px;
     overflow: hidden;
@@ -119,6 +119,47 @@
       span.fa-check {
         opacity: 1 !important;
       }
+    }
+  }
+
+  .containerCheck {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 25px;
+      width: 25px;
+      background-color: #eee;
+    }
+
+    input:checked ~ .checkmark {
+      background-color: #3598dc;
+    }
+  }
+
+  .editPlacementsFlag {
+    input[type="checkbox"]{
+      width: 0;
+      height: 0;
     }
   }
 }
