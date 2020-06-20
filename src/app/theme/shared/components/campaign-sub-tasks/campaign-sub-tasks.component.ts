@@ -49,7 +49,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
     {
       label: 'Create a new Task', icon: 'fa fa-edit', click: () => this.onClickAddTask()
     },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true},
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
   ];
 
   subTaskForm: FormGroup;
@@ -88,7 +88,6 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
     ];
 
     this.tableSource.setColumns(columns);
-
   }
 
   _updateTable(tasks: CollaborateCampaignTask[]) {
@@ -150,7 +149,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
       const subTask = event.row as CollaborateCampaignSubtask;
       this.selectRow.emit(subTask);
       this.tableButtons[1].hide = false;
-      if (event.cellIndex === 0 && event.column.frozonLeft ) {
+      if (event.cellIndex === 0 && event.column.frozonLeft) {
 
         this.subTaskForm.setValue({
           id: subTask.id,

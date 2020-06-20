@@ -6,8 +6,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { SocialEngager } from '@app-models/social';
-import { SocialEngagersMockData } from '@app-fake-db/social-engagers-mock';
 import { ValidationService } from '@app-services/validation.service';
+import { SocialService } from '@app-core/services/social.service';
 
 
 @Component({
@@ -35,6 +35,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
   loading = false;
   submitted = false;
   error = '';
+  engagers: SocialEngager[];
 
   tableSource: DataTableSource<SocialEngager> = new DataTableSource<SocialEngager>(50);
   tableButtons = [
@@ -50,32 +51,12 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private socialService: SocialService,
   ) { }
 
   ngOnInit(): void {
     this.showSearch = false;
-
-    this.tableSource.next(SocialEngagersMockData.slice(0, 50), SocialEngagersMockData.length);
-
-    this.tableSource.changed$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
-        console.log('Campaign Table Changes: ', change);
-
-        this.tableSource.next(
-          SocialEngagersMockData.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          SocialEngagersMockData.length
-        );
-      });
-    this.tableSource.selection$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
-
-
     this.engagerForm = this.formBuilder.group({
       id: 0,
       first_name: ['', Validators.required],
@@ -85,6 +66,19 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
       mobile_number: ['', Validators.required],
       zip: ['', Validators.required],
     });
+
+    this.loading = true;
+    this.socialService.getSocialEngagers()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe(
+      data => {
+        this.engagers = data;
+        this._updateTable(this.engagers);
+      },
+      error => {
+        console.log('error', error);
+        this.loading = false;
+      });
   }
 
   ngAfterViewInit() {
@@ -154,5 +148,24 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
 
   onDeleteEngager() {
     this.confirmModal.show();
+  }
+
+  _updateTable(engagers: SocialEngager[]) {
+    this.tableSource.next(engagers.slice(0, 50), engagers.length);
+
+    this.tableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(change => {
+        this.tableSource.next(
+          engagers.slice(
+            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+          engagers.length
+        );
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
   }
 }

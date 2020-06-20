@@ -10,15 +10,11 @@ import { takeUntil } from 'rxjs/operators';
 import { CollaborateService } from '@app-services/collaborate.service';
 import { UserService } from '@app-services/user.service';
 
-import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
+import { DataTableSource } from '@app-components/datatable/datatable-source';
 
 import { CampaignFilterType } from '@app-core/enums/campaign-type.enum';
 import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
 import { User } from '@app-models/user';
-
-import { CollaborateCampaignsMockData } from '@app-fake-db/collaborate-campaigns-mock';
-import { CollaborateTeamsMockData } from '@app-fake-db/collaborate-teams-mock';
-import { UsersMockData } from '@app-fake-db/users-mock';
 
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
@@ -41,6 +37,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   campaigns: any[];
   teams: any[];
   allUsers: any[];
+  loaded: number;
 
   teamsInAssignModel: any[];
 
@@ -104,11 +101,12 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     private collaborateService: CollaborateService,
     private userService: UserService
   ) {
-    this.campaigns = CollaborateCampaignsMockData;
-    this.teams = CollaborateTeamsMockData;
+    this.campaigns = [];
+    this.teams = [];
+    this.allUsers = [];
+    this.loaded = 0;
 
     this.teamsInAssignModel = [];
-    this.allUsers = UsersMockData.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
 
     this.selectedFilter = 'All';
     this.selectedStatus = 'in-progress';
@@ -126,7 +124,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     ];
 
     this.tableSource.setColumns(columns);
-
   }
 
   ngOnInit(): void {
@@ -135,43 +132,51 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       current_team: [''],
       new_team: ['', Validators.required],
     });
-    this._updateTable(this._filterCampaigns());
-    // load teams
-    // this.collaborateService.getCollaborateTeams()
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       this.teams = data;
-    //       this.teamsForNgSelect = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
-    //     },
-    //     error => {
-    //       console.log('error', error);
-    //     }
-    //   );
-    // load Campaigns
-    // this.collaborateService.getCollaborateCampaigns()
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       this.campaigns = data;
-    //       this.filteredCampaignsInProgress = data.filter(item => item.status === 'inprogress');
-    //       this.filteredCampaignsInArchived = data.filter(item => item.status !== 'inprogress');
-    //     },
-    //     error => {
-    //       console.log('error', error);
-    //     }
-    //   );
-    // this.userService.getAll()
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
-    //     },
-    //     error => {
-    //       console.log('error', error);
-    //     }
-    //   );
 
+    // load teams
+    this.collaborateService.getCollaborateTeams()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.teams = data;
+          this.loaded++;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
+    // load Campaigns
+    this.collaborateService.getCollaborateCampaigns()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.campaigns = data;
+          this.loaded++;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
+    this.userService.getAll()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
+          this.loaded++;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
+    setTimeout(() => this.checkLoaded());
+  }
+
+  checkLoaded() {
+    if (this.loaded === 3) {
+      this._updateTable(this._filterCampaigns());
+    } else {
+      setTimeout(() => this.checkLoaded);
+    }
   }
 
   ngOnDestroy(): void {
@@ -243,10 +248,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSelectTask(task: CollaborateCampaignTask) {
-
     this.selectedTask = task;
     this.selectedUser = this.allUsers.find((x: User) => x.id === task.user_id);
-
     this.campaignSubTasks.loadSubTasks(task.id);
   }
 

@@ -55,7 +55,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
     {
       label: 'Create a new Task', icon: 'fa fa-edit', click: () => this.onClickAddTask()
     },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true},
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
   ];
   taskForm: FormGroup;
 
@@ -115,8 +115,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
     ];
 
     this.tableSource.setColumns(columns);
-
   }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

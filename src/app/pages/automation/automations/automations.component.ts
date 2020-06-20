@@ -7,7 +7,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AutomationService } from '@app-core/services/automation.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
-import { AutomationsMockData } from '@app-fake-db/automation-mock';
 
 @Component({
   selector: 'app-automations',
@@ -38,22 +37,21 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.displayLimit = 50;
     this.sortField = '';
     this.sortDirection = 0;
-    this.automations = AutomationsMockData;
+    this.automations = [];
   }
 
   ngOnInit(): void {
-    // this.automationService.getAutomations(this.searchString, this.displayLimit, this.sortField, this.sortDirection, 0)
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       console.log(data);
-    //     },
-    //     error => {
-    //       console.log('error', error.response);
-    //     }
-    //   );
-    this._updateTable(this.automations);
-
+    this.automationService.getAutomations(this.searchString, this.displayLimit, this.sortField, this.sortDirection, 0)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.automations = data;
+          this._updateTable(this.automations);
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
   }
 
   ngAfterViewInit(): void {

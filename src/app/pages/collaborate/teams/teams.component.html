@@ -1,7 +1,7 @@
 <div class="container-fluid p-0">
 	<div class="row">
 		<div class="col-md-5 col-sm-12 card-teams">
-			<app-datatable
+			<app-datatable #cardTeams
 				[title] = "'Collaboration Teams'"
 				[dataSource]="tableSource"
 				[buttons]="tableButtons"
@@ -112,9 +112,9 @@
 						<span class="input-group-text"><i class="feather icon-user"></i> Team</span>
 					</div>
 					<ng-select [ngClass]="'ng-select'"
-						[options]="teamsInAssignCampaign"
+						[options]="teamsInModal"
 						(ngModelChange)="onChangeTeam($event)"
-						[(ngModel)]="selectedTeamInAssignCampaigns"></ng-select>
+						[(ngModel)]="selectedTeamInModal"></ng-select>
 				</div>
 			</div>
 		</div>

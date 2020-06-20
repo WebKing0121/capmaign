@@ -9,16 +9,14 @@ import { takeUntil } from 'rxjs/operators';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
-import { User } from '@app-models/user';
-
-import { CollaborateCampaignsMockData } from '@app-fake-db/collaborate-campaigns-mock';
-import { CollaborateTeamsMockData } from '@app-fake-db/collaborate-teams-mock';
-import { UsersMockData } from '@app-fake-db/users-mock';
+import { User } from '@app-core/models/user';
 
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
+
 import { UserService } from '@app-services/user.service';
 import { CollaborateService } from '@app-services/collaborate.service';
 import { ToastService } from '../../../theme/shared/components/toast/toast.service';
+
 
 
 @Component({
@@ -49,6 +47,7 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   teams: CollaborateTeam[];
   campaigns: CollaborateCampaign[];
   allUsers: any[];
+  loaded: number;
 
   // Delete Confirm Modal
   confirmButtons = [
@@ -77,8 +76,8 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   // Team Modal related;
   isNew: boolean;
 
-  selectedTeamInAssignCampaigns: any;
-  teamsInAssignCampaign: any[];
+  selectedTeamInModal: any;
+  teamsInModal: any[];
 
   // dual list box
   sourceCampaigns: any[];
@@ -99,67 +98,72 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
     private toastEvent: ToastService
 
   ) {
-    this.teams = CollaborateTeamsMockData;
-    this.allUsers = UsersMockData.map(x => ({ value: `${x.id}`, label: `${x.firstName} ${x.lastName}` }));
-    this.campaigns = CollaborateCampaignsMockData;
-
-
+    this.teams = [];
+    this.allUsers = [];
+    this.campaigns = [];
+    this.loaded = 0;
   }
 
   ngOnInit(): void {
-    this.getUnassignedCampaigns();
-    this.teamsInAssignCampaign = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
+
     // this.cardTeams.setCardRefresh(true);
-    // this.collaborateService.getCollaborateTeams()
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       this.teams = data;
-    //       this.teamsInAssignCampaign = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
-    //       this.dtTrigger.next();
-    //       this.getUnassignedCampaigns();
-    //       // this.cardTeams.setCardRefresh(false);
-    //     },
-    //     error => {
-    //       console.log('error', error);
-    //     }
-    //   );
+    this.collaborateService.getCollaborateTeams()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.teams = data;
+          this.teamsInModal = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
+          this.loaded++;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
 
-    // this.collaborateService.getCollaborateCampaigns()
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       this.campaigns = data;
-    //       this.sourceCampaigns = this.campaigns;
-    //       this.getUnassignedCampaigns();
-    //     },
-    //     error => {
-    //       console.log('error', error);
-    //     }
-    //   );
+    this.collaborateService.getCollaborateCampaigns()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.campaigns = data;
+          this.sourceCampaigns = this.campaigns;
+          this.loaded++;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
 
-    // this.userService.getAll()
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
-    //     },
-    //     error => {
-    //       console.log('error', error);
-    //     }
-    //   );
+    this.userService.getAll()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
+          this.loaded++;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
 
-    this._updateTeamTable(this.teams);
-    this._updateCampaignTable([]);
     this.teamForm = this.fb.group({
       id: 0,
       team_name: ['', Validators.required],
       team_desc: '',
       members: []
     });
+    setTimeout(() => this.checkLoaded());
   }
 
-
+  checkLoaded() {
+    if (this.loaded === 3) {
+      this.getUnassignedCampaigns();
+      // this.cardTeams.setCardRefresh(false);
+      this._updateTeamTable(this.teams);
+      this._updateCampaignTable([]);
+    } else {
+      setTimeout(() => this.checkLoaded());
+    }
+  }
 
   ngAfterViewInit() {
 
@@ -254,11 +258,11 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   onClickAssignCampaign() {
 
     if (this.selectedTeam) {
-      this.selectedTeamInAssignCampaigns = this.teams.find(x => x.id === this.selectedTeam.id);
-      const { campaigns } = this.selectedTeamInAssignCampaigns;
+      this.selectedTeamInModal = this.teams.find(x => x.id === this.selectedTeam.id);
+      const { campaigns } = this.selectedTeamInModal;
       this.assignedCampaigns = this.campaigns.filter(x => campaigns.indexOf(x.id) >= 0);
       this.sourceCampaigns = [...this.unassignedCampaigns, ...this.assignedCampaigns];
-      this.selectedTeamInAssignCampaigns = '' + this.selectedTeam.id;
+      this.selectedTeamInModal = '' + this.selectedTeam.id;
     } else {
       this.assignedCampaigns = [];
       this.sourceCampaigns = [...this.unassignedCampaigns];
@@ -289,7 +293,7 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onSelectTask(task: any) {
     this.selectedTask = task;
-    this.selectedUser = this.allUsers.find(x => x.value === `${task.user_id}`);
+    this.selectedUser = this.allUsers.find(x => x.id === task.user_id);
     this.campaignSubTasks.loadSubTasks(task.id);
   }
 
@@ -308,8 +312,8 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   *                                                          *
   ************************************************************/
   onChangeTeam(event) {
-    this.selectedTeamInAssignCampaigns = this.teams.find(x => x.id === Number(event));
-    const { campaigns } = this.selectedTeamInAssignCampaigns;
+    this.selectedTeamInModal = this.teams.find(x => x.id === Number(event));
+    const { campaigns } = this.selectedTeamInModal;
     this.assignedCampaigns = this.campaigns.filter(x => campaigns.indexOf(x.id) >= 0);
 
     this.sourceCampaigns = [...this.unassignedCampaigns, ...this.assignedCampaigns];
