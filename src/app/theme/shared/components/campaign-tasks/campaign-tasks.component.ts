@@ -2,18 +2,20 @@ import {
   Component, OnInit, OnDestroy,
   AfterViewInit, ViewEncapsulation, ViewChild, Input, EventEmitter, Output, TemplateRef, SimpleChanges, SimpleChange
 } from '@angular/core';
-import { CollaborateService } from 'src/app/_services/collaborate.service';
-import { ToastService } from '../toast/toast.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CollaborateCampaign, CollaborateTeam, CollaborateCampaignTask } from '@app-core/models/collaborate';
-
-import { CollaborateCampaignsTasksMockData } from '../../../../fack-db/collaborate-campaign-tasks-mock';
-import { DateFormatPipe } from '../../pipes/date-format.pipe';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CollaborateCampaign, CollaborateTeam, CollaborateCampaignTask } from '@app-models/collaborate';
 import { CardButton } from '@app-models/card';
+
+import { CollaborateCampaignsTasksMockData } from '@app-fake-db/collaborate-campaign-tasks-mock';
+import { DateFormatPipe } from '../../pipes/date-format.pipe';
+
+import { CollaborateService } from '@app-services/collaborate.service';
+import { ToastService } from '../toast/toast.service';
 
 @Component({
   selector: 'app-campaign-tasks',
@@ -53,7 +55,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
     {
       label: 'Create a new Task', icon: 'fa fa-edit', click: () => this.onClickAddTask()
     },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true},
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
   ];
   taskForm: FormGroup;
 
@@ -113,8 +115,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
     ];
 
     this.tableSource.setColumns(columns);
-
   }
+
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();

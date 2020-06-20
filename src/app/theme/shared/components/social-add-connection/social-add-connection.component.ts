@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppState, AppTypes, selectSocialSites } from '../../../../store/app.models';
+import { AppState, AppTypes, selectSocialSites } from '@app-store/app.models';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

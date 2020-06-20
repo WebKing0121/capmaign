@@ -22,6 +22,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @HostBinding('class.app-datatable') hostClassName = true;
 
   @ViewChild(NgxDataTableComponent, { static: false }) handle: NgxDataTableComponent;
+  @ViewChild('datatableCard', { static: false }) datatableCard;
   @Input() title = '';
   @Input() classes = ['app-datatable-common'];
   @Input() buttons = [];
@@ -116,5 +117,9 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   }
 
   onPage(event: any, indexes: { last: number; }) {
+  }
+
+  setCardRefresh(flag: boolean) {
+    this.datatableCard.setCardRefresh(flag);
   }
 }

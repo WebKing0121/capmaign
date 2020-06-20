@@ -1,3 +1,4 @@
+import { ChatRoomType } from '@app-core/enums/chat-user-type.enum.ts';
 export class CollaborateCampaignSubtask {
   id: number;
   // tslint:disable-next-line
@@ -47,4 +48,14 @@ export class CollaborateTeam {
   created: string;
   members: number[] | null;
   campaigns: number[] | null;
+}
+
+export class CollaborateChatRoom {
+  id: number;
+  name: string;
+  newMessageCount: number;
+  type: ChatRoomType | string;
+  lastMessage: string;
+  lastMessageTime: string;
+  profileImg?: string;
 }

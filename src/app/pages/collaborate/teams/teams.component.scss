@@ -1,21 +1,25 @@
 ng-select {
     width: calc(100% - 55px)!important;
-    min-height: 40px;
+    height: 40px;
     
 }
 ng-select > div {
-    min-height: 40px !important;
+    height: 40px !important;
 }
 
+.campaigns {
+    height: calc(30vh + 45px);
+}
 .assigned_campaigns {
+    
     ng-select {
         width: calc(100% - 90px)!important;
-        min-height: 45px;
+        height: 45px;
     }
 
 
     ng-select > div {
-        min-height: 45px !important;
+        height: 45px !important;
     }
     ng-select>div>div.single>div.placeholder, ng-select>div>div.single>div.value {
         line-height: 45px;
@@ -56,29 +60,11 @@ table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
     }
 }
 
-.card-campaigns-1 {
+.campaigns-section {
     padding-left: 0px;
-    .card-assigned-campaigns {
-        margin-bottom: 15px;
-        .card-body {
-            height: calc(30vh - 20px);
-        }
-    }
-    .card-tasks {
-        margin-bottom: 15px;
-        .card-body {
-            height: calc(30vh - 120px);
-        }
-    }
-    .card-sub-tasks {
-        margin-bottom: 15px;
-        .card-body {
-            height: calc(30vh - 100px);
-        }
-    }
 }
 @media only screen and (max-width: 575px) {
-    .card-campaigns-1 {
+    .campaigns-section {
         padding-right: 0px;
     }
 }

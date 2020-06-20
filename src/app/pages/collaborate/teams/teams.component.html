@@ -1,78 +1,43 @@
 <div class="container-fluid p-0">
 	<div class="row">
 		<div class="col-md-5 col-sm-12 card-teams">
-			<app-card cardTitle="Collaboration Teams" #cardTeams cardClass="card-datatable" [options]="false">
-				<div class="total-counts">
-					<div class="position-relative">
-						<div class="ml-auto">
-							<span class="campaigns-header_totalNum ml-auto mr-2">Total Teams:
-								{{tableSource.totalCount$ | async}}</span>
-							<span class="mr-2" (click)="tableSource.prevPage()"><i class="fa fa-chevron-left"></i></span>
-							<span class="mr-2" (click)="tableSource.nextPage()"><i class="fa fa-chevron-right"></i></span>
-						</div>
-					</div>
-				</div>
-				<div class="d-flex">
-					<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickCreateTeam()">
-						<i class="fa fa-plus"></i> Create a team
-					</button>
-					<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickDelete()"
-						*ngIf="selected.length > 0">
-						<i class="fa fa-trash"></i> Delete
-					</button>
-				</div>
-				<div class="task-table mt-2">
-					<app-datatable [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
-						[selectable]="false" (activate)="onClickTeam($event)"></app-datatable>
-
-					<div class="w-100">
-						<app-datatable-pagination [tableSource]="tableSource"></app-datatable-pagination>
-					</div>
-				</div>
-			</app-card>
-			<!-- <app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
-			[users]="allUsers" (selectRow)="onSelectTask($event)">
-		</app-campaign-tasks>
-		<app-campaign-sub-tasks #campaignSubTasks [taskId]="selectedTaskId" [taskName]="selectedTaskName"
-			[userId]="selectedUserId" [userName]="selectedUserName">
-		</app-campaign-sub-tasks> -->
+			<app-datatable #cardTeams
+				[title] = "'Collaboration Teams'"
+				[dataSource]="tableSource"
+				[buttons]="tableButtons"
+				[rowHeight]="35"
+				[headerHeight]="40"
+				[selectionType]="'single'"
+				[selectable]="false"
+				(activate)="onClickTeam($event)"></app-datatable>
 		</div>
-		<div class="col-md-7 col-sm-12 card-campaigns">
-			<app-card cardTitle="Assigned Campaigns" cardClass="card-datatable" [options]="false">
-				<div class="total-counts">
-					<div class="position-relative">
-						<div class="ml-auto">
-							<span class="campaigns-header_totalNum ml-auto mr-2">Total Campaigns:
-								{{tableSourceCampaigns.totalCount$ | async}}</span>
-							<span class="mr-2" (click)="tableSourceCampaigns.prevPage()"><i class="fa fa-chevron-left"></i></span>
-							<span class="mr-2" (click)="tableSourceCampaigns.nextPage()"><i class="fa fa-chevron-right"></i></span>
-						</div>
-					</div>
+		<div class="col-md-7 col-sm-12 campaigns-section">
+			<div class="campaigns">
+				<app-datatable
+					[title]="'Assigned Campaigns'"
+					[dataSource]="tableSourceCampaigns"
+					[buttons]="tableButtonsCampaigns"
+					[rowHeight]="35"
+					[headerHeight]="40"
+					[selectionType]="'single'"
+					[selectable]="false"
+					(activate)="onClickCampaign($event)"></app-datatable>
+			</div>
+				<div class="card-tasks">
+					<app-campaign-tasks #campaignTasks
+						[campaign]="selectedCampaign"
+						[teams]="teams"
+						[campaigns]="campaigns"
+						[users]="allUsers"
+						(selectRow)="onSelectTask($event)">
+					</app-campaign-tasks>
 				</div>
-				<div class="d-flex">
-					<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickAssignCampaign()">
-						<i class="fa fa-plus"></i> Assign Campaign
-					</button>
-					<button type="button" class="btn btn-outline-primary btn-normal-padding" (click)="onClickUnassignCampaign()"
-						*ngIf="selectedCampaigns.length > 0">
-						<i class="fa fa-trash"></i> Unassign Campaign
-					</button>
+				<div class="card-sub-tasks">
+					<app-campaign-sub-tasks #campaignSubTasks
+						[task]="selectedTask"
+						[user]="selectedUser"
+					></app-campaign-sub-tasks>
 				</div>
-				<div class="task-table mt-2">
-					<app-datatable [dataSource]="tableSourceCampaigns" [rowHeight]="35" [headerHeight]="40"
-						[selectionType]="'single'" [selectable]="false" (activate)="onClickCampaign($event)"></app-datatable>
-
-					<div class="w-100">
-						<app-datatable-pagination [tableSource]="tableSourceCampaigns"></app-datatable-pagination>
-					</div>
-				</div>
-			</app-card>
-			<!-- <app-campaign-tasks #campaignTasks [campaignId]="selectedCampaignId" [teams]="teams" [campaigns]="campaigns"
-			[users]="allUsers" (selectRow)="onSelectTask($event)">
-		</app-campaign-tasks>
-		<app-campaign-sub-tasks #campaignSubTasks [taskId]="selectedTaskId" [taskName]="selectedTaskName"
-			[userId]="selectedUserId" [userName]="selectedUserName">
-		</app-campaign-sub-tasks> -->
 		</div>
 	</div>
 </div>
@@ -128,7 +93,7 @@
 		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="teamModal.hide()">Close</button>
 	</div>
 </app-ui-modal>
-<!-- 
+
 <app-ui-modal #assignCampaignModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Assign Campaigns</h5>
@@ -146,8 +111,10 @@
 					<div class="input-group-prepend">
 						<span class="input-group-text"><i class="feather icon-user"></i> Team</span>
 					</div>
-					<ng-select [ngClass]="'ng-select'" [options]="teamsInAssignCampaign" (ngModelChange)="onChangeTeam($event)"
-						[(ngModel)]="selectedTeamInAssignCampaigns"></ng-select>
+					<ng-select [ngClass]="'ng-select'"
+						[options]="teamsInModal"
+						(ngModelChange)="onChangeTeam($event)"
+						[(ngModel)]="selectedTeamInModal"></ng-select>
 				</div>
 			</div>
 		</div>
@@ -161,11 +128,11 @@
 	</div>
 
 	<div class="app-modal-footer">
-		<button type="button" class="btn btn-primary" (click)="onCreateTeam()">Assign</button> &nbsp;
+		<button type="button" class="btn btn-primary" (click)="assignCampaign()">Assign</button> &nbsp;
 		<button type="button" class="btn btn-secondary" data-dismiss="modal"
 			(click)="assignCampaignModal.hide()">Close</button>
 	</div>
-</app-ui-modal> -->
+</app-ui-modal>
 
 <app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
 	[buttons]="confirmButtons"></app-confirm-modal>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { SocialLinkSelected } from '../../../_models/social-account';
+import { SocialLinkSelected } from '@app-models/social';
 
 @Component({
   selector: 'app-social-monitor',

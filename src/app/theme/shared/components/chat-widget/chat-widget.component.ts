@@ -2,10 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import * as moment from 'moment';
-import { CollaborateService } from 'src/app/_services/collaborate.service';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+
+import { CollaborateChatRoom } from '@app-models/collaborate';
+import { CollaborateChatRoomsMockData } from '@app-fake-db/collaborate-chat-users-mock';
+import { CollaborateService } from '@app-services/collaborate.service';
 
 @Component({
   selector: 'app-chat-widget',
@@ -19,12 +22,13 @@ export class ChatWidgetComponent implements OnInit, OnDestroy {
   route: string;
   isOpened: boolean;
   newMessages: number;
-  myRooms: any[];
-  filteredRooms: any[];
+
+  myRooms: CollaborateChatRoom[];
+  filteredRooms: CollaborateChatRoom[];
   searchKey: string;
 
   selectedRoomId: number;
-  selectedRoom: any;
+  selectedRoom: CollaborateChatRoom;
 
   messages: any[];
 
@@ -97,17 +101,19 @@ export class ChatWidgetComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     // this.cardTeams.setCardRefresh(true);
-    this.collaborateService.getChatUsers()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.myRooms = data;
-          this.filteredRooms = [...this.myRooms];
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
+    // this.collaborateService.getChatUsers()
+    //   .pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe(
+    //     data => {
+    //       this.myRooms = data;
+    //       this.filteredRooms = [...this.myRooms];
+    //     },
+    //     error => {
+    //       console.log('error', error);
+    //     }
+    //   );
+    this.myRooms = CollaborateChatRoomsMockData;
+    this.filteredRooms = [...this.myRooms];
   }
 
   ngOnDestroy(): void {

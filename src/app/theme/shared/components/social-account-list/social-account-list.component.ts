@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AppState, AppTypes, selectSocialAccounts } from '../../../../store/app.models';
+import { AppState, AppTypes, selectSocialAccounts } from '@app-store/app.models';
 import { Store } from '@ngrx/store';
 
-import { SocialLinkSelected } from '../../../../_models/social-account';
+import { SocialLinkSelected, SocialAccount } from '@app-models/social';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -22,7 +22,7 @@ export class SocialAccountListComponent implements OnInit, OnDestroy {
   errorNumber: number;
   errorMessage: string;
 
-  socialAccounts$: Observable<any[]>;
+  socialAccounts$: Observable<SocialAccount[]>;
   selectedLinks: SocialLinkSelected[];
 
   constructor(

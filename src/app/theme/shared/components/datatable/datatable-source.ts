@@ -137,11 +137,13 @@ export class DataTableSource<T> {
   }
 
   setColumns(columns: DataTableColumn[]) {
-    this.columns = columns.map((column, index) => ({
-      ...column,
-      id: index
-    }));
-    this.columnsChanged$.emit(this.columns);
+    setTimeout(() => {
+      this.columns = columns.map((column, index) => ({
+        ...column,
+        id: index
+      }));
+      this.columnsChanged$.emit(this.columns);
+    });
   }
 
   getColumns(): DataTableColumn[] {

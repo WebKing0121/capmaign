@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CampaignFromDisplayType } from '@app-core/enums/campaign-type.enum';
 import { ModalService } from '@app-components/modal/modal.service';
 import { Campaign } from '@app-models/campaign';
-import { CampaignResponseMockData } from '../../../fack-db/campaign-mock';
+import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
 
 @Component({

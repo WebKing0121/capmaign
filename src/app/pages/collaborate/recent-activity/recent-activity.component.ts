@@ -1,10 +1,11 @@
 import { Component, OnInit, OnDestroy, ViewEncapsulation, HostListener, ViewChild } from '@angular/core';
-import { CollaborateService } from 'src/app/_services/collaborate.service';
+
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
+import { CollaborateService } from '@app-services/collaborate.service';
 
 @Component({
   selector: 'app-recent-activity',
@@ -18,12 +19,13 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject();
 
-  dtActivityOption: any = {};
-  dtTrigger: Subject<any> = new Subject();
   activities: any[];
   campaigns: any[];
   filterDate: NgbDateStruct;
   selectedCampaignId: string;
+
+  lastActivityTime: string; // should be removed once it was connected to backend
+
 
   constructor(
     private collaborateService: CollaborateService
@@ -34,6 +36,7 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
     const day = Number(moment().format('DD'));
     this.filterDate = { year, month, day };
     this.selectedCampaignId = '0';
+    this.campaigns = [];
   }
 
   ngOnInit(): void {
@@ -51,6 +54,7 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
 
     const { year, month, day } = this.filterDate;
     const date = year + '-' + month + '-' + day;
+
     this.collaborateService.getRecentActivities(date, Number(this.selectedCampaignId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -63,20 +67,6 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.dtActivityOption = {
-      // data: this.teams,
-      columns: [{
-        title: 'Activity time',
-      }, {
-        title: 'User',
-      }, {
-        title: 'Module',
-      }, {
-        title: 'Campaign',
-      }, {
-        title: 'Message',
-      }],
-    };
   }
 
   ngOnDestroy(): void {
@@ -88,10 +78,10 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
     return moment(time).fromNow();
   }
 
+
   onReloadActivities() {
     const { year, month, day } = this.filterDate;
     const date = year + '-' + month + '-' + day;
-
     this.collaborateService.getRecentActivities(date, Number(this.selectedCampaignId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(

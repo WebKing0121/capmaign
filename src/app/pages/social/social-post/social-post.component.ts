@@ -2,9 +2,9 @@ import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@ang
 
 import 'tinymce/tinymce.min.js';
 import { Observable } from 'rxjs';
-import { AppState, AppTypes, selectSocialAccounts } from '../../../store/app.models';
+import { AppState, AppTypes, selectSocialAccounts } from '@app-store/app.models';
 import { Store } from '@ngrx/store';
-import { SocialLinkSelected } from '../../../_models/social-account';
+import { SocialLinkSelected } from '@app-models/social';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

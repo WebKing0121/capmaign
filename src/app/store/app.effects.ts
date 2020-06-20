@@ -7,7 +7,9 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { AppTypes, GetSocialAccounts, AppFields, GetSocialSites } from './app.models';
-import { SocialService } from '../_services/social.service';
+import { SocialService } from '@app-services/social.service';
+import { SocialAccountsMockData } from '@app-fake-db/social-accounts-mock';
+import { SocialSitesMockData } from '@app-fake-db/social-sites-mock';
 
 @Injectable() export class AppEffects {
 

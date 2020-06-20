@@ -21,7 +21,10 @@
     "paths": {
       "@app-core/*": ["src/app/core/*"],
       "@app-models/*": ["src/app/core/models/*"],
-      "@app-components/*": ["src/app/theme/shared/components/*"]
+      "@app-components/*": ["src/app/theme/shared/components/*"],
+      "@app-services/*": ["src/app/core/services/*"],
+      "@app-store/*": ["src/app/store/*"],
+      "@app-fake-db/*": ["src/app/fake-data/*"],
     }
   },
   "angularCompilerOptions": {

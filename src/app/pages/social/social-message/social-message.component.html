@@ -6,13 +6,13 @@
 					<ng-template ngbTabContent>
 						<ul class="chat-users">
 							<li *ngFor="let user of socialChatUsers" (click)="selectUser(user.id)" [ngClass]="{'selected': user.id===selectedUserId}">
-								<img [src]="user.profileImage" class="profile-image" />
+								<img [src]="user.profile_image" class="profile-image" />
 								<img [src]="socialIcons[user.site]" class="social-site" />
 								<div class="user-name">
 									<div class="page">{{user.page}}</div>
 									<div class="name">
 
-										{{user.profileName}}
+										{{user.profile_name}}
 										<span class="float-right created_at">{{user.registeredAt | date}}</span>
 									</div>
 								</div>
@@ -34,7 +34,7 @@
 				<li *ngFor="let message of socialChatMessages">
 					<div *ngIf="message.mine === 0" class="d-flex">
 						<div class="user-image">
-							<img [src]="message.profileImage" /><br />
+							<img [src]="message.profile_image" /><br />
 							<span>12:43</span>
 						</div>
 						<p class="user-chat-text">
@@ -46,7 +46,7 @@
 							{{message.message}}
 						</p>
 						<div class="user-image">
-							<img [src]="message.profileImage" /><br />
+							<img [src]="message.profile_image" /><br />
 							<span>12:43</span>
 						</div>
 					</div>

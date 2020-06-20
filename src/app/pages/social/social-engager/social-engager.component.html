@@ -1,7 +1,13 @@
 <div class="row">
   <div class="col-12 card-social-engagers">
-    <app-datatable [title]="'Social Engagers'" [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40"
-          [columnMode]="'force'" (activate)="onActive($event)"></app-datatable>
+    <app-datatable
+      [title]="'Social Engagers'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      [columnMode]="'force'"
+      (activate)="onActive($event)"></app-datatable>
   </div>
 
 </div>

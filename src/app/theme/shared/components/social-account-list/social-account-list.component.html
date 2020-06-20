@@ -2,12 +2,12 @@
 <div class="post-to">
 	<ul class="social-link">
 		<li *ngFor="let social of socialAccounts$ | async" (click)="clickSocialIcon(social.id)">
-			<img [src]="social.profileImg"
+			<img [src]="social.user_profile_image"
 				[ngClass]="{'selected': getSocialLinkSelected(social.id), 'selected-border': getSocialLinkSelected(social.id)}"
 				width="64px" />
 			<img [src]="social.img" class="social-icon" [ngClass]="{'selected': getSocialLinkSelected(social.id)}" />
 			<div class="social-link-name" [ngClass]="{'selected': getSocialLinkSelected(social.id)}">
-				{{social.type==='profile' ? social.userProfileName : social.pageName}}</div>
+				{{social.type==='profile' ? social.user_profile_name : social.page_name}}</div>
 		</li>
 		<li class="float-right text-center" (click)="onAddConnection()">
 			<i class="feather icon-plus font-size-50"></i>

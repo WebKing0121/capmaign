@@ -11,7 +11,7 @@
 		<div class="row">
 			<div class="col-md-4 col-sm-12 social-connect-card" *ngFor="let social of socialSites$ | async">
 				<app-card [hidHeader]="true" cardClass="text-center social-site">
-					<img [src]="social.normalImg" width="64px" />
+					<img [src]="social.normal_img" width="64px" />
 					<div class="card-text">{{social.label}}</div>
 					<div *ngFor="let button of social.buttons" class="social-button">
 						<button class="btn btn-primary" (click)="onConnect(social.id, button.type)">{{button.label}}</button>
