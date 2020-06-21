@@ -158,7 +158,7 @@ const NavigationItems = [
             id: 'data-all-records',
             title: 'All Records',
             type: 'item',
-            url: 'javascript:',
+            url: '/data/manage-records',
             external: true
           }, {
             id: 'data-subscriber',

@@ -134,6 +134,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(event) {
     if (event.type === 'click') {
+      this.tableButtons[1].hide = false;
       if (event.cellIndex === 0 && event.column.frozenLeft) {
         const automation: Automation = event.row as Automation;
         this.isModalNew = false;
