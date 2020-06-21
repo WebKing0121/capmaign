@@ -57,7 +57,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
 
   filterNavigation(activeLink) {
     let result = [];
-    let title = 'Welcome';
+    let title = 'CampaignToCash';
     this.navigation.forEach((a) => {
       if (a.type === 'item' && 'url' in a && a.url === activeLink) {
         result = [
@@ -138,7 +138,7 @@ export class BreadcrumbComponent implements OnInit, OnDestroy {
       }
     });
     this.navigationList = result;
-    this.titleService.setTitle(title + ' | Pangong Angular 9+ Admin Template');
+    this.titleService.setTitle(title);
   }
 
 }

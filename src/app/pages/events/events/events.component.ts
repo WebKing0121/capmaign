@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Event } from '@app-models/event';
@@ -22,6 +22,10 @@ import * as moment from 'moment';
 export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('eventModal', { static: false }) eventModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
+
+  @ViewChild('templateDisplayFrom') templateDisplayFrom: TemplateRef<any>;
+  @ViewChild('templateFolder') templateFolder: TemplateRef<any>;
+
   private unsubscribe$ = new Subject();
 
   events: Event[];
@@ -133,8 +137,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
         name: 'End Date', prop: 'end_date', sortable: true,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
       },
-      { name: 'Display From', prop: 'display_name', sortable: true },
-      { name: 'Folder', prop: 'folder', sortable: true },
+      { name: 'Display From', prop: 'display_name', sortable: true, custom: true, template: this.templateDisplayFrom },
+      { name: 'Folder', prop: 'folder', sortable: true, custom: true, template: this.templateFolder },
     ];
     this.tableSource.setColumns(columns);
   }
@@ -219,5 +223,13 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onConfirmDelete() {
     this.confirmModal.hide();
+  }
+
+  getDisplayFrom(value: string) {
+    return this.displayNameList.find(x => x.value === value).label;
+  }
+
+  getFolder(value: string) {
+    return this.folderList.find(x => x.value === value).label;
   }
 }

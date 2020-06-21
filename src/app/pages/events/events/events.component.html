@@ -9,6 +9,14 @@
     ></app-datatable>
   </div>
 </div>
+<!-- template of Display From-->
+<ng-template #templateDisplayFrom let-row="row" let-value let-i="index">
+  <span>{{ getDisplayFrom(value) }}</span>
+</ng-template>
+
+<ng-template #templateFolder let-row="row" let-value let-i="index">
+  <span>{{ getFolder(value) }}</span>
+</ng-template>
 
 <app-ui-modal #eventModal [containerClick]="false" dialogClass="modal-dialog-centered modal-event modal-xl">
   <div class="app-modal-header">
