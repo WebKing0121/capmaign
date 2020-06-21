@@ -80,7 +80,6 @@ export class FacebookAdsModalComponent implements OnInit {
       { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
       { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
       { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Settings', headerTemplate: this.tableColumnSettingsTemplate, maxWidth: 30, alwaysVisible: true }
     ];
     this.tableSource.setColumns(columns);
   }
