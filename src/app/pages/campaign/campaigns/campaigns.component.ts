@@ -25,7 +25,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tableColumnType') tableColumnTypeTemplate: TemplateRef<any>;
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
-  
   tableButtons = [
     {
       label: 'Create', icon: 'fa fa-plus', click: () => this.clickTemplate(),
@@ -37,8 +36,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         { label: 'Create Facebook Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
       ]
     },
-    { label: 'Delete', icon: 'fa fa-clone', click: () => this.clickTemplate() },
-    { label: 'Send', icon: 'fa fa-download', click: () => this.clickTemplate() },
+    { label: 'Send', icon: 'far fa-envelope', click: () => this.onSendClicked() },
   ];
 
   selected: Campaign[] = [];
@@ -101,19 +99,16 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    setTimeout(() => {
-      const columns: DataTableColumn[] = [
-        { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
-        { name: 'Subject', prop: 'subject', sortable: true },
-        { name: 'Type', prop: 'type', sortable: true, maxWidth: 90, custom: true, template: this.tableColumnTypeTemplate },
-        { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-        { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-        { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-        { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-        { name: 'Settings', headerTemplate: this.tableColumnSettingsTemplate, maxWidth: 30, alwaysVisible: true }
-      ];
-      this.tableSource.setColumns(columns);
-    });
+    const columns: DataTableColumn[] = [
+      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true},
+      { name: 'Subject', prop: 'subject', sortable: true },
+      { name: 'Type', prop: 'type', sortable: true, maxWidth: 90, custom: true, template: this.tableColumnTypeTemplate },
+      { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } }
+    ];
+    this.tableSource.setColumns(columns);
   }
 
   onActive(event) {

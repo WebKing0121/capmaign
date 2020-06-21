@@ -35,6 +35,7 @@ import { ListModule } from '@app-components/list/list.module';
     EmailCampaignEditorModule,
     ArchwizardModule,
     ListModule
-  ]
+  ],
+  entryComponents: [CampaignSendModalComponent]
 })
 export class CampaignModule { }
