@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatatableModule } from '@app-components/datatable/datatable.module';
 
 import {
   NgbProgressbarModule,
@@ -11,10 +12,11 @@ import {
 import { FacebookAdsRoutingModule } from './facebook-ads-routing.module';
 import { FacebookAdsComponent } from './facebook-ads/facebook-ads.component';
 import { FacebookAdsCreateComponent } from './facebook-ads-create/facebook-ads-create.component';
+import { FacebookAdsModalComponent } from './facebook-ads-create/facebook-ads-modal/facebook-ads-modal.component';
 
 
 @NgModule({
-  declarations: [FacebookAdsComponent, FacebookAdsCreateComponent],
+  declarations: [FacebookAdsComponent, FacebookAdsCreateComponent, FacebookAdsModalComponent],
   imports: [
     CommonModule,
     FacebookAdsRoutingModule,
@@ -24,7 +26,9 @@ import { FacebookAdsCreateComponent } from './facebook-ads-create/facebook-ads-c
     NgbDatepickerModule,
     NgbButtonsModule,
     NgbDropdownModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+
+    DatatableModule
   ]
 })
 export class FacebookAdsModule { }

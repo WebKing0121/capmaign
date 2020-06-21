@@ -15,11 +15,11 @@ const states = ['Alabama', 'Alaska', 'American Samoa', 'Arizona', 'Arkansas', 'C
   'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virgin Islands', 'Virginia',
   'Washington', 'West Virginia', 'Wisconsin', 'Wyoming'];
 
-export interface googleAdsType{
-  id: number,
-  headline1: string,
-  headline2: string,
-  description: string
+export interface GoogleAdsType {
+  id: number;
+  headline1: string;
+  headline2: string;
+  description: string;
 }
 
 @Component({
@@ -41,11 +41,15 @@ export class GoogleAdsCreateComponent implements OnInit {
   headline2: any;
   description: any;
   model: any;
+  
+  public googleAdsArr: GoogleAdsType[] = [];
 
-  @ViewChild('instance', {static: true}) instance: NgbTypeahead;
+  startDate: NgbDate;
+  endDate: NgbDate;
+
+  @ViewChild('instance', { static: true }) instance: NgbTypeahead;
   focus$ = new Subject<string>();
   click$ = new Subject<string>();
-  
   search = (text$: Observable<string>) => {
     const debouncedText$ = text$.pipe(debounceTime(200), distinctUntilChanged());
     const clicksWithClosedPopup$ = this.click$.pipe(filter(() => !this.instance.isPopupOpen()));
@@ -56,11 +60,6 @@ export class GoogleAdsCreateComponent implements OnInit {
         : states.filter(v => v.toLowerCase().indexOf(term.toLowerCase()) > -1)).slice(0, 10))
     );
   }
-
-  public googleAdsArr: googleAdsType[] = [];
-
-  startDate: NgbDate;
-  endDate: NgbDate;
 
   constructor(
     private fb: FormBuilder,
@@ -141,15 +140,14 @@ export class GoogleAdsCreateComponent implements OnInit {
   }
 
   onCreateAds(headline1, headline2, description) {
-    this.googleAdsArr = [...this.googleAdsArr, { id:this.googleAdsArr.length,headline1:headline1, headline2:headline2, description:description}];
-    console.log(this.googleAdsArr);
+    this.googleAdsArr = [...this.googleAdsArr, { id: this.googleAdsArr.length, headline1: headline1, headline2: headline2, description: description }];
   }
 
   onRemoveAd(id) {
-    let tempGoogleAds = this.googleAdsArr;
-    let i=0;
-    for (i=0; i < tempGoogleAds.length; i++) {
-      if(id === tempGoogleAds[i].id) {
+    const tempGoogleAds = this.googleAdsArr;
+    let i = 0;
+    for (i = 0; i < tempGoogleAds.length; i++) {
+      if (id === tempGoogleAds[i].id) {
         tempGoogleAds.splice(i, 1);
       }
     }

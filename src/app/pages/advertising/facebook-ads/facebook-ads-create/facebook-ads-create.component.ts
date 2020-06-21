@@ -1,11 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
+import { ModalService } from '@app-components/modal/modal.service';
+import { FacebookAdsModalComponent } from './facebook-ads-modal/facebook-ads-modal.component';
+import { DataTableSource } from '@app-components/datatable/datatable-source';
+import { Campaign } from '@app-core/models/campaign';
+
+export interface LocalDrive {
+  id: number;
+  path: any;
+}
 
 export interface CampaignAdSets {
-  id: number,
-  adSetName: string,
-  adName: string
+  id: number;
+  adSetName: string;
+  adName: string;
 }
 @Component({
   selector: 'app-facebook-ads-create',
@@ -29,27 +38,61 @@ export class FacebookAdsCreateComponent implements OnInit {
   startDate: NgbDate;
   endDate: NgbDate;
   model: any;
-  facebookNewsFeed: boolean = false;
-  instagramFeed: boolean = false;
-  facebookMarketplace: boolean = false;
-  facebookVideoFeeds: boolean = false;
-  facebookRightColumn: boolean = false;
-  instagramExplore: boolean = false;
-  messengerInbox: boolean = false;
-  messengerSponsoredMessages: boolean = false;
-  facebookStories: boolean = false;
-  instagramStories: boolean = false;
-  messengerStories: boolean = false;
-  facebookInStreamVideos: boolean = false;
-  facebookSearchResults: boolean = false;
-  facebookInstantArticles: boolean = false;
-  audienceNetworkNativeBannerAndInterstitial: boolean = false;
-  audienceNetworkRewardedVideos: boolean = false;
-  audienceNetworkInStreamVideos: boolean = false;
-  
+  facebookNewsFeed: boolean;
+  instagramFeed: boolean;
+  facebookMarketplace: boolean;
+  facebookVideoFeeds: boolean;
+  facebookRightColumn: boolean;
+  instagramExplore: boolean;
+  messengerInbox: boolean;
+  messengerSponsoredMessages: boolean;
+  facebookStories: boolean;
+  instagramStories: boolean;
+  messengerStories: boolean;
+  facebookInStreamVideos: boolean;
+  facebookSearchResults: boolean;
+  facebookInstantArticles: boolean;
+  audienceNetworkNativeBannerAndInterstitial: boolean;
+  audienceNetworkRewardedVideos: boolean;
+  audienceNetworkInStreamVideos: boolean;
+
+  tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
+  imageArr: LocalDrive[];
+
   constructor(
-    private fb: FormBuilder
-  ) { }
+    private fb: FormBuilder,
+    private modalService: ModalService
+  ) {
+    this.desktopMode = true;
+    this.mobileMode = true;
+    this.facebook = true;
+    this.audienceNetwork = true;
+    this.instagram = true;
+    this.messenger = true;
+    this.facebookNewsFeed = true;
+    this.instagramFeed = true;
+    this.facebookMarketplace = true;
+    this.facebookVideoFeeds = true;
+    this.facebookRightColumn = true;
+    this.instagramExplore = true;
+    this.messengerInbox = true;
+    this.messengerSponsoredMessages = true;
+    this.facebookStories = true;
+    this.instagramStories = true;
+    this.messengerStories = true;
+    this.facebookInStreamVideos = true;
+    this.facebookSearchResults = true;
+    this.facebookInstantArticles = true;
+    this.audienceNetworkNativeBannerAndInterstitial = true;
+    this.audienceNetworkRewardedVideos = true;
+    this.audienceNetworkInStreamVideos = true;
+    this.imageArr = [
+      {
+        id: 0,
+        path: ''
+      }
+    ];
+  }
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
@@ -63,9 +106,9 @@ export class FacebookAdsCreateComponent implements OnInit {
     this.spliteTestFlag = false;
     this.campaignAdsArr = [
       {
-        id:1,
+        id: 1,
         adSetName: '',
-        adName:''
+        adName: ''
       }
     ];
     this.editPlacementsFlag = false;
@@ -75,25 +118,25 @@ export class FacebookAdsCreateComponent implements OnInit {
   onSplitTestClick() {
     this.spliteTestFlag = !this.spliteTestFlag;
   }
-  
+
   onSetTestNum(num) {
-    let i=1;
+    let i = 1;
     this.campaignAdsArr = [
       {
-        id:1,
+        id: 1,
         adSetName: '',
-        adName:''
+        adName: ''
       }
     ];
 
-    while(num>1) {
+    while (num > 1) {
       this.campaignAdsArr = [
         ...this.campaignAdsArr,
-      {
-        id: i+1,
-        adSetName: '',
-        adName: ''
-      }];
+        {
+          id: i + 1,
+          adSetName: '',
+          adName: ''
+        }];
 
       i++;
       num--;
@@ -108,10 +151,19 @@ export class FacebookAdsCreateComponent implements OnInit {
     this.editPlacementsFlag = flag;
   }
 
+  onImportFromLeads() {
+    this.modalService.openModal(FacebookAdsModalComponent, {
+      width: '80%',
+      data: {
+        campaign: this.tableSource.selected[0]
+      }
+    });
+  }
+
   onDesktopModeClick() {
     this.desktopMode = !this.desktopMode;
 
-    if(!this.mobileMode) {
+    if (!this.mobileMode) {
       this.desktopMode = true;
     }
   }
@@ -119,30 +171,75 @@ export class FacebookAdsCreateComponent implements OnInit {
   onMobileModeClick() {
     this.mobileMode = !this.mobileMode;
 
-    if(!this.desktopMode) {
+    if (!this.desktopMode) {
       this.mobileMode = true;
     }
   }
 
   onFacebookClick() {
     this.facebook = !this.facebook;
-    if(this.facebook) {
+
+    if (this.facebook) {
       this.facebookNewsFeed = true;
+      this.facebookMarketplace = true;
+      this.facebookVideoFeeds = true;
+      this.facebookRightColumn = true;
+      this.facebookStories = true;
+      this.facebookInStreamVideos = true;
+      this.facebookSearchResults = true;
+      this.facebookInstantArticles = true;
     } else {
       this.facebookNewsFeed = false;
+      this.facebookMarketplace = false;
+      this.facebookVideoFeeds = false;
+      this.facebookRightColumn = false;
+      this.facebookStories = false;
+      this.facebookInStreamVideos = false;
+      this.facebookSearchResults = false;
+      this.facebookInstantArticles = false;
     }
   }
 
   onAudienceNetworkClick() {
     this.audienceNetwork = !this.audienceNetwork;
+
+    if (this.audienceNetwork) {
+      this.audienceNetworkNativeBannerAndInterstitial = true;
+      this.audienceNetworkRewardedVideos = true;
+      this.audienceNetworkInStreamVideos = true;
+    } else {
+      this.audienceNetworkNativeBannerAndInterstitial = false;
+      this.audienceNetworkRewardedVideos = false;
+      this.audienceNetworkInStreamVideos = false;
+    }
   }
 
   onInstagramClick() {
     this.instagram = !this.instagram;
+
+    if (this.instagram) {
+      this.instagramFeed = true;
+      this.instagramExplore = true;
+      this.instagramStories = true;
+    } else {
+      this.instagramFeed = false;
+      this.instagramExplore = false;
+      this.instagramStories = false;
+    }
   }
 
   onMessengerClick() {
     this.messenger = !this.messenger;
+
+    if (this.messenger) {
+      this.messengerInbox = true;
+      this.messengerSponsoredMessages = true;
+      this.messengerStories = true;
+    } else {
+      this.messengerInbox = false;
+      this.messengerSponsoredMessages = false;
+      this.messengerStories = false;
+    }
   }
 
   onSetContinuouslyStartingToday() {
@@ -152,7 +249,7 @@ export class FacebookAdsCreateComponent implements OnInit {
   onSetTrafficStartEndDate() {
     this.setTrafficStartEndDate = true;
   }
-  
+
   onStartSelect(event) {
     this.startDate = event;
   }
@@ -162,7 +259,7 @@ export class FacebookAdsCreateComponent implements OnInit {
   }
 
   onFacebookNewsFeed() {
-    if(this.facebookNewsFeed) {
+    if (this.facebookNewsFeed) {
       this.facebookNewsFeed = false;
     } else {
       this.facebookNewsFeed = true;
@@ -170,66 +267,156 @@ export class FacebookAdsCreateComponent implements OnInit {
   }
 
   onInstagramFeed() {
-    this.instagramFeed = !this.instagramFeed;
+    if (this.instagramFeed) {
+      this.instagramFeed = false;
+    } else {
+      this.instagramFeed = true;
+    }
   }
 
   onFacebookMarketplace() {
-    this.facebookMarketplace = !this.facebookMarketplace;
+    if (this.facebookMarketplace) {
+      this.facebookMarketplace = false;
+    } else {
+      this.facebookMarketplace = true;
+    }
   }
 
   onFacebookVideoFeeds() {
-    this.facebookVideoFeeds = !this.facebookVideoFeeds;
+    if (this.facebookVideoFeeds) {
+      this.facebookVideoFeeds = false;
+    } else {
+      this.facebookVideoFeeds = true;
+    }
   }
 
   onFacebookRightColumn() {
-    this.facebookRightColumn = !this.facebookRightColumn;
+    if (this.facebookRightColumn) {
+      this.facebookRightColumn = false;
+    } else {
+      this.facebookRightColumn = true;
+    }
   }
 
   onInstagramExplore() {
-    this.instagramExplore = !this.instagramExplore;
+    if (this.instagramExplore) {
+      this.instagramExplore = false;
+    } else {
+      this.instagramExplore = true;
+    }
   }
 
   onMessengerInbox() {
-    this.messengerInbox = !this.messengerInbox;
+    if (this.messengerInbox) {
+      this.messengerInbox = false;
+    } else {
+      this.messengerInbox = true;
+    }
   }
 
   onMessengerSponsoredMessages() {
-    this.messengerSponsoredMessages = !this.messengerSponsoredMessages;
+    if (this.messengerSponsoredMessages) {
+      this.messengerSponsoredMessages = false;
+    } else {
+      this.messengerSponsoredMessages = true;
+    }
   }
 
   onFacebookStories() {
-    this.facebookStories = !this.facebookStories;
+    if (this.facebookStories) {
+      this.facebookStories = false;
+    } else {
+      this.facebookStories = true;
+    }
   }
 
   onInstagramStories() {
-    this.instagramStories = !this.instagramStories;
+    if (this.instagramStories) {
+      this.instagramStories = false;
+    } else {
+      this.instagramStories = true;
+    }
   }
 
   onMessengerStories() {
-    this.messengerStories = !this.messengerStories;
+    if (this.messengerStories) {
+      this.messengerStories = false;
+    } else {
+      this.messengerStories = true;
+    }
   }
 
   onFacebookInStreamVideos() {
-    this.facebookInStreamVideos = !this.facebookInStreamVideos;
+    if (this.facebookInStreamVideos) {
+      this.facebookInStreamVideos = false;
+    } else {
+      this.facebookInStreamVideos = true;
+    }
   }
 
   onFacebookSearchResults() {
-    this.facebookSearchResults = !this.facebookSearchResults;
+    if (this.facebookSearchResults) {
+      this.facebookSearchResults = false;
+    } else {
+      this.facebookSearchResults = true;
+    }
   }
 
   onFacebookInstantArticles() {
-    this.facebookInstantArticles = !this.facebookInstantArticles;
+    if (this.facebookInstantArticles) {
+      this.facebookInstantArticles = false;
+    } else {
+      this.facebookInstantArticles = true;
+    }
   }
 
   onAudienceNetworkNativeBannerAndInterstitial() {
-    this.audienceNetworkNativeBannerAndInterstitial = !this.audienceNetworkNativeBannerAndInterstitial;
+    if (this.audienceNetworkNativeBannerAndInterstitial) {
+      this.audienceNetworkNativeBannerAndInterstitial = false;
+    } else {
+      this.audienceNetworkNativeBannerAndInterstitial = true;
+    }
   }
 
   onAudienceNetworkRewardedVideos() {
-    this.audienceNetworkRewardedVideos = !this.audienceNetworkRewardedVideos;
+    if (this.audienceNetworkRewardedVideos) {
+      this.audienceNetworkRewardedVideos = false;
+    } else {
+      this.audienceNetworkRewardedVideos = true;
+    }
   }
 
-  AudienceNetworkInStreamVideos() {
-    this.audienceNetworkInStreamVideos = !this.audienceNetworkInStreamVideos;
+  onAudienceNetworkInStreamVideos() {
+    if (this.audienceNetworkInStreamVideos) {
+      this.audienceNetworkInStreamVideos = false;
+    } else {
+      this.audienceNetworkInStreamVideos = true;
+    }
+  }
+
+  uploadImage(files, id) {
+
+    if (files.length === 0) {
+      return;
+    }
+
+    const mimeType = files[0].type;
+    if (mimeType.match(/image\/*/) == null) {
+      return;
+    }
+
+    const reader = new FileReader();
+    // this.imagePath = files;
+    reader.readAsDataURL(files[0]);
+    reader.onload = () => {
+      this.imageArr[id].path = reader.result;
+    };
+  }
+
+  onAddImage() {
+    this.imageArr = [...this.imageArr, {
+      id: this.imageArr.length,
+      path: ''
+    }];
   }
 }
