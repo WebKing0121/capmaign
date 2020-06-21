@@ -26,7 +26,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   automations: Automation[];
   tableSource: DataTableSource<Automation> = new DataTableSource<Automation>(50);
   tableButtons = [
-    { label: 'Create a new Automation', icon: 'fa fa-plus', click: () => this.onCreateAutomation() },
+    { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateAutomation() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteAutomation(), color: 'red', hide: true },
   ];
   selected: Automation[] = [];

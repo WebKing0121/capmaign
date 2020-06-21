@@ -39,7 +39,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
 
   tableSource: DataTableSource<SocialEngager> = new DataTableSource<SocialEngager>(50);
   tableButtons = [
-    { label: 'Create a new Engager', icon: 'fa fa-plus', click: () => this.onNewEngager() },
+    { label: 'Create', icon: 'fa fa-plus', click: () => this.onNewEngager() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEngager(), color: 'red', hide: true },
   ];
   selected: SocialEngager[] = [];

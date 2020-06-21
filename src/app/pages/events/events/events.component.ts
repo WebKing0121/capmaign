@@ -33,7 +33,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   tableSource: DataTableSource<Event> = new DataTableSource<Event>(50);
   selected: Event[] = [];
   tableButtons = [
-    { label: 'Create a new Event', icon: 'fa fa-plus', click: () => this.onCreateEvent() },
+    { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateEvent() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEvent(), color: 'red', hide: true },
   ];
 

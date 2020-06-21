@@ -59,7 +59,7 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   selected: CollaborateTeam[] = [];
   selectedTeam: CollaborateTeam;
   tableButtons = [
-    { label: 'Create a new Team', icon: 'fa fa-plus', click: () => this.onClickCreateTeam() },
+    { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreateTeam() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
   ];
 
@@ -67,8 +67,8 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedCampaigns: CollaborateCampaign[] = [];
   selectedCampaign: CollaborateCampaign;
   tableButtonsCampaigns = [
-    { label: 'Assign a campaign', icon: 'fa fa-link', click: () => this.onClickAssignCampaign() },
-    { label: 'Unassign a campaign', icon: 'fa fa-chain-broken', click: () => this.onClickUnassignCampaign(), color: 'red', hide: true },
+    { label: 'Assign', icon: 'fa fa-link', click: () => this.onClickAssignCampaign() },
+    { label: 'Unassign', icon: 'fa fa-times', click: () => this.onClickUnassignCampaign(), color: 'red', hide: true },
   ];
 
   selectedTask: CollaborateCampaignTask;

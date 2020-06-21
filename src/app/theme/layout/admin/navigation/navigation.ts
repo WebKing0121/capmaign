@@ -159,7 +159,7 @@ const NavigationItems = [
             title: 'All Records',
             type: 'item',
             url: '/data/manage-records',
-            external: true
+            external: false
           }, {
             id: 'data-subscriber',
             title: 'Subscriber',

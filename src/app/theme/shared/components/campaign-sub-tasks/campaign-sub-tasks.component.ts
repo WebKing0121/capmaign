@@ -47,7 +47,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
   selected: CollaborateCampaignTask[] = [];
   tableButtons: CardButton[] = [
     {
-      label: 'Create a new Task', icon: 'fa fa-edit', click: () => this.onClickAddTask()
+      label: 'Create', icon: 'fa fa-edit', click: () => this.onClickAddTask()
     },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
   ];

@@ -3,15 +3,15 @@
   <div class="card-header d-flex" *ngIf="!hidHeader" [ngClass]="headerClass">
     <h5 *ngIf="!customHeader">{{ cardTitle }}</h5>
     <div *ngIf="cardButtons.length > 0" class="header-button">
-      <div *ngFor="let button of getActiveButtons()" [title]="button.label"
-        [ngStyle]="{'color': button.color ? button.color: '#5e7d8a'}"
-      >
-        <span *ngIf="(!button.childs || button.childs.length === 0)" (click)="button.click()">
-          <i [ngClass]="button.icon"></i>
-        </span>
+      <div *ngFor="let button of getActiveButtons()" [title]="button.label">
+        <button *ngIf="(!button.childs || button.childs.length === 0)" class="btn-header-1" (click)="button.click()">
+          <i [ngClass]="button.icon" [ngStyle]="{'color': button.color ? button.color: '#5e7d8a'}"></i>
+          <span class="button-text">{{button.label}}</span>
+        </button>
         <div *ngIf="button.childs && button.childs.length > 0" ngbDropdown class="btn-group dropdown dropright">
-          <button class="button-dropdown" ngbDropdownToggle type="button">
+          <button class="button-dropdown btn-header-1" ngbDropdownToggle type="button">
             <i [ngClass]="button.icon"></i>
+            <span class="button-text">{{button.label}}</span>
           </button>
           <div ngbDropdownMenu class="drop-down-menu-my">
             <a *ngFor="let sub_button of button.childs" class="dropdown-item" (click)="sub_button.click()">
