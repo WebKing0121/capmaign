@@ -343,7 +343,7 @@ const NavigationItems = [
         title: 'Events',
         type: 'item',
         icon: 'feather icon-square',
-        url: '/events',
+        url: '/events/events',
         external: false
       },
       {

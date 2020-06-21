@@ -29,6 +29,7 @@
     <form [formGroup]="automationForm" (ngSubmit)="onSaveAutomation()">
       <div class="row">
         <div class="col-md-6">
+          <label class="mobile-show">Automation Type</label>
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">Automation Type</span>
@@ -36,7 +37,8 @@
             <ng-select [ngClass]="'ng-select'" formControlName="type" [options]="automationTypeList"></ng-select>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mobile-mt">
+          <label class="mobile-show">Automation Name</label>
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">Automation Name</span>
@@ -47,6 +49,7 @@
       </div>
       <div class="row mt-2">
         <div class="col-md-12">
+          <label class="mobile-show">Description</label>
           <div class="input-group">
             <div class="input-group-prepend">
               <span class="input-group-text">Description</span>
@@ -60,7 +63,7 @@
           <h5>Activities</h5>
           <app-go-pallete></app-go-pallete>
         </div>
-        <div class="col-xl-9 col-md-6 col-sm-12">
+        <div class="col-xl-9 col-md-6 col-sm-12  mobile-mt">
           <h5>Automations</h5>
           <app-go-diagram></app-go-diagram>
         </div>

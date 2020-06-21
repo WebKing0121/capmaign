@@ -9,22 +9,44 @@
   }
 
   ng-select {
-    width: calc(100% - 148px) !important;
+    width: calc(100% - 148px);
     min-height: 45px;
     .single {
       .value {
         line-height: 43px;
       }
     }
-
   }
 
   ng-select > div {
     min-height: 45px !important;
   }
 }
+
+.mobile-show {
+  display: none;
+}
+
 @media only screen and (max-width: 575px) {
   .card-automation {
     padding: 0px;
+    height: 500px;
+  }
+  .modal-automation {
+    .input-group-prepend {
+      display: none;
+    }
+
+    ng-select {
+      width: 100%;
+    }
+  }
+
+  .mobile-show {
+    display: inherit;
+  }
+
+  .mobile-mt {
+    margin-top: 9px;
   }
 }
