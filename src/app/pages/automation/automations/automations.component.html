@@ -1,6 +1,77 @@
 <div class="row mt-3">
   <div class="col-12 card-automation">
-    <app-datatable [title]="'Automations'" [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" (activate)="onActive($event)">
-    </app-datatable>
+    <app-datatable
+      [title]="'Automations'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
   </div>
 </div>
+
+<!-- template of Display From-->
+<ng-template #templateType let-row="row" let-value let-i="index">
+  <span>{{ getAutomationType(value) }}</span>
+</ng-template>
+
+<app-ui-modal #automationModal [containerClick]="false" dialogClass="modal-dialog-centered modal-automation modal-xl">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} Automation</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="automationModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body">
+    <form [formGroup]="automationForm" (ngSubmit)="onSaveAutomation()">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Automation Type</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" formControlName="type" [options]="automationTypeList"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Automation Name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="name" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Description</span>
+            </div>
+            <input type="text" class="form-control" formControlName="description" placeholder="e.g: This is ...">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-4">
+        <div class="col-xl-3 col-md-6 col-sm-12">
+          <h5>Activities</h5>
+          <app-go-pallete></app-go-pallete>
+        </div>
+        <div class="col-xl-9 col-md-6 col-sm-12">
+          <h5>Automations</h5>
+          <app-go-diagram></app-go-diagram>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary" (click)="onSaveAutomation()">{{isModalNew ? 'Create' : 'Save'}}</button> &nbsp;
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="automationModal.hide()">Close</button>
+  </div>
+</app-ui-modal>
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected event?"
+	[buttons]="confirmButtons"></app-confirm-modal>

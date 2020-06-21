@@ -5,12 +5,10 @@ import { AutomationRoutingModule } from './automation-routing.module';
 import { SharedModule } from '../../theme/shared/shared.module';
 import { SelectModule } from 'ng-select';
 import { AutomationsComponent } from './automations/automations.component';
-import { AutomationComponent } from './automation/automation.component';
 
 @NgModule({
   declarations: [
   AutomationsComponent,
-  AutomationComponent
 ],
   imports: [
     CommonModule,
