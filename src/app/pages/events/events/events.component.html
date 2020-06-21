@@ -1,0 +1,88 @@
+<div class="row mt-3">
+  <div class="col-12 card-events">
+    <app-datatable [title]="'Events'"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
+  </div>
+</div>
+
+<app-ui-modal #eventModal [containerClick]="false" dialogClass="modal-dialog-centered modal-event modal-xl">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} Event</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="eventModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body">
+    <form (ngSubmit)="onSaveEvent()">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Event Name</span>
+            </div>
+            <input type="text" class="form-control" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Event Subject</span>
+            </div>
+            <input type="text" class="form-control" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Display From</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" [options]="displayNameList"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Folder</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" [options]="folderList"></ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+				<div class="col-md-6 col-sm-12 input-group">
+					<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
+						#d_f="ngbDatepicker">
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_f.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+					<input type="time" class="form-control" placeholder="Date" value="20:55">
+				</div>
+				<div class="col-md-6 col-sm-12 input-group">
+					<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+						#d_t="ngbDatepicker">
+					<div class="input-group-append">
+						<span class="input-group-text" (click)="d_t.toggle()">
+							<i class="fa fa-calendar"></i>
+						</span>
+					</div>
+					<input type="time" class="form-control" placeholder="Date" value="20:55">
+				</div>
+			</div>
+    </form>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary">{{isModalNew ? 'Create' : 'Save'}}</button> &nbsp;
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="eventModal.hide()">Close</button>
+  </div>
+</app-ui-modal>

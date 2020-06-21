@@ -48,18 +48,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   // Colaborate Campaigns Table;
   tableSource: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
   selected: CollaborateCampaign[] = [];
-  tableButtons = [
-    {
-      label: 'Create', icon: 'fa fa-plus', click: () => this.clickTemplate, childs: [
-        { label: 'Create a Email Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
-        { label: 'Create a SMS Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
-        { label: 'Create a Mobile Campaign', icon: 'fa fa-email', click: () => this.clickTemplate },
-      ]
-    },
-    { label: 'Delete', icon: 'fa fa-clone', click: () => this.clickTemplate },
-    { label: 'Assign', icon: 'fa fa-crop', click: () => this.clickTemplate },
-    { label: 'Send', icon: 'fa fa-download', click: () => this.clickTemplate },
-  ];
+  tableButtons = [];
 
   showSearchCampaigns: boolean;
 

@@ -341,38 +341,10 @@ const NavigationItems = [
       {
         id: 'events',
         title: 'Events',
-        type: 'collapse',
+        type: 'item',
         icon: 'feather icon-square',
-        children: [
-          {
-            id: 'events-events',
-            title: 'Events',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'events-pre-events',
-            title: 'Pre Events',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'events-during-events',
-            title: 'During Events',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'events-post-events',
-            title: 'Post Events',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-        ]
+        url: '/events',
+        external: false
       },
       {
         id: 'scoring',

@@ -98,10 +98,11 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   onActive(event) {
-    // TODO: Simplify later
-    if (event.type === 'click' && event.cellIndex === 0) {
-      const automation: Automation = event.row as Automation;
-      this.router.navigate([`/automation/edit/${automation.id}`]);
+    if (event.type === 'click') {
+      if (event.cellIndex === 0 && event.column.frozenLeft) {
+        const automation: Automation = event.row as Automation;
+        this.router.navigate([`/automation/edit/${automation.id}`]);
+      }
     }
   }
 

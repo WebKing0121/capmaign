@@ -28,6 +28,10 @@ const routes: Routes = [
         loadChildren: () => import('./pages/automation/automation.module').then(module => module.AutomationModule)
       },
       {
+        path: 'events',
+        loadChildren: () => import('./pages/events/events.module').then(module => module.EventsModule)
+      },
+      {
         path: 'campaign',
         loadChildren: () => import('./pages/campaign/campaign.module').then(module => module.CampaignModule)
       },
