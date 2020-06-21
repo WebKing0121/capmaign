@@ -10,7 +10,7 @@ import {
   NgbDatepickerModule, NgbButtonsModule,
   NgbDropdownModule, NgbTooltipModule
 } from '@ng-bootstrap/ng-bootstrap';
-
+import { EmailCampaignEditorModule } from '@app-components/email-campaign-editor/email-campaign-editor.module';
 import { EventsComponent } from './events/events.component';
 
 @NgModule({
@@ -29,6 +29,7 @@ import { EventsComponent } from './events/events.component';
     NgbDropdownModule,
     NgbTooltipModule,
     EventsRoutingModule,
+    EmailCampaignEditorModule,
   ]
 })
 export class EventsModule { }

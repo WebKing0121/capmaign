@@ -8,7 +8,10 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { EventService } from '@app-services/event.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
+
 import { NgSelectData } from '@app-models/common';
+
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-events',
@@ -18,15 +21,26 @@ import { NgSelectData } from '@app-models/common';
 })
 export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('eventModal', { static: false }) eventModal;
-
+  @ViewChild('confirmModal', { static: false }) confirmModal;
   private unsubscribe$ = new Subject();
 
   events: Event[];
+
   tableSource: DataTableSource<Event> = new DataTableSource<Event>(50);
   selected: Event[] = [];
+  tableButtons = [
+    { label: 'Create a new Event', icon: 'fa fa-plus', click: () => this.onCreateEvent() },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEvent(), color: 'red', hide: true },
+  ];
 
+  // add, edit event modal
   isModalNew: boolean;
   eventForm: FormGroup;
+
+  // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
+  ];
 
   displayNameList: NgSelectData[];
   folderList: NgSelectData[];
@@ -40,13 +54,16 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.events = [];
     this.isModalNew = true;
+    const year = Number(moment().format('YYYY'));
+    const month = Number(moment().format('MM'));
+    const day = Number(moment().format('DD'));
     this.eventForm = fb.group({
       id: 0,
       name: ['', Validators.required],
       subject: ['', Validators.required],
-      start_date: ['', Validators.required],
+      start_date: { year, month, day },
       start_time: ['', Validators.required],
-      end_date: ['', Validators.required],
+      end_date: [moment().format('YYYY-MM-DD'), Validators.required],
       end_time: ['', Validators.required],
       display_name: ['', Validators.required],
       location: ['', Validators.required],
@@ -148,9 +165,38 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(evt) {
     if (evt.type === 'click') {
+      this.tableButtons[1].hide = false;
       if (evt.cellIndex === 0 && evt.column.frozenLeft) {
         const event: Event = evt.row as Event;
         this.isModalNew = false;
+        const startYear = Number(moment(event.start_date).format('YYYY'));
+        const startMonth = Number(moment(event.start_date).format('MM'));
+        const startDay = Number(moment(event.start_date).format('DD'));
+        const endYear = Number(moment(event.end_date).format('YYYY'));
+        const endMonth = Number(moment(event.end_date).format('MM'));
+        const endDay = Number(moment(event.end_date).format('DD'));
+
+        this.eventForm.setValue({
+          id: event.id,
+          name: event.name,
+          subject: event.subject,
+          start_date: {
+            year: startYear,
+            month: startMonth,
+            day: startDay
+          },
+          start_time: moment(event.start_date).format('HH:mm'),
+          end_date: {
+            year: endYear,
+            month: endMonth,
+            day: endDay
+          },
+          end_time: moment(event.end_date).format('HH:mm'),
+          display_name: event.display_name,
+          location: event.location,
+          folder: event.folder,
+          template: event.template,
+        });
         this.eventModal.show();
       }
     }
@@ -158,12 +204,20 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onCreateEvent() {
     this.isModalNew = true;
+    this.eventForm.reset();
     this.eventModal.show();
   }
 
   // event form submit
   onSaveEvent() {
-
+    console.log(this.eventForm.value);
   }
 
+  onDeleteEvent() {
+    this.confirmModal.show();
+  }
+
+  onConfirmDelete() {
+    this.confirmModal.hide();
+  }
 }
