@@ -13,11 +13,13 @@ import {
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ManageRecordsComponent } from './manage-records/manage-records.component';
+import { ListsComponent } from './lists/lists.component';
 
 @NgModule({
   declarations: [
-
-  ManageRecordsComponent],
+    ManageRecordsComponent,
+    ListsComponent
+  ],
   imports: [
     CommonModule,
     DataRoutingModule,

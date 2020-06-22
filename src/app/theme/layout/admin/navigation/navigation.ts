@@ -161,17 +161,11 @@ const NavigationItems = [
             url: '/data/manage-records/',
             external: false
           }, {
-            id: 'data-landing-page-category',
-            title: 'Landing Page Category',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
             id: 'data-lists',
             title: 'Lists',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/data/lists',
+            external: false
           }, {
             id: 'data-event-lists',
             title: 'Event Lists',

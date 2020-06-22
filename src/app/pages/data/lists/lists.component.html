@@ -1,0 +1,81 @@
+<div class="row mt-3">
+  <div class="col-12 card-lists">
+    <app-datatable [title]="'List'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
+  </div>
+</div>
+<!-- template of Display From-->
+<ng-template #templateDisplayFrom let-row="row" let-value let-i="index">
+  <span>{{ getTypeList(value) }}</span>
+</ng-template>
+
+<ng-template #templateFolder let-row="row" let-value let-i="index">
+  <span>{{ getFolder(value) }}</span>
+</ng-template>
+
+<app-ui-modal #listModal [containerClick]="false" dialogClass="modal-dialog-centered modal-list modal-xl">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} List</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="listModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body">
+    <form [formGroup]="listForm" (ngSubmit)="onSaveList()">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="mobile-show">Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="name" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+        <div class="col-md-6 mobile-mt">
+          <label class="mobile-show">Description</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Description</span>
+            </div>
+            <input type="text" class="form-control" formControlName="description" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-6">
+          <label class="mobile-show">Type</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Type</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" formControlName="type" [options]="typeList"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-6 mobile-mt">
+          <label class="mobile-show">Folder</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Folder</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" formControlName="folderId" [options]="folderList"></ng-select>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary" (click)="onSaveList()">{{isModalNew ? 'Create' : 'Save'}}</button> &nbsp;
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="listModal.hide()">Close</button>
+  </div>
+</app-ui-modal>
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected event?"
+	[buttons]="confirmButtons"></app-confirm-modal>

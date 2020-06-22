@@ -2,10 +2,13 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
+
 import {
   AllRecordGridColumnsMock, AllRecordsMock, SubscribersMock,
   LeadsMock, ProspectsMock, TransactionalsMock
 } from '@app-fake-db/data-records-mock';
+import { ListsMockData } from '@app-fake-db/list-mock';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -43,5 +46,16 @@ export class DataService {
           __abp: true
         });
     }
+  }
+
+  getLists(): Observable<any> {
+    return of(ListsMockData);
+  }
+
+  getTypeList(): Observable<any> {
+    return of([
+      {value: 'Mailing', label: 'Mailing'},
+      {value: 'SMS', label: 'SMS'},
+    ]);
   }
 }
