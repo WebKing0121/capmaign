@@ -10,7 +10,7 @@
       <div class="col-lg-12 d-flex">
         <div class="col-lg-3">
           <div>
-            <input class="form-control" formControlName="searchValue" type="text" placeholder="Search Lead Category" style="width: 100%;" (change)="onSearch($event)">
+            <input class="form-control" formControlName="searchLeadItem" type="text" placeholder="Search Lead Category" style="width: 100%;" (change)="onSearch($event)">
           </div>
           <div class="">
             <div class="border border-secondary b-w-3" style="height: calc(100vh - 250px); overflow-y: auto;">
@@ -31,6 +31,22 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+        <div class="col-lg-9">
+          <div class="col-lg-12">
+            <label class="col-lg-6">
+              Lead Scoring Profile Name<span class="text-danger">*</span>
+              <input class="form-control m-t-10" formControlName="profileName" type="text">
+            </label>
+            <label class="col-lg-6">
+              Description
+              <input class="form-control m-t-10" formControlName="profileDescription" type="text">
+            </label>
+          </div>
+
+          <div class="col-lg-12">
+            
           </div>
         </div>
       </div>

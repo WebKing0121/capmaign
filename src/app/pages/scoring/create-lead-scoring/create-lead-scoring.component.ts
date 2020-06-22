@@ -15,7 +15,9 @@ export class CreateLeadScoringComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-      searchLeadItem: ""
+      searchLeadItem: '',
+      profileName: '',
+      profileDescription: ''
     })
   }
 

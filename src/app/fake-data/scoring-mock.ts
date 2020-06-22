@@ -1,4 +1,5 @@
 import { Scoring } from '@app-models/scoring';
+import { Lead } from '@app-models/scoring';
 
 export const LeadScoringMockData: Scoring[] = [
   {
@@ -211,4 +212,21 @@ export const LeadScoringMockData: Scoring[] = [
     isActive: true,
     isStatic: false
   },
+];
+// id: string;
+//   name: string;
+//   profileRulesLeadAttribute: string;
+//   valueType: number;
+//   weightage: number;
+//   rulList: Rule[];
+
+export const LeadList: Lead[] = [
+  {
+    id: '0',
+    name: 'GAWebsite',
+    profileRulesLeadAttribute: 'isSubscribed',
+    valueType: 'boolean',
+    weightage: 0,
+    rulList: []
+  }
 ];
