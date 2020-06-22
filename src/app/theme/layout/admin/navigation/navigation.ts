@@ -419,8 +419,8 @@ const NavigationItems = [
         ]
       },
       {
-        id: 'adversting',
-        title: 'Adversting',
+        id: 'advertising',
+        title: 'Adversising',
         type: 'collapse',
         icon: 'feather icon-map',
         children: [
