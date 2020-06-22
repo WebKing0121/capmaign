@@ -35,14 +35,14 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
   loading = false;
   submitted = false;
   error = '';
-  engagers: SocialEngager[];
+  engagers: any[];
 
-  tableSource: DataTableSource<SocialEngager> = new DataTableSource<SocialEngager>(50);
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onNewEngager() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEngager(), color: 'red', hide: true },
   ];
-  selected: SocialEngager[] = [];
+  selected: any[] = [];
 
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
@@ -59,11 +59,11 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
     this.showSearch = false;
     this.engagerForm = this.formBuilder.group({
       id: 0,
-      first_name: ['', Validators.required],
-      last_name: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
       company: ['', Validators.required],
-      email: ['', [Validators.required, ValidationService.emailValidator]],
-      mobile_number: ['', Validators.required],
+      email: '',
+      mobileNumber: ['', Validators.required],
       zip: ['', Validators.required],
     });
 
@@ -72,7 +72,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
     .pipe(takeUntil(this.destroy$))
     .subscribe(
       data => {
-        this.engagers = data;
+        this.engagers = data.result.items;
         this._updateTable(this.engagers);
       },
       error => {
@@ -83,12 +83,12 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit() {
     const columns: DataTableColumn[] = [
-      { name: 'First name', prop: 'first_name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
-      { name: 'Last name', prop: 'last_name', sortable: true },
+      { name: 'First name', prop: 'firstName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
+      { name: 'Last name', prop: 'lastName', sortable: true },
       { name: 'Company', prop: 'company', sortable: true },
-      { name: 'Phone number', prop: 'phone_number', sortable: true },
-      { name: 'Corporate Address Zip', prop: 'zip', sortable: true },
-      { name: 'Lead Source', prop: 'lead_source', sortable: true },
+      { name: 'Phone number', prop: 'mobileNumberPersonal', sortable: true },
+      { name: 'Corporate Address Zip', prop: 'corporateAddressZip', sortable: true },
+      { name: 'Lead Source', prop: 'leadSource', sortable: true },
     ];
     this.tableSource.setColumns(columns);
   }
@@ -101,17 +101,17 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
   onActive(event) {
     // TODO: Simplify later
     if (event.type === 'click') {
-      const engager = event.row as SocialEngager;
+      const engager = event.row as any;
       this.tableButtons[1].hide = false;
       if (event.cellIndex === 0 && event.column.frozenLeft) {
         this.engagerForm.setValue({
           id: engager.id,
-          first_name: engager.first_name,
-          last_name: engager.last_name,
+          firstName: engager.firstName,
+          lastName: engager.lastName,
           company: engager.company,
-          email: engager.email,
-          mobile_number: engager.phone_number,
-          zip: engager.zip,
+          email: engager.emailAddress,
+          mobileNumber: engager.mobileNumberPersonal,
+          zip: engager.corporateAddressZip,
         });
         this.newEngagerModal.show();
       }
@@ -150,7 +150,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
     this.confirmModal.show();
   }
 
-  _updateTable(engagers: SocialEngager[]) {
+  _updateTable(engagers: any[]) {
     this.tableSource.next(engagers.slice(0, 50), engagers.length);
 
     this.tableSource.changed$
