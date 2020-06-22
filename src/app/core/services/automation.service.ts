@@ -25,10 +25,4 @@ export class AutomationService {
     // return this.http.post<any>(`${environment.apiUrl}/${this.url}/getAllAutomations`, postData);
     return of(AutomationsMockData);
   }
-
-  getAutomation(automationId: number) {
-
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/getAutomation/${automationId}`);
-    return of(AutomationsMockData.find(x => x.id = automationId));
-  }
 }

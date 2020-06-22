@@ -13,7 +13,7 @@
 
 <!-- template of Display From-->
 <ng-template #templateType let-row="row" let-value let-i="index">
-  <span>{{ getAutomationType(value) }}</span>
+  <span>{{ getAutomationType(row) }}</span>
 </ng-template>
 
 <app-ui-modal #automationModal [containerClick]="false" dialogClass="modal-dialog-centered modal-automation modal-xl">
