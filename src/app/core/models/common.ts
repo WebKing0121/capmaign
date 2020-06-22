@@ -12,3 +12,9 @@ export class GridColumn {
   tenantId: null | number;
   userId: null | number;
 }
+
+export interface Tab {
+  label: string;
+  link: string;
+  selected: boolean;
+}

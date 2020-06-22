@@ -1,27 +1,14 @@
-<div class="row">
+<div class="row mt-3">
+  <app-data-record-tabs [tabs]="tabs"></app-data-record-tabs>
   <div class="col-12 manage-records">
-    <app-card cardTitle="All Records" [options]="false">
-      <div class="table-responsive">
-        <table class="table">
-          <thead>
-            <tr>
-              <th width="40">#</th>
-              <th>First name</th>
-              <th>Last name</th>
-              <th>Company</th>
-              <th>Phone Number</th>
-              <th>Corporate Address Zip</th>
-              <th>Lead Source</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td colspan=7 align="center"> No data available in table.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </app-card>
+    <app-datatable
+      [title]="''"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
   </div>
 </div>
 <!-- <app-ui-modal #newEngagerModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl'">

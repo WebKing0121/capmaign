@@ -1,7 +1,7 @@
 <div class="card" [ngClass]="cardClass" [@cardRemove]="cardRemove" #toAnimate>
   <!-- animates animatesInitMode="show" [animatesOnInit]="{useVisibility: false, disabled: true}" -->
   <div class="card-header d-flex" *ngIf="!hidHeader" [ngClass]="headerClass">
-    <h5 *ngIf="!customHeader">{{ cardTitle }}</h5>
+    <h5 *ngIf="!customHeader && cardTitle">{{ cardTitle }}</h5>
     <div *ngIf="cardButtons.length > 0" class="header-button">
       <div *ngFor="let button of getActiveButtons()" [title]="button.label">
         <button *ngIf="(!button.childs || button.childs.length === 0)" class="btn-header-1" (click)="button.click()">

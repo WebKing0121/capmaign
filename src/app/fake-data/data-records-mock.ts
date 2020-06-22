@@ -39,44 +39,6 @@ export const AllRecordGridColumnsMock: GridColumn[] = [
   },
 ];
 
-export const SubscriberGridColumnsMock: GridColumn[] = [
-  {
-    columnName: 'RecordType',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'Id',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'FirstName',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'LastName',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-];
 
 export const SubscribersMock = {
   result: {
@@ -391,45 +353,6 @@ export const SubscribersMock = {
   __abp: true
 }
 
-export const LeadsGridColumnsMock: GridColumn[] = [
-  {
-    columnName: 'RecordType',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'Id',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'FirstName',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'LastName',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-];
-
 export const LeadsMock = {
   result: {
     items: [
@@ -509,45 +432,6 @@ export const LeadsMock = {
   __abp: true
 }
 
-export const ProspectGridColumnsMock: GridColumn[] = [
-  {
-    columnName: 'RecordType',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'Id',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'FirstName',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'LastName',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-];
-
 export const ProspectsMock = {
   result: null,
   targetUrl: null,
@@ -556,46 +440,6 @@ export const ProspectsMock = {
   unAuthorizedRequest: false,
   __abp: true
 };
-
-
-export const TransactionalGridColumnsMock: GridColumn[] = [
-  {
-    columnName: 'RecordType',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'Id',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'FirstName',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-  {
-    columnName: 'LastName',
-    columnOrder: 0,
-    columnWidth: 0,
-    fieldName: '',
-    gridType: null,
-    tenantId: null,
-    userId: null,
-  },
-];
 
 export const TransactionalsMock = {
   result: {

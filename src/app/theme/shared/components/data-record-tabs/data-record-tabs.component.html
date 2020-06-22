@@ -1,0 +1,5 @@
+<ul class="btn-tabs">
+  <li *ngFor="let tab of tabs" (click)="onClickTab(tab)" [ngClass]="{'selected': tab.selected}">
+    {{tab.label}}
+  </li>
+</ul>
