@@ -6,16 +6,16 @@ import { Effect, Actions, ofType } from '@ngrx/effects';
 
 import { switchMap, map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { AppTypes, GetSocialAccounts, AppFields, GetSocialSites } from './app.models';
+import { AppTypes, GetSocialAccounts, AppFields, GetSocialSites, GetRecordColumns } from './app.models';
 import { SocialService } from '@app-services/social.service';
-import { SocialAccountsMockData } from '@app-fake-db/social-accounts-mock';
-import { SocialSitesMockData } from '@app-fake-db/social-sites-mock';
+import { DataService } from '@app-services/data.service';
 
 @Injectable() export class AppEffects {
 
   constructor(
     private as: Actions,
-    private socialService: SocialService
+    private socialService: SocialService,
+    private dataService: DataService,
   ) {}
 
   @Effect() getSocialConnections: Observable<Action> = this.as.pipe(
@@ -36,6 +36,17 @@ import { SocialSitesMockData } from '@app-fake-db/social-sites-mock';
       type: AppTypes.UpdateState,
       payload: {
         [AppFields.SocialSites]: res
+      }
+    }))
+  );
+
+  @Effect() getRecordColumns: Observable<Action> = this.as.pipe(
+    ofType(AppTypes.GetRecordColumns),
+    switchMap((a: GetRecordColumns) => this.dataService.getColumns()),
+    map((res) => ({
+      type: AppTypes.UpdateState,
+      payload: {
+        [AppFields.RecordColumns]: res
       }
     }))
   );

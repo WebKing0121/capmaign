@@ -39,6 +39,318 @@ export const AllRecordGridColumnsMock: GridColumn[] = [
   },
 ];
 
+export const AllRecordsMock = {
+  result: {
+    items: [
+      {
+        recordType: 'SocialEngager',
+        id: '3ac9f992-c8a1-4691-80e2-2cc582a27f73',
+        firstName: 'SimplyCast',
+        lastName: null
+      },
+      {
+        recordType: 'SocialEngager',
+        id: '6d496238-2657-4a89-9844-f16939fc5850',
+        firstName: 'Jumptools - CRM & Marketing Automation',
+        lastName: null
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'e0967c10-6ee6-4726-ba5c-fffd42ee485e',
+        firstName: 'Ujjal',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'fc34c98c-fe22-41e6-bf65-ff75b0d162d3',
+        firstName: 'Niranjan',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '97514e72-3a76-4dcf-8b5f-ff68e71afa43',
+        firstName: 'Nagesh',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '3d008479-6d04-42c3-9fd4-ff49b3d93403',
+        firstName: 'Suruchi',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '39b5e049-4537-476e-bddc-fe7977133906',
+        firstName: 'Naveen',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '645e0569-b00b-4b08-ae6e-fe5ba082ab29',
+        firstName: 'Vivek',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '942986c8-7b31-4e4f-8161-fdc325af9e7c',
+        firstName: 'Deepak',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '1667f002-fb9c-4762-80c6-fdaab7f2a225',
+        firstName: 'Felipe',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '9fb2e328-aea7-45aa-8e45-fd8ed9570c85',
+        firstName: 'Kris',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'df41f7f9-d9f0-4264-86e2-fd6d7414e887',
+        firstName: 'Paul',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '11e31786-871b-4cf7-a858-fd5942a1db1f',
+        firstName: 'Miguel',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '08be632f-66ce-42b8-89f1-fcdc1f759fe4',
+        firstName: 'Ravindra',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'd56aca35-cf4e-4c0b-a809-fca87ef2075c',
+        firstName: 'Abhishek',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'd6c4b633-ea98-4660-b00c-fc9598f486aa',
+        firstName: 'Nitin',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '7d248cca-9075-4891-9c8f-fc8c9d571996',
+        firstName: 'Kristen',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'efec9c7b-262a-4ac1-9444-fc4e3c0adf3d',
+        firstName: 'Anmol',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '5d274e53-0226-4b14-90c9-fba22d5f5253',
+        firstName: 'Clement',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '6ab4caae-e2b8-4462-adaf-fb9bbf169f49',
+        firstName: 'Samir',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '71be43d9-7476-4964-881a-fb2715b350ca',
+        firstName: 'Neeraj',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '5ff2e6ea-c67c-4570-98f2-fa5809fc6469',
+        firstName: 'Adrian',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '4d26dd82-1913-4b17-8834-f9e3fca1606d',
+        firstName: 'Murli Manohar',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '577535a7-47b6-477b-811e-f9933217cb38',
+        firstName: 'Shyam',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '0f5146c6-6146-4693-8257-f939e93edb63',
+        firstName: 'K Tushar',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'e7f90435-dde6-4990-af58-f93962c26312',
+        firstName: 'Devpal',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '3033ad3c-571e-4d7d-a505-f91b96e7ffbd',
+        firstName: 'Mohammed Taher',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '735ae334-7a61-4b20-8e6b-f80631510703',
+        firstName: 'Ruchi',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '985fa953-adfe-4090-87c1-f72f2debbd42',
+        firstName: 'Erik',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '92120feb-ef27-4741-8e0a-f6fba5070421',
+        firstName: 'Nina',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '62669bf1-d98a-471c-a2f7-f6ef62bac22b',
+        firstName: 'Radka',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '9ad9cc1d-9f00-48d1-8526-f65b7608efb0',
+        firstName: 'Prashant',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '8399a1ad-afe7-487b-97bf-f63c0bc68ef7',
+        firstName: 'Robert',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '11d87cc9-33df-487f-9566-f61229b070dc',
+        firstName: 'Rupali',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '8674cfe4-fb1f-45fe-95c4-f5bac8ed2ebb',
+        firstName: 'CA Amit',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '538223f6-fbd8-4e58-b912-f5245385b6f2',
+        firstName: 'Kedar',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '7242f193-43d8-4ef3-aa00-f5192e47164b',
+        firstName: 'John',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '6df53a31-a0db-4096-a3f0-f4fa91b91f74',
+        firstName: 'Yuvrraj',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '1e861fb3-67c2-4695-8201-f4c57dfff74f',
+        firstName: 'Srinivas',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '6282fa0c-e291-491d-8f4e-f4bf09e482ce',
+        firstName: 'Prakash',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '3718fe73-0cdf-4eee-ad3c-f3be80039011',
+        firstName: 'Ravikishor',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'c5c07de2-03b1-4696-8901-f3a5f2f38089',
+        firstName: 'Rohitash',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '98944106-e517-4da8-9e88-f339dd60511b',
+        firstName: 'Bejani',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'c953ad1e-d24c-4c44-a472-f338904dcd2d',
+        firstName: 'Venugopal',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'a4242bf7-c1a7-403e-ae22-f32a41f650a2',
+        firstName: 'Piyush',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '326146a8-634d-4002-a840-f31fb2103f2c',
+        firstName: 'Harish',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: 'f4ee9a1c-4dfa-485f-bafe-f306b3f184e3',
+        firstName: 'Nitin',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '8fcfe514-c150-4403-afb4-f2feb9e02ec9',
+        firstName: 'Simon',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '8948fdea-76ab-4c73-b48d-f2b8f1c6deee',
+        firstName: 'Sudarshan',
+        lastName: ''
+      },
+      {
+        recordType: 'Subscriber',
+        id: '4174acbe-13e5-4af3-b4c9-f27712776413',
+        firstName: 'Jesper',
+        lastName: ''
+      }
+    ],
+    totalCount: 5919
+  },
+  targetUrl: null,
+  success: true,
+  error: null,
+  unAuthorizedRequest: false,
+  __abp: true
+};
 
 export const SubscribersMock = {
   result: {
@@ -351,7 +663,7 @@ export const SubscribersMock = {
   error: null,
   unAuthorizedRequest: false,
   __abp: true
-}
+};
 
 export const LeadsMock = {
   result: {
@@ -430,9 +742,10 @@ export const LeadsMock = {
   error: null,
   unAuthorizedRequest: false,
   __abp: true
-}
+};
 
 export const ProspectsMock = {
+
   result: null,
   targetUrl: null,
   success: true,
