@@ -420,7 +420,7 @@ const NavigationItems = [
       },
       {
         id: 'advertising',
-        title: 'Adversising',
+        title: 'Advertising',
         type: 'collapse',
         icon: 'feather icon-map',
         children: [
