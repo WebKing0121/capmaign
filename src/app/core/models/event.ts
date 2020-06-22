@@ -1,14 +1,21 @@
 export class Event {
-  id: number | string;
-  name: string;
-  subject: string;
-  // tslint:disable-next-line
-  start_date: string;
-  // tslint:disable-next-line
-  end_date: string;
-  // tslint:disable-next-line
-  display_name: string;
-  folder: string;
+  id: number;
+  eventName: string;
+  eventSubject: string;
+  eventStartDate: string;
+  eventEndDate: string;
+  eventStartTime: null | string;
+  displayName: null | string;
+  fromAddressId: number;
+  replyAddressId: number;
+  eventEndTime: null | string;
   location: string;
-  template: string;
+  eventBody: null | string;
+  isDeleted: boolean;
+  deleterUserId: null | number;
+  deletionTime: null | string;
+  lastModificationTime: null | string;
+  lastModifierUserId: null | number;
+  creationTime: string;
+  creatorUserId: null | number;
 }
