@@ -138,14 +138,17 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (event.type === 'click') {
       this.tableButtons[1].hide = false;
       if (event.cellIndex === 0 && event.column.frozenLeft) {
+        
         const automation: Automation = event.row as Automation;
         this.isModalNew = false;
+        
         this.automationForm.setValue({
           id: automation.id,
           type: this.getAutomationTypeKey(automation),
-          name: automation.name,
+          name: '' + automation.name,
           description: automation.description
         });
+
         this.automationModal.show();
       }
     }
@@ -190,7 +193,9 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (automation.eventAutomationType === 1 && automation.automationType === 0) {
       return 'Post Event';
     }
+    return 'Unknown';
   }
+
   getAutomationTypeKey(automation: Automation) {
     if (automation.eventAutomationType === 0 && automation.automationType === 0) {
       return 'email';
@@ -201,11 +206,12 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (automation.eventAutomationType === 0 && automation.automationType === 2) {
       return 'pre-event';
     }
-    if (automation.eventAutomationType === 1 && automation.automationType === 1) {
+    if (automation.eventAutomationType === 0 && automation.automationType === 1) {
       return 'sms';
     }
     if (automation.eventAutomationType === 1 && automation.automationType === 0) {
       return 'post-event';
     }
+    return 'unknown';
   }
 }
