@@ -46,6 +46,10 @@ const routes: Routes = [
       {
         path: 'advertising',
         loadChildren: () => import('./pages/advertising/advertising.module').then(module => module.AdvertisingModule)
+      },
+      {
+        path: 'scoring',
+        loadChildren: () => import('./pages/scoring/scoring.module').then(module => module.ScoringModule)
       }
     ]
   },

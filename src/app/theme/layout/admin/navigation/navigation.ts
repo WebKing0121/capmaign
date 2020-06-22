@@ -302,35 +302,36 @@ const NavigationItems = [
         id: 'scoring',
         title: 'Scoring',
         type: 'collapse',
+        url: '/scoring',
         icon: 'feather icon-award',
         children: [
           {
             id: 'scoring-lead-category',
             title: 'Lead Category',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/scoring/lead-category',
+            external: false
           },
           {
             id: 'scoring-lead-scoring',
             title: 'Lead Scoring',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/scoring/lead-scoring',
+            external: false
           },
           {
             id: 'scoring-lead-grading',
             title: 'Lead Grading',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/scoring/lead-grading',
+            external: false
           },
           {
             id: 'scoring-lead-timeframes',
             title: 'Lead Timeframes',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/scoring/lead-timeframes',
+            external: false
           },
         ]
       },
@@ -377,21 +378,21 @@ const NavigationItems = [
         icon: 'feather icon-map',
         children: [
           {
-            id: 'adversting-facebook-ads',
+            id: 'advertising-facebook-ads',
             title: 'Facebook Ads',
             type: 'item',
             url: 'javascript:',
             external: true
           },
           {
-            id: 'adversting-google-ads',
+            id: 'advertising-google-ads',
             title: 'Google Ads',
             type: 'item',
             url: 'javascript:',
             external: true
           },
           {
-            id: 'adversting-ad-simulator',
+            id: 'advertising-ad-simulator',
             title: 'Ad Simulator',
             type: 'item',
             url: 'javascript:',

@@ -7,21 +7,21 @@
       <h3 class="text-primary font-weight-bold">Campaign Details</h3>
 
       <form [formGroup]="formGroup">
-        <div class="" formGroupName="details">
+        <div class="m-t-20" formGroupName="details">
           <div class="row">
             <div class="col-12 col-lg-6 form-group">
               <label class="required-mark-after">Campaign Name</label>
-              <input class="form-control" formControlName="name" aria-label="Campaign Name">
+              <input class="form-control m-t-10" formControlName="name" aria-label="Campaign Name">
             </div>
             <div class="col-12 col-lg-6 form-group">
-              <label class="required-mark-after">Select Customer Account</label>
-              <select class="form-control" formControlName="customerAccount">
+              <label class="required-mark-after">Customer Account</label>
+              <select class="form-control m-t-10" formControlName="customerAccount">
                 <option>GadManager</option>
               </select>
             </div>
             <div class="col-12 col-lg-6 form-group m-l-auto">
-              <label class="required-mark-after">Select Billing Account</label>
-              <select class="form-control" formControlName="billingAccount">
+              <label class="required-mark-after">Billing Account</label>
+              <select class="form-control m-t-10" formControlName="billingAccount">
                 <option></option>
               </select>
             </div>
@@ -63,21 +63,11 @@
                 <label class="font-weight-bold">
                   Include
                 </label>
-                <div class="input-group">
+                <div class="input-group m-t-10">
                   <div class="input-group-prepend">
                     <span class="input-group-text text-primary"><i class="fa fa-map-marker"></i></span>
                   </div>
                   <input class="form-control" placeholder="Search" autocomplete="off" name="include">
-                  <!-- <input
-                    id="typeahead-focus"
-                    type="text"
-                    class="form-control"
-                    [(ngModel)]="model"
-                    [ngbTypeahead]="search"
-                    (focus)="focus$.next($any($event).target.value)"
-                    (click)="click$.next($any($event).target.value)"
-                    #instance="ngbTypeahead"
-                  /> -->
                   <div class="input-group-append">
                     <span class="input-group-text text-primary">
                       <i class="fa fa-search"></i>
@@ -91,7 +81,7 @@
                 <label class="font-weight-bold">
                   Exclude
                 </label>
-                <div class="input-group">
+                <div class="input-group m-t-10">
                   <div class="input-group-prepend">
                     <span class="input-group-text text-primary"><i class="fa fa-map-marker"></i></span>
                   </div>
@@ -109,7 +99,7 @@
                 <label class="text-primary font-weight-bold">
                   Language
                 </label>
-                <div class="input-group">
+                <div class="input-group m-t-10">
                   <select class="form-control" placeholder="Search" autocomplete="off" name="language">
                     <option></option>
                   </select>
@@ -214,19 +204,19 @@
           <form [formGroup]="siteLinkCreateForm" (ngSubmit)="createNewSiteLink()">
             <div class="form-group m-t-20">
               <label class="required-mark-after">Sitelink Text</label>
-              <input class="form-control" formControlName="text" aria-label="Site Link">
+              <input class="form-control m-t-10" formControlName="text" aria-label="Site Link">
             </div>
             <div class="form-group">
               <label class="required-mark-after">Description Line 1</label>
-              <input class="form-control" formControlName="description1" aria-label="Description Line 1">
+              <input class="form-control m-t-10" formControlName="description1" aria-label="Description Line 1">
             </div>
             <div class="form-group">
               <label>Description Line 2</label>
-              <input class="form-control" formControlName="description2" aria-label="Description Line 2">
+              <input class="form-control m-t-10" formControlName="description2" aria-label="Description Line 2">
             </div>
             <div class="form-group">
               <label class="required-mark-after">Final URL</label>
-              <input type="url" class="form-control" formControlName="finalUrl">
+              <input type="url" class="form-control m-t-10" formControlName="finalUrl">
             </div>
 
             <div class="d-flex justify-content-end">
@@ -257,17 +247,17 @@
       <h3 class="text-primary font-weight-bold">Campaign Details</h3>
 
       <div class="row" formGroupName="template">
-        <div class="col-12 col-lg-6 form-group">
+        <div class="col-12 col-lg-6 form-group m-t-20">
           <label class="required-mark-after">Campaign Name</label>
-          <input class="form-control" formControlName="name" aria-label="Campaign Name">
+          <input class="form-control m-t-10" formControlName="name" aria-label="Campaign Name">
         </div>
         <div class="col-12 col-lg-6 form-group">
           <label>Billing Account</label>
-          <input class="form-control" formControlName="billingAccount" aria-label="Billing Account">
+          <input class="form-control m-t-10" formControlName="billingAccount" aria-label="Billing Account">
         </div>
         <div class="col-12 col-lg-6 form-group">
           <label class="required-mark-after">Tag Name</label>
-          <input class="form-control" formControlName="tagName" aria-label="Tag Name">
+          <input class="form-control m-t-10" formControlName="tagName" aria-label="Tag Name">
         </div>
         <div class="col-12 col-lg-12">
           <div class="d-flex justify-content-center align-items-center border p-t-10 p-b-10 border border-primary">
@@ -323,15 +313,15 @@
       <h3 class="text-primary font-weight-bold">Group Details</h3>
 
       <div class="row" formGroupName="groupDetail">
-        <div class="col-lg-6 form-group">
+        <div class="col-lg-6 form-group m-t-20">
           <label>Ad Group Name</label>
-          <input class="form-control" formControlName="addGroupName" aria-label="Ad Group Name">
+          <input class="form-control m-t-10" formControlName="addGroupName" aria-label="Ad Group Name">
         </div>
         <div class="col-lg-12 p-0 m-b-20">
           <div class="col-lg-6">
             <label>
               Ad Group Name<span class="text-danger">*</span>
-              <textarea class="form-control ng-pristine ng-untouched ng-empty ng-invalid ng-invalid-required"
+              <textarea class="form-control  m-t-10"
                 type="text" name="Name" rows="4" id="txtKeywords" required=""
                 ng-model="vm.googleAd.keywords"></textarea>
             </label>
@@ -341,13 +331,13 @@
           <label>
             Business Name
           </label>
-          <input type="text" class="form-control" placeholder="Business Name">
+          <input type="text" class="form-control m-t-10" placeholder="Business Name">
         </div>
         <div class="col-lg-6">
           <label>
             Website Url<span class="text-danger">*</span>
           </label>
-          <input type="text" class="form-control" placeholder="Website Url">
+          <input type="text" class="form-control m-t-10" placeholder="Website Url">
         </div>
         <div class="col-lg-12 m-t-20">
           <span class="text-primary">Define your Product or Services</span>
@@ -357,22 +347,22 @@
     <hr>
 
     <section [formGroup]="formGroup">
-      <h3 class="text-primary font-weight-bold">Ads Preview</h3>
+      <h3 class="text-primary font-weight-bold m-t-20">Ads Preview</h3>
 
       <div class="row" formGroupName="adsPreview">
         <div class="col-lg-8 d-flex flex-wrap">
-          <span class="col-lg-12 text-primary font-weight-bold">Ad#1</span>
-          <div class="col-md-6">
+          <span class="col-lg-12 text-primary font-weight-bold m-t-20">Ad#1</span>
+          <div class="col-md-6 m-t-20">
             <label>Headline 1<span class="text-danger">*</span></label>
-            <input [(ngModel)]="headline1" type="text" class="form-control" formControlName="headline1">
+            <input [(ngModel)]="headline1" type="text" class="form-control m-t-10" formControlName="headline1">
           </div>
           <div class="col-md-6">
             <label>Headline 2<span class="text-danger">*</span></label>
-            <input [(ngModel)]="headline2" type="text" class="form-control" formControlName="headline2">
+            <input [(ngModel)]="headline2" type="text" class="form-control m-t-10" formControlName="headline2">
           </div>
           <div class="col-md-12 m-t-10">
             <label>Description</label>
-            <input [(ngModel)]="description" type="text" class="form-control" formControlName="description">
+            <input [(ngModel)]="description" type="text" class="form-control m-t-10" formControlName="description">
           </div>
           <div class="col-lg-12 d-flex m-t-10 justify-content-end">
             <button class="btn btn-success p-10 border-0 rounded-0"
@@ -388,7 +378,7 @@
               <label class="text-white">Your Ad Preview</label>
             </div>
             <div>
-              <div class="container row m-0 p-0">
+              <div class="container row m-0 p-10">
                 <div class="col-lg-12 p-l-5 d-flex">
                   <div class="p-8">
                     &nbsp;<i class="fa fa-phone"></i>&nbsp;

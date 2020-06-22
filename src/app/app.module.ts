@@ -38,7 +38,6 @@ import { AppReducer } from './store/app.reducer';
 import { AppEffects } from './store/app.effects';
 import { DemoMaterialModule } from './theme/shared/material/material.module';
 
-
 @NgModule({
   declarations: [
     AppComponent,

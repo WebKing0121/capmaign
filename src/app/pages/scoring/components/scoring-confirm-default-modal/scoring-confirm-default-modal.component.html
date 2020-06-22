@@ -1,0 +1,17 @@
+<div class="modal-content">
+  <div class="modal-body d-flex flex-column m-t-10">
+    <div class="text-center">
+      <i class="fas fa-exclamation-circle f-80 text-warning"></i>
+    </div>
+    <div class="f-40 text-center m-t-10">
+      <h1>Are you sure?</h1>
+    </div>
+    <div class="text-secondary m-t-20">
+      {{alertText}}
+    </div>
+    <div class="text-right m-t-10">
+      <span class="btn btn-secondary" (click)="onCancel()">Cancel</span>
+      <span class="btn btn-primary m-l-10" (click)="onYes()">Yes</span>
+    </div>
+  </div>
+</div>
