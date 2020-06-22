@@ -29,14 +29,14 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     {
       label: 'Create', icon: 'fa fa-plus', click: () => this.clickTemplate(),
       childs: [
-        { label: 'Create Email Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Email) },
-        { label: 'Create Mobile Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Mobile) },
-        { label: 'Create Social Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Social) },
-        { label: 'Create Google Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.GoogleAds) },
-        { label: 'Create Facebook Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
+        { label: 'Email Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Email) },
+        { label: 'Mobile Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Mobile) },
+        { label: 'Social Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Social) },
+        { label: 'Google Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.GoogleAds) },
+        { label: 'Facebook Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
       ]
     },
-    { label: 'Send', icon: 'far fa-envelope', click: () => this.onSendClicked() },
+    { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked() },
   ];
 
   selected: Campaign[] = [];
@@ -55,6 +55,21 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
+    // let url = 'https://someurl.com';
+    // let options = {
+    //             method: 'POST',
+    //             url: url,
+    //             headers: {
+    //                 'Accept': 'application/json',
+    //                 'Content-Type': 'application/json;charset=UTF-8'
+    //             },
+    //             data: {
+    //                 property_one: value_one,
+    //                 property_two: value_two
+    //             }
+    //         };
+    // let response = await axios(options);
+
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);
 
     this.tableSource.changed$
@@ -154,6 +169,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSendClicked() {
+    if(this.selected.length < 1)
+      return;
     this.modalService.openModal(CampaignSendModalComponent, {
       width: '80%',
       data: {

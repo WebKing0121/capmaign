@@ -52,4 +52,15 @@
     font-weight: bold;
     color: black;
   }
+
+  .edit-btn {
+
+    &:hover {
+      color: black;
+    }
+
+    &:active {
+      color: white;
+    }
+  }
 }

@@ -59,11 +59,11 @@ export class CampaignComponent implements OnInit {
   }
 
   onSave() {
-    this.router.navigate(['..'], {relativeTo: this.route});
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
   onCancel() {
-    this.router.navigate(['..'], {relativeTo: this.route});
+    this.router.navigate(['..'], { relativeTo: this.route });
   }
 
   sendEmail(mode: 'full' | 'test') {
