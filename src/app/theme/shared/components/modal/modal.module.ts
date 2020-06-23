@@ -8,6 +8,7 @@ import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { AddToListModalComponent } from './add-to-list-modal/add-to-list-modal.component';
 import { ModalContainerComponent } from './modal-container/modal-container.component';
 import { PortalModule } from '@angular/cdk/portal';
+import { ViewColumnsComponent } from './view-columns/view-columns.component';
 
 @NgModule({
   imports: [
@@ -22,12 +23,14 @@ import { PortalModule } from '@angular/cdk/portal';
     ConfirmModalComponent,
     ModalContainerComponent,
     AddToListModalComponent,
+    ViewColumnsComponent,
   ],
   exports: [
     UiModalComponent,
     AnimationModalComponent,
     ConfirmModalComponent,
     AddToListModalComponent,
+    ViewColumnsComponent
   ]
 })
 export class ModalModule { }

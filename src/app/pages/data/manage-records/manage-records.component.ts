@@ -9,11 +9,13 @@ import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 export class ManageRecordsComponent implements OnInit {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('addToListModal', { static: false }) addToListModal;
+  @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
 
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
     { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), hide: true },
+    { label: 'View Columns', icon: 'fa fa-eye', click: () => this.onClickViewColumns() },
   ];
 
   // confirm Modal
@@ -50,5 +52,9 @@ export class ManageRecordsComponent implements OnInit {
 
   onClickAddToList() {
     this.addToListModal.show();
+  }
+
+  onClickViewColumns() {
+    this.viewColumnsModal.show();
   }
 }
