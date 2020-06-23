@@ -19,6 +19,7 @@ export class ViewColumnsComponent implements OnInit, OnDestroy {
   allColumns: any[] = GridAllColumns;
 
   columns: any[];
+  filteredColumns: any[];
 
   private unsubscribe$ = new Subject();
   recordColumns$: Observable<GridColumn[]>;
@@ -27,11 +28,15 @@ export class ViewColumnsComponent implements OnInit, OnDestroy {
   viewColumns: any[];
   dataLoaded: number;
 
+  searchQuery: string;
+
   constructor(
     private dataService: DataService,
     private store: Store<AppState>
   ) {
+    this.searchQuery = '';
     this.columns = [];
+    this.filteredColumns = [];
     this.customFields = [];
     this.viewColumns = [];
     this.dataLoaded = 0;
@@ -50,11 +55,12 @@ export class ViewColumnsComponent implements OnInit, OnDestroy {
         data => {
           if (data.result) {
             this.customFields = data.result.items;
-            
+
           } else {
             this.customFields = [];
           }
           this.columns = [...this.allColumns, ...this.customFields.map(x => ({ name: x.displayName, selected: false }))];
+          this.filteredColumns = this.columns;
           this.dataLoaded++;
         },
         error => {
@@ -72,9 +78,10 @@ export class ViewColumnsComponent implements OnInit, OnDestroy {
   }
 
   checkLoaded() {
-    console.log(this.dataLoaded);
+
     if (this.dataLoaded === 2) {
       this.columns = this.columns.map(x => this.viewColumns.indexOf(x.name) >= 0 ? ({ name: x.name, selected: true }) : x);
+      this.filteredColumns = this.columns;
     } else {
       setTimeout(() => this.checkLoaded);
     }
@@ -83,6 +90,18 @@ export class ViewColumnsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  onChangeSearchQuery(event) {
+    this.getFilteredList(event);
+  }
+
+  getFilteredList(searchQuery: string) {
+    if (searchQuery === '') {
+      this.filteredColumns = this.columns;
+    } else {
+      this.filteredColumns = this.columns.filter(x => x.name.toLowerCase().indexOf(searchQuery.toLowerCase()) >= 0);
+    }
   }
 
   onClickSave() {

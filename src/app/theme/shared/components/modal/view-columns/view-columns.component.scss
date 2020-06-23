@@ -1,3 +1,11 @@
+.search-group {
+  position: relative;
+  margin-bottom: 20px;
+  .search-icon {
+    left: 15px;
+  }
+}
+
 .columns-container {
   height: 300px;
   overflow: auto;
@@ -5,11 +13,14 @@
     columns: 4;
 
     .column {
-      height: 25px;
+      height: 35px;
       font-size: 15px;
       align-items: center;
       display: inline-block;
       width: 100%;
+      input[type="checkbox"] {
+        margin-right: 10px;
+      }
     }
   }
 }

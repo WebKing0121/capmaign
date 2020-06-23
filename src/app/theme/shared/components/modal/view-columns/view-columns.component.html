@@ -7,11 +7,18 @@
 		</button>
 	</div>
 	<div class="app-modal-body">
-		<input placeholder="Search Columns" />
+		<div class="search-group">
+			<input class="search-list" (ngModelChange)="onChangeSearchQuery($event)" [(ngModel)]="searchQuery" placeholder="Search Columns" />
+			<span class="search-icon">
+				<i class="fa fa-search"></i>
+			</span>
+		</div>
 		<div class="columns-container">
 			<div class="columns">
-				<label *ngFor="let column of columns" class="column">
-					<input type="checkbox" [value]="column.selected" />
+				<label *ngFor="let column of filteredColumns" class="datatable-checkbox column">
+					<input type="checkbox" [(ngModel)]="column.selected"
+						[ngModelOptions]="{standalong: true}"
+					/>
 					{{column.name}}
 				</label>
 			</div>
