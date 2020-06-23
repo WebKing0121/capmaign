@@ -7,15 +7,19 @@
 		</button>
 	</div>
 	<div class="app-modal-body">
-		<div class="columns">
-			<label *ngFor="let column of columns" class="column">
-				<input type="checkbox" [value]="column.selected" />
-				{{column.name}}
-			</label>
+		<input placeholder="Search Columns" />
+		<div class="columns-container">
+			<div class="columns">
+				<label *ngFor="let column of columns" class="column">
+					<input type="checkbox" [value]="column.selected" />
+					{{column.name}}
+				</label>
+			</div>
 		</div>
 	</div>
 	<div class="app-modal-footer">
 		<button type="button" class="btn btn-primary mr-2" (click)="onClickSave()">Save</button>
-		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="viewColumnsModal.hide()">Close</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal"
+			(click)="viewColumnsModal.hide()">Close</button>
 	</div>
 </app-ui-modal>

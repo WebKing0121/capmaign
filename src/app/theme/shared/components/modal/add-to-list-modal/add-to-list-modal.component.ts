@@ -82,7 +82,6 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
 
   ngAfterViewInit(): void {
     this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
-      console.log(data);
       if (data) {
         const columns = data.map((x: GridColumn) => ({
           name: x.columnName, prop: this.capitalize(x.columnName), sortable: true

@@ -1,6 +1,15 @@
-.columns {
-  columns: 4;
-  .column {
-    display: block;
+.columns-container {
+  height: 300px;
+  overflow: auto;
+  .columns {
+    columns: 4;
+
+    .column {
+      height: 25px;
+      font-size: 15px;
+      align-items: center;
+      display: inline-block;
+      width: 100%;
+    }
   }
 }

@@ -50,10 +50,11 @@ export class ViewColumnsComponent implements OnInit, OnDestroy {
         data => {
           if (data.result) {
             this.customFields = data.result.items;
+            
           } else {
             this.customFields = [];
           }
-          this.columns = [...this.allColumns, this.customFields.map(x => ({ name: x.displayName, selected: false }))];
+          this.columns = [...this.allColumns, ...this.customFields.map(x => ({ name: x.displayName, selected: false }))];
           this.dataLoaded++;
         },
         error => {
@@ -63,9 +64,9 @@ export class ViewColumnsComponent implements OnInit, OnDestroy {
 
     this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       if (data) {
-        this.viewColumns = data.map((x: GridColumn) => (x.columnName));
+        this.viewColumns = data.map((x: GridColumn) => x.columnName);
+        this.dataLoaded++;
       }
-      this.dataLoaded++;
     });
     setTimeout(() => this.checkLoaded());
   }

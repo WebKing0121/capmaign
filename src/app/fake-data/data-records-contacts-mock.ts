@@ -1,4 +1,4 @@
-export const ContactsMock={
+export const ContactsMock = {
   result: {
     totalCount: 3,
     items: [
