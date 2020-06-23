@@ -1,0 +1,51 @@
+<div class="card m-15">
+  <div class="card-body p-0">
+    <form [formGroup]="formGroup">
+      <div class="col-lg-12 d-flex bg-secondary text-white p-10" style="align-items: center;">
+        <div class="col-md-4 d-flex">
+          <div class="d-flex m-r-5" style="align-items: center;">
+            <span>Profile Rules-Lead</span>
+          </div>
+          <div>
+            <input type="text" class="form-control" formControlName="attitude">
+          </div>
+        </div>
+        <div class="col-md-4 d-flex" style="align-items: center;">
+          <div class="d-flex m-r-5" style="align-items: center;">
+            <span>Value Type</span>
+          </div>
+          <div class="d-flex m-r-5" style="align-items: center;">
+            <input type="text" class="form-control" formControlName="valueType">
+          </div>
+        </div>
+        <div class="col-md-4 d-flex">
+          <div class="d-flex m-r-5" style="align-items: center;">
+            <span>Weightage</span>
+          </div>
+          <div class="d-flex m-r-5" style="align-items: center;">
+            <input type="text" class="form-control" formControlName="weightage">
+          </div>
+          <div class="d-flex m-l-10" style="align-items: center;">
+            <span><i class="btn btn-danger fa fa-trash-alt p-10" (click)="remove_me()"></i></span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-12 d-flex m-t-10">
+        <div class="col-sm-3 d-flex" style="align-items: center;">
+          <span>Rule Description</span>
+        </div>
+        <div class="col-sm-3 d-flex" style="align-items: center;">
+          <span>Condition</span>
+        </div>
+        <div class="col-sm-3 d-flex" style="align-items: center;">
+          <span>Value</span>
+        </div>
+        <div class="col-sm-3 d-flex" style="align-items: center;">
+          <div class="col-sm-10">Point</div>
+          <div class="btn btn-success f-20 font-weight-bold" style="padding: 0 10px;" (click)="add()">+</div>
+        </div>
+      </div>
+      <ng-template #ruleList></ng-template>
+    </form>
+  </div>
+</div>
