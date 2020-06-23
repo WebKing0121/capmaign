@@ -19,14 +19,14 @@ import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-s
   styleUrls: ['./lead-scoring.component.scss']
 })
 export class LeadScoringComponent implements OnInit {
-  
+
   destroy$ = new Subject();
   leadScoringData: Scoring[];
   selected: Scoring[] = [];
 
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
-  
+
 
   tableSource: DataTableSource<Scoring> = new DataTableSource<Scoring>(50);
   tableButtons = [
@@ -56,7 +56,7 @@ export class LeadScoringComponent implements OnInit {
           console.log('error', error);
         }
       );
-    
+
     this.tableSource.next(this.leadScoringData.slice(0, 50), this.leadScoringData.length);
 
     this.tableSource.changed$
@@ -110,7 +110,7 @@ export class LeadScoringComponent implements OnInit {
   onActive(event) {
     // TODO: Simplify later
     if (event.type === 'click') {
-      switch(event.cellIndex) {
+      switch (event.cellIndex) {
         case 3:
         case 4:
         case 5:
@@ -128,7 +128,7 @@ export class LeadScoringComponent implements OnInit {
         scoring: event.row,
         selectedIdx: event.cellIndex
       }
-    })
+    });
   }
 
   onCheckClick(e) {

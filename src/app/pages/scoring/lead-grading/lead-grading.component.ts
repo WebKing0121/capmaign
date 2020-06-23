@@ -98,7 +98,7 @@ export class LeadGradingComponent implements OnInit {
     this.modalService.openModal(CreateLeadGradingComponent, {
       width: '80%',
       data: {}
-    })
+    });
   }
 
   onActive(event) {
@@ -123,7 +123,7 @@ export class LeadGradingComponent implements OnInit {
         scoring: event.row,
         selectedIdx: idx
       }
-    })
+    });
   }
 
   onCheckClick(e) {

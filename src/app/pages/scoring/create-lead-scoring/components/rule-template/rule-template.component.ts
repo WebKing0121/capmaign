@@ -9,10 +9,10 @@ import { LeadScoringTemplateComponent } from '../lead-scoring-template/lead-scor
 })
 export class RuleTemplateComponent implements OnInit {
 
-  public unique_key: number;
+  public uniqueKey: number;
   public parentRef: LeadScoringTemplateComponent;
 
-  formGroup:FormGroup;
+  formGroup: FormGroup;
 
 
   constructor(
@@ -29,6 +29,6 @@ export class RuleTemplateComponent implements OnInit {
   }
 
   remove_me() {
-    this.parentRef.remove(this.unique_key);
+    this.parentRef.remove(this.uniqueKey);
   }
 }

@@ -115,7 +115,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true},
+      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Subject', prop: 'subject', sortable: true },
       { name: 'Type', prop: 'type', sortable: true, maxWidth: 90, custom: true, template: this.tableColumnTypeTemplate },
       { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
@@ -133,7 +133,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       switch (campaign.type) {
         case CampaignType.Email: {
-          this.router.navigate([campaign.id], {relativeTo: this.route});
+          this.router.navigate([campaign.id], { relativeTo: this.route });
           return;
         }
         case CampaignType.Mobile: {
@@ -147,7 +147,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   onCampaignTypeClicked(type: CampaignType) {
     switch (type) {
       case CampaignType.Email: {
-        this.router.navigate(['new-email'], {relativeTo: this.route});
+        this.router.navigate(['new-email'], { relativeTo: this.route });
         return;
       }
       case CampaignType.Mobile: {
@@ -169,13 +169,15 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onSendClicked() {
-    if(this.selected.length < 1)
+    if (this.selected.length < 1) {
       return;
-    this.modalService.openModal(CampaignSendModalComponent, {
-      width: '80%',
-      data: {
-        campaign: this.tableSource.selected[0]
-      }
-    });
+    } else {
+      this.modalService.openModal(CampaignSendModalComponent, {
+        width: '80%',
+        data: {
+          campaign: this.tableSource.selected[0]
+        }
+      });
+    }
   }
 }

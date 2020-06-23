@@ -28,7 +28,7 @@ export class ScoringConfirmDefaultModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    switch(this.props.selectedIdx) {
+    switch (this.props.selectedIdx) {
       case -1:
         this.alertText = 'Please add atleast one Profile Rule';
         this.hiddenCancelbtn = true;
@@ -43,10 +43,9 @@ export class ScoringConfirmDefaultModalComponent implements OnInit {
         this.alertText = 'Are You Sure You want to make this profile as lead scoring profile for website';
         break;
       case 6:
-        console.log(this.props.scoring.isActive)
         this.alertText = this.props.scoring.isActive
-                          ? 'Are you sure you want to deactivate this Lead Scoring Profile'
-                          : 'Are you sure you want to activate this Lead Scoring Profile'
+          ? 'Are you sure you want to deactivate this Lead Scoring Profile'
+          : 'Are you sure you want to activate this Lead Scoring Profile';
         break;
     }
   }

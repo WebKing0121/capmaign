@@ -9,11 +9,11 @@ import { CreateLeadGradingComponent } from '../create-lead-grading.component';
 })
 export class RuleComponent implements OnInit {
 
-  public unique_key: number;
+  public uniqueKey: number;
   public parentRef: CreateLeadGradingComponent;
 
-  formGroup:FormGroup;
-  
+  formGroup: FormGroup;
+
   constructor(
     private fb: FormBuilder
   ) { }
@@ -28,6 +28,6 @@ export class RuleComponent implements OnInit {
   }
 
   remove() {
-    this.parentRef.remove(this.unique_key);
+    this.parentRef.remove(this.uniqueKey);
   }
 }

@@ -14,8 +14,8 @@ export class CreateLeadGradingComponent implements OnInit {
   @ViewChild('ruleList', { read: ViewContainerRef })
   ruleList: ViewContainerRef;
 
-  child_unique_key: number = 0;
-  rulesReferences = Array<ComponentRef<RuleComponent>>()
+  childUniqueKey: number;
+  rulesReferences = Array<ComponentRef<RuleComponent>>();
   formGroup: FormGroup;
 
   constructor(
@@ -23,56 +23,58 @@ export class CreateLeadGradingComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private modalService: ModalService,
     @Inject(ModalRef) private modalRef: ModalRef<CreateLeadGradingComponent>,
-  ) { }
+  ) {
+    this.childUniqueKey = 0;
+  }
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
       searchLeadItem: '',
       profileName: ['', [Validators.required]],
-      profileDescription: '',
-      
-    })
+      profileDescription: ''
+    });
   }
 
   ngAfterViewInit() {
-    
+
   }
 
   onSearch(e) {
-    console.log("_______________", e);
   }
 
   add() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(RuleComponent);
     const ruleRef = this.ruleList.createComponent(componentFactory);
-    let rule = ruleRef.instance;
-    rule.unique_key = ++this.child_unique_key;
+    const rule = ruleRef.instance;
+    rule.uniqueKey = ++this.childUniqueKey;
     rule.parentRef = this;
     this.rulesReferences.push(ruleRef);
   }
 
   remove(key: number) {
-    if (this.ruleList.length < 1) return;
+    if (this.ruleList.length < 1) {
+      return;
+    } else {
+      const componentRef = this.rulesReferences.filter(
+        x => x.instance.uniqueKey === key
+      )[0];
 
-    let componentRef = this.rulesReferences.filter(
-      x => x.instance.unique_key == key
-    )[0];
-
-    let vcrIndex: number = this.ruleList.indexOf(componentRef.hostView);
-    this.ruleList.remove(vcrIndex);
-    this.rulesReferences = this.rulesReferences.filter(
-      x => x.instance.unique_key !== key
-    );
+      const vcrIndex: number = this.ruleList.indexOf(componentRef.hostView);
+      this.ruleList.remove(vcrIndex);
+      this.rulesReferences = this.rulesReferences.filter(
+        x => x.instance.uniqueKey !== key
+      );
+    }
   }
 
   onSaveClick() {
-    if(this.ruleList.length<1) {
+    if (this.ruleList.length < 1) {
       this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
         width: '400px',
         data: {
           selectedIdx: -1
         }
-      })
+      });
     } else {
       this.modalRef.cancel();
     }
