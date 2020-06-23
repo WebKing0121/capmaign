@@ -1,0 +1,50 @@
+
+<div class="card mt-4" style="height: calc( 100vh - 120px );">
+  <div class="card-header">
+    <div class="f-24 text-primary">
+      <span>CREATE LEAD GRADING PROFILE</span>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="formGroup">
+      <div class="col-lg-12 d-flex">
+        <label class="col-lg-6">
+          Name<span class="text-danger">*</span>
+          <input class="form-control m-t-10" formControlName="profileName" type="text" required>
+        </label>
+        <label class="col-lg-6">
+          Description
+          <input class="form-control m-t-10" formControlName="profileDescription" type="text">
+        </label>
+      </div>
+      <div class="card" style="margin: 30px;">
+        <div class="card-header bg-secondary">
+          <span class="text-white">Profile Rules</span>
+        </div>
+        <div class="card-body">
+          <div class="col-lg-12 d-flex">
+            <div class="col-sm-4">
+              <span>Rule Description</span>
+            </div>
+            <div class="col-sm-4 d-flex">
+              <div class="col-sm-6">Greater Than/<br>Equal To</div>
+              <div class="col-sm-6">Less Than</div>
+            </div>
+            <div class="col-sm-4 d-flex">
+              <div class="col-sm-10">Grade</div>
+              <div class="btn btn-success f-20 font-weight-bold" (click)="add()">+</div>
+            </div>
+          </div>
+          <ng-template #ruleList ></ng-template>
+        </div>
+      </div>
+      <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
+        <div>
+          <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i class="fa fa-save m-r-10"></i>Save</span>
+          <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i class="fa fa-save m-r-10"></i>Save</span>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

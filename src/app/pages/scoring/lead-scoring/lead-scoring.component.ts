@@ -11,6 +11,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { stringify } from 'querystring';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
 
 @Component({
   selector: 'app-lead-scoring',
@@ -99,7 +100,11 @@ export class LeadScoringComponent implements OnInit {
   }
 
   createLeadScoring() {
-    this.router.navigate(['create-new-scoring'], {relativeTo: this.route});
+    // this.router.navigate(['create-new-scoring'], {relativeTo: this.route});
+    this.modalService.openModal(CreateLeadScoringComponent, {
+      width: '80%',
+      data: {}
+    });
   }
 
   onActive(event) {

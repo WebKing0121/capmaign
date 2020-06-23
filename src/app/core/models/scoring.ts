@@ -27,3 +27,14 @@ export class Lead {
   weightage: number;
   rulList: Rule[];
 }
+
+export class Grading {
+  id: string;
+  name: string;
+  description: string;
+  isDefaultForNewRecord: boolean;
+  isDefaultForCampaign: boolean;
+  isActive: boolean;
+  isStatic: boolean;
+  [name: string]: any;
+}

@@ -1,0 +1,29 @@
+<div class="p-10">
+  <form [formGroup]="formGroup">
+    <div class="col-lg-12 d-flex">
+      <div class="col-sm-4">
+        <input type="text" class="form-control" formControlName="description">
+      </div>
+      <div class="col-sm-4 d-flex">
+        <div class="col-sm-6">
+          <input type="number" class="form-control" formControlName="min">
+        </div>
+        <div class="col-sm-6">
+          <input type="number" class="form-control" formControlName="max">
+        </div>
+      </div>
+      <div class="col-sm-4 d-flex">
+        <div class="col-sm-10">
+          <select class="form-control" formControlName="grade">
+            <option value="a">A</option>
+            <option value="b">B</option>
+            <option value="c">C</option>
+          </select>
+        </div>
+        <div class="btn btn-danger f-20 font-weight-bold d-flex p-0" style="align-items: center;">
+          <i class="fa fa-trash-alt p-10" (click)="remove()"></i>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
