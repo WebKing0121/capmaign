@@ -1,0 +1,51 @@
+<app-ui-modal #addToListModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl'">
+	<div class="app-modal-header">
+		<h5 class="modal-title">{{modalTitle}}</h5>
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="addToListModal.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="app-modal-body">
+		<div class="row">
+			<div class="col-md-4">
+				<div class="search-group">
+					<input class="search-list" (ngModelChange)="onChangeSearchQuery($event)" [(ngModel)]="searchQuery" placeholder="Search" />
+					<span class="search-icon">
+						<i class="fa fa-search"></i>
+					</span>
+				</div>
+				<ul class='list-group mt-3'>
+					<li *ngFor="let item of filteredList" (click)="onClickList(item.listId)"
+						[ngClass]="{'selected': item.listId===selectedListId}">
+						<div class="list-name">
+							{{item.name}}
+						</div>
+						<div class="list-type">
+							{{item.type}}
+						</div>
+					</li>
+				</ul>
+			</div>
+			<div class="col-md-8 records-table">
+				<app-datatable
+					[title]="'Assigned Records'"
+					[buttons]="tableButtons"
+					[dataSource]="tableSource"
+					[rowHeight]="35"
+					[selectable]="true"
+					[headerHeight]="40"
+					[selectionType]="'checkbox'"
+					(activate)="onActive($event)"
+				></app-datatable>
+			</div>
+		</div>
+	</div>
+	<div class="app-modal-footer">
+		<button type="button" class="btn btn-primary mr-2" (click)="onClickAdd()">Add</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addToListModal.hide()">Close</button>
+	</div>
+</app-ui-modal>
+
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to remove selected records from the list?"
+	[buttons]="confirmButtons"></app-confirm-modal>

@@ -1,18 +1,18 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Event } from '@app-models/event';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataService } from '@app-services/data.service';
 import { EventService } from '@app-services/event.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
-import { NgSelectData } from '@app-models/common';
+import { NgSelectData, GridColumn } from '@app-models/common';
 import { List } from '@app-models/list';
-import * as moment from 'moment';
+import { Store } from '@ngrx/store';
+import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
 
 @Component({
   selector: 'app-data-lists',
@@ -22,10 +22,10 @@ import * as moment from 'moment';
 })
 export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('listModal', { static: false }) listModal;
-  @ViewChild('confirmModal', { static: false }) confirmModal;
+  @ViewChild('dataRecordsModal', { static: false }) dataRecordsModal;
 
-  @ViewChild('templateDisplayFrom') templateDisplayFrom: TemplateRef<any>;
-  @ViewChild('templateFolder') templateFolder: TemplateRef<any>;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
+  @ViewChild('confirmRemoveRecordsModal', { static: false }) confirmRemoveRecordsModal;
 
   private unsubscribe$ = new Subject();
 
@@ -39,6 +39,20 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
   ];
 
+  records: any[];
+
+  // columns
+  recordColumns$: Observable<GridColumn[]>;
+
+  // Records Tables
+  tableSourceRecords: DataTableSource<any> = new DataTableSource<any>(50);
+  totalRecordsCount: number;
+  selectedRecords: any[] = [];
+  recordsTableButtons = [
+    { label: 'Add Records', icon: 'fa fa-plus', click: () => this.onClickAddRecords(), hide: true },
+    { label: 'Remove Records', icon: 'fa fa-trash', click: () => this.onClickRemoveRecords(), color: 'red', hide: true },
+  ];
+
   // add, edit list modal
   isModalNew: boolean;
   listForm: FormGroup;
@@ -47,6 +61,11 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
+  confirmRemoveRecordsButtons = [
+    { label: 'Yes', action: this.onRemoveRecordsConfirm.bind(this), class: 'btn-primary' }
+  ];
+
+  tableRecordsButtons = [];
 
   typeList: NgSelectData[];
   folderList: NgSelectData[];
@@ -58,7 +77,8 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private dataService: DataService,
-    private eventService: EventService
+    private eventService: EventService,
+    private store: Store<AppState>
   ) {
     this.totalCount = 0;
     this.lists = [];
@@ -71,6 +91,7 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
       type: ['', Validators.required],
     });
     this.dataLoaded = 0;
+    this.recordColumns$ = this.store.select(selectRecordColumns);
   }
 
   ngOnInit(): void {
@@ -117,6 +138,12 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('error', error.response);
         }
       );
+
+    this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res) => res === null && this.store.dispatch({
+        type: AppTypes.GetRecordColumns
+      }));
+
     setTimeout(() => this.checkLoaded());
   }
 
@@ -133,23 +160,30 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Description', prop: 'description', sortable: true },
-      {
-        name: 'Modification Date', prop: 'lastModificationTime', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
-      },
-      {
-        name: 'Creation Date', prop: 'creationTime', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
-      },
-      { name: 'Type', prop: 'type', sortable: true },
-      { name: 'Folder', prop: 'folderName', sortable: true },
+      { name: 'Type', prop: 'type', sortable: true, maxWidth: 100 },
+      { name: 'Records', prop: 'records', sortable: true, maxWidth: 80 }
     ];
     this.tableSource.setColumns(columns);
+
+    this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
+      if (data) {
+        const columnsRecords = data.map((x: GridColumn) => ({
+          name: x.columnName, prop: this.capitalize(x.columnName), sortable: true
+        }));
+        this.tableSourceRecords.setColumns(columnsRecords);
+      }
+    });
+  }
+
+  capitalize = (s: string) => {
+    const str = s.split(' ').join('');
+    return str.charAt(0).toLowerCase() + str.slice(1);
   }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+
   }
 
   _updateTable(lists: List[]) {
@@ -170,12 +204,49 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
+  _updateRecordsTable(records: any[]) {
+    this.tableSourceRecords.next(records.slice(0, 50), records.length);
+    this.tableSourceRecords.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(change => {
+        this.tableSourceRecords.next(
+          records.slice(
+            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+          records.length
+        );
+      });
+    this.tableSourceRecords.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selectedRecords = selected;
+      });
+  }
 
   onActive(evt) {
     if (evt.type === 'click') {
+      const list: List = evt.row as List;
       this.tableButtons[1].hide = false;
+      this.recordsTableButtons[0].hide = false;
+      this.recordsTableButtons[1].hide = true;
+      this.dataService.getRecordsByListId(list.listId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            if (data.result) {
+              this.records = data.result.items;
+              this.totalRecordsCount = data.result.totalCount;
+            } else {
+              this.records = [];
+              this.totalRecordsCount = 0;
+            }
+            this._updateRecordsTable(this.records);
+          },
+          error => {
+            console.log('error', error.response);
+          }
+        );
+
       if (evt.cellIndex === 0 && evt.column.frozenLeft) {
-        const list: List = evt.row as List;
         this.isModalNew = false;
 
         this.listForm.setValue({
@@ -185,7 +256,7 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
           folderId: `${list.folderId}`,
           type: list.type,
         });
-        console.log(this.listForm.value);
+
         this.listModal.show();
       }
     }
@@ -193,7 +264,14 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onClickCreate() {
     this.isModalNew = true;
-    this.listForm.reset();
+    this.listForm.setValue({
+      id: 0,
+      name: '',
+      description: '',
+      folderId: '0',
+      type: ''
+    });
+
     this.listModal.show();
   }
 
@@ -208,6 +286,33 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onConfirmDelete() {
     this.confirmModal.hide();
+  }
+
+  onClickAddRecords() {
+    this.dataRecordsModal.show();
+  }
+
+  onClickRemoveRecords() {
+    this.confirmRemoveRecordsModal.show();
+  }
+
+  onRemoveRecordsConfirm() {
+    this.confirmRemoveRecordsModal.hide();
+  }
+
+  // activate event in data-records table
+  onActiveRecords(event) {
+    if (event.type === 'click') {
+      this.recordsTableButtons[1].hide = this.selectedRecords.length === 0;
+    }
+  }
+
+  // activate event in data-records modal
+  onActiveRecordsTable(evt) {
+    const { event, selected } = evt;
+    if (event.type === 'checkbox') {
+      console.log(selected);
+    }
   }
 
   getTypeList(value: string | null) {

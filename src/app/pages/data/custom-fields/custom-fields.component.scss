@@ -1,9 +1,5 @@
-.card-lists, .card-records {
+.card-lists {
   height: calc(100vh - 130px);
-}
-
-.card-records {
-  padding-left: 0px;
 }
 
 .modal-list {
@@ -26,22 +22,13 @@
   ng-select > div {
     min-height: 45px !important;
   }
-
-  .data-records {
-    height: 400px !important;
-    margin-bottom: 0px;
-  }
-  .modal-body {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
 }
 
 .mobile-show {
   display: none;
 }
 @media only screen and (max-width: 575px) {
-  .card-lists, .card-records {
+  .card-lists {
     padding: 0px;
     height: 500px;
   }

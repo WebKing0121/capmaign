@@ -14,11 +14,14 @@ import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ManageRecordsComponent } from './manage-records/manage-records.component';
 import { ListsComponent } from './lists/lists.component';
+import { CustomFieldsComponent } from './custom-fields/custom-fields.component';
+
 
 @NgModule({
   declarations: [
     ManageRecordsComponent,
-    ListsComponent
+    ListsComponent,
+    CustomFieldsComponent
   ],
   imports: [
     CommonModule,

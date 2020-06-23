@@ -167,17 +167,11 @@ const NavigationItems = [
             url: '/data/lists',
             external: false
           }, {
-            id: 'data-event-lists',
-            title: 'Event Lists',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
             id: 'data-custom-fields',
             title: 'Custom Fields',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/data/custom-fields',
+            external: false
           }, {
             id: 'data-filters',
             title: 'Filters',
@@ -293,10 +287,25 @@ const NavigationItems = [
       {
         id: 'events',
         title: 'Events',
-        type: 'item',
+        type: 'collapse',
         icon: 'feather icon-square',
-        url: '/events/events',
-        external: false
+        url: 'javascript:',
+        children: [
+          {
+            id: 'data-event',
+            title: 'Events',
+            type: 'item',
+            url: '/events/events',
+            external: false,
+          },
+          {
+            id: 'data-event-lists',
+            title: 'Event Lists',
+            type: 'item',
+            url: '/events/lists',
+            external: false,
+          },
+        ]
       },
       {
         id: 'scoring',

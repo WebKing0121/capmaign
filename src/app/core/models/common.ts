@@ -15,6 +15,6 @@ export class GridColumn {
 
 export interface Tab {
   label: string;
-  link: string;
+  key: string;
   selected: boolean;
 }

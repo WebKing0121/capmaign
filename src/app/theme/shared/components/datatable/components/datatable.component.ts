@@ -56,11 +56,13 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   ngOnInit() {
     if (this.dataSource) {
       this.innerColumns = this.dataSource.columns;
+
       this.dataSource.columnsChanged$.pipe(
         takeUntil(this.destroy$)
       ).subscribe(columns => {
         this.innerColumns = columns;
       });
+
       this.limit = this.dataSource.pageSize;
 
       this.dataSource.data$.pipe(
@@ -99,7 +101,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
       this.handle.recalculate();
       this.handle.recalculatePages();
       this.handle.recalculateColumns();
-    }, 800);
+    });
   }
 
   onSelect(event: { selected: any[] }) {

@@ -2,7 +2,7 @@ import { GridColumn } from '@app-models/common';
 
 export const AllRecordGridColumnsMock: GridColumn[] = [
   {
-    columnName: 'RecordType',
+    columnName: 'Record Type',
     columnOrder: 0,
     columnWidth: 0,
     fieldName: '',
@@ -20,7 +20,7 @@ export const AllRecordGridColumnsMock: GridColumn[] = [
     userId: null,
   },
   {
-    columnName: 'FirstName',
+    columnName: 'First Name',
     columnOrder: 0,
     columnWidth: 0,
     fieldName: '',
@@ -29,7 +29,7 @@ export const AllRecordGridColumnsMock: GridColumn[] = [
     userId: null,
   },
   {
-    columnName: 'LastName',
+    columnName: 'Last Name',
     columnOrder: 0,
     columnWidth: 0,
     fieldName: '',

@@ -31,6 +31,7 @@ import { ChatWidgetComponent } from './components/chat-widget/chat-widget.compon
 import { GoPalleteComponent } from './components/go-pallete/go-pallete.component';
 import { GoDiagramComponent } from './components/go-diagram/go-diagram.component';
 import { DataRecordTabsComponent } from './components/data-record-tabs/data-record-tabs.component';
+import { DataRecordsComponent } from './components/data-records/data-records.component';
 /*import 'hammerjs';
 import 'mousetrap';
 import { GalleryModule } from '@ks89/angular-modal-gallery';*/
@@ -85,7 +86,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChatWidgetComponent,
     GoPalleteComponent,
     GoDiagramComponent,
-    DataRecordTabsComponent
+    DataRecordTabsComponent,
+    DataRecordsComponent
   ],
   declarations: [
     DataFilterPipe,
@@ -102,7 +104,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChatWidgetComponent,
     GoPalleteComponent,
     GoDiagramComponent,
-    DataRecordTabsComponent
+    DataRecordTabsComponent,
+    DataRecordsComponent
   ],
   providers: [
     {

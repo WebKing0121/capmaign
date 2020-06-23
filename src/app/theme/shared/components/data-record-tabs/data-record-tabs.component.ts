@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { Tab } from '@app-models/common';
 
@@ -10,8 +10,8 @@ import { Tab } from '@app-models/common';
 })
 export class DataRecordTabsComponent implements OnInit {
   @Input() tabs: Tab[] = [];
+  @Output() selectTab: EventEmitter<any> = new EventEmitter<any>();
   constructor(
-    private router: Router,
   ) {
 
   }
@@ -20,6 +20,6 @@ export class DataRecordTabsComponent implements OnInit {
   }
 
   onClickTab(tab: Tab) {
-    this.router.navigate([tab.link]);
+    this.selectTab.emit(tab);
   }
 }
