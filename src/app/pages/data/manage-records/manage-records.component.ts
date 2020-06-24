@@ -10,12 +10,15 @@ export class ManageRecordsComponent implements OnInit {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('addToListModal', { static: false }) addToListModal;
   @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
+  @ViewChild('importCSVModal', { static: false }) importCSVModal;
 
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
     { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), hide: true },
     { label: 'View Columns', icon: 'fa fa-eye', click: () => this.onClickViewColumns() },
+    { label: 'Import', icon: 'fa fa-upload', click: () => this.onClickImport() },
+    { label: 'Export', icon: 'fa fa-download', click: () => this.onClickExport() },
   ];
 
   // confirm Modal
@@ -56,5 +59,13 @@ export class ManageRecordsComponent implements OnInit {
 
   onClickViewColumns() {
     this.viewColumnsModal.show();
+  }
+
+  onClickImport() {
+    this.importCSVModal.show();
+  }
+
+  onClickExport() {
+
   }
 }
