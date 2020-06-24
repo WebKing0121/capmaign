@@ -1,0 +1,82 @@
+<div class="card">
+  <div class="card-header">
+    <span>{{ mode? 'Create ' : 'Edit ' }}LEAD CATEGORY PROFILE</span>
+  </div>
+
+  <div class="card-body">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="col-md-6 input-item">
+          <label class="mobile-show">Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Name</span></div>
+            <input type="text" formControlName="name" class="form-control ng-untouched ng-pristine ng-invalid">
+          </div>
+        </div>
+        <div class="col-md-6 input-item">
+          <label class="mobile-show">Lead Category</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Lead Category</span></div>
+            <select formControlName="leadCategoryType" class="form-control ng-untouched ng-pristine ng-invalid">
+              <option *ngFor="let item of leadCategoryTypeList" value="item.id">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 input-item">
+          <label class="mobile-show">Field Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Field Name</span></div>
+            <select formControlName="fieldName" class="form-control ng-untouched ng-pristine ng-invalid">
+              <option *ngFor="let item of fieldNameTypeList" value="item.id">{{item.value}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 input-item">
+          <label class="mobile-show">Criteria</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Criteria</span></div>
+            <input type="text" formControlName="criteria" disabled
+              class="form-control ng-untouched ng-pristine ng-invalid">
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header bg-secondary text-white">
+          <span>Category Fields</span>
+        </div>
+
+        <div class="card-body" style="max-height: calc(100vh - 450px); overflow-y: auto;">
+          <div class="row">
+            <div class="col-md-3">
+              <span>Category Name</span>
+            </div>
+            <div class="col-md-3">
+              <span>Value</span>
+            </div>
+            <div class="col-md-2">
+              <span>Score</span>
+            </div>
+            <div class="col-md-2">
+              <span>Condition</span>
+            </div>
+            <div class="col-md-2">
+              <span class="p-10" (click)="add()"><i class="fa fa-plus"></i></span>
+            </div>
+          </div>
+          <ng-template #categoryList></ng-template>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="card-footer">
+    <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
+      <div>
+        <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
+        <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i
+            class="fa fa-save m-r-10"></i>Save</span>
+        <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i
+            class="fa fa-save m-r-10"></i>Save</span>
+      </div>
+    </div>
+  </div>
+</div>

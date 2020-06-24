@@ -88,6 +88,8 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
           this.leadScoringCardList = list;
         }
       );
+
+      console.log("dkdkdkd", this.leadScoringCardList);
   }
 
   onSearch(e) {
@@ -122,6 +124,10 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
         x => x.instance.uniqueKey !== key
       );
     }
+  }
+
+  onCancelClick() {
+    this.modalRef.cancel();
   }
 
   onSaveClick() {

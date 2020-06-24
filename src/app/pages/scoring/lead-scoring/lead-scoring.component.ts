@@ -55,8 +55,6 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
       .subscribe(change => {
-        console.log('Campaign Table Changes: ', change);
-
         let mockData = [];
         if (change.search) {
           mockData = this.leadScoringData.filter(item =>

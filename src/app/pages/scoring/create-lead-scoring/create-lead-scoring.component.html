@@ -1,17 +1,42 @@
 <div class="card mt-4" style="height: calc( 100vh - 120px );">
   <div class="card-header">
-    <div class="f-24 text-primary">
-      <span>CREATE LEAD SCORING PROFILE</span>
-    </div>
+    <span>CREATE LEAD SCORING PROFILE</span>
   </div>
 
   <div class="card-body">
     <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="mobile-show">Profile Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Profile Name</span></div>
+            <input type="text" formcontrolname="profileName" class="form-control ng-untouched ng-pristine ng-invalid">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="mobile-show">Description</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Description</span></div>
+            <input type="text" formcontrolname="profileName"
+              class="form-control ng-untouched ng-pristine ng-invalid" ng-reflect-name="name">
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-3">
+          <div class="form-group">
+            <input class="form-control" formControlName="searchLeadCard" type="text"
+              placeholder="Search Lead Category" style="width: 100%;" (change)="onSearch($event)">
+          </div>
+          <div class="form-group">
+            <div *ngFor="let card of leadScoringCardList">
+              <span class="border border-secondary" style="margin: 10px 0; border-radius: 5px;">{{card.name}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="col-lg-12 d-flex">
         <div class="col-lg-3">
-          <div>
-            <input class="form-control" formControlName="searchLeadItem" type="text" placeholder="Search Lead Category" style="width: 100%;" (change)="onSearch($event)">
-          </div>
           <div class="">
             <div class="" style="height: calc(100vh - 250px); overflow-y: auto;">
               <div class="d-flex border border-secondary m-t-3" style="justify-content: space-between;">
@@ -35,27 +60,22 @@
         </div>
         <div class="col-lg-9">
           <div class="col-lg-12">
-            <label class="col-lg-6">
-              Lead Scoring Profile Name<span class="text-danger">*</span>
-              <input class="form-control m-t-10" formControlName="profileName" type="text">
-            </label>
-            <label class="col-lg-6">
-              Description
-              <input class="form-control m-t-10" formControlName="profileDescription" type="text">
-            </label>
-          </div>
-
-          <div class="col-lg-12">
-            <ng-template #leadCardList ></ng-template>
-          </div>
-          <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
-            <div>
-              <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i class="fa fa-save m-r-10"></i>Save</span>
-              <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i class="fa fa-save m-r-10"></i>Save</span>
-            </div>
+            <ng-template #leadCardList></ng-template>
           </div>
         </div>
       </div>
     </form>
+  </div>
+  <div class="card-footer">
+    {{formGroup.valid}}
+    <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
+      <div>
+        <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
+        <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i
+            class="fa fa-save m-r-10"></i>Save</span>
+        <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i
+            class="fa fa-save m-r-10"></i>Save</span>
+      </div>
+    </div>
   </div>
 </div>
