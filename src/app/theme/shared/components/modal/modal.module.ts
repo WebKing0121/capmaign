@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { PortalModule } from '@angular/cdk/portal';
+import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 import { UiModalComponent } from './ui-modal/ui-modal.component';
 import { AnimationModalComponent } from './animation-modal/animation-modal.component';
@@ -12,13 +13,16 @@ import { AddToListModalComponent } from './add-to-list-modal/add-to-list-modal.c
 import { ModalContainerComponent } from './modal-container/modal-container.component';
 import { ViewColumnsComponent } from './view-columns/view-columns.component';
 import { ImportCsvModalComponent } from './import-csv-modal/import-csv-modal.component';
+import { FileFormatOptionComponent } from './import-csv-modal/file-format-option/file-format-option.component';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     PortalModule,
     DatatableModule,
-    ArchwizardModule
+    ArchwizardModule,
+    FileUploadModule
   ],
   declarations: [
     UiModalComponent,
@@ -28,6 +32,7 @@ import { ImportCsvModalComponent } from './import-csv-modal/import-csv-modal.com
     AddToListModalComponent,
     ViewColumnsComponent,
     ImportCsvModalComponent,
+    FileFormatOptionComponent,
   ],
   exports: [
     UiModalComponent,
@@ -35,7 +40,8 @@ import { ImportCsvModalComponent } from './import-csv-modal/import-csv-modal.com
     ConfirmModalComponent,
     AddToListModalComponent,
     ViewColumnsComponent,
-    ImportCsvModalComponent
+    ImportCsvModalComponent,
+    FileFormatOptionComponent
   ]
 })
 export class ModalModule { }
