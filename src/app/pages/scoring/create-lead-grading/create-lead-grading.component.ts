@@ -75,6 +75,10 @@ export class CreateLeadGradingComponent implements OnInit {
     }
   }
 
+  onCancelClick() {
+    this.modalRef.cancel();
+  }
+
   onSaveClick() {
     if (this.ruleList.length < 1) {
       this.modalService.openModal(ScoringConfirmDefaultModalComponent, {

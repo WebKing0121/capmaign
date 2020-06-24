@@ -91,6 +91,7 @@ export class CreateLeadScoringComponent implements OnInit {
   }
 
   add(id) {
+    console.log("dkdkdk")
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(LeadCardComponent);
     const leadCardRef = this.leadCardList.createComponent(componentFactory);
     const leadCard = leadCardRef.instance;
