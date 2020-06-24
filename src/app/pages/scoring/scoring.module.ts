@@ -10,6 +10,10 @@ import { LeadTimeframesComponent } from './lead-timeframes/lead-timeframes.compo
 import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { ScoringConfirmDefaultModalComponent } from './components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadScoringComponent } from './create-lead-scoring/create-lead-scoring.component';
+import { CreateLeadGradingComponent } from './create-lead-grading/create-lead-grading.component';
+import { RuleComponent } from './create-lead-grading/rule/rule.component';
+import { LeadCardComponent } from './create-lead-scoring/components/lead-card/lead-card.component';
+import { RuleTemplateComponent } from './create-lead-scoring/components/rule-template/rule-template.component';
 
 
 @NgModule({
@@ -19,7 +23,11 @@ import { CreateLeadScoringComponent } from './create-lead-scoring/create-lead-sc
     LeadCategoryComponent,
     LeadTimeframesComponent,
     ScoringConfirmDefaultModalComponent,
-    CreateLeadScoringComponent
+    CreateLeadScoringComponent,
+    CreateLeadGradingComponent,
+    RuleComponent,
+    LeadCardComponent,
+    RuleTemplateComponent
   ],
   imports: [
     CommonModule,

@@ -1,31 +1,27 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
-import { CampaignType } from '@app-core/enums/campaign-type.enum';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
-import { Campaign } from '@app-core/models/campaign';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ScoringService } from '@app-core/services/scoring.service';
 import { Scoring } from '@app-core/models/scoring';
-import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
-import { stringify } from 'querystring';
-import { Router, ActivatedRoute } from '@angular/router';
+import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
 
 @Component({
   selector: 'app-lead-scoring',
   templateUrl: './lead-scoring.component.html',
   styleUrls: ['./lead-scoring.component.scss']
 })
-export class LeadScoringComponent implements OnInit {
-  
+export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
+
   destroy$ = new Subject();
   leadScoringData: Scoring[];
   selected: Scoring[] = [];
 
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
-  
+
 
   tableSource: DataTableSource<Scoring> = new DataTableSource<Scoring>(50);
   tableButtons = [
@@ -35,8 +31,6 @@ export class LeadScoringComponent implements OnInit {
   ];
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private scoringService: ScoringService,
     private modalService: ModalService
   ) {
@@ -55,7 +49,7 @@ export class LeadScoringComponent implements OnInit {
           console.log('error', error);
         }
       );
-    
+
     this.tableSource.next(this.leadScoringData.slice(0, 50), this.leadScoringData.length);
 
     this.tableSource.changed$
@@ -83,6 +77,12 @@ export class LeadScoringComponent implements OnInit {
       .subscribe(selected => {
         this.selected = selected;
       });
+      
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 
   ngAfterViewInit(): void {
@@ -99,13 +99,28 @@ export class LeadScoringComponent implements OnInit {
   }
 
   createLeadScoring() {
-    this.router.navigate(['create-new-scoring'], {relativeTo: this.route});
+    this.modalService.openModal(CreateLeadScoringComponent, {
+      width: '80%',
+      data: {
+        mode: 'new'
+      }
+    });
   }
 
   onActive(event) {
     // TODO: Simplify later
     if (event.type === 'click') {
-      switch(event.cellIndex) {
+      switch (event.cellIndex) {
+        case 1:
+          const scoring = event.row as Scoring;
+          this.modalService.openModal(CreateLeadScoringComponent, {
+            width: '80%',
+            data: {
+              scoring: scoring,
+              mode: 'edit'
+            }
+          })
+          break;
         case 3:
         case 4:
         case 5:
@@ -123,7 +138,7 @@ export class LeadScoringComponent implements OnInit {
         scoring: event.row,
         selectedIdx: event.cellIndex
       }
-    })
+    });
   }
 
   onCheckClick(e) {

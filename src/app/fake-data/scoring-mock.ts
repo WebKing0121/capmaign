@@ -1,5 +1,7 @@
 import { Scoring } from '@app-models/scoring';
-import { Lead } from '@app-models/scoring';
+import { LeadCard } from '@app-models/scoring';
+import { Grading } from '@app-core/models/scoring';
+import { LeadScoringRuleConditionType } from '@app-core/enums/scoring-type.enum';
 
 export const LeadScoringMockData: Scoring[] = [
   {
@@ -213,20 +215,106 @@ export const LeadScoringMockData: Scoring[] = [
     isStatic: false
   },
 ];
-// id: string;
-//   name: string;
-//   profileRulesLeadAttribute: string;
-//   valueType: number;
-//   weightage: number;
-//   rulList: Rule[];
 
-export const LeadList: Lead[] = [
+export const LeadScoringCardListMockData: LeadCard[] = [
   {
     id: '0',
-    name: 'GAWebsite',
+    name: 'New2020',
     profileRulesLeadAttribute: 'isSubscribed',
     valueType: 'boolean',
     weightage: 0,
-    rulList: []
+    rulList: [
+      {
+        id: '0',
+        ruleDescription: 'FirstName',
+        condition: LeadScoringRuleConditionType.Equals,
+        value: 'Manoj',
+        points: 10
+      },
+      {
+        id: '1',
+        ruleDescription: 'Location',
+        condition: LeadScoringRuleConditionType.Contains,
+        value: 'Delhi',
+        points: 5
+      },
+      {
+        id: '2',
+        ruleDescription: 'FirstName',
+        condition: LeadScoringRuleConditionType.Contains,
+        value: 'Mumbai',
+        points: 5
+      },
+    ]
+  },
+  {
+    id: '1',
+    name: 'GA2020',
+    profileRulesLeadAttribute: 'isSubscribed',
+    valueType: 'boolean',
+    weightage: 0,
+    rulList: [
+      {
+        id: '0',
+        ruleDescription: 'FirstName',
+        condition: LeadScoringRuleConditionType.Equals,
+        value: 'Manoj',
+        points: 10
+      },
+      {
+        id: '1',
+        ruleDescription: 'Location',
+        condition: LeadScoringRuleConditionType.Contains,
+        value: 'Delhi',
+        points: 5
+      },
+      {
+        id: '2',
+        ruleDescription: 'FirstName',
+        condition: LeadScoringRuleConditionType.Contains,
+        value: 'Mumbai',
+        points: 5
+      },
+    ]
+  }
+];
+
+
+export const LeadGradingMockData: Grading[] = [
+  {
+    id: '0',
+    name: 'Default Grading',
+    description: '',
+    isDefaultForNewRecord: true,
+    isDefaultForCampaign: true,
+    isActive: true,
+    isStatic: false
+  },
+  {
+    id: '1',
+    name: 'Records Grading',
+    description: '',
+    isDefaultForNewRecord: false,
+    isDefaultForCampaign: false,
+    isActive: true,
+    isStatic: false
+  },
+  {
+    id: '2',
+    name: 'Lead grading profile',
+    description: 'This is the lead grading profile for leads',
+    isDefaultForNewRecord: false,
+    isDefaultForCampaign: false,
+    isActive: true,
+    isStatic: false
+  },
+  {
+    id: '3',
+    name: 'Demarcation',
+    description: 'Sample',
+    isDefaultForNewRecord: false,
+    isDefaultForCampaign: false,
+    isActive: true,
+    isStatic: false
   }
 ];
