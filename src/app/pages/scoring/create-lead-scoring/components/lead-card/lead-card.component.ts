@@ -6,7 +6,7 @@ import { LeadCard } from '@app-core/models/scoring';
 import { MODAL_DATA } from '@app-components/modal/modal-ref';
 
 interface ComponentProps {
-  card: LeadCard
+  card: LeadCard;
 }
 
 @Component({
@@ -57,7 +57,7 @@ export class LeadCardComponent implements OnInit {
 
   remove(key: number) {
     if (this.ruleList.length < 1) {
-      return
+      return;
     } else {
       const componentRef = this.rulesReferences.filter(
         x => x.instance.uniqueKey === key
