@@ -2,13 +2,19 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, Component
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CreateLeadScoringComponent } from '../../create-lead-scoring.component';
 import { RuleTemplateComponent } from '../rule-template/rule-template.component';
+import { LeadCard } from '@app-core/models/scoring';
+import { MODAL_DATA } from '@app-components/modal/modal-ref';
+
+interface ComponentProps {
+  card: LeadCard
+}
 
 @Component({
-  selector: 'app-lead-scoring-template',
-  templateUrl: './lead-scoring-template.component.html',
-  styleUrls: ['./lead-scoring-template.component.scss']
+  selector: 'app-lead-card',
+  templateUrl: './lead-card.component.html',
+  styleUrls: ['./lead-card.component.scss']
 })
-export class LeadScoringTemplateComponent implements OnInit {
+export class LeadCardComponent implements OnInit {
 
   public uniqueKey: number;
   public parentRef: CreateLeadScoringComponent;
@@ -23,6 +29,7 @@ export class LeadScoringTemplateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
+    @Inject(MODAL_DATA) private props: ComponentProps
   ) {
     this.childUniqueKey = 0;
   }

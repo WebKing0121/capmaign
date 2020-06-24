@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { LeadScoringTemplateComponent } from '../lead-scoring-template/lead-scoring-template.component';
+import { LeadCardComponent } from '../lead-card/lead-card.component';
 
 @Component({
   selector: 'app-rule-template',
@@ -10,7 +10,7 @@ import { LeadScoringTemplateComponent } from '../lead-scoring-template/lead-scor
 export class RuleTemplateComponent implements OnInit {
 
   public uniqueKey: number;
-  public parentRef: LeadScoringTemplateComponent;
+  public parentRef: LeadCardComponent;
 
   formGroup: FormGroup;
 

@@ -105,6 +105,15 @@ export class LeadGradingComponent implements OnInit {
     // TODO: Simplify later
     if (event.type === 'click') {
       switch (event.cellIndex) {
+        case 1:
+          this.modalService.openModal(CreateLeadGradingComponent, {
+            width: '80%',
+            data: {
+             grading: event.row,
+             gradingMode: 'edit' 
+            }
+          })
+          break;
         case 3:
         case 4:
         case 5:

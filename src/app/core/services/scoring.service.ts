@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 import * as moment from 'moment';
 
-import { LeadScoringMockData, LeadGradingMockData } from '@app-fake-db/scoring-mock';
+import { LeadScoringMockData, LeadGradingMockData, LeadScoringCardListMockData } from '@app-fake-db/scoring-mock';
 @Injectable({
   providedIn: 'root'
 })
@@ -20,5 +20,9 @@ export class ScoringService {
 
   getLeadGradingMockData() {
     return of(LeadGradingMockData);
+  }
+
+  getLeadScoringLeadMockData() {
+    return of(LeadScoringCardListMockData);
   }
 }

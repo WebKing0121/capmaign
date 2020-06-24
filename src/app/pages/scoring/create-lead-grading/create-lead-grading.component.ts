@@ -3,7 +3,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RuleComponent } from './rule/rule.component';
 import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
-import { ModalRef } from '@app-components/modal/modal-ref';
+import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
+import { Grading } from '@app-core/models/scoring';
+
+interface ComponentProps {
+  grading: Grading;
+  mode: string;
+}
 
 @Component({
   selector: 'app-create-lead-grading',
@@ -11,6 +17,9 @@ import { ModalRef } from '@app-components/modal/modal-ref';
   styleUrls: ['./create-lead-grading.component.scss']
 })
 export class CreateLeadGradingComponent implements OnInit {
+  grading: Grading;
+  gradingMode: 'new' | 'edit';
+
   @ViewChild('ruleList', { read: ViewContainerRef })
   ruleList: ViewContainerRef;
 
@@ -23,20 +32,19 @@ export class CreateLeadGradingComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     private modalService: ModalService,
     @Inject(ModalRef) private modalRef: ModalRef<CreateLeadGradingComponent>,
-  ) {
+    @Inject(MODAL_DATA) private props: ComponentProps
+    ) {
     this.childUniqueKey = 0;
   }
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
       searchLeadItem: '',
-      profileName: ['', [Validators.required]],
-      profileDescription: ''
+      profileName: [this.props.grading && this.props.grading.name, [Validators.required]],
+      profileDescription: this.props.grading && this.props.grading.description
     });
-  }
 
-  ngAfterViewInit() {
-
+    this.gradingMode = this.props.mode === 'new' ? 'new' : 'edit';
   }
 
   onSearch(e) {
@@ -65,6 +73,10 @@ export class CreateLeadGradingComponent implements OnInit {
         x => x.instance.uniqueKey !== key
       );
     }
+  }
+
+  onCancelClick() {
+    this.modalRef.cancel();
   }
 
   onSaveClick() {

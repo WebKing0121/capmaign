@@ -12,7 +12,7 @@ import { ScoringConfirmDefaultModalComponent } from './components/scoring-confir
 import { CreateLeadScoringComponent } from './create-lead-scoring/create-lead-scoring.component';
 import { CreateLeadGradingComponent } from './create-lead-grading/create-lead-grading.component';
 import { RuleComponent } from './create-lead-grading/rule/rule.component';
-import { LeadScoringTemplateComponent } from './create-lead-scoring/components/lead-scoring-template/lead-scoring-template.component';
+import { LeadCardComponent } from './create-lead-scoring/components/lead-card/lead-card.component';
 import { RuleTemplateComponent } from './create-lead-scoring/components/rule-template/rule-template.component';
 
 
@@ -26,7 +26,7 @@ import { RuleTemplateComponent } from './create-lead-scoring/components/rule-tem
     CreateLeadScoringComponent,
     CreateLeadGradingComponent,
     RuleComponent,
-    LeadScoringTemplateComponent,
+    LeadCardComponent,
     RuleTemplateComponent
   ],
   imports: [

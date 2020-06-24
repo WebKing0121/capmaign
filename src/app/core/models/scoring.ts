@@ -19,7 +19,7 @@ class Rule {
   points: number;
 }
 
-export class Lead {
+export class LeadCard {
   id: string;
   name: string;
   profileRulesLeadAttribute: string;
