@@ -1,5 +1,6 @@
 import { Scoring } from '@app-models/scoring';
 import { Lead } from '@app-models/scoring';
+import { Grading } from '@app-core/models/scoring';
 
 export const LeadScoringMockData: Scoring[] = [
   {
@@ -213,12 +214,6 @@ export const LeadScoringMockData: Scoring[] = [
     isStatic: false
   },
 ];
-// id: string;
-//   name: string;
-//   profileRulesLeadAttribute: string;
-//   valueType: number;
-//   weightage: number;
-//   rulList: Rule[];
 
 export const LeadList: Lead[] = [
   {
@@ -228,5 +223,45 @@ export const LeadList: Lead[] = [
     valueType: 'boolean',
     weightage: 0,
     rulList: []
+  }
+];
+
+
+export const LeadGradingMockData: Grading[] = [
+  {
+    id: '0',
+    name: 'Default Grading',
+    description: '',
+    isDefaultForNewRecord: true,
+    isDefaultForCampaign: true,
+    isActive: true,
+    isStatic: false
+  },
+  {
+    id: '1',
+    name: 'Records Grading',
+    description: '',
+    isDefaultForNewRecord: false,
+    isDefaultForCampaign: false,
+    isActive: true,
+    isStatic: false
+  },
+  {
+    id: '2',
+    name: 'Lead grading profile',
+    description: 'This is the lead grading profile for leads',
+    isDefaultForNewRecord: false,
+    isDefaultForCampaign: false,
+    isActive: true,
+    isStatic: false
+  },
+  {
+    id: '3',
+    name: 'Demarcation',
+    description: 'Sample',
+    isDefaultForNewRecord: false,
+    isDefaultForCampaign: false,
+    isActive: true,
+    isStatic: false
   }
 ];

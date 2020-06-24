@@ -11,6 +11,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { stringify } from 'querystring';
 import { Router, ActivatedRoute } from '@angular/router';
+import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
 
 @Component({
   selector: 'app-lead-scoring',
@@ -18,14 +19,14 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./lead-scoring.component.scss']
 })
 export class LeadScoringComponent implements OnInit {
-  
+
   destroy$ = new Subject();
   leadScoringData: Scoring[];
   selected: Scoring[] = [];
 
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
-  
+
 
   tableSource: DataTableSource<Scoring> = new DataTableSource<Scoring>(50);
   tableButtons = [
@@ -55,7 +56,7 @@ export class LeadScoringComponent implements OnInit {
           console.log('error', error);
         }
       );
-    
+
     this.tableSource.next(this.leadScoringData.slice(0, 50), this.leadScoringData.length);
 
     this.tableSource.changed$
@@ -99,13 +100,17 @@ export class LeadScoringComponent implements OnInit {
   }
 
   createLeadScoring() {
-    this.router.navigate(['create-new-scoring'], {relativeTo: this.route});
+    // this.router.navigate(['create-new-scoring'], {relativeTo: this.route});
+    this.modalService.openModal(CreateLeadScoringComponent, {
+      width: '80%',
+      data: {}
+    });
   }
 
   onActive(event) {
     // TODO: Simplify later
     if (event.type === 'click') {
-      switch(event.cellIndex) {
+      switch (event.cellIndex) {
         case 3:
         case 4:
         case 5:
@@ -123,7 +128,7 @@ export class LeadScoringComponent implements OnInit {
         scoring: event.row,
         selectedIdx: event.cellIndex
       }
-    })
+    });
   }
 
   onCheckClick(e) {
