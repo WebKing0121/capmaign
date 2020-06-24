@@ -1,21 +1,36 @@
 <app-ui-modal #importCSVModal [containerClick]="false" dialogClass="modal-dialog-centered" [dialogClass]="'modal-lg'">
-	<div class="app-modal-header">
-		<h5 class="modal-title">Import Data</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
-			(click)="importCSVModal.hide()">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-	<div class="app-modal-body">
-		<aw-wizard #wizard class="arc-wizard import-wizard" navBarLayout="large-filled-symbols">
-      <aw-wizard-step stepTitle="Select File" [navigationSymbol]="{ symbol: '&#xf1c3;', fontFamily: 'Font Awesome 5 Free' }">
+  <div class="app-modal-header">
+    <h5 class="modal-title">Import Data</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="importCSVModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <aw-wizard #wizard class="arc-wizard import-wizard" navBarLayout="large-filled-symbols">
+      <aw-wizard-step stepTitle="Select File"
+        [navigationSymbol]="{ symbol: '&#xf1c3;', fontFamily: 'Font Awesome 5 Free' }">
         <div class="row">
           <div class="col-sm-12">
             <h5><span class="fa-icon">&#xf1c3;</span> Select File <span class="step-caption">Step 1 of 3</span></h5>
             <hr>
             <div class="row">
               <div class="col-md-12">
-                <file-upload class="file-upload"></file-upload>
+                <file-upload accept=".csv" class="file-upload" simple>
+                  <ng-template let-file #placeholder>
+                    <ng-container *ngIf="file; else emptyList">
+                      {{ file.name }}
+                    </ng-container>
+
+                    <ng-template #emptyList>
+                      Choose a file...
+                    </ng-template>
+                  </ng-template>
+
+                  <ng-template let-control="control" #button>
+                    Browse
+                  </ng-template>
+                </file-upload>
               </div>
             </div>
             <div class="row  mt-3 import-csv-section">
@@ -37,15 +52,18 @@
                     <hr>
                     <div class="custom-control custom-radio ml-3 mb-1">
                       <input type="radio" id="radio_1" name="customRadio" class="custom-control-input">
-                      <label class="custom-control-label" for="radio_1">Update existing records and add new Records</label>
+                      <label class="custom-control-label" for="radio_1">Update existing records and add new
+                        Records</label>
                     </div>
                     <div class="custom-control custom-radio ml-3 mb-1">
                       <input type="radio" id="radio_2" name="customRadio" class="custom-control-input">
-                      <label class="custom-control-label" for="radio_2">Update existing records but skip new Records</label>
+                      <label class="custom-control-label" for="radio_2">Update existing records but skip new
+                        Records</label>
                     </div>
                     <div class="custom-control custom-radio ml-3 mb-1">
                       <input type="radio" id="radio_3" name="customRadio" class="custom-control-input">
-                      <label class="custom-control-label" for="radio_3">Skip existing records and add new Records</label>
+                      <label class="custom-control-label" for="radio_3">Skip existing records and add new
+                        Records</label>
                     </div>
                   </div>
                 </div>
@@ -69,7 +87,8 @@
               <div class="col-12 ">
                 <div class="my-check datatable-checkbox">
                   <input type="checkbox" id="gridCheck1">
-                  <label class="line-height-25" for="gridCheck1"> I certify that these Records are from those who have opted-in-to receiving
+                  <label class="line-height-25" for="gridCheck1"> I certify that these Records are from those who have
+                    opted-in-to receiving
                     my emails in accordance with anti-spam regulations of my country and those
                     of my recipients.</label>
                 </div>
@@ -83,34 +102,145 @@
       </aw-wizard-step>
       <aw-wizard-step stepTitle="Data Mapping" [navigationSymbol]="{ symbol: '&#xe88c;', fontFamily: 'Feather' }">
         <div class="row">
-          <div class="col-sm-12">
+          <div class="col-12">
             <h5><span class="fa-icon">&#xf279;</span> Data Mapping <span class="step-caption">Step 2 of 3</span></h5>
             <hr>
-            <p> Field Mapping UI</p>
-          </div>
-          <div class="col-sm-12 centered-content">
-            <div class="btn-group mt-10">
-              <button type="button" class="btn btn-secondary btn-md" awPreviousStep>Back</button>
-              <button type="button" class="btn btn-primary btn-md" awNextStep>Continue</button>
+            <div class="row">
+              <div class="col-md-12 data-mapping-section">
+                <label class="mobile-show">Saved Mappings</label>
+                <div class="input-group">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text">Saved Mappings</span>
+                  </div>
+                  <ng-select [ngClass]="'ng-select'" [options]="mappingList"></ng-select>
+                  <button class="btn btn-danger btn-left-gutter"><i class="fa fa-trash"></i></button>
+                </div>
+              </div>
+              <div class="col-sm-12 mt-3 centered-content">
+                <div class="btn-group mt-10">
+                  <button type="button" class="btn btn-secondary btn-md">Save Mapping</button>
+                  <button type="button" class="btn btn-success btn-md" (click)="onClickAutomapping()">Auto
+                    Mapping</button>
+                </div>
+              </div>
             </div>
+            <div class="fields-list">
+              <div class="left-fields">
+                <div class="search">
+                  <input (ngModelChange)="searchCvsQuery($event)" [(ngModel)]="searchCVS" placeholder="Search..." />
+                  <div class="csv-fields">
+                    <ul class="fields">
+                      <li *ngFor="let field of filteredCsvFields" class="input-group">
+                        <span class="field-name">{{field.name}}</span>
+                        <span (click)="onClickCSVFields(field)" class="field-action">
+                          <i class="fa fa-chevron-right"></i>
+                        </span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="center-fields">
+                <div class="search centered-content">Field Mapping</div>
+                <div class="mapping-fields">
+                  <ul class="mapping">
+                    <li *ngFor="let field of mappingFields; let i = index" class="d-flex map-field">
+                      <div class="w-50">
+                        <span class="field" *ngIf="field.left">{{field.leftField.name}}</span>
+                      </div>
+                      <div class="w-50 position-relative">
+                        <span class="field" *ngIf="field.right">
+                          {{field.rightField.name}}
+
+                        </span>
+                        <span class="field-type" *ngIf="field.right"
+                          [ngClass]="field.rightField.type">{{getFirstLetter(field.rightField.type)}}</span>
+                        <button type="button" class="remove-row" (click)="onClickRemoveMappingRow(i)"><i
+                            class="fa fa-trash"></i></button>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="right-fields">
+                <div class="search">
+                  <input (ngModelChange)="searchDbQuery($event)" [(ngModel)]="searchDB" placeholder="Search..." />
+                </div>
+                <div class="db-fields">
+                  <ul class="fields">
+                    <li *ngFor="let field of filteredDbFields" class="input-group">
+                      <span (click)="onClickDBFields(field)" class="field-action">
+                        <i class="fa fa-chevron-left"></i>
+                      </span>
+                      <span class="field-name">{{field.name}}</span>
+                      <span class="field-type" [ngClass]="field.type">{{getFirstLetter(field.type)}}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <button type="button" class="btn btn-secondary btn-md float-left" awPreviousStep>Back</button>
+            <button type="button" class="btn btn-primary btn-md float-right" awNextStep>Continue</button>
           </div>
         </div>
       </aw-wizard-step>
       <aw-wizard-step stepTitle="Finish" [navigationSymbol]="{ symbol: '&#xe840;', fontFamily: 'Feather' }">
         <div class="row">
-          <div class="col-sm-12">
-            <h5><span class="fa-icon">&#xf14a;</span> Finish <span class="step-caption">Step 3 of 3</span></h5>
+          <div class="col-sm-12 unique-form">
+            <h5><span class="fa-icon">&#xf14a;</span> Unique Fields <span class="step-caption">Step 3 of 3</span></h5>
             <hr>
-            <p>Finish UI</p>
-          </div>
-          <div class="col-sm-12 centered-content">
-            <div class="btn-group mt-10">
-              <button type="button" class="btn btn-secondary btn-md" awPreviousStep>Back</button>
-              <button type="button" class="btn btn-success btn-md" awResetWizard>Finished</button>
+            <div class="row">
+              <ul class="information">
+                <li>
+                  * You can select a maximum of 3 unique fields.
+                </li>
+                <li>
+                  * Updating records will work with respect to unique column(s) selected.
+                </li>
+                <li>
+                  * Import can be a time taking process, depending on the number of records being imported.
+                </li>
+                <li>
+                  * you will see a notification on the import in bell icon.
+                </li>
+              </ul>
             </div>
+            <div class="row mt-3">
+              <div class="col-md-8 col-sm-12 offset-md-2">
+                <div class="d-flex">
+                  <div class="w-50">
+                    <h5 class="pl-4">Mapped Fields</h5>
+                    <hr />
+                  </div>
+                  <div class="w-50">
+                    <h5>Imported Fields</h5>
+                    <hr />
+                  </div>
+                </div>
+                <ul class="unique-select">                  
+                  <li *ngFor="let field of mappingFields; let i = index" class="d-flex">
+                    <label class="w-50 datatable-checkbox">
+                      <input *ngIf="field.right" type="checkbox"
+                        (click)="onClickUniqueCheck(field.rightField)"
+                        [disabled]="!field.rightField.unique && uniqueSelected === 3" />
+                      <span *ngIf="field.right">{{field.rightField.name}}</span>
+                    </label>
+                    <div class="w-50">
+                      <span *ngIf="field.left">{{field.leftField.name}}</span>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <button type="button" class="btn btn-secondary btn-md float-left" awPreviousStep>Back</button>
+            <button type="button" class="btn btn-primary btn-md float-right"><i class="fa fa-upload"></i> Import </button>
           </div>
         </div>
       </aw-wizard-step>
     </aw-wizard>
-	</div>
+  </div>
 </app-ui-modal>
