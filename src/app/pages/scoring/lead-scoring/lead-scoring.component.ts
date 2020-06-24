@@ -77,7 +77,6 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(selected => {
         this.selected = selected;
       });
-      
   }
 
   ngOnDestroy(): void {
@@ -89,9 +88,12 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true},
       { name: 'Description', prop: 'description', sortable: true },
-      { name: 'Is Default For New Record', prop: 'isDefaultForNewRecord', sortable: false, custom: true, template: this.tableColumnCheckTemplate },
-      { name: 'Is Default For Campaign', prop: 'isDefaultForCampaign', sortable: false, custom: true, template: this.tableColumnCheckTemplate },
-      { name: 'Is Lead Scoring For Website', prop: 'isLeadScoringForWebsite', sortable: false, custom: true, template: this.tableColumnCheckTemplate },
+      { name: 'Is Default For New Record', prop: 'isDefaultForNewRecord',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
+      { name: 'Is Default For Campaign', prop: 'isDefaultForCampaign',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
+      { name: 'Is Lead Scoring For Website', prop: 'isLeadScoringForWebsite',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
       { name: 'Is Active', prop: 'isActive', sortable: true, custom: true, template: this.tableColumnCheckTemplate },
       { name: 'Is Static', prop: 'isStatic', sortable: true}
     ];
@@ -116,10 +118,10 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
           this.modalService.openModal(CreateLeadScoringComponent, {
             width: '80%',
             data: {
-              scoring: scoring,
+              scoring: '{scoring}',
               mode: 'edit'
             }
-          })
+          });
           break;
         case 3:
         case 4:

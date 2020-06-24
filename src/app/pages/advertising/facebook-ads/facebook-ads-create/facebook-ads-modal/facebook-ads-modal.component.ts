@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, TemplateRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
 import { Campaign } from '@app-core/models/campaign';
@@ -18,7 +18,7 @@ interface ComponentProps {
   templateUrl: './facebook-ads-modal.component.html',
   styleUrls: ['./facebook-ads-modal.component.scss']
 })
-export class FacebookAdsModalComponent implements OnInit {
+export class FacebookAdsModalComponent implements OnInit, OnDestroy, AfterViewInit {
 
   CampaignType = CampaignType;
 
