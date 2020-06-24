@@ -7,7 +7,7 @@
 		</button>
 	</div>
 	<div class="app-modal-body">
-		<aw-wizard #wizard class="arc-wizard" navBarLayout="large-filled-symbols">
+		<aw-wizard #wizard class="arc-wizard import-wizard" navBarLayout="large-filled-symbols">
       <aw-wizard-step stepTitle="Select File" [navigationSymbol]="{ symbol: '&#xf1c3;', fontFamily: 'Font Awesome 5 Free' }">
         <div class="row">
           <div class="col-sm-12">
@@ -18,27 +18,66 @@
                 <file-upload class="file-upload"></file-upload>
               </div>
             </div>
-            <div class="row  mt-3">
-              <div class="col-md-6">
+            <div class="row  mt-3 import-csv-section">
+              <div class="col-md-7">
                 <div class="row">
-                  <div class="col-md-6 form-group">
-                    User
-                  </div>
-                  <div class="col-md-6 form-group">
-                    Lead Category
+                  <div class="col-md-12">
+                    <label class="mobile-show">Lead Category</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Lead Category</span>
+                      </div>
+                      <ng-select [ngClass]="'ng-select'" [options]="leadCategoryList"></ng-select>
+                    </div>
                   </div>
                 </div>
-                
+                <div class="row mt-3">
+                  <div class="col-12">
+                    <h5>When duplicate records are found?</h5>
+                    <hr>
+                    <div class="custom-control custom-radio ml-3 mb-1">
+                      <input type="radio" id="radio_1" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="radio_1">Update existing records and add new Records</label>
+                    </div>
+                    <div class="custom-control custom-radio ml-3 mb-1">
+                      <input type="radio" id="radio_2" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="radio_2">Update existing records but skip new Records</label>
+                    </div>
+                    <div class="custom-control custom-radio ml-3 mb-1">
+                      <input type="radio" id="radio_3" name="customRadio" class="custom-control-input">
+                      <label class="custom-control-label" for="radio_3">Skip existing records and add new Records</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">
+                    <label class="mobile-show">Account</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text">Account</span>
+                      </div>
+                      <ng-select [ngClass]="'ng-select'" [options]="accountList"></ng-select>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-5">
                 <app-file-format-option></app-file-format-option>
               </div>
             </div>
-          </div>
-          <div class="col-sm-12 centered-content">
-            <div class="btn-group mt-10">
-              <button type="button" class="btn btn-primary btn-md" awNextStep>Continue</button>
+            <div class="form-group row mt-3">
+              <div class="col-12 ">
+                <div class="my-check datatable-checkbox">
+                  <input type="checkbox" id="gridCheck1">
+                  <label class="line-height-25" for="gridCheck1"> I certify that these Records are from those who have opted-in-to receiving
+                    my emails in accordance with anti-spam regulations of my country and those
+                    of my recipients.</label>
+                </div>
+              </div>
             </div>
+          </div>
+          <div class="col-12">
+            <button type="button" class="btn btn-primary btn-md float-right" awNextStep>Continue</button>
           </div>
         </div>
       </aw-wizard-step>

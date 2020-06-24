@@ -1,0 +1,35 @@
+.ml-level-1 {
+  margin-left: 10px;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #324148;
+  display: flex;
+  justify-content: space-between;
+}
+.ml-level-2 {
+  margin-left: 30px;
+  margin-top: 5px;
+  font-size: 14px;
+  color: #324148;
+  display: flex;
+  justify-content: space-between;
+}
+
+.value {
+  width: 150px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.format-option {
+  background: #efefef;
+  padding: 10px 10px 10px 10px;
+  h5 {
+    margin-top: 5px;
+    margin-bottom: -5px;
+    .btn-edit {
+      float: right;
+      margin-top: -9px;
+    }
+  }
+}

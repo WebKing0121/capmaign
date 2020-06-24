@@ -1,4 +1,57 @@
 .file-upload {
   border: 1px dashed;
   border-radius: 10px;
+  min-height: 80px !important;
+}
+.mobile-show {
+  display: none;
+}
+
+.import-csv-section {
+  .input-group-text {
+    width: 140px;
+  }
+
+  ng-select {
+    width: calc(100% - 138px);
+    min-height: 45px;
+    .single {
+      .value {
+        line-height: 43px;
+      }
+    }
+  }
+
+  ng-select > div {
+    min-height: 45px !important;
+  }
+}
+
+.import-wizard {
+  margin-top: -15px;
+  .line-height-25 {
+    line-height: 25px;
+  }
+}
+.my-check {
+  display: flex;
+  & > input[type="checkbox"] {
+    margin-top: 15px;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .mobile-show {
+    display: inherit;
+  }
+
+  .import-csv-section {
+    .input-group-text {
+      width: 140px;
+      display: none;
+    }
+
+    ng-select {
+      width: 100%;
+    }
+  }
 }

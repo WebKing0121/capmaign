@@ -905,10 +905,10 @@ aw-wizard-navigation-bar {
         .label {
           color: #e6e6e6;
           text-transform: none;
-				}
-				.step-indicator {
-					font-family: "Font Awesome 5 Free";
-				}
+        }
+        .step-indicator {
+          font-family: "Font Awesome 5 Free";
+        }
       }
     }
     li.current {
@@ -927,8 +927,8 @@ aw-wizard-navigation-bar {
             color: #b2d135;
           }
           .label::before {
-						content: "\f058";
-						font-family: "Font Awesome 5 Free";
+            content: "\f058";
+            font-family: "Font Awesome 5 Free";
             display: inline-block;
             color: #b2d135;
             padding: 0 6px 0 0;
@@ -938,9 +938,9 @@ aw-wizard-navigation-bar {
           }
         }
         li.current {
-					.label::before {
-						content: "";
-					}
+          .label::before {
+            content: "";
+          }
           .step-indicator {
             background-color: #56bdea;
           }
@@ -951,11 +951,20 @@ aw-wizard-navigation-bar {
 }
 
 .fa-icon {
-	font-family: "Font Awesome 5 Free";
-	margin-right: 10px;
+  font-family: "Font Awesome 5 Free";
+  margin-right: 10px;
 }
 
 .step-caption {
-	float: right;
-	color: cadetblue;
+  float: right;
+  color: cadetblue;
+}
+
+.custom-radio {
+  .custom-control-label {
+    &:after,
+    &:before {
+      top: -2px;
+    }
+  }
 }

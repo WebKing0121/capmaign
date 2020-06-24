@@ -5,6 +5,7 @@ import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { PortalModule } from '@angular/cdk/portal';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
+import { SelectModule } from 'ng-select';
 
 import { UiModalComponent } from './ui-modal/ui-modal.component';
 import { AnimationModalComponent } from './animation-modal/animation-modal.component';
@@ -22,7 +23,8 @@ import { FileFormatOptionComponent } from './import-csv-modal/file-format-option
     PortalModule,
     DatatableModule,
     ArchwizardModule,
-    FileUploadModule
+    FileUploadModule,
+    SelectModule
   ],
   declarations: [
     UiModalComponent,
