@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DataRoutingModule } from './data-routing.module';
+import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { SharedModule } from '../../theme/shared/shared.module';
 import { SelectModule } from 'ng-select';
 import {
@@ -12,11 +13,16 @@ import {
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ManageRecordsComponent } from './manage-records/manage-records.component';
+import { ListsComponent } from './lists/lists.component';
+import { CustomFieldsComponent } from './custom-fields/custom-fields.component';
+
 
 @NgModule({
   declarations: [
-
-  ManageRecordsComponent],
+    ManageRecordsComponent,
+    ListsComponent,
+    CustomFieldsComponent
+  ],
   imports: [
     CommonModule,
     DataRoutingModule,
@@ -28,7 +34,8 @@ import { ManageRecordsComponent } from './manage-records/manage-records.componen
     NgbDropdownModule,
     NgbTooltipModule,
     AngularDualListBoxModule,
-    InfiniteScrollModule
+    InfiniteScrollModule,
+    DatatableModule
   ]
 })
 export class DataModule { }

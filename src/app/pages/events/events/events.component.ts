@@ -31,6 +31,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   events: Event[];
 
   tableSource: DataTableSource<Event> = new DataTableSource<Event>(50);
+  totalCount: number;
   selected: Event[] = [];
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateEvent() },
@@ -48,6 +49,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayNameList: NgSelectData[];
   folderList: NgSelectData[];
+  folders: any[]; // data from API;
   dataLoaded: number;
 
   constructor(
@@ -56,6 +58,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
     private fb: FormBuilder,
     private eventService: EventService
   ) {
+    this.totalCount = 0;
     this.events = [];
     this.isModalNew = true;
     const year = Number(moment().format('YYYY'));
@@ -65,13 +68,12 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
       id: 0,
       name: ['', Validators.required],
       subject: ['', Validators.required],
-      start_date: { year, month, day },
-      start_time: ['', Validators.required],
-      end_date: [moment().format('YYYY-MM-DD'), Validators.required],
-      end_time: ['', Validators.required],
-      display_name: ['', Validators.required],
+      startDate: { year, month, day },
+      startTime: ['', Validators.required],
+      endDate: [moment().format('YYYY-MM-DD'), Validators.required],
+      endTime: ['', Validators.required],
+      displayName: ['', Validators.required],
       location: ['', Validators.required],
-      folder: ['', Validators.required],
       template: '',
     });
     this.dataLoaded = 0;
@@ -82,7 +84,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.folderList = data;
+          this.folders = data.result;
+          this.folderList = data.result.map(x => ({ value: '' + x.folderId, label: x.folderName }));
           this.dataLoaded++;
         },
         error => {
@@ -106,7 +109,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.events = data;
+          this.events = data.result.items;
+          this.totalCount = data.result.totalCount;
           this.dataLoaded++;
         },
         error => {
@@ -127,18 +131,17 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
 
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
-      { name: 'Subject', prop: 'subject', sortable: true },
+      { name: 'Name', prop: 'eventName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
+      { name: 'Subject', prop: 'eventSubject', sortable: true },
       {
-        name: 'Start Date', prop: 'start_date', sortable: true,
+        name: 'Start Date', prop: 'eventStartDate', sortable: true,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
       },
       {
-        name: 'End Date', prop: 'end_date', sortable: true,
+        name: 'End Date', prop: 'eventEndDate', sortable: true,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
       },
-      { name: 'Display From', prop: 'display_name', sortable: true, custom: true, template: this.templateDisplayFrom },
-      { name: 'Folder', prop: 'folder', sortable: true, custom: true, template: this.templateFolder },
+      { name: 'Display From', prop: 'displayName', sortable: true, custom: true, template: this.templateDisplayFrom },
     ];
     this.tableSource.setColumns(columns);
   }
@@ -173,33 +176,32 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
       if (evt.cellIndex === 0 && evt.column.frozenLeft) {
         const event: Event = evt.row as Event;
         this.isModalNew = false;
-        const startYear = Number(moment(event.start_date).format('YYYY'));
-        const startMonth = Number(moment(event.start_date).format('MM'));
-        const startDay = Number(moment(event.start_date).format('DD'));
-        const endYear = Number(moment(event.end_date).format('YYYY'));
-        const endMonth = Number(moment(event.end_date).format('MM'));
-        const endDay = Number(moment(event.end_date).format('DD'));
+        const startYear = Number(moment(event.eventStartDate).format('YYYY'));
+        const startMonth = Number(moment(event.eventStartDate).format('MM'));
+        const startDay = Number(moment(event.eventStartDate).format('DD'));
+        const endYear = Number(moment(event.eventEndDate).format('YYYY'));
+        const endMonth = Number(moment(event.eventEndDate).format('MM'));
+        const endDay = Number(moment(event.eventEndDate).format('DD'));
 
         this.eventForm.setValue({
           id: event.id,
-          name: event.name,
-          subject: event.subject,
-          start_date: {
+          name: event.eventName,
+          subject: event.eventSubject,
+          startDate: {
             year: startYear,
             month: startMonth,
             day: startDay
           },
-          start_time: moment(event.start_date).format('HH:mm'),
-          end_date: {
+          startTime: moment(event.eventStartDate).format('HH:mm'),
+          endDate: {
             year: endYear,
             month: endMonth,
             day: endDay
           },
-          end_time: moment(event.end_date).format('HH:mm'),
-          display_name: event.display_name,
+          endTime: moment(event.eventEndDate).format('HH:mm'),
+          displayName: event.displayName,
           location: event.location,
-          folder: event.folder,
-          template: event.template,
+          template: event.eventBody,
         });
         this.eventModal.show();
       }
@@ -225,8 +227,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confirmModal.hide();
   }
 
-  getDisplayFrom(value: string) {
-    return this.displayNameList.find(x => x.value === value).label;
+  getDisplayFrom(value: string | null) {
+    return value ? this.displayNameList.find(x => x.value === value).label : '';
   }
 
   getFolder(value: string) {

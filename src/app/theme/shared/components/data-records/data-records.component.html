@@ -1,0 +1,15 @@
+<div class="row mt-3">
+  <app-data-record-tabs [tabs]="tabs" (selectTab)="onSelectTab($event)"></app-data-record-tabs>
+  <div class="col-12 data-records">
+    <app-datatable
+      [title]="''"
+      [buttons]="buttons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [selectable]="true"
+      [headerHeight]="40"
+      [selectionType]="'checkbox'"
+      (activate)="onActive($event)"
+    ></app-datatable>
+  </div>
+</div>

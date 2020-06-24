@@ -31,16 +31,18 @@
     <form [formGroup]="eventForm" (ngSubmit)="onSaveEvent()">
       <div class="row">
         <div class="col-md-6">
+          <label class="mobile-show">Event Name</label>
           <div class="input-group">
-            <div class="input-group-prepend">
+            <div class="input-group-prepend mobile-hide">
               <span class="input-group-text">Event Name</span>
             </div>
             <input type="text" class="form-control" formControlName="name" placeholder="e.g: Webinar Event">
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mobile-mt">
+          <label class="mobile-show">Event Subject</label>
           <div class="input-group">
-            <div class="input-group-prepend">
+            <div class="input-group-prepend mobile-hide">
               <span class="input-group-text">Event Subject</span>
             </div>
             <input type="text" class="form-control" formControlName="subject" placeholder="e.g: Webinar Event">
@@ -49,44 +51,52 @@
       </div>
       <div class="row mt-2">
         <div class="col-md-6">
+          <label class="mobile-show">Display From</label>
           <div class="input-group">
-            <div class="input-group-prepend">
+            <div class="input-group-prepend mobile-hide">
               <span class="input-group-text">Display From</span>
             </div>
-            <ng-select [ngClass]="'ng-select'" formControlName="display_name" [options]="displayNameList"></ng-select>
+            <ng-select [ngClass]="'ng-select'" formControlName="displayName" [options]="displayNameList"></ng-select>
           </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mobile-mt">
+          <label class="mobile-show">Folder</label>
           <div class="input-group">
-            <div class="input-group-prepend">
+            <div class="input-group-prepend mobile-hide">
               <span class="input-group-text">Folder</span>
             </div>
-            <ng-select [ngClass]="'ng-select'" formControlName="folder" [options]="folderList"></ng-select>
+            <ng-select [ngClass]="'ng-select'" [options]="folderList"></ng-select>
           </div>
         </div>
       </div>
       <div class="row mt-2">
-				<div class="col-md-6 col-sm-12 input-group">
-          <input class="form-control" autocomplete="off" formControlName="start_date"
-            placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
-						#d_f="ngbDatepicker">
-					<div class="input-group-append">
-						<span class="input-group-text" (click)="d_f.toggle()">
-							<i class="fa fa-calendar"></i>
-						</span>
-					</div>
-					<input type="time" class="form-control" formControlName="start_time">
+				<div class="col-md-6 col-sm-12">
+          <label class="mobile-show">Start Date</label>
+          <div class="input-group">
+            <input class="form-control" autocomplete="off" formControlName="startDate"
+              placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
+              #d_f="ngbDatepicker">
+            <div class="input-group-append">
+              <span class="input-group-text" (click)="d_f.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+            <input type="time" class="form-control" formControlName="startTime">
+          </div>
 				</div>
-				<div class="col-md-6 col-sm-12 input-group">
-          <input class="form-control" autocomplete="off"  formControlName="start_date"
-            placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
-						#d_t="ngbDatepicker">
-					<div class="input-group-append">
-						<span class="input-group-text" (click)="d_t.toggle()">
-							<i class="fa fa-calendar"></i>
-						</span>
-					</div>
-					<input type="time" class="form-control" formControlName="end_time">
+				<div class="col-md-6 col-sm-12 input-group  mobile-mt">
+          <label class="mobile-show">End Date</label>
+          <div class="input-group">
+            <input class="form-control" autocomplete="off"  formControlName="endDate"
+              placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+              #d_t="ngbDatepicker">
+            <div class="input-group-append">
+              <span class="input-group-text" (click)="d_t.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+            <input type="time" class="form-control" formControlName="endTime">
+          </div>
 				</div>
       </div>
       <div class="row mt-5">

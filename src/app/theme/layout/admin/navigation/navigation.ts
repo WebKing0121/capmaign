@@ -158,74 +158,20 @@ const NavigationItems = [
             id: 'data-all-records',
             title: 'All Records',
             type: 'item',
-            url: '/data/manage-records',
+            url: '/data/manage-records/',
             external: false
-          }, {
-            id: 'data-subscriber',
-            title: 'Subscriber',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'data-unsubscriber',
-            title: 'Unsubscriber',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'data-leads',
-            title: 'Leads',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'data-contacts',
-            title: 'Contacts',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'data-prospects',
-            title: 'Prospects',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'data-accounts',
-            title: 'Accounts',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'data-transactional',
-            title: 'Transactional',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'data-landing-page-category',
-            title: 'Landing Page Category',
-            type: 'item',
-            url: 'javascript:',
-            external: true
           }, {
             id: 'data-lists',
             title: 'Lists',
             type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'data-event-lists',
-            title: 'Event Lists',
-            type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/data/lists',
+            external: false
           }, {
             id: 'data-custom-fields',
             title: 'Custom Fields',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/data/custom-fields',
+            external: false
           }, {
             id: 'data-filters',
             title: 'Filters',
@@ -341,10 +287,25 @@ const NavigationItems = [
       {
         id: 'events',
         title: 'Events',
-        type: 'item',
+        type: 'collapse',
         icon: 'feather icon-square',
-        url: '/events',
-        external: false
+        url: 'javascript:',
+        children: [
+          {
+            id: 'data-event',
+            title: 'Events',
+            type: 'item',
+            url: '/events/events',
+            external: false,
+          },
+          {
+            id: 'data-event-lists',
+            title: 'Event Lists',
+            type: 'item',
+            url: '/events/lists',
+            external: false,
+          },
+        ]
       },
       {
         id: 'scoring',

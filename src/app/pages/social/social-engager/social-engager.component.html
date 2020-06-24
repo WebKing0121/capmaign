@@ -29,15 +29,15 @@
       <div class="row">
         <div class="col-md-6">
           <label for="first_name">First name</label>
-          <input type="text" class="form-control" id="first_name" placeholder="First name" formControlName="first_name"
-            [ngClass]="{ 'is-invalid': submitted && f.first_name.errors }">
+          <input type="text" class="form-control" id="first_name" placeholder="First name" formControlName="firstName"
+            [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }">
 
         </div>
         <div class="col-md-6">
           <label for="last_name">Last name</label>
 
-          <input type="text" class="form-control" id="last_name" placeholder="Last name" formControlName="last_name"
-            [ngClass]="{ 'is-invalid': submitted && f.last_name.errors }">
+          <input type="text" class="form-control" id="last_name" placeholder="Last name" formControlName="lastName"
+            [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }">
 
         </div>
       </div>
@@ -62,8 +62,8 @@
           <label for="phone_number">Personal Phone number</label>
 
           <input [textMask]="{mask: maskMobileNo}" type="text" class="form-control" id="phone_number"
-            placeholder="9999-999-999" formControlName="mobile_number"
-            [ngClass]="{ 'is-invalid': submitted && f.mobile_number.errors }">
+            placeholder="9999-999-999" formControlName="mobileNumber"
+            [ngClass]="{ 'is-invalid': submitted && f.mobileNumber.errors }">
 
         </div>
         <div class="col-md-6">
