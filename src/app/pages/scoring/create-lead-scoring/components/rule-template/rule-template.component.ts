@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { LeadCardComponent } from '../lead-scoring-template/lead-scoring-template.component';
+import { LeadCardComponent } from '../lead-card/lead-card.component';
 
 @Component({
   selector: 'app-rule-template',

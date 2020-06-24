@@ -1,11 +1,13 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, Inject } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CreateLeadScoringComponent } from '../../create-lead-scoring.component';
-import { RuleComponent } from '../../../create-lead-grading/rule/rule.component';
-import { ModalService } from '@app-components/modal/modal.service';
-import { ModalRef } from '@app-components/modal/modal-ref';
-import { ScoringConfirmDefaultModalComponent } from '../../../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { RuleTemplateComponent } from '../rule-template/rule-template.component';
+import { LeadCard } from '@app-core/models/scoring';
+import { MODAL_DATA } from '@app-components/modal/modal-ref';
+
+interface ComponentProps {
+  card: LeadCard
+}
 
 @Component({
   selector: 'app-lead-card',
@@ -27,6 +29,7 @@ export class LeadCardComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
+    @Inject(MODAL_DATA) private props: ComponentProps
   ) {
     this.childUniqueKey = 0;
   }
