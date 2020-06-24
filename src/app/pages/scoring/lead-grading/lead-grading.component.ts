@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Grading } from '@app-core/models/scoring';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
@@ -14,7 +14,7 @@ import { CreateLeadGradingComponent } from '../create-lead-grading/create-lead-g
   templateUrl: './lead-grading.component.html',
   styleUrls: ['./lead-grading.component.scss']
 })
-export class LeadGradingComponent implements OnInit {
+export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   destroy$ = new Subject();
   leadGradingData: Grading[];
@@ -38,6 +38,11 @@ export class LeadGradingComponent implements OnInit {
     private modalService: ModalService
   ) {
     this.leadGradingData = [];
+  }
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+    throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
@@ -82,11 +87,14 @@ export class LeadGradingComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Description', prop: 'description', sortable: true },
-      { name: 'Is Default For New Record', prop: 'isDefaultForNewRecord', sortable: false, custom: true, template: this.tableColumnCheckTemplate },
-      { name: 'Is Default For Campaign', prop: 'isDefaultForCampaign', sortable: false, custom: true, template: this.tableColumnCheckTemplate },
+      { name: 'Is Default For New Record', prop: 'isDefaultForNewRecord',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
+      { name: 'Is Default For Campaign', prop: 'isDefaultForCampaign',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
       { name: 'Is Active', prop: 'isActive', sortable: true, custom: true, template: this.tableColumnCheckTemplate },
       { name: 'Is Static', prop: 'isStatic', sortable: true }
     ];
@@ -109,10 +117,10 @@ export class LeadGradingComponent implements OnInit {
           this.modalService.openModal(CreateLeadGradingComponent, {
             width: '80%',
             data: {
-             grading: event.row,
-             gradingMode: 'edit' 
+              grading: event.row,
+              gradingMode: 'edit'
             }
-          })
+          });
           break;
         case 3:
         case 4:

@@ -1,4 +1,8 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentFactoryResolver, ComponentRef, Inject, Pipe } from '@angular/core';
+import {
+  Component, OnInit, ViewChild, ViewContainerRef,
+  ComponentFactoryResolver, ComponentRef, Inject,
+  Pipe, OnDestroy
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LeadCardComponent } from './components/lead-card/lead-card.component';
 import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
@@ -21,7 +25,7 @@ interface ComponentProps {
   templateUrl: './create-lead-scoring.component.html',
   styleUrls: ['./create-lead-scoring.component.scss']
 })
-export class CreateLeadScoringComponent implements OnInit {
+export class CreateLeadScoringComponent implements OnInit, OnDestroy {
 
   items = [
     {
@@ -58,8 +62,14 @@ export class CreateLeadScoringComponent implements OnInit {
     private componentFactoryResolver: ComponentFactoryResolver,
     @Inject(ModalRef) private modalRef: ModalRef<CreateLeadScoringComponent>,
     @Inject(MODAL_DATA) private props: ComponentProps
-    ) {
+  ) {
     this.childUniqueKey = 0;
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
+    throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
@@ -70,13 +80,12 @@ export class CreateLeadScoringComponent implements OnInit {
     });
 
     this.scoringMode = this.props.mode === 'new' ? 'new' : 'edit';
-    console.log("scoring mode: ", this.scoringMode);
 
     this.scoringService.getLeadScoringLeadMockData()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         list => {
-          this.leadScoringCardList = list
+          this.leadScoringCardList = list;
         }
       );
   }
@@ -91,13 +100,11 @@ export class CreateLeadScoringComponent implements OnInit {
   }
 
   add(id) {
-    console.log("dkdkdk")
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(LeadCardComponent);
     const leadCardRef = this.leadCardList.createComponent(componentFactory);
     const leadCard = leadCardRef.instance;
     leadCard.uniqueKey = ++this.childUniqueKey;
     leadCard.parentRef = this;
-    
     this.leadProfileReferences.push(leadCardRef);
   }
 
