@@ -21,10 +21,6 @@ export class ConfirmModalComponent implements OnInit {
     this.confirmModal.show();
   }
 
-  hide() {
-    this.confirmModal.hide();
-  }
-
   onClickYes(clickAction: () => void) {
     clickAction();
     this.confirmModal.hide();

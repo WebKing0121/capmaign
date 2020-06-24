@@ -6,6 +6,11 @@ import { ScoringService } from '@app-core/services/scoring.service';
 import { Scoring } from '@app-core/models/scoring';
 import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
+<<<<<<< HEAD
+=======
+import { stringify } from 'querystring';
+import { Router, ActivatedRoute } from '@angular/router';
+>>>>>>> b720348dda0a0db7f972eda38992d36e566e2445
 import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
 
 @Component({
@@ -13,7 +18,11 @@ import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-s
   templateUrl: './lead-scoring.component.html',
   styleUrls: ['./lead-scoring.component.scss']
 })
+<<<<<<< HEAD
 export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
+=======
+export class LeadScoringComponent implements OnInit {
+>>>>>>> b720348dda0a0db7f972eda38992d36e566e2445
 
   destroy$ = new Subject();
   leadScoringData: Scoring[];

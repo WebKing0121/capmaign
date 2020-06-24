@@ -16,6 +16,7 @@ interface ComponentProps {
 })
 export class ScoringConfirmDefaultModalComponent implements OnInit {
   alertText: string;
+  hiddenCancelbtn: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -23,10 +24,15 @@ export class ScoringConfirmDefaultModalComponent implements OnInit {
     @Inject(MODAL_DATA) private props: ComponentProps
   ) {
     this.alertText = '';
+    this.hiddenCancelbtn = false;
   }
 
   ngOnInit(): void {
-    switch(this.props.selectedIdx) {
+    switch (this.props.selectedIdx) {
+      case -1:
+        this.alertText = 'Please add atleast one Profile Rule';
+        this.hiddenCancelbtn = true;
+        break;
       case 3:
         this.alertText = 'Are You Sure You want to make this profile as default for new record';
         break;
@@ -37,10 +43,9 @@ export class ScoringConfirmDefaultModalComponent implements OnInit {
         this.alertText = 'Are You Sure You want to make this profile as lead scoring profile for website';
         break;
       case 6:
-        console.log(this.props.scoring.isActive)
         this.alertText = this.props.scoring.isActive
-                          ? 'Are you sure you want to deactivate this Lead Scoring Profile'
-                          : 'Are you sure you want to activate this Lead Scoring Profile'
+          ? 'Are you sure you want to deactivate this Lead Scoring Profile'
+          : 'Are you sure you want to activate this Lead Scoring Profile';
         break;
     }
   }

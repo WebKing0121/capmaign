@@ -41,7 +41,7 @@ export class GoogleAdsCreateComponent implements OnInit {
   headline2: any;
   description: any;
   model: any;
-  
+
   public googleAdsArr: GoogleAdsType[] = [];
 
   startDate: NgbDate;
@@ -140,7 +140,12 @@ export class GoogleAdsCreateComponent implements OnInit {
   }
 
   onCreateAds(headline1, headline2, description) {
-    this.googleAdsArr = [...this.googleAdsArr, { id: this.googleAdsArr.length, headline1: headline1, headline2: headline2, description: description }];
+    this.googleAdsArr = [...this.googleAdsArr, {
+      id: this.googleAdsArr.length,
+      headline1: '{headline1}',
+      headline2: '{headline2}',
+      description: '{description}'
+    }];
   }
 
   onRemoveAd(id) {

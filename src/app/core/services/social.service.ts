@@ -39,6 +39,7 @@ export class SocialService {
     // return this.http.get<any>(`${environment.apiUrl}/${this.url}/chat-messages/${userId}`);
     return of(SocialChatMessagesMockData);
   }
+
   getSocialEngagers(): Observable<any> {
     // return this.http.get<any>(`${environment.apiUrl}/${this.url}/chat-messages/${userId}`);
     return of(SocialEngagersMockData);
