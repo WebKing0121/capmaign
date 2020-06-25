@@ -42,7 +42,6 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
-    throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
