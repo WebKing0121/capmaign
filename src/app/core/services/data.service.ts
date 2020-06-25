@@ -9,6 +9,9 @@ import {
 } from '@app-fake-db/data-records-mock';
 import { ListsMockData } from '@app-fake-db/list-mock';
 import { CustomFieldsMock } from '@app-fake-db/data-custom-fields-mock';
+import { AccountsImportMocks } from '@app-fake-db/data-import-accounts-mock';
+import { LeadCategoriesImportMock } from '@app-fake-db/data-import-lead-categories-mock';
+import { MapsMappingImportMocks } from '@app-fake-db/data-import-maps-mock';
 
 @Injectable({
   providedIn: 'root'
@@ -87,5 +90,17 @@ export class DataService {
           __abp: true
         });
     }
+  }
+
+  getImportAccounts(): Observable<any> {
+    return of(AccountsImportMocks);
+  }
+
+  getImportLeadCategories(): Observable<any> {
+    return of(LeadCategoriesImportMock);
+  }
+
+  getImportMappings(): Observable<any> {
+    return of(MapsMappingImportMocks);
   }
 }
