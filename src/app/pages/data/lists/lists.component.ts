@@ -159,7 +159,7 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
-      { name: 'Description', prop: 'description', sortable: true },
+      { name: 'Description', prop: 'description', sortable: true, hidden: true },
       { name: 'Type', prop: 'type', sortable: true, maxWidth: 100 },
       { name: 'Records', prop: 'records', sortable: true, maxWidth: 80 }
     ];
