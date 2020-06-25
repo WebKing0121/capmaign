@@ -112,7 +112,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
         width: '80%',
         height: '90%',
         data: {
-          leadCategory: '{leadCategory}',
+          leadCategory: leadCategory,
           createMode: false
         }
       });

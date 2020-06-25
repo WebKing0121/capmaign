@@ -93,7 +93,6 @@ export class LeadCategoryModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.props.leadCategory)
     this.formGroup = this.fb.group({
       name: [this.props.leadCategory && this.props.leadCategory.name, Validators.required],
       leadCategory: '',
