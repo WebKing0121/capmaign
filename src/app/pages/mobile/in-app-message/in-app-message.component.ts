@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { Campaign } from '@app-core/models/campaign';
 import { Subject } from 'rxjs';
@@ -13,13 +13,13 @@ import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/sc
   templateUrl: './in-app-message.component.html',
   styleUrls: ['./in-app-message.component.scss']
 })
-export class InAppMessageComponent implements OnInit {
+export class InAppMessageComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateClicked() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true }
-  ]
+  ];
 
   selected: Campaign[];
   inAppMessageData: Campaign[];
@@ -34,41 +34,41 @@ export class InAppMessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.campaignService.getCampaignMockData()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(
-      data => {
-        this.inAppMessageData = data;
-      },
-      error => {
-        console.log("error", error);
-      }
-    );
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.inAppMessageData = data;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
 
     this.tableSource.next(this.inAppMessageData.slice(0, 50), this.inAppMessageData.length);
 
     this.tableSource.changed$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(change => {
-      let mockData = [];
-      if(change.search) {
-        mockData = this.inAppMessageData.filter(item => item.name.includes(change.search));
-      } else {
-        mockData = this.inAppMessageData;
-      }
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(change => {
+        let mockData = [];
+        if (change.search) {
+          mockData = this.inAppMessageData.filter(item => item.name.includes(change.search));
+        } else {
+          mockData = this.inAppMessageData;
+        }
 
-      this.tableSource.next(
-        mockData.slice(
-          change.pagination.pageSize * (change.pagination.pageNumber - 1),
-          change.pagination.pageSize * (change.pagination.pageNumber)),
-        mockData.length
-      );
-    });
+        this.tableSource.next(
+          mockData.slice(
+            change.pagination.pageSize * (change.pagination.pageNumber - 1),
+            change.pagination.pageSize * (change.pagination.pageNumber)),
+          mockData.length
+        );
+      });
 
     this.tableSource.selection$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(selected => {
-      this.selected = selected;
-    });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
   }
 
   ngOnDestroy(): void {
@@ -78,7 +78,7 @@ export class InAppMessageComponent implements OnInit {
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'In App Campaign Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true},
+      { name: 'In App Campaign Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
       { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
     ];

@@ -73,14 +73,13 @@ export class GoogleAdsCreateComponent implements OnInit {
         customerAccount: '',
         billingAccount: '',
         openGoalFlag: '',
-        
       }),
       locationAndDelivery: this.fb.group({
         include: ['', Validators.required],
         exclude: ['', Validators.required],
         language: '',
         dailyBudget: '',
-        startDate:'',
+        startDate: '',
         endDate: ''
       }),
       siteLinks: this.fb.array([]),

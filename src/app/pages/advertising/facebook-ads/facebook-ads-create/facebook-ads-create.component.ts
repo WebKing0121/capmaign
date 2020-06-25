@@ -5,6 +5,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { FacebookAdsModalComponent } from './facebook-ads-modal/facebook-ads-modal.component';
 import { DataTableSource } from '@app-components/datatable/datatable-source';
 import { Campaign } from '@app-core/models/campaign';
+import { Location } from '@angular/common';
 
 export interface LocalDrive {
   id: number;
@@ -61,7 +62,8 @@ export class FacebookAdsCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private location: Location
   ) {
     this.desktopMode = true;
     this.mobileMode = true;
@@ -420,5 +422,9 @@ export class FacebookAdsCreateComponent implements OnInit {
       id: this.imageArr.length,
       path: ''
     }];
+  }
+
+  cancel() {
+    this.location.back();
   }
 }
