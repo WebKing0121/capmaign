@@ -14,6 +14,7 @@ import { LeadCategoriesImportMock } from '@app-fake-db/data-import-lead-categori
 import { MapsMappingImportMocks } from '@app-fake-db/data-import-maps-mock';
 import { EventListsMockData } from '@app-fake-db/data-list-event-mock';
 import { EventsMockData } from '@app-fake-db/events-mock';
+import { DataFiltersMock, filterColumnsMock } from '@app-fake-db/data-filters-mock';
 
 @Injectable({
   providedIn: 'root'
@@ -117,5 +118,13 @@ export class DataService {
 
   getEvents(): Observable<any> {
     return of(EventsMockData);
+  }
+
+  getFilters(): Observable<any> {
+    return of(DataFiltersMock);
+  }
+
+  getFilterColumns(): Observable<any> {
+    return of(filterColumnsMock);
   }
 }

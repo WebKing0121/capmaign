@@ -176,8 +176,8 @@ const NavigationItems = [
             id: 'data-filters',
             title: 'Filters',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/data/filters',
+            external: false
           },
         ]
       },
