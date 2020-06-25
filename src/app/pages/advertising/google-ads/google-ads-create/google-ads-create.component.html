@@ -3,10 +3,10 @@
     <h2 class="m-0 text-primary font-weight-bold">Create Google Ads Campaign</h2>
   </div>
   <div class="card-body">
-    <section>
-      <h3 class="text-primary font-weight-bold">Campaign Details</h3>
+    <form [formGroup]="formGroup">
+      <section>
+        <h3 class="text-primary font-weight-bold">Campaign Details</h3>
 
-      <form [formGroup]="formGroup">
         <div class="m-t-20" formGroupName="details">
           <div class="row">
             <div class="col-12 col-lg-6 form-group">
@@ -45,18 +45,16 @@
             </div>
           </div>
         </div>
-      </form>
-    </section>
-    <hr>
+      </section>
+      <hr>
 
-    <section>
-      <div class="col-12 col-lg-12 p-0">
-        <div class="text-primary m-t-30 font-weight-bold">
-          <span>Location</span>
+      <section>
+        <div class="col-12 col-lg-12 p-0">
+          <div class="text-primary m-t-30 font-weight-bold">
+            <span>Location</span>
+          </div>
         </div>
-      </div>
-      <form [formGroup]="formGroup">
-        <div class="" formGroupName="details">
+        <div class="" formGroupName="locationAndDelivery">
           <div class="row">
             <div class="col-12 col-lg-6 form-group">
               <div class="text-primary m-t-30">
@@ -67,7 +65,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text text-primary"><i class="fa fa-map-marker"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Search" autocomplete="off" name="include">
+                  <input class="form-control" fomrControlName="include" placeholder="Search" autocomplete="off" name="include">
                   <div class="input-group-append">
                     <span class="input-group-text text-primary">
                       <i class="fa fa-search"></i>
@@ -85,7 +83,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text text-primary"><i class="fa fa-map-marker"></i></span>
                   </div>
-                  <input class="form-control" placeholder="Search" autocomplete="off" name="exclude">
+                  <input class="form-control" fomrControlName="exclude" placeholder="Search" autocomplete="off" name="exclude">
                   <div class="input-group-append">
                     <span class="input-group-text text-primary">
                       <i class="fa fa-search"></i>
@@ -100,7 +98,7 @@
                   Language
                 </label>
                 <div class="input-group m-t-10">
-                  <select class="form-control" placeholder="Search" autocomplete="off" name="language">
+                  <select class="form-control" fomrControlName="language" placeholder="Search" autocomplete="off" name="language">
                     <option></option>
                   </select>
                 </div>
@@ -116,7 +114,7 @@
                     Daily Budget<span class="text-danger">*</span>
                   </label>
                   <div class="input-group m-t-20">
-                    <input type="text" class="form-control" placeholder="Daily Budget" autocomplete="off" name="exclude">
+                    <input type="text" class="form-control" fomrControlName="dailyBudget" placeholder="Daily Budget" autocomplete="off" name="exclude">
                     <div class="input-group-append">
                       <span class="input-group-text text-primary">
                         <i class="fa fa-usd">$</i>
@@ -144,9 +142,12 @@
               <div class="">
                 <div class="input-group">
                   <label class="col-md-4 d-flex align-items-center">Start Date <span class="text-danger"> * </span> : </label>
-                  <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM"
+                  <!-- <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM"
                     name="dp_to" ngbDatepicker [(ngModel)]="model" #datePickerStart="ngbDatepicker"
-                    (dateSelect) = "onStartSelect($event)">
+                    (dateSelect) = "onStartSelect($event)"> -->
+                  <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM"
+                    name="dp_to" ngbDatepicker formControlName="startDate" #datePickerStart="ngbDatepicker"
+                    (dateSelect)="onStartSelect($event)">  
                   <div class="input-group-append">
                     <span class="input-group-text" (click)="datePickerStart.toggle()">
                       <i class="fa fa-calendar"></i>
@@ -155,8 +156,11 @@
                 </div>
                 <div class="input-group m-t-15">
                   <label class="col-md-4 d-flex align-items-center">End Date <span class="text-danger"> * </span> : </label>
-                  <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM"
+                  <!-- <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM"
                     name="dp_to" ngbDatepicker [(ngModel)]="model" #datePickerEnd="ngbDatepicker"
+                    (dateSelect) = "onEndSelect($event)"> -->
+                  <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD HH:MM"
+                    name="dp_to" ngbDatepicker formControlName="endDate" #datePickerEnd="ngbDatepicker"
                     (dateSelect) = "onEndSelect($event)">
                   <div class="input-group-append">
                     <span class="input-group-text" (click)="datePickerEnd.toggle()">
@@ -181,264 +185,264 @@
             </div>
           </div>
         </div>
-      </form>
-    </section>
-    <hr>
+      </section>
+      <hr>
 
-    <section>
-      <div class="col-lg-12 text-primary font-weight-bold m-t-20 p-0">
-        <span>Add Sitelink - minimum 2 required</span>
-      </div>
-
-      <div class="col-lg-12 d-flex m-t-15 p-0">
-        <div class="col-lg-6 bg-primary text-white d-flex justify-content-center m-r-20 p-10 ">
-          <span>Search Ads</span>
-        </div>
-        <div class="col-lg-6 bg-primary text-white d-flex justify-content-center p-10 ">
-          <span>Select From Predefined</span>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-12 col-lg-6 d-flex flex-column">
-          <form [formGroup]="siteLinkCreateForm" (ngSubmit)="createNewSiteLink()">
-            <div class="form-group m-t-20">
-              <label class="required-mark-after">Sitelink Text</label>
-              <input class="form-control m-t-10" formControlName="text" aria-label="Site Link">
-            </div>
-            <div class="form-group">
-              <label class="required-mark-after">Description Line 1</label>
-              <input class="form-control m-t-10" formControlName="description1" aria-label="Description Line 1">
-            </div>
-            <div class="form-group">
-              <label>Description Line 2</label>
-              <input class="form-control m-t-10" formControlName="description2" aria-label="Description Line 2">
-            </div>
-            <div class="form-group">
-              <label class="required-mark-after">Final URL</label>
-              <input type="url" class="form-control m-t-10" formControlName="finalUrl">
-            </div>
-
-            <div class="d-flex justify-content-end">
-              <button class="btn btn-primary" type="submit" [disabled]="siteLinkCreateForm.invalid">+ Add</button>
-            </div>
-          </form>
+      <section>
+        <div class="col-lg-12 text-primary font-weight-bold m-t-20 p-0">
+          <span>Add Sitelink - minimum 2 required</span>
         </div>
 
-        <div class="col-12 col-lg-6" [formGroup]="formGroup">
-          <ng-container formArrayName="siteLinks">
-            <div class="row">
-              <div class="col-12 mb-2" *ngFor="let control of siteLinksFormArray.controls; index as i">
-                <div class="checkbox-wrapper" [formGroup]="siteLinksFormArray.controls[i]">
-                  <input type="checkbox" id="{{'sitelink_check_' + i}}" formControlName="check" aria-label="Checkbox"
-                    class="mr-2">
-                  <label for="{{'sitelink_check_' + i}}">{{siteLinksFormArray.controls[i].value.text}}</label>
-                </div>
-              </div>
-            </div>
-          </ng-container>
-        </div>
-      </div>
-    </section>
-    <hr>
-
-    <section [formGroup]="formGroup">
-
-      <h3 class="text-primary font-weight-bold">Campaign Details</h3>
-
-      <div class="row" formGroupName="template">
-        <div class="col-12 col-lg-6 form-group m-t-20">
-          <label class="required-mark-after">Campaign Name</label>
-          <input class="form-control m-t-10" formControlName="name" aria-label="Campaign Name">
-        </div>
-        <div class="col-12 col-lg-6 form-group">
-          <label>Billing Account</label>
-          <input class="form-control m-t-10" formControlName="billingAccount" aria-label="Billing Account">
-        </div>
-        <div class="col-12 col-lg-6 form-group">
-          <label class="required-mark-after">Tag Name</label>
-          <input class="form-control m-t-10" formControlName="tagName" aria-label="Tag Name">
-        </div>
-        <div class="col-12 col-lg-12">
-          <div class="d-flex justify-content-center align-items-center border p-t-10 p-b-10 border border-primary">
-            <span class="font-weight-bold">Choose Campaign Objective</span>
+        <div class="col-lg-12 d-flex m-t-15 p-0">
+          <div class="col-lg-6 bg-primary text-white d-flex justify-content-center m-r-20 p-10 ">
+            <span>Search Ads</span>
+          </div>
+          <div class="col-lg-6 bg-primary text-white d-flex justify-content-center p-10 ">
+            <span>Select From Predefined</span>
           </div>
         </div>
-        <div class="col-lg-12" style="margin-top: 20px;">
-          <label class="col-md-3">
-            <div class="card border border-primary">
-              <div style="background-color:#00a8e8; padding: 15px; text-align:center">
-                <label class="radio-inline text-bold" style="word-wrap: break-word; width: 140px; color:white;">
-                  <input id="radio" type="radio" name="TemplateId" value="1" ng-model="vm.searchNework"
-                    class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" style=""> Search Network
-                </label>
-              </div>
-              <div style="padding:15px;">
-                <img src="./assets/images/campaign/Search1.png" style="height: 300px; width: 100%;">
-              </div>
-            </div>
-          </label>
-          <label class="col-md-3">
-            <div class="card border border-primary">
-              <div style="background-color:#00a8e8; padding: 15px; text-align:center">
-                <label class="radio-inline text-bold" style="word-wrap: break-word; width: 140px; color:white;">
-                  <input id="radio" type="radio" name="TemplateId" value="1" ng-model="vm.searchPartners"
-                    class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" style=""> Search Partners
-                </label>
-              </div>
-              <div style="padding:15px;">
-                <img src="./assets/images/campaign/Search2.png" style="height: 300px; width: 100%;">
-              </div>
-            </div>
-          </label>
-          <label class="col-md-3">
-            <div class="card border border-primary">
-              <div style="background-color:#00a8e8; padding: 15px; text-align:center">
-                <label class="radio-inline text-bold" style="word-wrap: break-word; width: 140px; color:white;">
-                  <input id="radio" type="radio" name="TemplateId" value="1" ng-model="vm.displayNetwork"
-                    class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" style=""> Display Network
-                </label>
-              </div>
-              <div style="padding:15px;">
-                <img src="./assets/images/campaign/Search3.png" style="height: 300px; width: 100%;">
-              </div>
-            </div>
-          </label>
-        </div>
-      </div>
-    </section>
-    <hr>
 
-    <section [formGroup]="formGroup">
-      <h3 class="text-primary font-weight-bold">Group Details</h3>
+        <div class="row">
+          <div class="col-12 col-lg-6 d-flex flex-column">
+            <form [formGroup]="siteLinkCreateForm" (ngSubmit)="createNewSiteLink()">
+              <div class="form-group m-t-20">
+                <label class="required-mark-after">Sitelink Text</label>
+                <input class="form-control m-t-10" formControlName="text" aria-label="Site Link">
+              </div>
+              <div class="form-group">
+                <label class="required-mark-after">Description Line 1</label>
+                <input class="form-control m-t-10" formControlName="description1" aria-label="Description Line 1">
+              </div>
+              <div class="form-group">
+                <label>Description Line 2</label>
+                <input class="form-control m-t-10" formControlName="description2" aria-label="Description Line 2">
+              </div>
+              <div class="form-group">
+                <label class="required-mark-after">Final URL</label>
+                <input type="url" class="form-control m-t-10" formControlName="finalUrl">
+              </div>
 
-      <div class="row" formGroupName="groupDetail">
-        <div class="col-lg-6 form-group m-t-20">
-          <label>Ad Group Name</label>
-          <input class="form-control m-t-10" formControlName="addGroupName" aria-label="Ad Group Name">
+              <div class="d-flex justify-content-end">
+                <button class="btn btn-primary" type="submit" [disabled]="siteLinkCreateForm.invalid">+ Add</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-12 col-lg-6" [formGroup]="formGroup">
+            <ng-container formArrayName="siteLinks">
+              <div class="row">
+                <div class="col-12 mb-2" *ngFor="let control of siteLinksFormArray.controls; index as i">
+                  <div class="checkbox-wrapper" [formGroup]="siteLinksFormArray.controls[i]">
+                    <input type="checkbox" id="{{'sitelink_check_' + i}}" formControlName="check" aria-label="Checkbox"
+                      class="mr-2">
+                    <label for="{{'sitelink_check_' + i}}">{{siteLinksFormArray.controls[i].value.text}}</label>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
         </div>
-        <div class="col-lg-12 p-0 m-b-20">
-          <div class="col-lg-6">
-            <label>
-              Ad Group Name<span class="text-danger">*</span>
-              <textarea class="form-control  m-t-10"
-                type="text" name="Name" rows="4" id="txtKeywords" required=""
-                ng-model="vm.googleAd.keywords"></textarea>
+      </section>
+      <hr>
+
+      <section>
+
+        <h3 class="text-primary font-weight-bold">Campaign Details</h3>
+
+        <div class="row" formGroupName="template">
+          <div class="col-12 col-lg-6 form-group m-t-20">
+            <label class="required-mark-after">Campaign Name</label>
+            <input class="form-control m-t-10" formControlName="name" aria-label="Campaign Name">
+          </div>
+          <div class="col-12 col-lg-6 form-group">
+            <label>Billing Account</label>
+            <input class="form-control m-t-10" formControlName="billingAccount" aria-label="Billing Account">
+          </div>
+          <div class="col-12 col-lg-6 form-group">
+            <label class="required-mark-after">Tag Name</label>
+            <input class="form-control m-t-10" formControlName="tagName" aria-label="Tag Name">
+          </div>
+          <div class="col-12 col-lg-12">
+            <div class="d-flex justify-content-center align-items-center border p-t-10 p-b-10 border border-primary">
+              <span class="font-weight-bold">Choose Campaign Objective</span>
+            </div>
+          </div>
+          <div class="col-lg-12" style="margin-top: 20px;">
+            <label class="col-md-3">
+              <div class="card border border-primary">
+                <div style="background-color:#00a8e8; padding: 15px; text-align:center">
+                  <label class="radio-inline text-bold" style="word-wrap: break-word; width: 140px; color:white;">
+                    <input id="radio" type="radio" name="TemplateId" value="1" ng-model="vm.searchNework"
+                      class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" style=""> Search Network
+                  </label>
+                </div>
+                <div style="padding:15px;">
+                  <img src="./assets/images/campaign/Search1.png" style="height: 300px; width: 100%;">
+                </div>
+              </div>
+            </label>
+            <label class="col-md-3">
+              <div class="card border border-primary">
+                <div style="background-color:#00a8e8; padding: 15px; text-align:center">
+                  <label class="radio-inline text-bold" style="word-wrap: break-word; width: 140px; color:white;">
+                    <input id="radio" type="radio" name="TemplateId" value="1" ng-model="vm.searchPartners"
+                      class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" style=""> Search Partners
+                  </label>
+                </div>
+                <div style="padding:15px;">
+                  <img src="./assets/images/campaign/Search2.png" style="height: 300px; width: 100%;">
+                </div>
+              </div>
+            </label>
+            <label class="col-md-3">
+              <div class="card border border-primary">
+                <div style="background-color:#00a8e8; padding: 15px; text-align:center">
+                  <label class="radio-inline text-bold" style="word-wrap: break-word; width: 140px; color:white;">
+                    <input id="radio" type="radio" name="TemplateId" value="1" ng-model="vm.displayNetwork"
+                      class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched" style=""> Display Network
+                  </label>
+                </div>
+                <div style="padding:15px;">
+                  <img src="./assets/images/campaign/Search3.png" style="height: 300px; width: 100%;">
+                </div>
+              </div>
             </label>
           </div>
         </div>
-        <div class="col-lg-6">
-          <label>
-            Business Name
-          </label>
-          <input type="text" class="form-control m-t-10" placeholder="Business Name">
-        </div>
-        <div class="col-lg-6">
-          <label>
-            Website Url<span class="text-danger">*</span>
-          </label>
-          <input type="text" class="form-control m-t-10" placeholder="Website Url">
-        </div>
-        <div class="col-lg-12 m-t-20">
-          <span class="text-primary">Define your Product or Services</span>
-        </div>
-      </div>
-    </section>
-    <hr>
+      </section>
+      <hr>
 
-    <section [formGroup]="formGroup">
-      <h3 class="text-primary font-weight-bold m-t-20">Ads Preview</h3>
+      <section>
+        <h3 class="text-primary font-weight-bold">Group Details</h3>
 
-      <div class="row" formGroupName="adsPreview">
-        <div class="col-lg-8 d-flex flex-wrap">
-          <span class="col-lg-12 text-primary font-weight-bold m-t-20">Ad#1</span>
-          <div class="col-md-6 m-t-20">
-            <label>Headline 1<span class="text-danger">*</span></label>
-            <input [(ngModel)]="headline1" type="text" class="form-control m-t-10" formControlName="headline1">
+        <div class="row" formGroupName="groupDetail">
+          <div class="col-lg-6 form-group m-t-20">
+            <label>Ad Group Name</label>
+            <input class="form-control m-t-10" formControlName="addGroupName" aria-label="Ad Group Name">
           </div>
-          <div class="col-md-6">
-            <label>Headline 2<span class="text-danger">*</span></label>
-            <input [(ngModel)]="headline2" type="text" class="form-control m-t-10" formControlName="headline2">
-          </div>
-          <div class="col-md-12 m-t-10">
-            <label>Description</label>
-            <input [(ngModel)]="description" type="text" class="form-control m-t-10" formControlName="description">
-          </div>
-          <div class="col-lg-12 d-flex m-t-10 justify-content-end">
-            <button class="btn btn-success p-10 border-0 rounded-0"
-              (click)="onCreateAds(headline1, headline2, description)">
-              + Add
-            </button>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <label class="text-primary">Preview</label>
-          <div class="card border border-1 border-primary m-t-10">
-            <div class="bg-primary p-10 text-align-left">
-              <label class="text-white">Your Ad Preview</label>
-            </div>
-            <div>
-              <div class="container row m-0 p-10">
-                <div class="col-lg-12 p-l-5 d-flex">
-                  <div class="p-8">
-                    &nbsp;<i class="fa fa-phone"></i>&nbsp;
-                  </div>
-                  <div class="text-wrap">
-                    {{headline1}}
-                    &nbsp;|&nbsp;
-                    {{headline2}}
-                  </div>
-                </div>
-                <div class="col-lg-12 tex-wrap border-t-1 p-t-5 m-t-5">
-                  {{description}}
-                </div>
-              </div>
-            </div>
-            <hr style="margin: 10px 0px;">
-            <div style="padding:10px; text-align:left">
-              <i class="fa fa-search" aria-hidden="true"> &nbsp; &nbsp; SEE MORE AD LAYOUTS</i>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-12">
-          <label class="text-primary">Create Ad#2</label>
-          <div class="d-flex flex-wrap">
-            <div *ngFor="let ad of googleAdsArr" class="col-lg-3">
-              <label class="col-lg-12 ng-scope">
-                <div class="card border border-1 border-primary">
-                  <div style="padding: 5px 10px; text-align:left">
-                    <label class="m-0">Your Ad Preview</label>
-                  </div>
-                  <div>
-                    <div class="container p-1">
-                      <div>
-                        <i class="fa fa-phone p-l-8 p-r-8 p-t-0 p-b-0" aria-hidden="true"></i>
-                        <label class="radio-inline text-primary text-bold margin-top-10 p-l-0">
-                          <span class="ng-binding">{{ad.headline1}} |
-                            {{ad.headline2}} <br> </span>
-                          <br>
-                        </label>
-                        <hr style="margin: 10px 0px;">
-                        <p class="m-10 ng-binding">
-                          {{ad.description}}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="p-15">
-                    <i class="fa fa-search" aria-hidden="true"> &nbsp; &nbsp; SEE MORE AD LAYOUTS</i>
-                  </div>
-                  <div class="p-3 m-b-10">
-                    <button class="btn btn-primary m-t-10" (click)="onRemoveAd(ad.id)">Delete</button>
-                  </div>
-                </div>
-
+          <div class="col-lg-12 p-0 m-b-20">
+            <div class="col-lg-6">
+              <label>
+                Ad Group Name<span class="text-danger">*</span>
+                <textarea class="form-control  m-t-10"
+                  type="text" name="Name" rows="4" id="txtKeywords" required=""
+                  ng-model="vm.googleAd.keywords"></textarea>
               </label>
             </div>
           </div>
+          <div class="col-lg-6">
+            <label>
+              Business Name
+            </label>
+            <input type="text" class="form-control m-t-10" placeholder="Business Name">
+          </div>
+          <div class="col-lg-6">
+            <label>
+              Website Url<span class="text-danger">*</span>
+            </label>
+            <input type="text" class="form-control m-t-10" placeholder="Website Url">
+          </div>
+          <div class="col-lg-12 m-t-20">
+            <span class="text-primary">Define your Product or Services</span>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+      <hr>
+
+      <section>
+        <h3 class="text-primary font-weight-bold m-t-20">Ads Preview</h3>
+
+        <div class="row" formGroupName="adsPreview">
+          <div class="col-lg-8 d-flex flex-wrap">
+            <span class="col-lg-12 text-primary font-weight-bold m-t-20">Ad#1</span>
+            <div class="col-md-6 m-t-20">
+              <label>Headline 1<span class="text-danger">*</span></label>
+              <input [(ngModel)]="headline1" type="text" class="form-control m-t-10" formControlName="headline1">
+            </div>
+            <div class="col-md-6">
+              <label>Headline 2<span class="text-danger">*</span></label>
+              <input [(ngModel)]="headline2" type="text" class="form-control m-t-10" formControlName="headline2">
+            </div>
+            <div class="col-md-12 m-t-10">
+              <label>Description</label>
+              <input [(ngModel)]="description" type="text" class="form-control m-t-10" formControlName="description">
+            </div>
+            <div class="col-lg-12 d-flex m-t-10 justify-content-end">
+              <button class="btn btn-success p-10 border-0 rounded-0"
+                (click)="onCreateAds(headline1, headline2, description)">
+                + Add
+              </button>
+            </div>
+          </div>
+          <div class="col-lg-4">
+            <label class="text-primary">Preview</label>
+            <div class="card border border-1 border-primary m-t-10">
+              <div class="bg-primary p-10 text-align-left">
+                <label class="text-white">Your Ad Preview</label>
+              </div>
+              <div>
+                <div class="container row m-0 p-10">
+                  <div class="col-lg-12 p-l-5 d-flex">
+                    <div class="p-8">
+                      &nbsp;<i class="fa fa-phone"></i>&nbsp;
+                    </div>
+                    <div class="text-wrap">
+                      {{headline1}}
+                      &nbsp;|&nbsp;
+                      {{headline2}}
+                    </div>
+                  </div>
+                  <div class="col-lg-12 tex-wrap border-t-1 p-t-5 m-t-5">
+                    {{description}}
+                  </div>
+                </div>
+              </div>
+              <hr style="margin: 10px 0px;">
+              <div style="padding:10px; text-align:left">
+                <i class="fa fa-search" aria-hidden="true"> &nbsp; &nbsp; SEE MORE AD LAYOUTS</i>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <label class="text-primary">Create Ad#2</label>
+            <div class="d-flex flex-wrap">
+              <div *ngFor="let ad of googleAdsArr" class="col-lg-3">
+                <label class="col-lg-12 ng-scope">
+                  <div class="card border border-1 border-primary">
+                    <div style="padding: 5px 10px; text-align:left">
+                      <label class="m-0">Your Ad Preview</label>
+                    </div>
+                    <div>
+                      <div class="container p-1">
+                        <div>
+                          <i class="fa fa-phone p-l-8 p-r-8 p-t-0 p-b-0" aria-hidden="true"></i>
+                          <label class="radio-inline text-primary text-bold margin-top-10 p-l-0">
+                            <span class="ng-binding">{{ad.headline1}} |
+                              {{ad.headline2}} <br> </span>
+                            <br>
+                          </label>
+                          <hr style="margin: 10px 0px;">
+                          <p class="m-10 ng-binding">
+                            {{ad.description}}</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="p-15">
+                      <i class="fa fa-search" aria-hidden="true"> &nbsp; &nbsp; SEE MORE AD LAYOUTS</i>
+                    </div>
+                    <div class="p-3 m-b-10">
+                      <button class="btn btn-primary m-t-10" (click)="onRemoveAd(ad.id)">Delete</button>
+                    </div>
+                  </div>
+
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
   </div>
 
   <div class="card-footer">

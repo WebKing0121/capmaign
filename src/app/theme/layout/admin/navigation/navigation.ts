@@ -348,21 +348,22 @@ const NavigationItems = [
         id: 'mobile',
         title: 'Mobile',
         type: 'collapse',
+        url: '/mobile',
         icon: 'feather icon-book',
         children: [
           {
             id: 'mobile-sms-messages',
             title: 'SMS Messages',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/mobile/manage-sms-campaign',
+            external: false
           },
           {
             id: 'mobile-inapp-messages',
             title: 'InApp Messages',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/mobile/in-app-message',
+            external: false
           },
           {
             id: 'mobile-push-notification',
