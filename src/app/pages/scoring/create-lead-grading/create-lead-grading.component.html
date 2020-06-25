@@ -1,20 +1,26 @@
 
 <div class="card mt-4" style="height: calc( 100vh - 120px );">
   <div class="card-header">
-    <span>CREATE LEAD GRADING PROFILE</span>
+    <span>{{createMode?'CREATE ':'EDIT '}}LEAD GRADING PROFILE</span>
   </div>
 
-  <div class="card-body">
+  <div class="card-body" style="overflow-y: auto;">
     <form [formGroup]="formGroup">
       <div class="col-lg-12 d-flex">
-        <label class="col-lg-6">
-          Name<span class="text-danger">*</span>
-          <input class="form-control m-t-10" formControlName="profileName" type="text" required>
-        </label>
-        <label class="col-lg-6">
-          Description
-          <input class="form-control m-t-10" formControlName="profileDescription" type="text">
-        </label>
+        <div class="col-md-6">
+          <label class="mobile-show">Name<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Name</span></div>
+            <input type="text" formControlName="profileName" class="form-control ng-untouched ng-pristine ng-invalid">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="mobile-show">Description<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Description</span></div>
+            <input type="text" formControlName="profileDescription" class="form-control">
+          </div>
+        </div>
       </div>
       <div class="card" style="margin: 30px;">
         <div class="card-header bg-secondary">
@@ -31,19 +37,23 @@
             </div>
             <div class="col-sm-4 d-flex">
               <div class="col-sm-10">Grade</div>
-              <div class="btn btn-success f-20 font-weight-bold" (click)="add()">+</div>
+              <span class="m-l-10 d-flex" style="align-items: center;">
+                <i class="text-secondary fa fa-plus f-20" (click)="add()"></i>
+              </span>
             </div>
           </div>
           <ng-template #ruleList ></ng-template>
         </div>
       </div>
-      <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
-        <div>
-          <span class="btn btn-secondary m-l-10" (click)="onCancelClick()"><i class="fa fa-save m-r-10"></i>Cancel</span>
-          <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i class="fa fa-save m-r-10"></i>Save</span>
-          <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i class="fa fa-save m-r-10"></i>Save</span>
-        </div>
-      </div>
     </form>
+  </div>
+  <div class="card-footer">
+    <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
+      <div>
+        <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
+        <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i class="fa fa-save m-r-10"></i>Save</span>
+        <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i class="fa fa-save m-r-10"></i>Save</span>
+      </div>
+    </div>
   </div>
 </div>

@@ -38,3 +38,9 @@ export class Grading {
   isStatic: boolean;
   [name: string]: any;
 }
+
+export class LeadCategory {
+  id: string;
+  name: string;
+  criteria: string;
+}

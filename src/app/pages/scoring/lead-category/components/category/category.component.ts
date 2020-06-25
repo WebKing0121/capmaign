@@ -1,16 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { LeadCategoryModalComponent } from '../../lead-category-modal/lead-category-modal.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
-import { CreateLeadGradingComponent } from '../create-lead-grading.component';
 
 @Component({
-  selector: 'app-rule',
-  templateUrl: './rule.component.html',
-  styleUrls: ['./rule.component.scss']
+  selector: 'app-category',
+  templateUrl: './category.component.html',
+  styleUrls: ['./category.component.scss']
 })
-export class RuleComponent implements OnInit {
+export class CategoryComponent implements OnInit {
 
   public uniqueKey: number;
-  public parentRef: CreateLeadGradingComponent;
+  public parentRef: LeadCategoryModalComponent;
 
   formGroup: FormGroup;
 

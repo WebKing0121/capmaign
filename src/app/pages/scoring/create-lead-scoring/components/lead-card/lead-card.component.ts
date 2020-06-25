@@ -37,8 +37,8 @@ export class LeadCardComponent implements OnInit {
   ngOnInit(): void {
     this.formGroup = this.fb.group({
       attitude: '',
-      valueType: 0,
-      weightage: 0
+      valueType: '',
+      weightage: ''
     });
   }
 

@@ -1,1 +1,10 @@
-<p>lead-category works!</p>
+
+<div style="height: calc( 100vh - 120px)">
+  <app-datatable [title]="'Lead Category Page'"
+    [dataSource]="tableSource"
+    [buttons]="tableButtons"
+    [selectable]="true"
+    [selectionType]="'checkbox'"
+    (activate)="onActive($event)">
+  </app-datatable>
+</div>

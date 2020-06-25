@@ -46,7 +46,7 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
   leadScoringCardList: LeadCard[];
 
   scoring: Scoring;
-  scoringMode: 'new' | 'edit';
+  createMode: boolean;
 
   @ViewChild('leadCardList', { read: ViewContainerRef })
   leadCardList: ViewContainerRef;
@@ -69,17 +69,16 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
-    throw new Error('Method not implemented.');
   }
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-      searchLeadItem: '',
+      searchLeadCard: '',
       profileName: [this.props.scoring && this.props.scoring.name, [Validators.required]],
-      profileDescription: this.props.scoring && this.props.scoring.description
+      description: this.props.scoring && this.props.scoring.description
     });
 
-    this.scoringMode = this.props.mode === 'new' ? 'new' : 'edit';
+    this.createMode = this.props.mode === 'new' ? true : false;
 
     this.scoringService.getLeadScoringLeadMockData()
       .pipe(takeUntil(this.destroy$))
@@ -122,6 +121,10 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
         x => x.instance.uniqueKey !== key
       );
     }
+  }
+
+  onCancelClick() {
+    this.modalRef.cancel();
   }
 
   onSaveClick() {

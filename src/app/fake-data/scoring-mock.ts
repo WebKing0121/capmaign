@@ -1,6 +1,6 @@
 import { Scoring } from '@app-models/scoring';
 import { LeadCard } from '@app-models/scoring';
-import { Grading } from '@app-core/models/scoring';
+import { Grading, LeadCategory } from '@app-core/models/scoring';
 import { LeadScoringRuleConditionType } from '@app-core/enums/scoring-type.enum';
 
 export const LeadScoringMockData: Scoring[] = [
@@ -317,4 +317,82 @@ export const LeadGradingMockData: Grading[] = [
     isActive: true,
     isStatic: false
   }
+];
+
+export const LeadCategoryMockData: LeadCategory[] = [
+  {
+    id: '1',
+    name: 'Website',
+    criteria: 'Explicit'
+  },
+  {
+    id: '2',
+    name: 'Website Visited Time',
+    criteria: 'Explicit'
+  },
+  {
+    id: '3',
+    name: 'Downloaded',
+    criteria: 'Explicit'
+  },
+  {
+    id: '4',
+    name: 'lead owner',
+    criteria: 'Explicit'
+  },
+  {
+    id: '5',
+    name: 'prospect owner',
+    criteria: 'Explicit'
+  },
+  {
+    id: '6',
+    name: 'test category',
+    criteria: 'Explicit'
+  },
+  {
+    id: '7',
+    name: 'Website',
+    criteria: 'Implicit'
+  },
+  {
+    id: '8',
+    name: 'test category',
+    criteria: 'Explicit'
+  },
+  {
+    id: '9',
+    name: 'Demo',
+    criteria: 'Explicit'
+  },
+  {
+    id: '10',
+    name: 'Website',
+    criteria: 'Implicit'
+  },
+  {
+    id: '11',
+    name: 'PersonalAddrCountry',
+    criteria: 'Explicit'
+  },
+  {
+    id: '12',
+    name: 'Countrycheck',
+    criteria: 'Explicit'
+  },
+  {
+    id: '13',
+    name: 'SMS Score',
+    criteria: 'Implicit'
+  },
+  {
+    id: '14',
+    name: 'SMS campaign Scoring',
+    criteria: 'Explicit'
+  },
+  {
+    id: '15',
+    name: 'Country Wise',
+    criteria: 'Implicit'
+  },
 ];

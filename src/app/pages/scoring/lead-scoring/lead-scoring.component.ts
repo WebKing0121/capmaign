@@ -7,6 +7,7 @@ import { Scoring } from '@app-core/models/scoring';
 import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
+import { ConfirmModalComponent } from '@app-components/modal/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-lead-scoring',
@@ -26,7 +27,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   tableSource: DataTableSource<Scoring> = new DataTableSource<Scoring>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.createLeadScoring(), },
-    // { label: 'Delete', icon: 'fa fa-trash-o', click: () => this.clickTemplate(), },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true }
     // { label: 'Run Profile', icon: 'far fa-gear', click: () => this.clickTemplate() },
   ];
 
@@ -55,8 +56,6 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
       .subscribe(change => {
-        console.log('Campaign Table Changes: ', change);
-
         let mockData = [];
         if (change.search) {
           mockData = this.leadScoringData.filter(item =>
@@ -118,7 +117,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
           this.modalService.openModal(CreateLeadScoringComponent, {
             width: '80%',
             data: {
-              scoring: '{scoring}',
+              scoring: scoring,
               mode: 'edit'
             }
           });
@@ -130,6 +129,10 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
           this.openSetDefaultConfirmModal(event);
           break;
       }
+    }
+
+    if (event.type === 'checkbox') {
+      this.tableButtons[1].hide = this.selected.length === 0;
     }
   }
 
@@ -145,5 +148,12 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onCheckClick(e) {
     e.preventDefault();
+  }
+
+  onClickDelete() {
+    this.modalService.openModal(ConfirmModalComponent, {
+      width: '400px',
+      height: '80%'
+    });
   }
 }

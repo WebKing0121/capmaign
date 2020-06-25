@@ -18,7 +18,7 @@ interface ComponentProps {
 })
 export class CreateLeadGradingComponent implements OnInit {
   grading: Grading;
-  gradingMode: 'new' | 'edit';
+  createMode: boolean;
 
   @ViewChild('ruleList', { read: ViewContainerRef })
   ruleList: ViewContainerRef;
@@ -44,7 +44,7 @@ export class CreateLeadGradingComponent implements OnInit {
       profileDescription: this.props.grading && this.props.grading.description
     });
 
-    this.gradingMode = this.props.mode === 'new' ? 'new' : 'edit';
+    this.createMode = this.props.mode === 'new' ? true : false;
   }
 
   onSearch(e) {
