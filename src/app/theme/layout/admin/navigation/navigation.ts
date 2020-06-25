@@ -362,8 +362,8 @@ const NavigationItems = [
             id: 'mobile-inapp-messages',
             title: 'InApp Messages',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/mobile/in-app-message',
+            external: false
           },
           {
             id: 'mobile-push-notification',

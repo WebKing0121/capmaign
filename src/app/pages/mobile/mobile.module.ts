@@ -9,9 +9,12 @@ import { MobileRoutingModule } from './mobile-routing.module';
 import { MobileCampaignComponent } from './mobile-campaign/mobile-campaign.component';
 import { ManageSmsCampaignComponent } from './manage-sms-campaign/manage-sms-campaign.component';
 import { DatatableModule } from '@app-components/datatable/datatable.module';
+import { InAppMessageComponent } from './in-app-message/in-app-message.component';
 
 @NgModule({
-  declarations: [MobileCampaignComponent, ManageSmsCampaignComponent],
+  declarations: [MobileCampaignComponent,
+    ManageSmsCampaignComponent,
+    InAppMessageComponent],
   imports: [
     CommonModule,
     MobileRoutingModule,
