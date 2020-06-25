@@ -151,9 +151,11 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onClickDelete() {
-    this.modalService.openModal(ConfirmModalComponent, {
+    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
-      height: '80%'
+      data: {
+        selectedIdx: 10
+      }
     });
   }
 }

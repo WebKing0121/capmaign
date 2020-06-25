@@ -7,6 +7,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { LeadCategoryModalComponent } from './lead-category-modal/lead-category-modal.component';
 import { ConfirmModalComponent } from '@app-components/modal/confirm-modal/confirm-modal.component';
+import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 
 @Component({
   selector: 'app-lead-category',
@@ -95,9 +96,11 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onClickDelete() {
-    this.modalService.openModal(ConfirmModalComponent, {
+    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
-      height: '80%'
+      data: {
+        selectedIdx: 10
+      }
     });
   }
 
