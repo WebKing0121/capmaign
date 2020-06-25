@@ -356,7 +356,7 @@ const NavigationItems = [
             title: 'SMS Messages',
             type: 'item',
             url: '/mobile/manage-sms-campaign',
-            external: true
+            external: false
           },
           {
             id: 'mobile-inapp-messages',

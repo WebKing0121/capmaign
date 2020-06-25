@@ -9,7 +9,7 @@ const routes: Routes = [
     path: 'manage-sms-campaign', component: ManageSmsCampaignComponent
   },
   {
-    path: 'new-campaign', component: MobileCampaignComponent, data: { mode: 'new' }
+    path: 'manage-sms-campaign/create', component: MobileCampaignComponent, data: { mode: 'new' }
   },
   {
     path: ':id', component: MobileCampaignComponent

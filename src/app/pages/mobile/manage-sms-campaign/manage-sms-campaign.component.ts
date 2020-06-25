@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { MobileCampaignComponent } from '../mobile-campaign/mobile-campaign.component';
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-manage-sms-campaign',
@@ -28,7 +29,9 @@ export class ManageSmsCampaignComponent implements OnInit {
 
   constructor(
     private campaignService: CampaignService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.smsCampaignData = [];
   }
@@ -44,6 +47,8 @@ export class ManageSmsCampaignComponent implements OnInit {
         console.log("error", error);
       }
     );
+
+    this.smsCampaignData = this.smsCampaignData.filter(item => item.type === 'mobile');
 
     this.tableSource.next(this.smsCampaignData.slice(0, 50), this.smsCampaignData.length);
 
@@ -89,23 +94,13 @@ export class ManageSmsCampaignComponent implements OnInit {
   }
 
   onCreateClicked() {
-    this.modalService.openModal(MobileCampaignComponent, {
-      width: '80%',
-      data: {
-
-      }
-    })
+    this.router.navigate(['create'], { relativeTo: this.route});
   }
 
   onActive(event) {
-    if(event.type === 'click' || event.cellIndex === 1) {
+    if(event.type === 'click' && event.cellIndex === 1) {
       const campaign = event.row as Campaign;
-      this.modalService.openModal(MobileCampaignComponent, {
-        width: '80%',
-        data: {
-
-        }
-      })
+      this.router.navigate(['mobile', campaign.id]);
     }
 
     if (event.type === 'checkbox') {
