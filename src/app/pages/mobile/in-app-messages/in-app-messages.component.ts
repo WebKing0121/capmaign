@@ -9,11 +9,11 @@ import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 
 @Component({
-  selector: 'app-in-app-message',
-  templateUrl: './in-app-message.component.html',
-  styleUrls: ['./in-app-message.component.scss']
+  selector: 'app-in-app-messages',
+  templateUrl: './in-app-messages.component.html',
+  styleUrls: ['./in-app-messages.component.scss']
 })
-export class InAppMessageComponent implements OnInit, OnDestroy, AfterViewInit {
+export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [

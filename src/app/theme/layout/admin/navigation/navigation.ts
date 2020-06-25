@@ -362,7 +362,7 @@ const NavigationItems = [
             id: 'mobile-inapp-messages',
             title: 'InApp Messages',
             type: 'item',
-            url: '/mobile/in-app-message',
+            url: '/mobile/in-app-messages',
             external: false
           },
           {
