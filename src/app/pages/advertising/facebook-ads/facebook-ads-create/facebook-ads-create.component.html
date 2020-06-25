@@ -9,7 +9,7 @@
           <div class="row">
             <div class="col-12 col-md-6 form-group">
               <label class="required-mark-after">Campaign Name</label>
-              <input class="form-control" formControlName="name" aria-label="Campaign Name">
+              <input type="text" class="form-control" formControlName="name" aria-label="Campaign Name">
             </div>
             <div class="col-12 col-md-6 form-group">
               <label class="required-mark-after">Ad Account</label>
@@ -19,7 +19,7 @@
             </div>
             <div class="col-12 col-md-6 form-group m-l-auto">
               <label class="required-mark-after">Ad Label</label>
-              <input class="form-control" formControlName="adLabel" aria-label="Campaign Name">
+              <input type="text" class="form-control" formControlName="adLabel" aria-label="Campaign Name">
             </div>
             <div class="col-12 col-lg-12">
               <div class="d-flex justify-content-center align-items-center border p-t-10 p-b-10 border border-primary">
@@ -36,12 +36,12 @@
                     <div class="text-center"><i class="fa fa-lg fa-globe-americas text-primary" aria-hidden="true"></i>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_brandawareness" class="m-r-5" name="campaignobjective"
+                      <input type="radio" id="obj_brandawareness" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
                         value="BRAND_AWARENESS">
                       <label for="obj_brandawareness">Brand Awareness</label>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_reach" class="m-r-5" name="campaignobjective" value="REACH">
+                      <input type="radio" id="obj_reach" class="m-r-5" formControlName="campaignObjective" name="campaignObjective" value="REACH">
                       <label for="obj_reach">Reach</label>
                     </div>
                   </div>
@@ -56,31 +56,32 @@
                     <div class="text-center"><i class="fab fa-lg fa-facebook-f text-primary" aria-hidden="true"></i>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_traffic" class="m-r-5" name="campaignobjective" value="LINK_CLICKS">
+                      <input type="radio" id="obj_traffic" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
+                        value="LINK_CLICKS">
                       <label for="obj_traffic">Traffic</label>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_engagement" class="m-r-5" name="campaignobjective"
+                      <input type="radio" id="obj_engagement" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
                         value="POST_ENGAGEMENT">
                       <label for="obj_engagement">Engagement</label>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_appinstalls" class="m-r-5" name="campaignobjective"
+                      <input type="radio" id="obj_appinstalls" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
                         value="APP_INSTALLS">
                       <label for="obj_appinstalls">App Installs</label>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_videoviews" class="m-r-5" name="campaignobjective"
+                      <input type="radio" id="obj_videoviews" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
                         value="VIDEO_VIEWS">
                       <label for="obj_videoviews">Video Views</label>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_leadgeneration" class="m-r-5" name="campaignobjective"
+                      <input type="radio" id="obj_leadgeneration" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
                         value="LEAD_GENERATION">
                       <label for="obj_leadgeneration">Lead Generation</label>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_messages" class="m-r-5" name="campaignobjective" value="MESSAGES">
+                      <input type="radio" id="obj_messages" class="m-r-5" formControlName="campaignObjective" name="campaignObjective" value="MESSAGES">
                       <label for="obj_messages">Messages</label>
                     </div>
                   </div>
@@ -95,17 +96,17 @@
                     <div class="text-center"><i class="fa fa-lg fa-mobile-alt text-primary" aria-hidden="true"></i>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_conversions" class="m-r-5" name="campaignobjective"
+                      <input type="radio" id="obj_conversions" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
                         value="CONVERSIONS">
                       <label for="obj_conversions">Conversions</label>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_cataloguesales" class="m-r-5" name="campaignobjective"
+                      <input type="radio" id="obj_cataloguesales" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
                         value="PRODUCT_CATALOG_SALES">
                       <label for="obj_cataloguesales">Catalogue Sales</label>
                     </div>
                     <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_storetraffic" class="m-r-5" name="campaignobjective"
+                      <input type="radio" id="obj_storetraffic" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
                         value="LOCAL_AWARENESS">
                       <label for="obj_storetraffic">Store Traffic</label>
                     </div>

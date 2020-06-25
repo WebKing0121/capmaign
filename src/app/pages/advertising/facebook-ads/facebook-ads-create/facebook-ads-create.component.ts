@@ -100,6 +100,8 @@ export class FacebookAdsCreateComponent implements OnInit {
         name: ['', Validators.required],
         adAccount: '',
         adLabel: '',
+        campaignObjective: '',
+        websiteUrl: ''
       })
     });
 
