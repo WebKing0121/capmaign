@@ -1,14 +1,12 @@
-import { Component, OnInit, Input, AfterViewInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
 import { Subject, Observable } from 'rxjs';
-import { Location } from '@angular/common';
 import { Tab, GridColumn } from '@app-models/common';
 import { Tabs } from '@app-core/enums/data-tabs.enum';
 import { DataTableSource } from '@app-components/datatable/datatable-source';
 import { DataService } from '@app-services/data.service';
 import { takeUntil } from 'rxjs/operators';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AppState, AppTypes, selectRecordColumns } from '@app-store/app.models';
 import { Store } from '@ngrx/store';
+import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
 
 @Component({
   selector: 'app-data-records',
@@ -18,11 +16,13 @@ import { Store } from '@ngrx/store';
 export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() buttons = [];
   @Output() activate: EventEmitter<any> = new EventEmitter<any>();
-  private prevRoute: string;
+  @Output() selectedTab: EventEmitter<any> = new EventEmitter<any>();
+  @ViewChild('recordModal', { static: false }) recordModal;
+  
   private unsubscribe$ = new Subject();
 
   tabs: Tab[] = Tabs;
-
+  recordType: string;
   // columns
   recordColumns$: Observable<GridColumn[]>;
 
@@ -37,6 +37,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
     private store: Store<AppState>
   ) {
     this.recordColumns$ = this.store.select(selectRecordColumns);
+    this.recordType = '';
   }
 
   ngOnInit(): void {
@@ -55,6 +56,10 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (tab) {
+      // set record type 
+      this.setRecordType(tab);
+
+      this.selectedTab.emit(tab);
       tab.selected = true;
       this.dataService.getRecords(tab.key)
         .pipe(takeUntil(this.unsubscribe$))
@@ -108,6 +113,14 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
       event,
       selected: this.selected
     });
+  }
+
+  createRecord() {
+    this.recordModal.newRecord();
+  }
+
+  setRecordType(tab: Tab) {
+    this.recordType = tab.key === 'all' ? 'accounts': tab.key;
   }
   _updateTable(records: any[]) {
     this.tableSource.next(records.slice(0, 50), records.length);

@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { RecordModalType } from '@app-core/enums/data-list-type.enum';
+import { Tab } from '@app-core/models/common';
 
 @Component({
   selector: 'app-manage-records',
@@ -11,7 +13,8 @@ export class ManageRecordsComponent implements OnInit {
   @ViewChild('addToListModal', { static: false }) addToListModal;
   @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
   @ViewChild('importCSVModal', { static: false }) importCSVModal;
-
+  @ViewChild('dataRecords', { static: false }) dataRecords;
+  
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
@@ -21,7 +24,6 @@ export class ManageRecordsComponent implements OnInit {
     { label: 'Send Email', icon: 'fa fa-envelope', click: () => this.onClickSendEmail(), hide: true },
     { label: 'Send SMS', icon: 'fa fa-envelope', click: () => this.onClickSendSMS(), hide: true },
     { label: 'View Columns', icon: 'fa fa-eye', click: () => this.onClickViewColumns() },
-
   ];
 
   // confirm Modal
@@ -29,8 +31,7 @@ export class ManageRecordsComponent implements OnInit {
     { label: 'Yes', action: this.onClickConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
-  constructor() {
-  }
+  constructor() { }
 
   ngOnInit(): void {
 
@@ -47,7 +48,7 @@ export class ManageRecordsComponent implements OnInit {
   }
 
   onClickCreate() {
-
+    this.dataRecords.createRecord();
   }
 
   onClickDelete() {

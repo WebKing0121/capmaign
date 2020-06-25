@@ -15,6 +15,7 @@ import { ModalContainerComponent } from './modal-container/modal-container.compo
 import { ViewColumnsComponent } from './view-columns/view-columns.component';
 import { ImportCsvModalComponent } from './import-csv-modal/import-csv-modal.component';
 import { FileFormatOptionComponent } from './import-csv-modal/file-format-option/file-format-option.component';
+import { RecordModalComponent } from './record-modal/record-modal.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { FileFormatOptionComponent } from './import-csv-modal/file-format-option
     ViewColumnsComponent,
     ImportCsvModalComponent,
     FileFormatOptionComponent,
+    RecordModalComponent,
   ],
   exports: [
     UiModalComponent,
@@ -43,7 +45,8 @@ import { FileFormatOptionComponent } from './import-csv-modal/file-format-option
     AddToListModalComponent,
     ViewColumnsComponent,
     ImportCsvModalComponent,
-    FileFormatOptionComponent
+    FileFormatOptionComponent,
+    RecordModalComponent
   ]
 })
 export class ModalModule { }
