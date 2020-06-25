@@ -8,6 +8,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadGradingComponent } from '../create-lead-grading/create-lead-grading.component';
+import { ConfirmModalComponent } from '@app-components/modal/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-lead-grading',
@@ -27,7 +28,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   tableSource: DataTableSource<Grading> = new DataTableSource<Grading>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.createLeadGrading(), },
-    // { label: 'Delete', icon: 'fa fa-trash-o', click: () => this.clickTemplate(), },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true }    
     // { label: 'Run Profile', icon: 'far fa-gear', click: () => this.clickTemplate() },
   ];
 
@@ -104,7 +105,9 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
     // this.router.navigate(['create-new-grading'], { relativeTo: this.route });
     this.modalService.openModal(CreateLeadGradingComponent, {
       width: '80%',
-      data: {}
+      data: {
+        mode: 'new'
+      }
     });
   }
 
@@ -117,7 +120,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
             width: '80%',
             data: {
               grading: event.row,
-              gradingMode: 'edit'
+              mode: 'edit'
             }
           });
           break;
@@ -127,6 +130,10 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
           this.openSetDefaultConfirmModal(event);
           break;
       }
+    }
+
+    if (event.type === 'checkbox') {
+      this.tableButtons[1].hide = this.selected.length === 0;
     }
   }
 
@@ -144,5 +151,12 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onCheckClick(e) {
     e.preventDefault();
+  }
+
+  onClickDelete() {
+    this.modalService.openModal(ConfirmModalComponent, {
+      width: '400px',
+      height: '80%'
+    });
   }
 }

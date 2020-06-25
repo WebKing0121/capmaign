@@ -46,7 +46,7 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
   leadScoringCardList: LeadCard[];
 
   scoring: Scoring;
-  scoringMode: 'new' | 'edit';
+  createMode: boolean;
 
   @ViewChild('leadCardList', { read: ViewContainerRef })
   leadCardList: ViewContainerRef;
@@ -78,7 +78,7 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
       description: this.props.scoring && this.props.scoring.description
     });
 
-    this.scoringMode = this.props.mode === 'new' ? 'new' : 'edit';
+    this.createMode = this.props.mode === 'new' ? true : false;
 
     this.scoringService.getLeadScoringLeadMockData()
       .pipe(takeUntil(this.destroy$))
