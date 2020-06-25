@@ -348,13 +348,14 @@ const NavigationItems = [
         id: 'mobile',
         title: 'Mobile',
         type: 'collapse',
+        url: '/mobile',
         icon: 'feather icon-book',
         children: [
           {
             id: 'mobile-sms-messages',
             title: 'SMS Messages',
             type: 'item',
-            url: 'javascript:',
+            url: '/mobile/manage-sms-campaign',
             external: true
           },
           {

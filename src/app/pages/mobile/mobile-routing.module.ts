@@ -2,8 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { MobileCampaignComponent } from './mobile-campaign/mobile-campaign.component';
+import { ManageSmsCampaignComponent } from './manage-sms-campaign/manage-sms-campaign.component';
 
 const routes: Routes = [
+  {
+    path: 'manage-sms-campaign', component: ManageSmsCampaignComponent
+  },
   {
     path: 'new-campaign', component: MobileCampaignComponent, data: { mode: 'new' }
   },
