@@ -72,13 +72,16 @@ export class GoogleAdsCreateComponent implements OnInit {
         name: ['', Validators.required],
         customerAccount: '',
         billingAccount: '',
-        openGoalFlag: ''
+        openGoalFlag: '',
+        
       }),
       locationAndDelivery: this.fb.group({
         include: ['', Validators.required],
         exclude: ['', Validators.required],
         language: '',
         dailyBudget: '',
+        startDate:'',
+        endDate: ''
       }),
       siteLinks: this.fb.array([]),
       template: this.fb.group({
@@ -87,7 +90,7 @@ export class GoogleAdsCreateComponent implements OnInit {
         tagName: ['', Validators.required]
       }),
       groupDetail: this.fb.group({
-        adGroupName: ['', Validators.required],
+        addGroupName: ['', Validators.required],
         keywords: ['', Validators.required],
         businessName: '',
         websiteUrl: ['', Validators.required]
