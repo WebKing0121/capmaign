@@ -18,7 +18,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   @Output() activate: EventEmitter<any> = new EventEmitter<any>();
   @Output() selectedTab: EventEmitter<any> = new EventEmitter<any>();
   @ViewChild('recordModal', { static: false }) recordModal;
-  
+
   private unsubscribe$ = new Subject();
 
   tabs: Tab[] = Tabs;
@@ -56,7 +56,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (tab) {
-      // set record type 
+
       this.setRecordType(tab);
 
       this.selectedTab.emit(tab);
@@ -120,7 +120,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   setRecordType(tab: Tab) {
-    this.recordType = tab.key === 'all' ? 'accounts': tab.key;
+    this.recordType = tab.key === 'all' ? 'accounts' : tab.key;
   }
   _updateTable(records: any[]) {
     this.tableSource.next(records.slice(0, 50), records.length);

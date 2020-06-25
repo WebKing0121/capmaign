@@ -14,7 +14,7 @@ export class ManageRecordsComponent implements OnInit {
   @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
   @ViewChild('importCSVModal', { static: false }) importCSVModal;
   @ViewChild('dataRecords', { static: false }) dataRecords;
-  
+
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },

@@ -22,9 +22,9 @@
   </div>
 
   <div class="app-modal-body">
-    <!-- <form [formGroup]="listForm" (ngSubmit)="onSaveList()">
+    <form [formGroup]="customFieldsForm" (ngSubmit)="onSaveCustomField()">
       <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-6">
           <label class="mobile-show">Field Name</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide">
@@ -33,17 +33,7 @@
             <input type="text" class="form-control" formControlName="name" placeholder="Custom Field Name">
           </div>
         </div>
-        <div class="col-md-4 mobile-mt">
-          <label class="mobile-show">Default Value</label>
-          <div class="input-group">
-            <div class="input-group-prepend mobile-hide">
-              <span class="input-group-text">Default Value</span>
-            </div>
-            <input type="text" class="form-control" formControlName="defaultValue" placeholder="e.g: Webinar Event">
-          </div>
-        </div>
-     
-        <div class="col-md-4">
+        <div class="col-md-6 mobile-mt">
           <label class="mobile-show">Type</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide">
@@ -52,13 +42,42 @@
             <ng-select [ngClass]="'ng-select'" formControlName="type" [options]="customFieldsType"></ng-select>
           </div>
         </div>
-       
       </div> 
-    </form>-->
+      <div class="row mt-2">
+        <div class="col-md-12">
+          <label class="mobile-show">Default Value</label>
+          <div class="input-group" *ngIf="defaultValueType === 'Text'">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Default Value</span>
+            </div>
+            <input type="text" class="form-control" formControlName="defaultValue">
+          </div>
+          <div class="input-group" *ngIf="defaultValueType === 'Numeric'">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Default Value</span>
+            </div>
+            <input type="number" class="form-control" formControlName="defaultValue">
+          </div>
+          <div class="input-group" *ngIf="defaultValueType === 'Date'">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Default Value</span>
+            </div>
+            <input class="form-control" autocomplete="off" formControlName="defaultValue"
+              placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+              #d_t="ngbDatepicker">
+            <div  class="input-group-append">
+              <span class="input-group-text" (click)="d_t.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSaveList()">{{isModalNew ? 'Create' : 'Save'}}</button> &nbsp;
+    <button type="button" class="btn btn-primary" (click)="onSaveCustomField()">{{isModalNew ? 'Create' : 'Save'}}</button> &nbsp;
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="customFieldsModal.hide()">Close</button>
   </div>
 </app-ui-modal>

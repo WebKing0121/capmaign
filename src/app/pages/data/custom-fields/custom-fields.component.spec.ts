@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListsComponent } from './lists.component';
+import { CustomFieldsComponent } from './custom-fields.component';
 
-describe('ListsComponent', () => {
-  let component: ListsComponent;
-  let fixture: ComponentFixture<ListsComponent>;
+describe('CustomFieldsComponent', () => {
+  let component: CustomFieldsComponent;
+  let fixture: ComponentFixture<CustomFieldsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ListsComponent ]
+      declarations: [ CustomFieldsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ListsComponent);
+    fixture = TestBed.createComponent(CustomFieldsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

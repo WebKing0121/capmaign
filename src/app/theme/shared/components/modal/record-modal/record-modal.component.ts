@@ -10,7 +10,7 @@ import { Tabs } from '@app-core/enums/data-tabs.enum';
 })
 export class RecordModalComponent implements OnInit {
   @ViewChild('recordModal', { static: false }) recordModal;
-  @Input() recordType: string = 'subscribers';
+  @Input() recordType = 'subscribers';
   @Output() saveRecord: EventEmitter<any> = new EventEmitter();
   tabs = Tabs;
   type: string;
@@ -36,7 +36,7 @@ export class RecordModalComponent implements OnInit {
 
   onChangeAccountType(event: string) {
     const selectedTab = this.tabs.find(x => x.key === event);
-    if (this.type == RecordModalType.New) {
+    if (this.type === RecordModalType.New) {
       this.modalTitle = 'Create a new ' + this.getSingleForm(selectedTab.label);
     } else if (this.type === RecordModalType.Edit) {
       this.modalTitle = 'Edit ' + this.getSingleForm(selectedTab.label);

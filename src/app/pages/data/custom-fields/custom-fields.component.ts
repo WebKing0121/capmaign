@@ -1,13 +1,11 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Event } from '@app-models/event';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
+import * as moment from 'moment';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataService } from '@app-services/data.service';
-import { EventService } from '@app-services/event.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { NgSelectData } from '@app-models/common';
@@ -45,25 +43,28 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   customFieldsType: NgSelectData[] = [
-
+    { value: 'Text', label: 'Text' },
+    { value: 'Numeric', label: 'Numeric' },
+    { value: 'Date', label: 'Date' },
   ];
 
+  defaultValueType: string;
+  defaultValue: any;
+
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private fb: FormBuilder,
-    private dataService: DataService,
-    private eventService: EventService
+    private dataService: DataService
   ) {
     this.totalCount = 0;
     this.customFields = [];
     this.isModalNew = true;
-    this.customFieldsForm = fb.group({
+    this.customFieldsForm = this.fb.group({
       id: 0,
       name: ['', Validators.required],
       defaultValue: ['', Validators.required],
       type: ['', Validators.required],
     });
+    this.defaultValueType = 'Text';
   }
 
   ngOnInit(): void {
@@ -85,12 +86,14 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('error', error.response);
         }
       );
+
+    this.onChangeType();
   }
 
   ngAfterViewInit(): void {
 
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'displayName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
+      { name: 'Name', prop: 'displayName', sortable: true, cellClass: ['cell-hyperlink'] },
       { name: 'Default Value', prop: 'defaultValue', sortable: true },
       { name: 'Data Type', prop: 'fieldDataType', sortable: true },
       {
@@ -108,6 +111,19 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  onChangeType() {
+    this.customFieldsForm.get('type').valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(val => {
+        this.defaultValueType = val;
+        if (val !== 'Date') {
+          this.customFieldsForm.get('defaultValue').setValue('');
+        } else {
+          this.customFieldsForm.get('defaultValue').setValue(this.defaultValue);
+        }
+      });
   }
 
   _updateTable(customFields: CustomField[]) {
@@ -132,14 +148,30 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
   onActive(evt) {
     if (evt.type === 'click') {
       this.tableButtons[1].hide = false;
-      if (evt.cellIndex === 0 && evt.column.frozenLeft) {
+      if (evt.cellIndex === 1) {
         const customField: CustomField = evt.row as CustomField;
         this.isModalNew = false;
+
+        let defaultValue;
+        if (customField.fieldDataType === 'Date') {
+          if (moment(customField.defaultValue).isValid()) {
+            const year = Number(moment(customField.defaultValue).format('YYYY'));
+            const month = Number(moment(customField.defaultValue).format('MM'));
+            const day = Number(moment(customField.defaultValue).format('DD'));
+
+            defaultValue = { year, month, day };
+          } else {
+            defaultValue = null;
+          }
+          this.defaultValue = defaultValue;
+        } else {
+          defaultValue = customField.defaultValue;
+        }
 
         this.customFieldsForm.setValue({
           id: customField.id,
           name: customField.displayName,
-          defaultValue: customField.defaultValue,
+          defaultValue,
           type: customField.fieldDataType,
         });
         this.customFieldsModal.show();
@@ -150,11 +182,16 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
   onClickCreate() {
     this.isModalNew = true;
     this.customFieldsForm.reset();
+    this.customFieldsForm.setValue({
+      id: 0,
+      name: '',
+      defaultValue: '',
+      type: 'Text'
+    });
     this.customFieldsModal.show();
   }
 
-  // event form submit
-  onSaveList() {
+  onSaveCustomField() {
     console.log(this.customFieldsForm.value);
   }
 
