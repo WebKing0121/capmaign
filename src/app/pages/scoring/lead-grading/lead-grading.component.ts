@@ -8,7 +8,6 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadGradingComponent } from '../create-lead-grading/create-lead-grading.component';
-import { ConfirmModalComponent } from '@app-components/modal/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-lead-grading',
@@ -28,7 +27,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   tableSource: DataTableSource<Grading> = new DataTableSource<Grading>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.createLeadGrading(), },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true }    
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true }
     // { label: 'Run Profile', icon: 'far fa-gear', click: () => this.clickTemplate() },
   ];
 
@@ -154,9 +153,11 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onClickDelete() {
-    this.modalService.openModal(ConfirmModalComponent, {
+    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
-      height: '80%'
+      data: {
+        selectedIdx: 10
+      }
     });
   }
 }

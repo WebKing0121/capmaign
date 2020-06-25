@@ -7,7 +7,6 @@ import { Scoring } from '@app-core/models/scoring';
 import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
-import { ConfirmModalComponent } from '@app-components/modal/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-lead-scoring',
@@ -151,9 +150,11 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onClickDelete() {
-    this.modalService.openModal(ConfirmModalComponent, {
+    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
-      height: '80%'
+      data: {
+        selectedIdx: 10
+      }
     });
   }
 }
