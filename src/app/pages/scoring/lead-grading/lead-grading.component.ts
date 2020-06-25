@@ -8,7 +8,6 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadGradingComponent } from '../create-lead-grading/create-lead-grading.component';
-import { ConfirmModalComponent } from '@app-components/modal/confirm-modal/confirm-modal.component';
 
 @Component({
   selector: 'app-lead-grading',
