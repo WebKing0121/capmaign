@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { LeadCategory } from '@app-core/models/scoring';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
@@ -13,7 +13,7 @@ import { ConfirmModalComponent } from '@app-components/modal/confirm-modal/confi
   templateUrl: './lead-category.component.html',
   styleUrls: ['./lead-category.component.scss']
 })
-export class LeadCategoryComponent implements OnInit {
+export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('confirmModal', { static: false }) confirmModal;
 
@@ -25,7 +25,7 @@ export class LeadCategoryComponent implements OnInit {
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true }
-  ]
+  ];
 
   constructor(
     private scoringService: ScoringService,
@@ -50,7 +50,7 @@ export class LeadCategoryComponent implements OnInit {
     .pipe(takeUntil(this.destroy$))
     .subscribe(change => {
       let mockData = [];
-      if(change.search) {
+      if (change.search) {
         mockData = this.leadCategoryData.filter(item =>
           item.name.includes(change.search) || item.criteria.includes(change.search));
       } else {
@@ -91,14 +91,14 @@ export class LeadCategoryComponent implements OnInit {
       data: {
         createMode: true
       }
-    })
+    });
   }
 
   onClickDelete() {
     this.modalService.openModal(ConfirmModalComponent, {
       width: '400px',
       height: '80%'
-    })
+    });
   }
 
   onClickConfirmDelete() {
@@ -106,16 +106,16 @@ export class LeadCategoryComponent implements OnInit {
   }
 
   onActive(event) {
-    if(event.type === 'click' && event.cellIndex === 1) {
+    if (event.type === 'click' && event.cellIndex === 1) {
       const leadCategory = event.row as LeadCategory;
       this.modalService.openModal(LeadCategoryModalComponent, {
         width: '80%',
         height: '90%',
         data: {
-          leadCategory: leadCategory,
+          leadCategory: '{leadCategory}',
           createMode: false
         }
-      })
+      });
     }
 
     if (event.type === 'checkbox') {

@@ -86,7 +86,7 @@ export class LeadCategoryModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
-    @Inject(ModalRef) private modalRef : ModalRef<LeadCategoryModalComponent>,
+    @Inject(ModalRef) private modalRef: ModalRef<LeadCategoryModalComponent>,
     @Inject(MODAL_DATA) private props: ComponentProps
   ) {
     this.childUniqueKey = 0;
@@ -99,7 +99,7 @@ export class LeadCategoryModalComponent implements OnInit {
       leadCategory: '',
       fieldName: '',
       criteria: this.props.leadCategory && this.props.leadCategory.criteria
-    })
+    });
 
     this.mode = this.props.createMode;
   }

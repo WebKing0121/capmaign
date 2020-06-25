@@ -63,7 +63,7 @@ export class LeadTimeframesComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.fb.group({
-    })
+    });
   }
 
   add() {

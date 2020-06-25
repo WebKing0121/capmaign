@@ -139,7 +139,6 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
         data => {
           this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
           this.loaded++;
-          console.log("__________", this.allUsers);
         },
         error => {
           console.log('error', error);

@@ -395,4 +395,4 @@ export const LeadCategoryMockData: LeadCategory[] = [
     name: 'Country Wise',
     criteria: 'Implicit'
   },
-]
+];

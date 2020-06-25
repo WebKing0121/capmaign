@@ -87,8 +87,6 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
           this.leadScoringCardList = list;
         }
       );
-
-      console.log("dkdkdkd", this.leadScoringCardList);
   }
 
   onSearch(e) {
