@@ -11,6 +11,7 @@ import { DataTableColumn, DataTableSource } from '@app-components/datatable/data
 import { AppState, AppTypes, selectRecordColumns } from '@app-store/app.models';
 import { Store } from '@ngrx/store';
 import { DataListType } from '@app-core/enums/data-list-type.enum';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 @Component({
   selector: 'app-add-to-list-modal',
   templateUrl: './add-to-list-modal.component.html',
@@ -108,14 +109,30 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   ngAfterViewInit(): void {
-    this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
-      if (data) {
-        const columns = data.map((x: GridColumn) => ({
-          name: x.columnName, prop: this.capitalize(x.columnName), sortable: true
-        }));
-        this.tableSource.setColumns(columns);
-      }
-    });
+    if (this.type === DataListType.List) {
+      this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
+        if (data) {
+          const columns = data.map((x: GridColumn) => ({
+            name: x.columnName, prop: this.capitalize(x.columnName), sortable: true
+          }));
+          this.tableSource.setColumns(columns);
+        }
+      });
+    } else if (this.type === DataListType.EventList) {
+      const eventColumns = [
+        { name: 'Name', prop: 'eventName', sortable: true },
+        { name: 'Subject', prop: 'eventSubject', sortable: true },
+        {
+          name: 'Start Date', prop: 'eventStartDate', sortable: true,
+          pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+        },
+        {
+          name: 'End Date', prop: 'eventEndDate', sortable: true,
+          pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+        }
+      ];
+      this.tableSource.setColumns(eventColumns);
+    }
   }
 
   ngOnDestroy(): void {
