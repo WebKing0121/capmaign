@@ -27,7 +27,7 @@ export class RuleComponent implements OnInit {
     });
   }
 
-  remove() {
+  remove_me() {
     this.parentRef.remove(this.uniqueKey);
   }
 }

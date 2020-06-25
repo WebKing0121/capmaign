@@ -3,61 +3,41 @@
     <span>CREATE LEAD SCORING PROFILE</span>
   </div>
 
-  <div class="card-body">
+  <div class="card-body" style="overflow-y: auto;">
     <form [formGroup]="formGroup">
       <div class="row">
         <div class="col-md-6">
           <label class="mobile-show">Profile Name</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide"><span class="input-group-text">Profile Name</span></div>
-            <input type="text" formcontrolname="profileName" class="form-control ng-untouched ng-pristine ng-invalid">
+            <input type="text" formControlName="profileName" class="form-control ng-untouched ng-pristine ng-invalid">
           </div>
         </div>
         <div class="col-md-6">
           <label class="mobile-show">Description</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide"><span class="input-group-text">Description</span></div>
-            <input type="text" formcontrolname="profileName"
+            <input type="text" formControlName="description"
               class="form-control ng-untouched ng-pristine ng-invalid" ng-reflect-name="name">
           </div>
         </div>
       </div>
-      <div class="row">
+      <div class="row m-t-10">
         <div class="col-lg-3">
-          <div class="form-group">
+          <div class="form-group m-t-15">
             <input class="form-control" formControlName="searchLeadCard" type="text"
               placeholder="Search Lead Category" style="width: 100%;" (change)="onSearch($event)">
           </div>
-          <div class="form-group">
-            <div *ngFor="let card of leadScoringCardList">
-              <span class="border border-secondary" style="margin: 10px 0; border-radius: 5px;">{{card.name}}</span>
+          <div *ngFor="let card of leadScoringCardList" class="d-flex border border-secondary m-t-3" style="justify-content: space-between;">
+            <div class="d-flex text-center align-items-center p-l-20">
+              <label>{{card.name}}</label>
+            </div>
+            <div class="text-right">
+              <span class="btn btn-secondary" style="border-radius: 0;" (click)="openProfile(1)">></span>
             </div>
           </div>
         </div>
-      </div>
-      <div class="col-lg-12 d-flex">
-        <div class="col-lg-3">
-          <div class="">
-            <div class="" style="height: calc(100vh - 250px); overflow-y: auto;">
-              <div class="d-flex border border-secondary m-t-3" style="justify-content: space-between;">
-                <div class="d-flex text-center align-items-center p-l-20">
-                  <label>TestRecord</label>
-                </div>
-                <div class="text-right">
-                  <span class="btn btn-secondary" style="border-radius: 0;" (click)="openProfile(1)">></span>
-                </div>
-              </div>
-              <div class="d-flex border border-secondary  m-t-4" style="justify-content: space-between;">
-                <div class="d-flex text-center align-items-center p-l-20">
-                  <label>TestRecord</label>
-                </div>
-                <div class="text-right">
-                  <span class="btn btn-secondary" style="border-radius: 0;" (click)="openProfile(2)">></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
         <div class="col-lg-9">
           <div class="col-lg-12">
             <ng-template #leadCardList></ng-template>
@@ -67,7 +47,6 @@
     </form>
   </div>
   <div class="card-footer">
-    {{formGroup.valid}}
     <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
       <div>
         <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
