@@ -7,6 +7,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
+import { InAppMessageComponent } from '../in-app-message/in-app-message.component';
 
 @Component({
   selector: 'app-in-app-messages',
@@ -86,14 +87,26 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onCreateClicked() {
-    // this.router.navigate(['create'], { relativeTo: this.route});
+    console.log("dkdkdkdk")
+    this.modalService.openModal(InAppMessageComponent, {
+      width: '80%',
+      data: {
+        createMode: true
+      }
+    });
   }
 
   onActive(event) {
-    // if(event.type === 'click' && event.cellIndex === 1) {
-    //   const campaign = event.row as Campaign;
-    //   this.router.navigate(['mobile', campaign.id]);
-    // }
+    if(event.type === 'click' && event.cellIndex === 1) {
+      const inAppMessage = event.row as Campaign;
+      this.modalService.openModal(InAppMessageComponent, {
+        width: '80%',
+        data: {
+          createMode: true,
+          inAppMessage: inAppMessage
+        }
+      });
+    }
 
     if (event.type === 'checkbox') {
       this.tableButtons[1].hide = this.selected.length === 0;

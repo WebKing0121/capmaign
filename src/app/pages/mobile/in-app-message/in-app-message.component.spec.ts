@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InAppMessagesComponent } from './in-app-messages.component';
+import { InAppMessageComponent } from './in-app-message.component';
 
 describe('InAppMessageComponent', () => {
-  let component: InAppMessagesComponent;
-  let fixture: ComponentFixture<InAppMessagesComponent>;
+  let component: InAppMessageComponent;
+  let fixture: ComponentFixture<InAppMessageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InAppMessagesComponent ]
+      declarations: [ InAppMessageComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(InAppMessagesComponent);
+    fixture = TestBed.createComponent(InAppMessageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

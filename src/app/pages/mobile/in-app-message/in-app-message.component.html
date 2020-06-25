@@ -1,0 +1,52 @@
+<div class="card">
+  <div class="card-header">
+    <span>IN APP MESSAGES</span>
+  </div>
+  <div class="card-body">
+    
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="tab m-b-20">
+          <span *ngIf="step[0]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(0)">AUDIENCE</span>
+          <span *ngIf="!step[0]" class="btn border border-secondary" style="width: 20%" (click)="openContent(0)">AUDIENCE</span>
+          <span *ngIf="step[1]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(1)">IN APP MESSAGES</span>
+          <span *ngIf="!step[1]" class="btn border border-secondary" style="width: 20%" (click)="openContent(1)">IN APP MESSAGES</span>
+          <span *ngIf="step[2]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(2)">DEVICE LIST</span>
+          <span *ngIf="!step[2]" class="btn border border-secondary" style="width: 20%" (click)="openContent(2)">DEVICE LIST</span>
+          <span *ngIf="step[3]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(3)">SHARE</span>
+          <span *ngIf="!step[3]" class="btn border border-secondary" style="width: 20%" (click)="openContent(3)">SHARE</span>
+          <span *ngIf="step[4]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(4)">APPROVE</span>
+          <span *ngIf="!step[4]" class="btn border border-secondary" style="width: 20%" (click)="openContent(4)">APPROVE</span>
+        </div>
+        
+        <!-- Tab content -->
+        <div class="card p-10">
+          <div *ngIf="step[0]" class="tabcontent">
+            <h3>London</h3>
+            <p>London is the capital city of England.</p>
+          </div>
+          
+          <div *ngIf="step[1]" class="tabcontent">
+            <h3>Paris</h3>
+            <p>Paris is the capital of France.</p>
+          </div>
+          
+          <div *ngIf="step[2]" class="tabcontent">
+            <h3>Tokyo</h3>
+            <p>Tokyo is the capital of Japan.</p>
+          </div>
+
+          <div *ngIf="step[3]" class="tabcontent">
+            <h3>Tiger</h3>
+            <p>Tiger is the capital of Japan.</p>
+          </div>
+
+          <div *ngIf="step[4]" class="tabcontent">
+            <h3>Viper</h3>
+            <p>Viper is the capital of Japan.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
