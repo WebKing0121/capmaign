@@ -16,9 +16,12 @@ export class ManageRecordsComponent implements OnInit {
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
     { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), hide: true },
-    { label: 'View Columns', icon: 'fa fa-eye', click: () => this.onClickViewColumns() },
     { label: 'Import', icon: 'fa fa-upload', click: () => this.onClickImport() },
     { label: 'Export', icon: 'fa fa-download', click: () => this.onClickExport() },
+    { label: 'Send Email', icon: 'fa fa-envelope', click: () => this.onClickSendEmail(), hide: true },
+    { label: 'Send SMS', icon: 'fa fa-envelope', click: () => this.onClickSendSMS(), hide: true },
+    { label: 'View Columns', icon: 'fa fa-eye', click: () => this.onClickViewColumns() },
+
   ];
 
   // confirm Modal
@@ -38,6 +41,8 @@ export class ManageRecordsComponent implements OnInit {
     if (event.type === 'checkbox') {
       this.tableButtons[1].hide = selected.length === 0;
       this.tableButtons[2].hide = selected.length === 0;
+      this.tableButtons[5].hide = selected.length === 0;
+      this.tableButtons[6].hide = selected.length === 0;
     }
   }
 
@@ -66,6 +71,14 @@ export class ManageRecordsComponent implements OnInit {
   }
 
   onClickExport() {
+
+  }
+
+  onClickSendEmail() {
+
+  }
+
+  onClickSendSMS() {
 
   }
 }

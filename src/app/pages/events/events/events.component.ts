@@ -10,7 +10,7 @@ import { EventService } from '@app-services/event.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { NgSelectData } from '@app-models/common';
-
+import { DataListType } from '@app-core/enums/data-list-type.enum';
 import * as moment from 'moment';
 
 @Component({
@@ -22,10 +22,12 @@ import * as moment from 'moment';
 export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('eventModal', { static: false }) eventModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
+  @ViewChild('addToEventListModal', { static: false }) addToEventListModal;
 
   @ViewChild('templateDisplayFrom') templateDisplayFrom: TemplateRef<any>;
   @ViewChild('templateFolder') templateFolder: TemplateRef<any>;
 
+  DataListType = DataListType;
   private unsubscribe$ = new Subject();
 
   events: Event[];
@@ -36,6 +38,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateEvent() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEvent(), color: 'red', hide: true },
+    { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), hide: true },
   ];
 
   // add, edit event modal
@@ -131,7 +134,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
 
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'eventName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
+      { name: 'Name', prop: 'eventName', sortable: true, cellClass: ['cell-hyperlink'] },
       { name: 'Subject', prop: 'eventSubject', sortable: true },
       {
         name: 'Start Date', prop: 'eventStartDate', sortable: true,
@@ -173,7 +176,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   onActive(evt) {
     if (evt.type === 'click') {
       this.tableButtons[1].hide = false;
-      if (evt.cellIndex === 0 && evt.column.frozenLeft) {
+      this.tableButtons[2].hide = false;
+      if (evt.cellIndex === 1) {
         const event: Event = evt.row as Event;
         this.isModalNew = false;
         const startYear = Number(moment(event.eventStartDate).format('YYYY'));
@@ -227,6 +231,10 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confirmModal.hide();
   }
 
+  onClickAddToList() {
+    this.addToEventListModal.show();
+  }
+
   getDisplayFrom(value: string | null) {
     return value ? this.displayNameList.find(x => x.value === value).label : '';
   }
@@ -234,4 +242,6 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   getFolder(value: string) {
     return this.folderList.find(x => x.value === value).label;
   }
+
+
 }

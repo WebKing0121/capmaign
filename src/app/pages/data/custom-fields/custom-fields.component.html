@@ -4,13 +4,15 @@
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"
+      [selectable]="true"
+      [selectionType]="'checkbox'"
       [headerHeight]="40"
       (activate)="onActive($event)"
     ></app-datatable>
   </div>
 </div>
 
-<app-ui-modal #customFieldsModal [containerClick]="false" dialogClass="modal-dialog-centered modal-list modal-xl">
+<app-ui-modal #customFieldsModal dialogClass="modal-dialog-centered modal-list modal-lg">
   <div class="app-modal-header">
     <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} Custom Field</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"

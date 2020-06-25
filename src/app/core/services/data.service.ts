@@ -7,11 +7,13 @@ import {
   AllRecordGridColumnsMock, AllRecordsMock, SubscribersMock,
   LeadsMock, ProspectsMock, TransactionalsMock
 } from '@app-fake-db/data-records-mock';
-import { ListsMockData } from '@app-fake-db/list-mock';
+import { ListsMockData } from '@app-fake-db/data-list-mock';
 import { CustomFieldsMock } from '@app-fake-db/data-custom-fields-mock';
 import { AccountsImportMocks } from '@app-fake-db/data-import-accounts-mock';
 import { LeadCategoriesImportMock } from '@app-fake-db/data-import-lead-categories-mock';
 import { MapsMappingImportMocks } from '@app-fake-db/data-import-maps-mock';
+import { EventListsMockData } from '@app-fake-db/data-list-event-mock';
+import { EventsMockData } from '@app-fake-db/events-mock';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +57,11 @@ export class DataService {
   getLists(): Observable<any> {
     return of(ListsMockData);
   }
+
+  getEventLists(): Observable<any> {
+    return of(EventListsMockData);
+  }
+
 
   getTypeList(): Observable<any> {
     return of([
@@ -102,5 +109,13 @@ export class DataService {
 
   getImportMappings(): Observable<any> {
     return of(MapsMappingImportMocks);
+  }
+
+  getEventsByListId(listId: number): Observable<any> {
+    return of(EventsMockData);
+  }
+
+  getEvents(): Observable<any> {
+    return of(EventsMockData);
   }
 }

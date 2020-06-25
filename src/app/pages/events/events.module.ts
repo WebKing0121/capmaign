@@ -12,10 +12,11 @@ import {
 } from '@ng-bootstrap/ng-bootstrap';
 import { EmailCampaignEditorModule } from '@app-components/email-campaign-editor/email-campaign-editor.module';
 import { EventsComponent } from './events/events.component';
-
+import { EventListsComponent} from './event-lists/event-lists.component';
 @NgModule({
   declarations: [
     EventsComponent,
+    EventListsComponent,
   ],
   imports: [
     CommonModule,
