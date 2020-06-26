@@ -27,6 +27,10 @@
         padding-right: $iphone-width;
         padding-bottom: $iphone-height;
         content: "";
+
+        @media only screen and (max-width: 360px) {
+          background-size: 280px 480px;
+        }
       }
     }
 
