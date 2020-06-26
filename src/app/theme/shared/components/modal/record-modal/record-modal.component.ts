@@ -18,8 +18,8 @@ export class RecordModalComponent implements OnInit {
   modalTitle: string;
 
   accountTypeList: NgSelectData[];
-
-
+  fields: any[];
+  profileField: any;
   constructor() {
     this.type = this.type = RecordModalType.New;
     this.accountTypeList = [];
@@ -31,7 +31,29 @@ export class RecordModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.profileField = {
+      key: 'profile', label: 'Profile',
+      fields: [
+        { key: 'accountName', label: 'Account Name', icon: 'fa fa-user', value: '' },
+        { key: 'accountNumber', label: 'Account Number', icon: 'fa fa-credit', value: '' },
+        { key: 'accountSite', label: 'Account Site', icon: '', value: '' },
+        { key: 'accountOwner', label: 'Account Type', icon: '', value: '' },
+        { key: 'officePhone', label: 'Office Phone', icon: '', value: '' },
+        { key: 'businessEmailAddress', label: 'Business Email Address', icon: '', value: '' },
+        { key: 'personalEmail', label: 'Personal Email', icon: '', value: '' },
+        { key: 'otherEmail', label: 'Other Email', icon: '', value: '' },
+        { key: 'fax', label: 'Fax', icon: '', value: '' },
+        { key: 'skypeID', label: 'Skype ID', icon: '', value: '' },
+        { key: 'faceBook', label: 'FaceBook', icon: '', value: '' },
+        { key: 'twitter', label: 'Twitter', icon: '', value: '' },
+        { key: 'linkedIn', label: 'LinedIn', icon: '', value: '' },
+        { key: 'website', label: 'Website', icon: '', value: '' },
+        { key: 'accountOptOut', label: 'Account Opt Out', icon: '', value: '' },
+      ]
+    };
+    this.fields = [
+      this.profileField
+    ];
   }
 
   onChangeAccountType(event: string) {

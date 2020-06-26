@@ -1,11 +1,8 @@
 <app-ui-modal #recordModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl'">
 	<div class="app-modal-header full-width">
 		<h5 class="modal-title">{{modalTitle}}</h5>
-		<ng-select class="header-select-box"
-			[options]="accountTypeList"
-			[(ngModel)]="recordType"
-			(ngModelChange)="onChangeAccountType($event)"
-		></ng-select>
+		<ng-select class="header-select-box" [options]="accountTypeList" [(ngModel)]="recordType"
+			(ngModelChange)="onChangeAccountType($event)"></ng-select>
 		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
 			(click)="recordModal.hide()">
 			<span aria-hidden="true">&times;</span>
@@ -13,7 +10,41 @@
 	</div>
 	<div class="app-modal-body">
 		<div class="row">
-			aaaa
+			<div class="col-md-3 profile-section">
+				<ul>
+					<li>Profile</li>
+					<li class="active">Lead Information</li>
+					<li>Company Information</li>
+					<li>Corporate Address</li>
+					<li>Billing Address</li>
+					<li>Shipping Address</li>
+					<li>Custom Fields</li>
+				</ul>
+			</div>
+			<div class="col-md-9 field-section">
+				<div class="record-fields">
+					<div class="row">
+						<div class="col-md-6">
+							<label class="mobile-show">Filter Name</label>
+							<div class="input-group">
+								<div class="input-group-prepend mobile-hide">
+									<span class="input-group-text">Name</span>
+								</div>
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						<div class="col-md-6">
+							<label class="mobile-show">Description</label>
+							<div class="input-group">
+								<div class="input-group-prepend mobile-hide">
+									<span class="input-group-text">Description</span>
+								</div>
+								<input type="text" class="form-control">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	<div class="app-modal-footer">
