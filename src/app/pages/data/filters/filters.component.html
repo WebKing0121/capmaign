@@ -60,8 +60,8 @@
       <div class="col-md-12">
         <div class="filter-section">
           <div class="filter-condition">
-            <button class="btn btn-primary btn-md w-100" (click)="onClickAddCondition()">Add Condition</button>
-            <button class="btn btn-outline-primary btn-md w-100 mt-3" (click)="onClickAddGroup()">Add Group</button>
+            <button class="btn btn-success btn-md w-100" (click)="onClickAddCondition()">Add Condition</button>
+            <button class="btn btn-success btn-md w-100 mt-3" (click)="onClickAddGroup()">Add Group</button>
           </div>
           <div class="filter-content">
             <div *ngFor="let item of filterConditions">
@@ -124,8 +124,9 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSaveFilters()">{{isModalNew ? 'Create' : 'Save'}}</button> &nbsp;
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="filterModal.hide()">Close</button>
+    <button type="button" class="btn btn-primary float-left" (click)="onSaveFilters()">Run</button> &nbsp;
+    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" (click)="filterModal.hide()">Close</button>
+    <button type="button" class="btn btn-primary float-right" (click)="onSaveFilters()">{{isModalNew ? 'Create' : 'Save'}}</button>
   </div>
 </app-ui-modal>
 <app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected filters?"

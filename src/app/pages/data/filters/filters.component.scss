@@ -34,7 +34,10 @@
     .filter-condition {
       width: 200px;
       padding: 20px;
+      display: flex;
       border-right: 1px solid #e9ecef;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .filter-content {
       flex-grow: 1;

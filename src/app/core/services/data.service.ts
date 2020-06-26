@@ -201,4 +201,36 @@ export class DataService {
     });
     return result;
   }
+
+  buildQuery(filterConditions: any[]) {
+    let query = '';
+    let subQuery = '';
+    filterConditions.forEach((filterItem: any) => {
+      if (filterItem.parentOp !== 'None') {
+        query += ` ${filterItem.parentOp}`;
+      }
+      if (filterItem.type === 'Item') {
+        if (filterItem.conditionOp !== 'is_null' && filterItem.conditionOp !== 'is_not_null') {
+          query += ` ${filterItem.fieldName} ${filterItem.conditionOp} "${filterItem.value}"`;
+        } else {
+          query += ` ${filterItem.fieldName} ${filterItem.conditionOp}`;
+        }
+      } else {
+
+        subQuery = '';
+        filterItem.children.forEach((subItem: any) => {
+          if (subItem.parentOp !== 'None') {
+            subQuery += ` ${filterItem.parentOp}`;
+          }
+          if (subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null') {
+            subQuery += ` ${subItem.fieldName} ${subItem.conditionOp} "${subItem.value}"`;
+          } else {
+            subQuery += ` ${subItem.fieldName} ${subItem.conditionOp}`;
+          }
+        });
+        query += ' (' + subQuery.substr(1) + ')';
+      }
+    });
+    return query.substr(1);
+  }
 }

@@ -272,7 +272,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onSaveFilters() {
-    console.log(this.filterForm.value);
+    const queryString = this.dataService.buildQuery(this.filterConditions);
+    console.log(queryString);
   }
 
   onClickDelete() {
