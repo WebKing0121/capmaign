@@ -40,9 +40,6 @@
       flex-grow: 1;
       padding: 20px;
       overflow: auto;
-      &::-webkit-scrollbar {
-        width: 2px;
-      }
       .filter-item {
         display: flex;
         margin-bottom: 10px;
@@ -54,6 +51,7 @@
             border-radius: 20px;
             & > div {
               border: none;
+              text-align: center;
             }
           }
         }
@@ -62,13 +60,14 @@
           margin-right: 10px;
         }
         .filter-op {
-          width: 120px;
+          width: 200px;
           margin-right: 10px;
           ng-select {
             border: 1px solid;
             border-radius: 20px;
             & > div {
               border: none;
+              text-align: center;
             }
           }
         }

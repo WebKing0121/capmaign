@@ -127,4 +127,78 @@ export class DataService {
   getFilterColumns(): Observable<any> {
     return of(filterColumnsMock);
   }
+
+  splitArray(query: string) {
+    const obj = {
+      brakets: null,
+      parentOps: null,
+      conditionOps: null,
+      variables: null,
+    };
+
+    query = query.replace(')', ')\n');
+    const brakets = query.match(/[\(].+[\)]/g);
+
+    query = query.replace(/[\(].+[\)]/g, 'replaced_brackets');
+    const parentOps = query.match(/OR|AND/g);
+
+    query = query.replace(/OR|AND/g, 'parentOp');
+    const conditionOps = query.match(/=|>=|>|<|<=|like|is_null|is_not null|>/g);
+
+    query = query.replace(/=|>=|>|<|<=|like|is_null|is_not null|>/g, 'operators');
+    const variables = query.split(/parentOp/).map((item) => item.split(/operators/));
+    return { brakets, parentOps, conditionOps, variables };
+  }
+
+  analysisQuery(query: string) {
+    const r1 = this.splitArray(query);
+    const { brakets, variables, parentOps, conditionOps } = r1;
+    const result = [];
+    let bracketNum = 0;
+
+    variables.forEach((variable, i) => {
+      const item = {
+        id: i + 1,
+        type: 'Item',
+        parentOp: i === 0 ? 'None' : parentOps[i - 1],
+        fieldName: variable[0].trim(),
+        conditionOp: conditionOps[i],
+        value: variable[1] ? variable[1].trim().slice(1, -1) : '',
+      };
+
+      const children = [];
+
+      if (item.fieldName.search(/_brackets/g) > 0) {
+
+        const r2 = this.splitArray(brakets[bracketNum].replace('(', '').replace(')', ''));
+
+        const variables2 = r2.variables;
+
+        variables2.forEach((variable2, j) => {
+          const subItem = {
+            id: j + 1,
+            type: 'Item',
+            parentOp: j === 0 ? 'None' : r2.parentOps[j - 1],
+            fieldName: variable2[0].trim(),
+            conditionOp: r2.conditionOps[j],
+            value: variable2[1] ? variable2[1].trim().slice(1, -1) : '',
+          };
+          children.push(subItem);
+        });
+
+        bracketNum++;
+
+        result.push({
+          id: i + 1,
+          type: 'Group',
+          parentOp: item.parentOp,
+          children,
+        });
+
+      } else {
+        result.push(item);
+      }
+    });
+    return result;
+  }
 }

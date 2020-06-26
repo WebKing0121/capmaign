@@ -59,19 +59,19 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.filterColumns = [];
     this.filterFields = [];
     this.filterOperators = [
-      { value: '=', label: '=' },
-      { value: '!=', label: '!=' },
-      { value: '<', label: '<' },
-      { value: '<=', label: '<=' },
-      { value: '>', label: '>' },
-      { value: '>=', label: '>=' },
-      { value: 'like', label: 'Like' },
-      { value: 'null', label: 'Is null' },
-      { value: 'not_null', label: 'Is not null' },
+      { value: '=', label: 'equal to' },
+      { value: '!=', label: 'not equal to' },
+      { value: '<', label: 'less than' },
+      { value: '<=', label: 'less than or equal to' },
+      { value: '>', label: 'greater than' },
+      { value: '>=', label: 'greater than or equal to' },
+      { value: 'like', label: 'like' },
+      { value: 'is_null', label: 'is null' },
+      { value: 'is_not_null', label: 'is not null' },
     ];
     this.conditionOperators = [
-      { value: 'Or', label: 'OR' },
-      { value: 'And', label: 'And' },
+      { value: 'OR', label: 'OR' },
+      { value: 'AND', label: 'AND' },
     ];
     this.isModalNew = true;
     this.filterForm = this.fb.group({
@@ -221,7 +221,6 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-
   get f() { return this.filterForm.controls; }
 
   _updateTable(filters: Filter[]) {
@@ -259,6 +258,8 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
           booleanQueryAsLinq: filter.booleanQueryAsLinq,
         });
         this.filterModal.show();
+
+        this.filterConditions = this.dataService.analysisQuery(filter.booleanQuery);
       }
     }
   }
@@ -266,6 +267,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   onClickCreate() {
     this.isModalNew = true;
     this.filterForm.reset();
+    this.filterConditions = [];
     this.filterModal.show();
   }
 
