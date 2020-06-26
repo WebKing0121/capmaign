@@ -1,4 +1,4 @@
-<app-ui-modal #addToListModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl'">
+<app-ui-modal #addToListModal dialogClass="modal-dialog-centered modal-xl">
 	<div class="app-modal-header">
 		<h5 class="modal-title">{{modalTitle}}</h5>
 		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
@@ -29,7 +29,7 @@
 			</div>
 			<div class="col-md-8 records-table">
 				<app-datatable
-					[title]="'Assigned Records'"
+					[title]="tableTitle"
 					[buttons]="tableButtons"
 					[dataSource]="tableSource"
 					[rowHeight]="35"

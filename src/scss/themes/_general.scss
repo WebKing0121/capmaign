@@ -968,3 +968,11 @@ aw-wizard-navigation-bar {
     }
   }
 }
+.app-modal-footer {
+  width: 100%;
+  text-align: right;
+  padding: 0 13px;
+    & > * {
+      margin: 0.25rem
+    } 
+}

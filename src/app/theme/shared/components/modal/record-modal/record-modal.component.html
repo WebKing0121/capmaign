@@ -1,0 +1,42 @@
+<app-ui-modal #recordModal [containerClick]="false" dialogClass="modal-dialog-centered modal-xl">
+	<div class="app-modal-header full-width">
+		<h5 class="modal-title">{{modalTitle}}</h5>
+		<ng-select class="header-select-box" [options]="accountTypeList" [(ngModel)]="recordType"
+			(ngModelChange)="onChangeAccountType($event)"></ng-select>
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="recordModal.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+	<div class="app-modal-body">
+		<div class="row">
+			<div class="col-md-3 profile-section">
+				<ul>
+					<li *ngFor="let field of fields"
+						[ngClass]="{'active': selectedField && field.key===selectedField.key}"
+						(click)="onClickField(field)"
+					>{{field.label}}</li>
+				</ul>
+			</div>
+			<div class="col-md-9 field-section">
+				<div class="record-fields">
+					<div class="row" *ngIf="selectedField">
+						<div class="col-md-6 mt-3" *ngFor="let itemField of selectedField.fields">
+							<label class="mobile-show">{{itemField.label}}</label>
+							<div class="input-group">
+								<div class="input-group-prepend mobile-hide">
+									<span class="input-group-text" [title]="itemField.label">{{itemField.label}}</span>
+								</div>
+								<input type="text" class="form-control">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="app-modal-footer">
+		<button type="button" class="btn btn-primary mr-2" (click)="onClickSave()">Add</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="recordModal.hide()">Close</button>
+	</div>
+</app-ui-modal>

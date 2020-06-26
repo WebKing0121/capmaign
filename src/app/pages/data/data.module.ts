@@ -15,13 +15,14 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ManageRecordsComponent } from './manage-records/manage-records.component';
 import { ListsComponent } from './lists/lists.component';
 import { CustomFieldsComponent } from './custom-fields/custom-fields.component';
-
+import { FiltersComponent } from './filters/filters.component';
 
 @NgModule({
   declarations: [
     ManageRecordsComponent,
     ListsComponent,
-    CustomFieldsComponent
+    CustomFieldsComponent,
+    FiltersComponent
   ],
   imports: [
     CommonModule,

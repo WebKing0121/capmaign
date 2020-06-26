@@ -5,6 +5,8 @@
       [dataSource]="tableSource"
       [rowHeight]="35"
       [headerHeight]="40"
+      [selectable]="true"
+      [selectionType]="'checkbox'"
       (activate)="onActive($event)"
     ></app-datatable>
   </div>
@@ -17,7 +19,7 @@
 <ng-template #templateFolder let-row="row" let-value let-i="index">
   <span>{{ getFolder(value) }}</span>
 </ng-template>
-
+<app-add-to-list-modal #addToEventListModal [type]="DataListType.EventList" modalTitle="Add To Event List"></app-add-to-list-modal>
 <app-ui-modal #eventModal [containerClick]="false" dialogClass="modal-dialog-centered modal-event modal-xl">
   <div class="app-modal-header">
     <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} Event</h5>

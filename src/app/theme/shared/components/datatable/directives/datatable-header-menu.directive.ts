@@ -1,4 +1,4 @@
-import { ComponentRef, Directive, ElementRef, HostListener, Input, Type } from '@angular/core';
+import { ComponentRef, Directive, ElementRef, HostListener, Input, Type, OnDestroy } from '@angular/core';
 import {
   Overlay,
   OverlayPositionBuilder,
@@ -10,19 +10,21 @@ import { ComponentPortal } from '@angular/cdk/portal';
 
 import { DataTableSource } from '@app-components/datatable/datatable-source';
 import { DatatableColumnsMenuComponent } from '@app-components/datatable/menus/datatable-columns-menu/datatable-columns-menu.component';
-import { takeWhile } from 'rxjs/operators';
+import { takeWhile, takeUntil } from 'rxjs/operators';
 import { DatatableHeaderMenuInterface } from '@app-components/datatable/datatable-header-menu.interface';
+import { Subject } from 'rxjs';
 
 @Directive({
   selector: '[appDatatableHeaderMenu]'
 })
-export class DatatableHeaderMenuDirective {
+export class DatatableHeaderMenuDirective implements OnDestroy {
   @Input() tableSource: DataTableSource<any>;
   @Input() menuType: 'columnsMenu';
   @Input() align: 'right' | 'left' = 'left';
 
   private overlayRef: OverlayRef;
   private readonly scrollStrategy: ScrollStrategy;
+  private unsubscribe$ = new Subject();
 
   constructor(
     private overlayPositionBuilder: OverlayPositionBuilder,
@@ -69,6 +71,7 @@ export class DatatableHeaderMenuDirective {
     this.overlayRef
       .backdropClick()
       .pipe(takeWhile(() => Boolean(this.overlayRef)))
+      .pipe(takeUntil(this.unsubscribe$))
       .subscribe(() => this.overlayRef.detach());
 
     let componentType: Type<any>;
@@ -82,5 +85,10 @@ export class DatatableHeaderMenuDirective {
     );
     // Pass content to tooltip component instance
     menuRef.instance.setDataSource(this.tableSource);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

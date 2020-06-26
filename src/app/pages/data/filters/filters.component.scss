@@ -1,0 +1,161 @@
+.card-filters {
+  height: calc(100vh - 130px);
+}
+
+.modal-filter {
+  .input-group-prepend {
+    .input-group-text {
+      width: 130px;
+    }
+  }
+
+  ng-select {
+    min-height: 35px;
+    .single {
+      .value {
+        line-height: 33px;
+      }
+    }
+  }
+
+  ng-select > div {
+    min-height: 35px !important;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-radius: 0;
+  }
+
+  .filter-section {
+    height: 300px;
+    border: 2px solid #e9ecef;
+    border-radius: 4px;
+    display: flex;
+    .filter-condition {
+      width: 200px;
+      padding: 20px;
+      display: flex;
+      border-right: 1px solid #e9ecef;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .filter-content {
+      flex-grow: 1;
+      padding: 20px;
+      overflow: auto;
+      .filter-item {
+        display: flex;
+        margin-bottom: 10px;
+        .filter-parent-op {
+          width: 60px;
+          margin-right: 10px;
+          ng-select {
+            border: 1px solid;
+            border-radius: 20px;
+            & > div {
+              border: none;
+              text-align: center;
+            }
+          }
+        }
+        .filter-name {
+          width: 280px;
+          margin-right: 10px;
+        }
+        .filter-op {
+          width: 200px;
+          margin-right: 10px;
+          ng-select {
+            border: 1px solid;
+            border-radius: 20px;
+            & > div {
+              border: none;
+              text-align: center;
+            }
+          }
+        }
+        .filter-value {
+          flex-grow: 1;
+          input {
+            width: 100%;
+            height: 100%;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid #e9ecef;
+            padding: 0 15px;
+            background: transparent;
+          }
+        }
+        .filter-remove {
+          padding: 0px;
+          height: 21px;
+          width: 18px;
+          background: none;
+          border: none;
+          margin-top: 8px;
+          margin-right: 11px;
+          color: #8e9ba6;
+        }
+      }
+      .filter-group {
+        border: 1px solid;
+        border-radius: 4px;
+        padding: 10px 10px 0 10px;
+        background: #fdfdfd;
+        flex-grow: 1;
+        position: relative;
+        .add-condition {
+          position: absolute;
+          right: -6px;
+          border-radius: 50%;
+          bottom: -4px;
+          background: #fff;
+          border: 1px solid #ddd;
+          padding: 1px 4px;
+          color: #0086ff;
+          width: 24px;
+          height: 24px;
+        }
+        .group-remove {
+          position: absolute;
+          right: -6px;
+          top: -6px;
+          border-radius: 50%;
+          border: 1px solid #ddd;
+          background: #fff;
+          color: #8e9ba6;
+          width: 24px;
+          padding: 0px;
+          height: 24px;
+        }
+        .filter-name {
+          width: 200px;
+          margin-right: 10px;
+        }
+        .filter-remove {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+}
+
+.mobile-show {
+  display: none;
+}
+@media only screen and (max-width: 575px) {
+  .card-filters {
+    padding: 0px;
+    height: 500px;
+  }
+  .mobile-mt {
+    margin-top: 9px;
+  }
+  .mobile-hide {
+    display: none;
+  }
+  .mobile-show {
+    display: inherit;
+  }
+}

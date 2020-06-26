@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { CheckListItem } from '@app-components/list/interface';
 
 @Component({
@@ -6,7 +6,7 @@ import { CheckListItem } from '@app-components/list/interface';
   templateUrl: './check-list.component.html',
   styleUrls: ['./check-list.component.scss'],
 })
-export class CheckListComponent implements OnInit {
+export class CheckListComponent implements OnInit, OnChanges {
   @Output() scrolled = new EventEmitter<[number, number]>();
 
   @Input() data: CheckListItem[] = [];

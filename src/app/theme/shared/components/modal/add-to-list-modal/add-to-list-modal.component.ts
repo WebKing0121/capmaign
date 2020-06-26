@@ -10,7 +10,8 @@ import { takeUntil } from 'rxjs/operators';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { AppState, AppTypes, selectRecordColumns } from '@app-store/app.models';
 import { Store } from '@ngrx/store';
-
+import { DataListType } from '@app-core/enums/data-list-type.enum';
+import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 @Component({
   selector: 'app-add-to-list-modal',
   templateUrl: './add-to-list-modal.component.html',
@@ -22,6 +23,8 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
   @ViewChild('addToListModal', { static: false }) addToListModal;
   @Input() modalTitle: string;
   @Input() selectedRecords: [] = [];
+  @Input() type: string = DataListType.List;
+
   @Output() recordAdded: EventEmitter<any> = new EventEmitter();
 
   private unsubscribe$ = new Subject();
@@ -44,6 +47,7 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
   tableButtons = [
     { label: 'Unassign Records', icon: 'fa fa-trash', click: () => this.onClickRemove(), color: 'red', hide: true },
   ];
+  tableTitle: string;
   selected: any[] = [];
 
   // confirm Modal
@@ -57,38 +61,78 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
   ) {
     this.totalCount = 0;
     this.searchQuery = '';
+    this.tableTitle = '';
     this.recordColumns$ = this.store.select(selectRecordColumns);
   }
 
   ngOnInit(): void {
-    this.dataService.getLists()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.lists = data.result.items;
-            this.filteredList = this.lists;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.lists = [];
-            this.totalCount = 0;
+    if (this.type === DataListType.List) {
+      this.tableTitle = 'Assigned Records';
+      this.dataService.getLists()
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            if (data.result) {
+              this.lists = data.result.items;
+              this.filteredList = this.lists;
+              this.totalCount = data.result.totalCount;
+            } else {
+              this.lists = [];
+              this.totalCount = 0;
+            }
+          },
+          error => {
+            console.log('error', error.response);
           }
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+        );
+    } else if (this.type === DataListType.EventList) {
+      this.tableTitle = 'Assigned Events';
+      this.dataService.getEventLists()
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            if (data.result) {
+              this.lists = data.result.items;
+              this.filteredList = this.lists;
+              this.totalCount = data.result.totalCount;
+            } else {
+              this.lists = [];
+              this.totalCount = 0;
+            }
+          },
+          error => {
+            console.log('error', error.response);
+          }
+        );
+    }
+
   }
 
   ngAfterViewInit(): void {
-    this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
-      if (data) {
-        const columns = data.map((x: GridColumn) => ({
-          name: x.columnName, prop: this.capitalize(x.columnName), sortable: true
-        }));
-        this.tableSource.setColumns(columns);
-      }
-    });
+    if (this.type === DataListType.List) {
+      this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
+        if (data) {
+          const columns = data.map((x: GridColumn) => ({
+            name: x.columnName, prop: this.capitalize(x.columnName), sortable: true
+          }));
+          this.tableSource.setColumns(columns);
+        }
+      });
+    } else if (this.type === DataListType.EventList) {
+      const eventColumns = [
+        { name: 'Name', prop: 'eventName', sortable: true },
+        { name: 'Subject', prop: 'eventSubject', sortable: true },
+        {
+          name: 'Start Date', prop: 'eventStartDate', sortable: true,
+          pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+        },
+        {
+          name: 'End Date', prop: 'eventEndDate', sortable: true,
+          pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+        }
+      ];
+      this.tableSource.setColumns(eventColumns);
+    }
   }
 
   ngOnDestroy(): void {
@@ -104,7 +148,43 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
   onClickList(listId: number) {
     this.selectedListId = listId;
     // load records along with the selected list
-
+    if (this.type === DataListType.List) {
+      this.dataService.getRecordsByListId(listId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            if (data.result) {
+              this.records = data.result.items;
+              this.totalCount = data.result.totalCount;
+            } else {
+              this.records = [];
+              this.totalCount = 0;
+            }
+            this._updateTable(this.records);
+          },
+          error => {
+            console.log('error', error.response);
+          }
+        );
+    } else if (this.type === DataListType.EventList) {
+      this.dataService.getEventsByListId(listId)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            if (data.result) {
+              this.records = data.result.items;
+              this.totalCount = data.result.totalCount;
+            } else {
+              this.records = [];
+              this.totalCount = 0;
+            }
+            this._updateTable(this.records);
+          },
+          error => {
+            console.log('error', error.response);
+          }
+        );
+    }
   }
 
   onChangeSearchQuery(event) {

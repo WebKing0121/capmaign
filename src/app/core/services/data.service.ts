@@ -7,11 +7,14 @@ import {
   AllRecordGridColumnsMock, AllRecordsMock, SubscribersMock,
   LeadsMock, ProspectsMock, TransactionalsMock
 } from '@app-fake-db/data-records-mock';
-import { ListsMockData } from '@app-fake-db/list-mock';
+import { ListsMockData } from '@app-fake-db/data-list-mock';
 import { CustomFieldsMock } from '@app-fake-db/data-custom-fields-mock';
 import { AccountsImportMocks } from '@app-fake-db/data-import-accounts-mock';
 import { LeadCategoriesImportMock } from '@app-fake-db/data-import-lead-categories-mock';
 import { MapsMappingImportMocks } from '@app-fake-db/data-import-maps-mock';
+import { EventListsMockData } from '@app-fake-db/data-list-event-mock';
+import { EventsMockData } from '@app-fake-db/events-mock';
+import { DataFiltersMock, filterColumnsMock } from '@app-fake-db/data-filters-mock';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +58,11 @@ export class DataService {
   getLists(): Observable<any> {
     return of(ListsMockData);
   }
+
+  getEventLists(): Observable<any> {
+    return of(EventListsMockData);
+  }
+
 
   getTypeList(): Observable<any> {
     return of([
@@ -102,5 +110,127 @@ export class DataService {
 
   getImportMappings(): Observable<any> {
     return of(MapsMappingImportMocks);
+  }
+
+  getEventsByListId(listId: number): Observable<any> {
+    return of(EventsMockData);
+  }
+
+  getEvents(): Observable<any> {
+    return of(EventsMockData);
+  }
+
+  getFilters(): Observable<any> {
+    return of(DataFiltersMock);
+  }
+
+  getFilterColumns(): Observable<any> {
+    return of(filterColumnsMock);
+  }
+
+  splitArray(query: string) {
+    const obj = {
+      brakets: null,
+      parentOps: null,
+      conditionOps: null,
+      variables: null,
+    };
+
+    query = query.replace(')', ')\n');
+    const brakets = query.match(/[\(].+[\)]/g);
+
+    query = query.replace(/[\(].+[\)]/g, 'replaced_brackets');
+    const parentOps = query.match(/OR|AND/g);
+
+    query = query.replace(/OR|AND/g, 'parentOp');
+    const conditionOps = query.match(/=|>=|>|<|<=|like|is_null|is_not null|>/g);
+
+    query = query.replace(/=|>=|>|<|<=|like|is_null|is_not null|>/g, 'operators');
+    const variables = query.split(/parentOp/).map((item) => item.split(/operators/));
+    return { brakets, parentOps, conditionOps, variables };
+  }
+
+  analysisQuery(query: string) {
+    const r1 = this.splitArray(query);
+    const { brakets, variables, parentOps, conditionOps } = r1;
+    const result = [];
+    let bracketNum = 0;
+
+    variables.forEach((variable, i) => {
+      const item = {
+        id: i + 1,
+        type: 'Item',
+        parentOp: i === 0 ? 'None' : parentOps[i - 1],
+        fieldName: variable[0].trim(),
+        conditionOp: conditionOps[i],
+        value: variable[1] ? variable[1].trim().slice(1, -1) : '',
+      };
+
+      const children = [];
+
+      if (item.fieldName.search(/_brackets/g) > 0) {
+
+        const r2 = this.splitArray(brakets[bracketNum].replace('(', '').replace(')', ''));
+
+        const variables2 = r2.variables;
+
+        variables2.forEach((variable2, j) => {
+          const subItem = {
+            id: j + 1,
+            type: 'Item',
+            parentOp: j === 0 ? 'None' : r2.parentOps[j - 1],
+            fieldName: variable2[0].trim(),
+            conditionOp: r2.conditionOps[j],
+            value: variable2[1] ? variable2[1].trim().slice(1, -1) : '',
+          };
+          children.push(subItem);
+        });
+
+        bracketNum++;
+
+        result.push({
+          id: i + 1,
+          type: 'Group',
+          parentOp: item.parentOp,
+          children,
+        });
+
+      } else {
+        result.push(item);
+      }
+    });
+    return result;
+  }
+
+  buildQuery(filterConditions: any[]) {
+    let query = '';
+    let subQuery = '';
+    filterConditions.forEach((filterItem: any) => {
+      if (filterItem.parentOp !== 'None') {
+        query += ` ${filterItem.parentOp}`;
+      }
+      if (filterItem.type === 'Item') {
+        if (filterItem.conditionOp !== 'is_null' && filterItem.conditionOp !== 'is_not_null') {
+          query += ` ${filterItem.fieldName} ${filterItem.conditionOp} "${filterItem.value}"`;
+        } else {
+          query += ` ${filterItem.fieldName} ${filterItem.conditionOp}`;
+        }
+      } else {
+
+        subQuery = '';
+        filterItem.children.forEach((subItem: any) => {
+          if (subItem.parentOp !== 'None') {
+            subQuery += ` ${filterItem.parentOp}`;
+          }
+          if (subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null') {
+            subQuery += ` ${subItem.fieldName} ${subItem.conditionOp} "${subItem.value}"`;
+          } else {
+            subQuery += ` ${subItem.fieldName} ${subItem.conditionOp}`;
+          }
+        });
+        query += ' (' + subQuery.substr(1) + ')';
+      }
+    });
+    return query.substr(1);
   }
 }

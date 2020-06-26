@@ -1,9 +1,16 @@
-<app-data-records
+<app-data-records #dataRecords
 	[buttons]="tableButtons"
 	(activate)="onActive($event)"
 ></app-data-records>
+
 <app-add-to-list-modal #addToListModal modalTitle="Add To List"></app-add-to-list-modal>
-<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected records?"
-	[buttons]="confirmButtons"></app-confirm-modal>
+
+<app-confirm-modal #confirmModal
+	modalTitle="Confirm"
+	modalMessage="Do you want to delete selected records?"
+	[buttons]="confirmButtons"
+></app-confirm-modal>
+
 <app-view-columns #viewColumnsModal></app-view-columns>
 <app-import-csv-modal #importCSVModal></app-import-csv-modal>
+<app-send-email-modal #sendEmailModal></app-send-email-modal>
