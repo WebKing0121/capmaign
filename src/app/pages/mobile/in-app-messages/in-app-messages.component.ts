@@ -96,7 +96,7 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onActive(event) {
-    if(event.type === 'click' && event.cellIndex === 1) {
+    if (event.type === 'click' && event.cellIndex === 1) {
       const inAppMessage = event.row as Campaign;
       this.modalService.openModal(InAppMessageComponent, {
         width: '80%',
@@ -115,9 +115,9 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
   onDeleteClicked() {
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
-        data: {
-          message: 'Are you sure you want to delete selected SMS?'
-        }
+      data: {
+        message: 'Are you sure you want to delete selected SMS?'
+      }
     });
   }
 }

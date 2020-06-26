@@ -7,17 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InAppMessageComponent implements OnInit {
 
-  optionList:['Tesh Header', 'UAT Header', 'UAT1010', 'Test In App', 'Test InApp'];
+  optionList: string[];
   step: boolean[];
   constructor() {
     this.step = [true, false, false, false, false, false];
   }
 
   ngOnInit(): void {
+    this.optionList = ['Tesh Header', 'UAT Header', 'UAT1010', 'Test In App', 'Test InApp'];
   }
 
   openContent(tab: number) {
-    this.step = this.step.map(flag => flag=false);
+    this.step = this.step.map(flag => flag = false);
     this.step[tab] = true;
   }
 }
