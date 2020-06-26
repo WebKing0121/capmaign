@@ -1,113 +1,135 @@
 <div class="card mt-3">
   <div class="card-header">
-    <h2 class="m-0 text-primary">Create Facebook Ads Campaign</h2>
+    <h2 class="m-0 text-secondary">Create Facebook Ads Campaign</h2>
   </div>
   <div class="card-body">
     <section>
       <form [formGroup]="formGroup">
         <div class="" formGroupName="details">
           <div class="row">
-            <div class="col-12 col-md-6 form-group">
-              <label class="required-mark-after">Campaign Name</label>
-              <input type="text" class="form-control" formControlName="name" aria-label="Campaign Name">
-            </div>
-            <div class="col-12 col-md-6 form-group">
-              <label class="required-mark-after">Ad Account</label>
-              <select class="form-control" formControlName="adAccount">
-                <option></option>
-              </select>
-            </div>
-            <div class="col-12 col-md-6 form-group m-l-auto">
-              <label class="required-mark-after">Ad Label</label>
-              <input type="text" class="form-control" formControlName="adLabel" aria-label="Campaign Name">
-            </div>
-            <div class="col-12 col-lg-12">
-              <div class="d-flex justify-content-center align-items-center border p-t-10 p-b-10 border border-primary">
-                <span class="font-weight-bold text-primary">Choose Campaign Objective</span>
+            <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+              <label class="mobile-show">Campaign Name<span class="text-danger">*</span></label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 140px;">Campaign Name</span>
+                </div>
+                <input type="text" class="form-control" fomrControlName="name">
               </div>
             </div>
-            <div class="col-12 col-lg-12 m-t-20 d-flex p-0">
-              <div class="col-lg-4 m-t-20">
-                <div class="border border-primary">
+            <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+              <label class="mobile-show">Ad Label</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 140px;">Ad Label</span>
+                </div>
+                <select class="form-control" formControlName="adLabel">
+                  <option></option>
+                </select>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+              <label class="mobile-show">Ad Account</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 140px;">Ad Account</span>
+                </div>
+                <select class="form-control" formControlName="adAccount">
+                  <option></option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-12">
+              <div
+                class="d-flex justify-content-center align-items-center m-t-10 p-t-10 p-b-10 bg-secondary text-white">
+                <span>Choose Campaign Objective</span>
+              </div>
+            </div>
+            <div class="col-12 col-lg-12 d-flex flex-wrap p-0">
+              <div class="col-lg-4 col-sm-12 m-t-10">
+                <div class="border border-secondary">
                   <div class="padding-10px bg-blue text-center">
-                    <label class="bg-primary text-white d-flex justify-content-center p-10">AWARENESS</label>
+                    <label class="bg-secondary text-white d-flex justify-content-center p-10">AWARENESS</label>
                   </div>
                   <div class="p-t-10 p-b-30 p-l-15">
-                    <div class="text-center"><i class="fa fa-lg fa-globe-americas text-primary" aria-hidden="true"></i>
+                    <div class="text-center"><i class="fa fa-lg fa-globe-americas text-secondary"
+                        aria-hidden="true"></i>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_brandawareness" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="BRAND_AWARENESS">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_brandawareness" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="BRAND_AWARENESS">
                       <label for="obj_brandawareness">Brand Awareness</label>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_reach" class="m-r-5" formControlName="campaignObjective" name="campaignObjective" value="REACH">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_reach" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="REACH">
                       <label for="obj_reach">Reach</label>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 m-t-20">
-                <div class="border border border-primary">
+              <div class="col-lg-4 col-sm-12 m-t-10">
+                <div class="border border border-secondary">
                   <div class="padding-10px bg-blue text-center">
-                    <label class="bg-primary text-white d-flex justify-content-center p-10">CONSIDERATION</label>
+                    <label class="bg-secondary text-white d-flex justify-content-center p-10">CONSIDERATION</label>
                   </div>
                   <div class="p-t-10 p-b-30 p-l-15">
-                    <div class="text-center"><i class="fab fa-lg fa-facebook-f text-primary" aria-hidden="true"></i>
+                    <div class="text-center"><i class="fab fa-lg fa-facebook-f text-secondary" aria-hidden="true"></i>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_traffic" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="LINK_CLICKS">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_traffic" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="LINK_CLICKS">
                       <label for="obj_traffic">Traffic</label>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_engagement" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="POST_ENGAGEMENT">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_engagement" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="POST_ENGAGEMENT">
                       <label for="obj_engagement">Engagement</label>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_appinstalls" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="APP_INSTALLS">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_appinstalls" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="APP_INSTALLS">
                       <label for="obj_appinstalls">App Installs</label>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_videoviews" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="VIDEO_VIEWS">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_videoviews" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="VIDEO_VIEWS">
                       <label for="obj_videoviews">Video Views</label>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_leadgeneration" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="LEAD_GENERATION">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_leadgeneration" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="LEAD_GENERATION">
                       <label for="obj_leadgeneration">Lead Generation</label>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_messages" class="m-r-5" formControlName="campaignObjective" name="campaignObjective" value="MESSAGES">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_messages" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="MESSAGES">
                       <label for="obj_messages">Messages</label>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="col-lg-4 m-t-20">
-                <div class="border border-primary">
+              <div class="col-lg-4 col-sm-12 m-t-10">
+                <div class="border border-secondary">
                   <div class="padding-10px bg-blue text-center">
-                    <label class="bg-primary text-white d-flex justify-content-center p-10">CONVERSION</label>
+                    <label class="bg-secondary text-white d-flex justify-content-center p-10">CONVERSION</label>
                   </div>
                   <div class="p-t-10 p-b-30 p-l-15">
-                    <div class="text-center"><i class="fa fa-lg fa-mobile-alt text-primary" aria-hidden="true"></i>
+                    <div class="text-center"><i class="fa fa-lg fa-mobile-alt text-secondary" aria-hidden="true"></i>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_conversions" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="CONVERSIONS">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_conversions" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="CONVERSIONS">
                       <label for="obj_conversions">Conversions</label>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_cataloguesales" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="PRODUCT_CATALOG_SALES">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_cataloguesales" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="PRODUCT_CATALOG_SALES">
                       <label for="obj_cataloguesales">Catalogue Sales</label>
                     </div>
-                    <div class="radio radio-primary text-primary font-weight-bold m-t-20 m-l-20">
-                      <input type="radio" id="obj_storetraffic" class="m-r-5" formControlName="campaignObjective" name="campaignObjective"
-                        value="LOCAL_AWARENESS">
+                    <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
+                      <input type="radio" id="obj_storetraffic" class="m-r-5" formControlName="campaignObjective"
+                        name="campaignObjective" value="LOCAL_AWARENESS">
                       <label for="obj_storetraffic">Store Traffic</label>
                     </div>
                   </div>
@@ -115,48 +137,60 @@
               </div>
             </div>
             <div class="col-lg-12 d-flex align-items-center m-t-10">
-              <label class="bold text-primary m-r-10">Split Test</label>
+              <label class="bold text-secondary m-r-10">Split Test</label>
               <label class="switch">
                 <input type="checkbox" (click)="onSplitTestClick()">
                 <span class="slider round"></span>
               </label>
             </div>
             <div *ngIf="spliteTestFlag" class="col-lg-12 d-flex flex-wrap m-t-10">
-              <div class="col-md-6">
-                <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                  <label class="text-primary font-weight-bold">Variable</label>
+              <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+                <label class="mobile-show">Variable</label>
+                <div class="input-group m-t-10">
+                  <div class="input-group-prepend mobile-hide">
+                    <span class="input-group-text" style="width: 150px;">Variable</span>
+                  </div>
                   <select class="form-control  ng-pristine ng-untouched ng-valid ng-empty">
                     <option value="? string: ?"></option>
-                    <option class="text-primary" value="1">Creative</option>
-                    <option class="text-primary" value="2">Delivery optimisation</option>
-                    <option class="text-primary" value="3">Audience</option>
-                    <option class="text-primary" value="4">Placement</option>
+                    <option class="text-secondary" value="1">Creative</option>
+                    <option class="text-secondary" value="2">Delivery optimisation</option>
+                    <option class="text-secondary" value="3">Audience</option>
+                    <option class="text-secondary" value="4">Placement</option>
                   </select>
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                  <label class="text-primary font-weight-bold">Number of ad sets</label>
+              <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+                <label class="mobile-show">Number of ad sets</label>
+                <div class="input-group m-t-10">
+                  <div class="input-group-prepend mobile-hide">
+                    <span class="input-group-text" style="width: 150px;">Number of ad sets</span>
+                  </div>
                   <select class="form-control" (change)="onSetTestNum($event.target.value)">
                     <option value="1"></option>
-                    <option class="text-primary" value="2">2</option>
-                    <option class="text-primary" value="3">3</option>
-                    <option class="text-primary" value="4">4</option>
-                    <option class="text-primary" value="5">5</option>
+                    <option class="text-secondary" value="2">2</option>
+                    <option class="text-secondary" value="3">3</option>
+                    <option class="text-secondary" value="4">4</option>
+                    <option class="text-secondary" value="5">5</option>
                   </select>
                 </div>
               </div>
               <!-- ngRepeat: n in adsetarray -->
               <div *ngFor="let ad of campaignAdsArr" class="col-lg-12 divadsets d-flex p-0">
-                <div class="col-md-6">
-                  <label class="text-primary font-weight-bold ng-binding">Ad Set {{ad.id}} Name</label>
-                  <div class="form-group form-md-line-input form-md-floating-label no-hint">
+                <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+                  <label class="mobile-show">Ad Set {{ad.id}} Name</label>
+                  <div class="input-group m-t-10">
+                    <div class="input-group-prepend mobile-hide">
+                      <span class="input-group-text" style="width: 150px;">Ad Set {{ad.id}} Name</span>
+                    </div>
                     <input type="text" class="form-control" name="adsetname" id="adsetname1">
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                    <label class="text-primary font-weight-bold ng-binding">Ad {{ad.id}} Name</label>
+                <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+                  <label class="mobile-show">Ad {{ad.id}} Name</label>
+                  <div class="input-group m-t-10">
+                    <div class="input-group-prepend mobile-hide">
+                      <span class="input-group-text" style="width: 150px;">Ad {{ad.id}} Name</span>
+                    </div>
                     <input type="text" class="form-control" name="adname" id="adname1">
                   </div>
                 </div>
@@ -168,20 +202,23 @@
               </div>
             </div>
             <div class="col-lg-12 d-flex align-items-center m-t-10">
-              <label class="bold text-primary m-r-10">Campaign budget optimisation</label>
+              <label class="bold text-secondary m-r-10">Campaign budget optimisation</label>
               <label class="switch">
                 <input type="checkbox" (click)="onCampaignBudgetOptimisationClick()">
                 <span class="slider round"></span>
               </label>
             </div>
-            <div *ngIf="campaignBudgetOptimisationFlag" class="col-lg-12 d-flex flex-wrap m-t-20">
-              <div class="col-md-6">
-                <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                  <label class="text-primary font-weight-bold">Campaign budget</label>
+            <div *ngIf="campaignBudgetOptimisationFlag" class="col-lg-12 d-flex flex-wrap m-t-10">
+              <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+                <label class="mobile-show">Campaign budget</label>
+                <div class="input-group m-t-10">
+                  <div class="input-group-prepend mobile-hide">
+                    <span class="input-group-text" style="width: 150px;">Campaign budget</span>
+                  </div>
                   <select id="selectBudget" class="form-control">
                     <option value=""></option>
-                    <option class="text-primary" value="daily_budget">Daily Budget</option>
-                    <option class="text-primary" value="lifetime_budget">Lifetime Budget</option>
+                    <option class="text-secondary" value="daily_budget">Daily Budget</option>
+                    <option class="text-secondary" value="lifetime_budget">Lifetime Budget</option>
                   </select>
                 </div>
               </div>
@@ -189,43 +226,46 @@
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                   <label></label>
                   <input type="number" min="0" max="99999"
-                    class="form-control text-primary ng-valid ng-valid-min ng-valid-max ng-not-empty ng-dirty ng-valid-number edited ng-touched"
+                    class="form-control text-secondary ng-valid ng-valid-min ng-valid-max ng-not-empty ng-dirty ng-valid-number edited ng-touched"
                     placeholder="20,000">
                 </div>
               </div>
-              <div class="col-md-6">
-                <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                  <label class="text-primary font-weight-bold">Campaign Bid Strategy</label>
+              <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+                <label class="mobile-show">Campaign Bid Strategy</label>
+                <div class="input-group m-t-10">
+                  <div class="input-group-prepend mobile-hide">
+                    <span class="input-group-text" style="width: 150px;">Campaign Bid Strategy</span>
+                  </div>
                   <select id="selectBidStrategy" ng-model="vm.campaign.bidstrategy" class="form-control">
                     <option value=""></option>
-                    <option class="text-primary" value="LOWEST_COST_WITHOUT_CAP">Lowest Cost</option>
-                    <option class="text-primary" value="LOWEST_COST_WITH_BID_CAP">Bid Cap</option>
-                    <option class="text-primary" value="TARGET_COST">Cost Cap</option>
+                    <option class="text-secondary" value="LOWEST_COST_WITHOUT_CAP">Lowest Cost</option>
+                    <option class="text-secondary" value="LOWEST_COST_WITH_BID_CAP">Bid Cap</option>
+                    <option class="text-secondary" value="TARGET_COST">Cost Cap</option>
                   </select>
                 </div>
               </div>
               <div class="col-lg-12">
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                  <label class="text-primary font-weight-bold">Ad Scheduling</label>
-                  <div class="radio radio-primary text-primary font-weight-bold m-t-10 m-l-20">
+                  <label class="text-secondary ">Ad Scheduling</label>
+                  <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
                     <input type="radio" id="adscheduling1" name="adscheduling" value="allthetime">
-                    <label class="text-primary" for="adscheduling1">Run ads all the time</label>
+                    <label class="text-secondary" for="adscheduling1">Run ads all the time</label>
                   </div>
-                  <div class="radio radio-primary text-primary font-weight-bold m-t-10 m-l-20">
+                  <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
                     <input type="radio" id="adscheduling2" name="adscheduling" value="onschedule">
-                    <label class="text-primary" for="adscheduling2">Run ads on a schedule</label>
+                    <label class="text-secondary" for="adscheduling2">Run ads on a schedule</label>
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-12 col-md-6 form-group">
-              <div class="text-primary m-t-30">
-                <label class="font-weight-bold">
+              <div class="text-secondary m-t-30">
+                <label class="">
                   Location
                 </label>
-                <div class="input-group">
+                <div class="input-group m-t-10">
                   <div class="input-group-prepend">
-                    <span class="input-group-text text-primary"><i class="fa fa-map-marker"></i></span>
+                    <span class="input-group-text text-secondary"><i class="fa fa-map-marker"></i></span>
                   </div>
                   <input class="form-control" placeholder="Location Search" autocomplete="off" name="location">
                   <!-- <input
@@ -239,7 +279,7 @@
                     #instance="ngbTypeahead"
                   /> -->
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">
+                    <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
@@ -247,17 +287,17 @@
               </div>
             </div>
             <div class="col-12 col-md-6 form-group">
-              <div class="text-primary m-t-30">
-                <label class="font-weight-bold">
+              <div class="text-secondary m-t-30">
+                <label class="">
                   Location (Exclude)
                 </label>
-                <div class="input-group">
+                <div class="input-group m-t-10">
                   <div class="input-group-prepend">
-                    <span class="input-group-text text-primary"><i class="fa fa-map-marker"></i></span>
+                    <span class="input-group-text text-secondary"><i class="fa fa-map-marker"></i></span>
                   </div>
                   <input class="form-control" placeholder="Location Search" autocomplete="off" name="location">
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">
+                    <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
@@ -265,17 +305,17 @@
               </div>
             </div>
             <div class="col-12 col-md-6 form-group">
-              <div class="text-primary m-t-20">
-                <label class="font-weight-bold">
+              <div class="text-secondary m-t-10">
+                <label class="">
                   Currency
                 </label>
-                <div class="input-group">
+                <div class="input-group m-t-10">
                   <div class="input-group-prepend">
-                    <span class="input-group-text text-primary"><i class="fa fa-usd">$</i></span>
+                    <span class="input-group-text text-secondary"><i class="fa fa-usd">$</i></span>
                   </div>
                   <input class="form-control" placeholder="Location Search" autocomplete="off" name="location">
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">
+                    <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
@@ -283,73 +323,73 @@
               </div>
             </div>
             <div class="col-12 col-md-6 form-group">
-              <div class="text-primary m-t-20">
-                <label class="font-weight-bold">
+              <div class="text-secondary m-t-10">
+                <label class="">
                   Languages
                 </label>
-                <div class="input-group">
+                <div class="input-group m-t-10">
                   <div class="input-group-prepend">
-                    <span class="input-group-text text-primary"><i class="fa fa-language"></i></span>
+                    <span class="input-group-text text-secondary"><i class="fa fa-language"></i></span>
                   </div>
                   <input class="form-control" placeholder="Location Search" autocomplete="off" name="location">
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">
+                    <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="col-lg-12 m-t-20">
+            <div class="col-lg-12 m-t-10">
               <div>
-                <label class="text-primary">
+                <label class="text-secondary">
                   <input type="checkbox" (click)="onImportFromLeads()">
                   Import from Leads
                 </label>
               </div>
-              <div class="m-t-20">
-                <label class="text-primary">
+              <div class="m-t-10">
+                <label class="text-secondary">
                   <input type="checkbox">
                   Include Facebook network in audience
                 </label>
               </div>
             </div>
-            <div class="col-md-6 form-group form-md-line-input form-md-floating-label no-hint m-t-20">
-              <label class="text-primary font-weight-bold">Age Range</label>
-              <div class="input-group d-flex align-items-center">
+            <div class="col-md-6 form-group form-md-line-input form-md-floating-label no-hint m-t-10">
+              <label class="text-secondary ">Age Range</label>
+              <div class="input-group d-flex align-items-center m-t-10">
                 <select ng-model="vm.campaign.agemin" ng-change="vm.updateagerange()" class="form-control">
                   <option label="13" value="number:13">13</option>
                 </select>
-                <span class="text-primary input-group-addon">to</span>
+                <span class="text-secondary input-group-addon">to</span>
                 <select ng-model="vm.campaign.agemax" ng-change="vm.updateagerange()" class="form-control">
                   <option label="56" value="number:56" selected="selected">56</option>
                 </select>
               </div>
             </div>
-            <div class="col-lg-12 form-group form-md-line-input form-md-floating-label no-hint m-t-20">
-              <label class="text-primary font-weight-bold">Gender</label>
+            <div class="col-lg-12 form-group form-md-line-input form-md-floating-label no-hint m-t-10">
+              <label class="text-secondary ">Gender</label>
               <div class="radio-group-multitoggle m-b-0">
                 <input id="toggle_gender1" class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty"
                   name="toggle_gender" value="all" type="radio" checked>
-                <label for="toggle_gender1" class="lblmultitoggle font-weight-bold">All</label>
+                <label for="toggle_gender1" class="lblmultitoggle ">All</label>
                 <input id="toggle_gender2" class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty"
                   name="toggle_gender" value="male" type="radio">
-                <label for="toggle_gender2" class="lblmultitoggle font-weight-bold">Male</label>
+                <label for="toggle_gender2" class="lblmultitoggle ">Male</label>
                 <input id="toggle_gender3"
                   class="multitoggle ng-untouched ng-valid ng-not-empty ng-dirty ng-valid-parse" name="toggle_gender"
                   value="female" type="radio">
-                <label for="toggle_gender3" class="lblmultitoggle font-weight-bold">Female</label>
+                <label for="toggle_gender3" class="lblmultitoggle ">Female</label>
               </div>
             </div>
             <div class="col-lg-12">
-              <span class="text-primary font-weight-bold">Targetting</span>
+              <span class="text-secondary ">Targetting</span>
             </div>
             <div class="col-12 col-md-4 form-group">
-              <div class="text-primary m-t-30">
+              <div class="text-secondary m-t-30">
                 <div class="input-group">
                   <input class="form-control" placeholder="Interest" autocomplete="off" name="interest">
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">
+                    <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
@@ -357,11 +397,11 @@
               </div>
             </div>
             <div class="col-12 col-md-4 form-group">
-              <div class="text-primary m-t-30">
+              <div class="text-secondary m-t-30">
                 <div class="input-group">
                   <input class="form-control" placeholder="Behavior" autocomplete="off" name="behavior">
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">
+                    <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
@@ -369,11 +409,11 @@
               </div>
             </div>
             <div class="col-12 col-md-4 form-group">
-              <div class="text-primary m-t-30">
+              <div class="text-secondary m-t-30">
                 <div class="input-group">
                   <input class="form-control" placeholder="Demographic" autocomplete="off" name="demographic">
                   <div class="input-group-append">
-                    <span class="input-group-text text-primary">
+                    <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
                     </span>
                   </div>
@@ -382,16 +422,16 @@
             </div>
             <div class="col-lg-12">
               <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                <label class="text-primary font-weight-bold m-t-20">Placements</label>
-                <div class="radio radio-primary text-primary m-t-20 m-l-20">
-                  <label class="text-primary">
+                <label class="text-secondary  m-t-10">Placements</label>
+                <div class="radio radio-secondary text-secondary m-t-10 m-l-20">
+                  <label class="text-secondary">
                     <input type="radio" id="automatic" name="placements" value="automatic"
                       (click)="onEditPlacementsClick(false)">
                     Automatic
                   </label>
                 </div>
-                <div class="radio radio-primary text-primary m-l-20 m-t-20">
-                  <label class="text-primary">
+                <div class="radio radio-secondary text-secondary m-l-20 m-t-10">
+                  <label class="text-secondary">
                     <input type="radio" id="editPlacement" name="placements" value="editPlacement"
                       (click)="onEditPlacementsClick(true)">
                     Edit Placements
@@ -400,13 +440,13 @@
               </div>
             </div>
             <div *ngIf="editPlacementsFlag">
-              <div class="col-lg-12 d-flex flex-wrap m-t-20">
+              <div class="col-lg-12 d-flex flex-wrap m-t-10">
                 <div class="col-lg-12 p-0">
                   <div class="form-group placement_devices form-md-line-input form-md-floating-label no-hint">
-                    <label class="text-primary font-weight-bold">Devices</label>
+                    <label class="text-secondary ">Devices</label>
                     <div class="card-body ng-tns-c111-113 ng-star-inserted">
                       <div data-toggle="buttons" class="btn-group btn-group-toggle ng-tns-c111-113">
-                        <label class="btn btn-primary">
+                        <label class="btn btn-secondary">
                           <input type="checkbox" (click)="onDesktopModeClick()">
                           Desktop
                           <span>
@@ -414,7 +454,7 @@
                             <i *ngIf="!desktopMode" class="fa fa-check" style="opacity: 0;"></i>
                           </span>
                         </label>
-                        <label class="btn btn-primary">
+                        <label class="btn btn-secondary">
                           <input type="checkbox" (click)="onMobileModeClick()">
                           Mobile
                           <span>
@@ -429,10 +469,10 @@
                 <div class="col-lg-12 p-0">
                   <div class="form-group form-md-line-input form-md-floating-label no-hint obj_platforms">
                     <div class="form-group placement_devices form-md-line-input form-md-floating-label no-hint">
-                      <label class="text-primary font-weight-bold">Devices</label>
+                      <label class="text-secondary ">Devices</label>
                       <div class="card-body ng-tns-c111-113 ng-star-inserted">
                         <div data-toggle="buttons" class="btn-group btn-group-toggle ng-tns-c111-113">
-                          <label class="btn btn-primary">
+                          <label class="btn btn-secondary">
                             Facebook
                             <input type="checkbox" name="facebook" (click)="onFacebookClick()">
                             <span>
@@ -440,7 +480,7 @@
                               <i *ngIf="!facebook" class="dkdkd fa fa-check" style="opacity: 0;"></i>
                             </span>
                           </label>
-                          <label class="btn btn-primary">
+                          <label class="btn btn-secondary">
                             <input type="checkbox" (click)="onAudienceNetworkClick()">
                             Audience Network
                             <span>
@@ -448,7 +488,7 @@
                               <i *ngIf="!audienceNetwork" class="fa fa-check" style="opacity: 0;"></i>
                             </span>
                           </label>
-                          <label class="btn btn-primary">
+                          <label class="btn btn-secondary">
                             <input type="checkbox" (click)="onInstagramClick()">
                             Instagram
                             <span>
@@ -456,7 +496,7 @@
                               <i *ngIf="!instagram" class="fa fa-check" style="opacity: 0;"></i>
                             </span>
                           </label>
-                          <label class="btn btn-primary">
+                          <label class="btn btn-secondary">
                             <input type="checkbox" (click)="onMessengerClick()">
                             Messenger
                             <span>
@@ -470,19 +510,19 @@
                   </div>
                 </div>
                 <div class="col-md-6 p-0">
-                  <label class="font-weight-bold text-primary margin-bottom-10">Placements</label>
+                  <label class=" text-secondary margin-bottom-10">Placements</label>
                 </div>
-                <div class="col-lg-12 obj_placements d-flex flex-wrap p-0 m-t-20 m-b-20">
+                <div class="col-lg-12 obj_placements d-flex flex-wrap p-0 m-t-10 m-b-20">
                   <div class="col-lg-12 obj_placements d-flex flex-wrap">
                     <div class="col-lg-6">
-                      <label class="text-primary font-weight-bold">
+                      <label class="text-secondary ">
                         <u>Feeds</u>
                         <small>
                           (Get high visibility for your business with ads in feeds)</small>
                       </label>
                       <label class="containerCheck m-t-10" id="facebook_newsfeed">
                         <input type="checkbox" (click)="onFacebookNewsFeed()">
-                        <span class="bg-primary border-primary">
+                        <span class="bg-secondary border-secondary">
                           <i *ngIf="facebookNewsFeed" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookNewsFeed" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -494,7 +534,7 @@
                           <i *ngIf="instagramFeed" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramFeed" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="instagramFeed" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramFeed" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -502,7 +542,7 @@
                       </label>
                       <label class="containerCheck" id="facebook_marketplace">
                         <input type="checkbox" (click)="onFacebookMarketplace()">
-                        <span class="bg-primary border-primary">
+                        <span class="bg-secondary border-secondary">
                           <i *ngIf="facebookMarketplace" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookMarketplace" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -510,7 +550,7 @@
                       </label>
                       <label class="containerCheck" id="facebook_videofeed">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onFacebookVideoFeeds()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="facebookVideoFeeds" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookVideoFeeds" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -522,7 +562,7 @@
                       </label>
                       <label class="containerCheck" id="facebook_rightcolumn">
                         <input type="checkbox" (click)="onFacebookRightColumn()">
-                        <span *ngIf="desktopMode" class="bg-primary border-primary">
+                        <span *ngIf="desktopMode" class="bg-secondary border-secondary">
                           <i *ngIf="facebookRightColumn" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookRightColumn" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -534,7 +574,7 @@
                       </label>
                       <label class="containerCheck" id="instagram_explore">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onInstagramExplore()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="instagramExplore" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramExplore" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -546,7 +586,7 @@
                       </label>
                       <label class="containerCheck" id="messenger_inbox">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onMessengerInbox()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="messengerInbox" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!messengerInbox" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -558,12 +598,12 @@
                       </label>
                     </div>
                     <div class="col-lg-6">
-                      <label class="text-primary font-weight-bold">
+                      <label class="text-secondary ">
                         <u>Stories</u>
                         <small>(Tell a rich, visual story with immersive, full screen vertical ads)</small></label>
                       <label class="containerCheck m-t-10" id="facebook_stories">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onFacebookStories()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="facebookStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -575,7 +615,7 @@
                       </label>
                       <label class="containerCheck" id="instagram_stories">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onInstagramStories()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="instagramStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -587,7 +627,7 @@
                       </label>
                       <label class="containerCheck" id="messenger_stories">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onMessengerStories()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="messengerStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!messengerStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -599,12 +639,12 @@
                       </label>
                     </div>
                     <div class="col-lg-6">
-                      <label class="text-primary font-weight-bold">
+                      <label class="text-secondary ">
                         <u>In-stream</u>
                         <small>(Quickly capture people's attention while they're watching videos)</small></label>
                       <label class="containerCheck m-t-10" id="facebook_instream">
                         <input type="checkbox" (click)="onFacebookInStreamVideos()">
-                        <span class="bg-primary border-primary">
+                        <span class="bg-secondary border-secondary">
                           <i *ngIf="facebookInStreamVideos" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookInStreamVideos" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -612,12 +652,12 @@
                       </label>
                     </div>
                     <div class="col-lg-6">
-                      <label class="text-primary font-weight-bold">
+                      <label class="text-secondary ">
                         <u>Search</u>
                         <small>(Get visibility for your business as people search on Facebook)</small></label>
                       <label class="containerCheck m-t-10" id="facebook_search">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onFacebookSearchResults()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="facebookSearchResults" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookSearchResults" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -629,13 +669,13 @@
                       </label>
                     </div>
                     <div class="col-lg-6">
-                      <label class="text-primary font-weight-bold">
+                      <label class="text-secondary ">
                         <u>Messages</u>
                         <small>(Send offers or updates to people who are already connected to your
                           business)</small></label>
                       <label class="containerCheck m-t-10" id="messenger_messages">
                         <input type="checkbox" (click)="onMessengerSponsoredMessages()">
-                        <span class="bg-primary border-primary">
+                        <span class="bg-secondary border-secondary">
                           <i *ngIf="messengerSponsoredMessages" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!messengerSponsoredMessages" class="fa fa-check"
@@ -645,12 +685,12 @@
                       </label>
                     </div>
                     <div class="col-lg-6">
-                      <label class="text-primary font-weight-bold">
+                      <label class="text-secondary ">
                         <u>In-Article</u>
                         <small>(Engage with people who are reading content from publishers)</small></label>
                       <label class="containerCheck m-t-10" id="facebook_articles">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onFacebookInstantArticles()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="facebookInstantArticles" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookInstantArticles" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -662,13 +702,13 @@
                       </label>
                     </div>
                     <div class="col-lg-6">
-                      <label class="text-primary font-weight-bold">
+                      <label class="text-secondary ">
                         <u>Apps and sites</u>
                         <small>(Expand your reach with ads in external apps and websites)</small></label>
                       <label class="containerCheck m-t-10" id="audience_classicgroup">
                         <input *ngIf="mobileMode" type="checkbox"
                           (click)="onAudienceNetworkNativeBannerAndInterstitial()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="audienceNetworkNativeBannerAndInterstitial" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!audienceNetworkNativeBannerAndInterstitial" class="fa fa-check"
@@ -686,7 +726,7 @@
                         data-type="img" data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/RbGZHFNttoD.png"
                         data-original-title="" title="">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onAudienceNetworkRewardedVideos()">
-                        <span *ngIf="mobileMode" class="bg-primary border-primary">
+                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
                           <i *ngIf="audienceNetworkRewardedVideos" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!audienceNetworkRewardedVideos" class="fa fa-check"
@@ -704,7 +744,7 @@
                         data-type="video" data-full="https://business.facebook.com/450d6c6b-93eb-4d0a-aa90-dcde9ee527c9"
                         data-original-title="" title="">
                         <input type="checkbox" (click)="onAudienceNetworkInStreamVideos()">
-                        <span class="bg-primary border-primary">
+                        <span class="bg-secondary border-secondary">
                           <i *ngIf="audienceNetworkInStreamVideos" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!audienceNetworkInStreamVideos" class="fa fa-check"
@@ -719,87 +759,96 @@
             </div>
           </div>
           <div class="col-lg-12 d-flex flex-wrap p-0" style="m-t: 20px" ng-show="!showhidebudget">
-            <div class="col-md-6">
-              <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                <label class="text-primary font-weight-bold">Campaign budget</label>
+            <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+              <label class="mobile-show">Campaign Budget</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 150px;">Campaign Budget</span>
+                </div>
                 <select id="selectBudget1" class="form-control">
-                  <option class="text-primary" value="daily_budget">Daily Budget</option>
-                  <option class="text-primary" value="lifetime_budget">Lifetime Budget</option>
+                  <option class="text-secondary" value="daily_budget">Daily Budget</option>
+                  <option class="text-secondary" value="lifetime_budget">Lifetime Budget</option>
                 </select>
               </div>
             </div>
+
             <div class="col-md-6">
               <div class="form-group form-md-line-input form-md-floating-label no-hint">
                 <label></label>
                 <input type="number" min="0" max="99999" class="form-control" placeholder="20,000">
               </div>
             </div>
-            <div class="col-md-6">
-              <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                <label class="text-primary font-weight-bold">Campaign Bid Strategy</label>
+            <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+              <label class="mobile-show">Campaign Bid Strategy</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text">Campaign Bid Strategy</span>
+                </div>
                 <select id="selectBidStrategy1" class="form-control">
                   <option value=""></option>
-                  <option class="text-primary" value="LOWEST_COST_WITHOUT_CAP">Lowest Cost</option>
-                  <option class="text-primary" value="LOWEST_COST_WITH_BID_CAP">Bid Cap</option>
-                  <option class="text-primary" value="TARGET_COST">Cost Cap</option>
+                  <option class="text-secondary" value="LOWEST_COST_WITHOUT_CAP">Lowest Cost</option>
+                  <option class="text-secondary" value="LOWEST_COST_WITH_BID_CAP">Bid Cap</option>
+                  <option class="text-secondary" value="TARGET_COST">Cost Cap</option>
                 </select>
               </div>
             </div>
-            <div class="clearfix"></div>
-            <div class="col-lg-12">
+            <div class="col-lg-12 m-t-10">
               <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                <label class="text-primary font-weight-bold">Ad Scheduling</label>
-                <div class="radio radio-primary text-primary m-t-10 m-l-30">
+                <label class="text-secondary ">Ad Scheduling</label>
+                <div class="radio radio-secondary text-secondary m-t-10 m-l-30">
                   <input type="radio" id="adscheduling3" ng-model="vm.campaign.pacing" name="adschedulingN"
                     value="standard" class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
-                  <label class="text-primary" for="adscheduling3">Run ads all the time</label>
+                  <label class="text-secondary" for="adscheduling3">Run ads all the time</label>
                 </div>
-                <div class="radio radio-primary text-primary m-t-20 m-l-30">
+                <div class="radio radio-secondary text-secondary m-t-10 m-l-30">
                   <input type="radio" id="adscheduling4" ng-model="vm.campaign.pacing" name="adschedulingN"
                     value="day_parting" class="ng-valid ng-not-empty ng-dirty ng-touched">
-                  <label class="text-primary" for="adscheduling4">Run ads on a schedule</label>
+                  <label class="text-secondary" for="adscheduling4">Run ads on a schedule</label>
                 </div>
               </div>
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-12 m-t-20">
-              <span class="text-primary font-weight-bold">Budget & schedule</span>
+            <div class="col-lg-12 m-t-10">
+              <span class="text-secondary ">Budget & schedule</span>
             </div>
-            <div class="col-lg-12 m-t-20">
-              <label class="text-primary font-family-bold">
-                Optimisation for ad delivery
-                <select class="form-control">
-                  <option class="text-primary" value="IMPRESSIONS">Impressions</option>
-                  <option class="text-primary" value="POST_ENGAGEMENT">Post Engagement</option>
-                  <option class="text-primary" value="CLICKS">Daily unique reach</option>
-                  <option class="text-primary" value="REACH">Reach</option>
-                  <option class="text-primary" value="CLICKS">Ad Recall Lift</option>
-                  <option class="text-primary" value="CLICKS">Landing Page Views</option>
-                  <option class="text-primary" value="CLICKS">Link Clicks</option>
-                  <option class="text-primary" value="CLICKS">App Events</option>
-                  <option class="text-primary" value="CLICKS">App Installs</option>
-                  <option class="text-primary" value="CLICKS">ThruPlay</option>
-                  <option class="text-primary" value="CLICKS">2-Second Continuous Video Views</option>
-                  <option class="text-primary" value="CLICKS">Leads</option>
-                  <option class="text-primary" value="CLICKS">Conversations</option>
-                  <option class="text-primary" value="CLICKS">Conversions</option>
-                  <option class="text-primary" value="CLICKS">Conversion Events</option>
+            <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+              <label class="mobile-show">Optimisation for ad delivery</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text">Optimisation for ad delivery</span>
+                </div>
+                <select id="selectBidStrategy1" class="form-control">
+                  <option class="text-secondary" value="IMPRESSIONS">Impressions</option>
+                  <option class="text-secondary" value="POST_ENGAGEMENT">Post Engagement</option>
+                  <option class="text-secondary" value="CLICKS">Daily unique reach</option>
+                  <option class="text-secondary" value="REACH">Reach</option>
+                  <option class="text-secondary" value="CLICKS">Ad Recall Lift</option>
+                  <option class="text-secondary" value="CLICKS">Landing Page Views</option>
+                  <option class="text-secondary" value="CLICKS">Link Clicks</option>
+                  <option class="text-secondary" value="CLICKS">App Events</option>
+                  <option class="text-secondary" value="CLICKS">App Installs</option>
+                  <option class="text-secondary" value="CLICKS">ThruPlay</option>
+                  <option class="text-secondary" value="CLICKS">2-Second Continuous Video Views</option>
+                  <option class="text-secondary" value="CLICKS">Leads</option>
+                  <option class="text-secondary" value="CLICKS">Conversations</option>
+                  <option class="text-secondary" value="CLICKS">Conversions</option>
+                  <option class="text-secondary" value="CLICKS">Conversion Events</option>
                 </select>
-              </label>
+              </div>
             </div>
             <div class="col-lg-12">
               <div class="form-group form-md-line-input form-md-floating-label no-hint">
-                <label class="text-primary font-weight-bold m-t-20">Traffic</label>
-                <div class="radio radio-primary text-primary m-t-20 m-l-20">
-                  <label class="text-primary">
+                <label class="text-secondary  m-t-10">Traffic</label>
+                <div class="radio radio-secondary text-secondary m-t-10 m-l-20">
+                  <label class="text-secondary">
                     <input type="radio" id="automatic" name="placements" value="automatic"
                       (click)="onSetContinuouslyStartingToday()">
                     Run my ad set continuously starting today
                   </label>
                 </div>
-                <div class="col-radio radio-primary text-primary m-t-20 m-l-20">
-                  <label class="text-primary">
+                <div class="col-radio radio-secondary text-secondary m-t-10 m-l-20">
+                  <label class="text-secondary">
                     <input type="radio" id="editPlacement" name="placements" value="editPlacement"
                       (click)="onSetTrafficStartEndDate()">
                     Set a start and end date
@@ -835,75 +884,100 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-12 p-0">
-              <label class="col-md-6 text-primary font-weight-bold">Facebook Page Selection
-                <select id="fb_page" class="form-control ng-pristine ng-valid ng-empty edited ng-touched">
-                  <option value=""></option>
-                </select>
-              </label>
-              <label class="col-md-6 text-primary font-weight-bold">Facebook Page Selection
-                <select id="fb_page" class="form-control ng-pristine ng-valid ng-empty edited ng-touched">
-                  <option value=""></option>
-                </select>
-              </label>
+            <div class="col-lg-12 d-flex flex-wrap p-0">
+              <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+                <label class="mobile-show">Facebook Page Selection</label>
+                <div class="input-group m-t-10">
+                  <div class="input-group-prepend mobile-hide">
+                    <span class="input-group-text">Facebook Page Selection</span>
+                  </div>
+                  <select id="fb_page" class="form-control ng-pristine ng-valid ng-empty edited ng-touched">
+                    <option value=""></option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+                <label class="mobile-show">Instagram Page Selection</label>
+                <div class="input-group m-t-10">
+                  <div class="input-group-prepend mobile-hide">
+                    <span class="input-group-text">Instagram Page Selection</span>
+                  </div>
+                  <select id="fb_page" class="form-control ng-pristine ng-valid ng-empty edited ng-touched">
+                    <option value=""></option>
+                  </select>
+                </div>
+              </div>
             </div>
             <div class="col-lg-12 d-flex flex-wrap p-20">
               <div class="col-lg-12 p-0">
-                <label class="text-primary font-weight-bold p-b-10">Primary Text</label>
+                <label class="text-secondary  p-b-10">secondary Text</label>
                 <textarea rows="15" style="width: 100%"></textarea>
               </div>
               <div class="col-lg-12 p-t-20 p-l-0 d-flex">
                 <div class="col-md-6 p-0 d-flex flex-column">
-                  <div>
-                    <label class="text-primary">Website URL</label>
+                  <!-- <div>
+                    <label class="text-secondary">Website URL</label>
                     <input class="form-control" formControlName="websiteUrl" aria-label="websiteUrl">
+                  </div> -->
+                  <div class="" style="margin: 5px 0;">
+                    <label class="mobile-show">Website URL</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text">Website URL</span>
+                      </div>
+                      <input class="form-control" formControlName="websiteUrl" aria-label="websiteUrl">
+                    </div>
                   </div>
-                  <div class="m-t-10">
-                    <label class="text-primary col-md-6 p-0">Call to Action
-                      <select id="calltoaction" class="form-control" style="width: 100%;">
+                  <div class="m-t-10" style="margin: 5px 0;">
+                    <label class="mobile-show">Call to Action</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text">Call to Action</span>
+                      </div>
+                      <select id="calltoaction" class="form-control">
                         <option value=""></option>
-                        <option class="text-primary" value="LEARN_MORE">Learn more</option>
-                        <option class="text-primary" value="SHOP_NOW">Shop now</option>
-                        <option class="text-primary" value="BOOK_NOW">Book now</option>
-                        <option class="text-primary" value="SIGN_UP">Sign Up</option>
-                        <option class="text-primary" value="DOWNLOAD">Download</option>
-                        <option class="text-primary" value="WATCH_MORE">Watch more</option>
-                        <option class="text-primary" value="LISTEN_NOW">Listen Now</option>
-                        <option class="text-primary" value="INSTALL_APP">Install App</option>
-                        <option class="text-primary" value="USE_APP">Use App</option>
-                        <option class="text-primary" value="APPLY_NOW">Apply Now</option>
-                        <option class="text-primary" value="SELL_NOW">Sell Now</option>
-                        <option class="text-primary" value="DONATE_NOW">Donate Now</option>
-                        <option class="text-primary" value="CONTACT_US">Contact Us</option>
-                        <option class="text-primary" value="SEE_MENU">See Menu</option>
+                        <option class="text-secondary" value="LEARN_MORE">Learn more</option>
+                        <option class="text-secondary" value="SHOP_NOW">Shop now</option>
+                        <option class="text-secondary" value="BOOK_NOW">Book now</option>
+                        <option class="text-secondary" value="SIGN_UP">Sign Up</option>
+                        <option class="text-secondary" value="DOWNLOAD">Download</option>
+                        <option class="text-secondary" value="WATCH_MORE">Watch more</option>
+                        <option class="text-secondary" value="LISTEN_NOW">Listen Now</option>
+                        <option class="text-secondary" value="INSTALL_APP">Install App</option>
+                        <option class="text-secondary" value="USE_APP">Use App</option>
+                        <option class="text-secondary" value="APPLY_NOW">Apply Now</option>
+                        <option class="text-secondary" value="SELL_NOW">Sell Now</option>
+                        <option class="text-secondary" value="DONATE_NOW">Donate Now</option>
+                        <option class="text-secondary" value="CONTACT_US">Contact Us</option>
+                        <option class="text-secondary" value="SEE_MENU">See Menu</option>
                       </select>
-                    </label>
+                    </div>
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <button class="btn-success border-0 p-10 m-t-20">Generate UTM</button>
+                  <button class="btn-primary border-0 p-10 m-t-10">Generate UTM</button>
                 </div>
               </div>
-              <div class="col-md-12 m-t-20 p-0">
+              <div class="col-md-12 m-t-10 p-0">
                 <div class="form-group d-flex flex-column">
-                  <label class="text-primary font-weight-bold">Format</label>
-                  <label for="toggle_cta1" class="toggle_btn text-primary p-t-10">
+                  <label class="text-secondary ">Format</label>
+                  <label for="toggle_cta1" class="toggle_btn text-secondary p-t-10">
                     <input id="toggle_cta1" value="standard" name="toggle_cta" type="radio">
                     Standard Link</label>
-                  <label for="toggle_cta2" class="toggle_btn text-primary p-t-20">
+                  <label for="toggle_cta2" class="toggle_btn text-secondary p-t-20">
                     <input id="toggle_cta2" value="instant" name="toggle_cta" type="radio">
                     Facebook Instant Experience
                   </label>
                 </div>
               </div>
-              <div class="col-md-12 m-t-20 p-0">
+              <div class="col-md-12 m-t-10 p-0">
                 <div class="form-group d-flex flex-column">
-                  <label class="text-primary font-weight-bold">Media</label>
-                  <label class="toggle_btn text-primary p-t-20">
+                  <label class="text-secondary ">Media</label>
+                  <label class="toggle_btn text-secondary p-t-20">
                     <input id="toggle_cta3" value="pictures" name="toggle_ctm" type="radio">
                     Pictures
                   </label>
-                  <label class="toggle_btn text-primary p-t-20">
+                  <label class="toggle_btn text-secondary p-t-20">
                     <input id="toggle_cta4" value="videoSlideshare" name="toggle_ctm" type="radio">
                     Video/Slideshare
                   </label>
@@ -913,15 +987,17 @@
                 <div id="mediaupload">
                   <div class="row d-flex flex-start">
                     <div class="imgUp d-flex flex-wrap flex-start col-lg-12">
-                      <div *ngFor="let image of imageArr" class="col-sm-2 p-t-10" style="overflow-x: hidden;">
+                      <div *ngFor="let image of imageArr" class="col-lg-2 col-md-4 col-sm-12 p-t-10"
+                        style="overflow-x: hidden; min-width: 250px;">
                         <!-- <div class="mediaPreview d-flex justify-content-center"> -->
-                          <div class="mediaPreview" [ngStyle]="{ 'background-image': 'url(' + image.path + ')'}">
+                        <div class="mediaPreview" [ngStyle]="{ 'background-image': 'url(' + image.path + ')'}">
                           <!-- <img [src]="image.path" style="object-fit: none;"> -->
                         </div>
-                        <label class="btn btn-primary" style="width:100%;">
-                            Upload from Local Drive
-                            <input #file type="file" accept='image/*' class="uploadFile img" value="Upload Media"
-                          style="width: 0px;height: 0px;overflow: hidden;" (change)="uploadImage(file.files, image.id)">
+                        <label class="btn btn-secondary" style="width:100%;">
+                          Upload from Local Drive
+                          <input #file type="file" accept='image/*' class="uploadFile img" value="Upload Media"
+                            style="width: 0px;height: 0px;overflow: hidden;"
+                            (change)="uploadImage(file.files, image.id)">
                         </label>
                       </div><!-- col-2 -->
                       <i class="fa fa-plus imgAdd border-3 round-5" (click)="onAddImage()"></i>
@@ -929,21 +1005,30 @@
                   </div><!-- row -->
                 </div><!-- container -->
               </div>
-              <div class="col-lg-12 m-t-20">
-                <label class="text-primary col-lg-4 col-md-6">Select Image for Ad
+              <div class="col-lg-6 col-md-12 m-t-10" style="margin: 5px 0;">
+                <label class="mobile-show">Select Image for Ad</label>
+                <div class="input-group m-t-10">
+                  <div class="input-group-prepend mobile-hide">
+                    <span class="input-group-text">Select Image for Ad</span>
+                  </div>
                   <select class="form-control" formControlName="websiteUrl">
                     <option></option>
                   </select>
-                </label>
-                <button class="btn-success m-t-10 border-0 p-10">Save Ad</button>
+                </div>
               </div>
-              <div class="col-lg-12 m-t-20 p-0">
-                <label class="text-primary col-lg-4 col-md-6">Select Image for Ad
-                  <select class="form-control" formControlName="websiteUrl">
-                    <option></option>
-                  </select>
-                </label>
-                <button class="btn-success border-0 m-t-10 p-10">Create Lead Generation Form</button>
+              <div class="col-lg-12 d-flex flex-wrap p-0">
+                <div class="col-lg-6 col-md-12 m-t-10" style="margin: 5px 0;">
+                  <label class="mobile-show">Lead From Selection</label>
+                  <div class="input-group m-t-10">
+                    <div class="input-group-prepend mobile-hide">
+                      <span class="input-group-text">Lead From Selection</span>
+                    </div>
+                    <select class="form-control" formControlName="websiteUrl">
+                      <option></option>
+                    </select>
+                  </div>
+                </div>
+                <button class="btn btn-primary border-0 m-t-10">Create Lead Generation Form</button>
               </div>
             </div>
           </div>
@@ -955,9 +1040,9 @@
     <div class="card-footer">
       <div class="card-footer">
         <div class="wrapper d-flex" [formGroup]="formGroup">
-          <button class="btn btn-outline-secondary ml-auto mr-2" (click)="cancel()">Cancel</button>
-          <button class="btn-success disabled p-10 border-0 m-l-5">Preview AD</button>
-          <button class="btn-success disabled p-10 border-0 m-l-5">Create Campaign</button>
+          <button class="btn btn-secondary ml-auto mr-2" (click)="cancel()">Cancel</button>
+          <button class="btn btn-primary disabled p-10 border-0 m-l-5">Preview AD</button>
+          <button class="btn btn-primary disabled p-10 border-0 m-l-5">Create Campaign</button>
         </div>
       </div>
     </div>
