@@ -33,7 +33,7 @@
 	</div>
 </div>
 <!-- new tab modal -->
-<app-ui-modal #newTabModal dialogClass="modal-dialog-centered" [dialogClass]="'new-tab'">
+<app-ui-modal #newTabModal dialogClass="modal-dialog-centered new-tab">
 	<div class="app-modal-header">
 		<h5 class="modal-title">Add Tab</h5>
 		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
@@ -58,7 +58,7 @@
 <app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to close tab?"
 	[buttons]="confirmButtons"></app-confirm-modal>
 
-<app-ui-modal #newStreamModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl new-stream'">
+<app-ui-modal #newStreamModal dialogClass="modal-dialog-centered modal-xl new-stream">
 	<div class="app-modal-header">
 		<h5 class="modal-title">{{modalStreamTitle}}</h5>
 		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"

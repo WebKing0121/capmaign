@@ -16,6 +16,7 @@ import { ViewColumnsComponent } from './view-columns/view-columns.component';
 import { ImportCsvModalComponent } from './import-csv-modal/import-csv-modal.component';
 import { FileFormatOptionComponent } from './import-csv-modal/file-format-option/file-format-option.component';
 import { RecordModalComponent } from './record-modal/record-modal.component';
+import { SendEmailModalComponent } from './send-email-modal/send-email-modal.component';
 
 @NgModule({
   imports: [
@@ -37,6 +38,7 @@ import { RecordModalComponent } from './record-modal/record-modal.component';
     ImportCsvModalComponent,
     FileFormatOptionComponent,
     RecordModalComponent,
+    SendEmailModalComponent,
   ],
   exports: [
     UiModalComponent,
@@ -46,7 +48,8 @@ import { RecordModalComponent } from './record-modal/record-modal.component';
     ViewColumnsComponent,
     ImportCsvModalComponent,
     FileFormatOptionComponent,
-    RecordModalComponent
+    RecordModalComponent,
+    SendEmailModalComponent,
   ]
 })
 export class ModalModule { }

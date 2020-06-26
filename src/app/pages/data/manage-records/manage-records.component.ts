@@ -14,7 +14,7 @@ export class ManageRecordsComponent implements OnInit {
   @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
   @ViewChild('importCSVModal', { static: false }) importCSVModal;
   @ViewChild('dataRecords', { static: false }) dataRecords;
-
+  @ViewChild('sendEmailModal', { static: false }) sendEmailModal;
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
@@ -42,8 +42,9 @@ export class ManageRecordsComponent implements OnInit {
     if (event.type === 'checkbox') {
       this.tableButtons[1].hide = selected.length === 0;
       this.tableButtons[2].hide = selected.length === 0;
-      this.tableButtons[5].hide = selected.length === 0;
-      this.tableButtons[6].hide = selected.length === 0;
+
+      this.tableButtons[5].hide = selected.length !== 1;
+      this.tableButtons[6].hide = selected.length !== 1;
     }
   }
 
@@ -76,7 +77,7 @@ export class ManageRecordsComponent implements OnInit {
   }
 
   onClickSendEmail() {
-
+    this.sendEmailModal.show();
   }
 
   onClickSendSMS() {

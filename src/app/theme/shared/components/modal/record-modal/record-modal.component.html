@@ -1,4 +1,4 @@
-<app-ui-modal #recordModal dialogClass="modal-dialog-centered" [dialogClass]="'modal-xl'">
+<app-ui-modal #recordModal [containerClick]="false" dialogClass="modal-dialog-centered modal-xl">
 	<div class="app-modal-header full-width">
 		<h5 class="modal-title">{{modalTitle}}</h5>
 		<ng-select class="header-select-box" [options]="accountTypeList" [(ngModel)]="recordType"
