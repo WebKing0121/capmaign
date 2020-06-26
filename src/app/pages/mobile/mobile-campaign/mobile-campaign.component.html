@@ -1,6 +1,7 @@
 <div class="card mt-4 mb-5">
   <div class="card-header campaign-header">
-    <h3 class="m-0" *ngIf="campaignMode === 'edit'">Campaign SMS: <strong class="font-weight-bold">{{formGroup.controls.name.value}}</strong></h3>
+    <h3 class="m-0" *ngIf="campaignMode === 'edit'">Campaign SMS: <strong
+        class="font-weight-bold">{{formGroup.controls.name.value}}</strong></h3>
     <h3 class="m-0" *ngIf="campaignMode === 'new'">Create Mobile Campaign</h3>
   </div>
 
@@ -35,8 +36,8 @@
               </div>
               <select class="form-control" formControlName="senderName">
                 <option></option>
-              <option [value]="CampaignFromDisplayType.CampaignToCash">CampaignToCash</option>
-              <option [value]="CampaignFromDisplayType.Palskem">Palskem</option>
+                <option [value]="CampaignFromDisplayType.CampaignToCash">CampaignToCash</option>
+                <option [value]="CampaignFromDisplayType.Palskem">Palskem</option>
               </select>
             </div>
           </div>
@@ -45,7 +46,8 @@
     </div>
 
     <div class="email-campaign-preview mt-5">
-      <div class="preview-toolbar mb-1 d-flex flex-wrap align-items-center col-lg-12 p-0" style="justify-content: space-between;">
+      <div class="preview-toolbar mb-1 d-flex flex-wrap align-items-center col-lg-12 p-0"
+        style="justify-content: space-between;">
         <div class="d-flex p-0 m-t-10">
           <div class="btn-group mr-2 dropdown" ngbDropdown placement="bottom-left" *ngIf="campaignMode==='edit'">
             <button class="btn btn-primary" ngbDropdownToggle type="button">Send Mail</button>
@@ -54,12 +56,15 @@
               <a class="dropdown-item" href="javascript:">Test Send</a>
             </div>
           </div>
-          <app-personalization-selector class="d-block mr-2" [editor]="mobileCampaignEditor"></app-personalization-selector>
+          <app-personalization-selector class="d-block mr-2" [editor]="mobileCampaignEditor">
+          </app-personalization-selector>
         </div>
         <div class="d-flex p-0 m-t-10">
-          <button class="btn btn-primary ml-auto m-r-10" appEmailCampaignDynamics [editor]="mobileCampaignEditor">Dynamics</button>
+          <button class="btn btn-primary ml-auto m-r-10" appEmailCampaignDynamics
+            [editor]="mobileCampaignEditor">Dynamics</button>
           <button class="btn btn-primary ml-2 mr-2" *ngIf="campaignMode === 'edit'">Edit</button>
-          <button class="btn btn-primary ml-10" [class.ml-auto]="campaignMode === 'new'" appEmailCampaignPreview [editor]="mobileCampaignEditor">Preview</button>
+          <button class="btn btn-primary ml-10" [class.ml-auto]="campaignMode === 'new'" appEmailCampaignPreview
+            [editor]="mobileCampaignEditor">Preview</button>
         </div>
       </div>
 
