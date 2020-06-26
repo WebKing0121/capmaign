@@ -12,32 +12,20 @@
 		<div class="row">
 			<div class="col-md-3 profile-section">
 				<ul>
-					<li>Profile</li>
-					<li class="active">Lead Information</li>
-					<li>Company Information</li>
-					<li>Corporate Address</li>
-					<li>Billing Address</li>
-					<li>Shipping Address</li>
-					<li>Custom Fields</li>
+					<li *ngFor="let field of fields"
+						[ngClass]="{'active': selectedField && field.key===selectedField.key}"
+						(click)="onClickField(field)"
+					>{{field.label}}</li>
 				</ul>
 			</div>
 			<div class="col-md-9 field-section">
 				<div class="record-fields">
-					<div class="row">
-						<div class="col-md-6">
-							<label class="mobile-show">Filter Name</label>
+					<div class="row" *ngIf="selectedField">
+						<div class="col-md-6 mt-3" *ngFor="let itemField of selectedField.fields">
+							<label class="mobile-show">{{itemField.label}}</label>
 							<div class="input-group">
 								<div class="input-group-prepend mobile-hide">
-									<span class="input-group-text">Name</span>
-								</div>
-								<input type="text" class="form-control">
-							</div>
-						</div>
-						<div class="col-md-6">
-							<label class="mobile-show">Description</label>
-							<div class="input-group">
-								<div class="input-group-prepend mobile-hide">
-									<span class="input-group-text">Description</span>
+									<span class="input-group-text" [title]="itemField.label">{{itemField.label}}</span>
 								</div>
 								<input type="text" class="form-control">
 							</div>
