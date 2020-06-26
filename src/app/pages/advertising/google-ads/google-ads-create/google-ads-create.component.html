@@ -19,7 +19,8 @@
             <div class="col-md-6 col-sm-12" style="margin: 5px 0;">
               <label class="mobile-show">Customer Account</label>
               <div class="input-group m-t-10">
-                <div class="input-group-prepend mobile-hide"><span class="input-group-text">Customer Account</span></div>
+                <div class="input-group-prepend mobile-hide"><span class="input-group-text">Customer Account</span>
+                </div>
                 <select class="form-control" formControlName="customerAccount">
                   <option>GadManager</option>
                 </select>
@@ -35,7 +36,8 @@
               </div>
             </div>
             <div class="col-12 col-lg-12">
-              <div class="d-flex justify-content-center align-items-center m-t-10 p-t-10 p-b-10 bg-secondary text-white">
+              <div
+                class="d-flex justify-content-center align-items-center m-t-10 p-t-10 p-b-10 bg-secondary text-white">
                 <span>Choose Campaign Objective</span>
               </div>
             </div>
@@ -74,7 +76,8 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text text-secondary"><i class="fa fa-map-marker"></i></span>
                   </div>
-                  <input class="form-control" fomrControlName="include" placeholder="Search" autocomplete="off" name="include">
+                  <input class="form-control" fomrControlName="include" placeholder="Search" autocomplete="off"
+                    name="include">
                   <div class="input-group-append">
                     <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
@@ -92,7 +95,8 @@
                   <div class="input-group-prepend">
                     <span class="input-group-text text-secondary"><i class="fa fa-map-marker"></i></span>
                   </div>
-                  <input class="form-control" fomrControlName="exclude" placeholder="Search" autocomplete="off" name="exclude">
+                  <input class="form-control" fomrControlName="exclude" placeholder="Search" autocomplete="off"
+                    name="exclude">
                   <div class="input-group-append">
                     <span class="input-group-text text-secondary">
                       <i class="fa fa-search"></i>
@@ -107,7 +111,8 @@
                   Language
                 </label>
                 <div class="input-group m-t-10">
-                  <select class="form-control" fomrControlName="language" placeholder="Search" autocomplete="off" name="language">
+                  <select class="form-control" fomrControlName="language" placeholder="Search" autocomplete="off"
+                    name="language">
                     <option></option>
                   </select>
                 </div>
@@ -124,7 +129,8 @@
                     <div class="input-group-prepend mobile-hide">
                       <span class="input-group-text">Daily Budget</span>
                     </div>
-                    <input type="text" class="form-control" fomrControlName="dailyBudget" autocomplete="off" name="exclude">
+                    <input type="text" class="form-control" fomrControlName="dailyBudget" autocomplete="off"
+                      name="exclude">
                     <div class="input-group-append">
                       <span class="input-group-text text-secondary"><i class="fa fa-usd">$</i></span>
                     </div>
@@ -154,9 +160,8 @@
                     <div class="input-group-prepend mobile-hide">
                       <span class="input-group-text" style="width: 110px;">Start Date</span>
                     </div>
-                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD"
-                    name="dp_to" ngbDatepicker formControlName="startDate" #datePickerStart="ngbDatepicker"
-                    (dateSelect)="onStartSelect($event)">
+                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_to" ngbDatepicker
+                      formControlName="startDate" #datePickerStart="ngbDatepicker" (dateSelect)="onStartSelect($event)">
                     <div class="input-group-append">
                       <span class="input-group-text" (click)="datePickerStart.toggle()">
                         <i class="fa fa-calendar"></i>
@@ -170,14 +175,13 @@
                     <div class="input-group-prepend mobile-hide">
                       <span class="input-group-text" style="width: 110px;">End Date</span>
                     </div>
-                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD"
-                    name="dp_to" ngbDatepicker formControlName="endDate" #datePickerEnd="ngbDatepicker"
-                    (dateSelect) = "onEndSelect($event)">
-                  <div class="input-group-append">
-                    <span class="input-group-text" (click)="datePickerEnd.toggle()">
-                      <i class="fa fa-calendar"></i>
-                    </span>
-                  </div>
+                    <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_to" ngbDatepicker
+                      formControlName="endDate" #datePickerEnd="ngbDatepicker" (dateSelect)="onEndSelect($event)">
+                    <div class="input-group-append">
+                      <span class="input-group-text" (click)="datePickerEnd.toggle()">
+                        <i class="fa fa-calendar"></i>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -315,7 +319,7 @@
               <span class="">Choose Campaign Objective</span>
             </div>
           </div>
-          <div class="col-lg-12" style="margin-top: 20px;">
+          <div class="col-lg-12 p-0" style="margin-top: 20px;">
             <label class="col-md-3">
               <div class="card border border-secondary">
                 <div class="bg-secondary p-15 align-items-center">
@@ -372,8 +376,8 @@
               </div>
               <input type="text" class="form-control" fomrControlName="addGroupName">
             </div>
-          </div> 
-          <div class="col-lg-12 p-0 m-b-20">
+          </div>
+          <div class="col-lg-12 p-0">
             <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
               <label class="mobile-show">Keyworks<span class="text-danger">*</span></label>
               <div class="input-group m-t-10">
