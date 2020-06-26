@@ -112,7 +112,7 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
       data: {
-        selectedIdx: 10
+        message: 'Are you sure you want to delete selected SMS?'
       }
     });
   }

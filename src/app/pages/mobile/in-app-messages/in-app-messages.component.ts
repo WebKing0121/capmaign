@@ -87,7 +87,6 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onCreateClicked() {
-    console.log("dkdkdkdk")
     this.modalService.openModal(InAppMessageComponent, {
       width: '80%',
       data: {
@@ -116,9 +115,9 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
   onDeleteClicked() {
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
-      data: {
-        selectedIdx: 10
-      }
+        data: {
+          message: 'Are you sure you want to delete selected SMS?'
+        }
     });
   }
 }
