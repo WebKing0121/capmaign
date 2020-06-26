@@ -234,7 +234,7 @@ const NavigationItems = [
       },
       {
         id: 'campaign',
-        title: 'Campaign',
+        title: 'Campaigns',
         type: 'item',
         icon: 'feather icon-globe',
         url: '/campaign',
@@ -386,27 +386,28 @@ const NavigationItems = [
         title: 'Advertising',
         type: 'collapse',
         icon: 'feather icon-map',
+        url: '/advertising',
         children: [
           {
             id: 'advertising-facebook-ads',
             title: 'Facebook Ads',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/advertising/facebook-ads/new-ads',
+            external: false
           },
           {
             id: 'advertising-google-ads',
             title: 'Google Ads',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/advertising/google-ads/new-ads',
+            external: false
           },
           {
             id: 'advertising-ad-simulator',
             title: 'Ad Simulator',
             type: 'item',
             url: 'javascript:',
-            external: true
+            external: false
           },
         ]
       },

@@ -7,9 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class InAppMessageComponent implements OnInit {
 
+  optionList:['Tesh Header', 'UAT Header', 'UAT1010', 'Test In App', 'Test InApp'];
   step: boolean[];
   constructor() {
-    this.step = [true, false, false, false, false];
+    this.step = [true, false, false, false, false, false];
   }
 
   ngOnInit(): void {

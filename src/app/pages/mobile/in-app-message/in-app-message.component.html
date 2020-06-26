@@ -3,48 +3,144 @@
     <span>IN APP MESSAGES</span>
   </div>
   <div class="card-body">
-    
+
     <div class="row">
       <div class="col-sm-12">
         <div class="tab m-b-20">
-          <span *ngIf="step[0]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(0)">AUDIENCE</span>
-          <span *ngIf="!step[0]" class="btn border border-secondary" style="width: 20%" (click)="openContent(0)">AUDIENCE</span>
-          <span *ngIf="step[1]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(1)">IN APP MESSAGES</span>
-          <span *ngIf="!step[1]" class="btn border border-secondary" style="width: 20%" (click)="openContent(1)">IN APP MESSAGES</span>
-          <span *ngIf="step[2]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(2)">DEVICE LIST</span>
-          <span *ngIf="!step[2]" class="btn border border-secondary" style="width: 20%" (click)="openContent(2)">DEVICE LIST</span>
-          <span *ngIf="step[3]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(3)">SHARE</span>
-          <span *ngIf="!step[3]" class="btn border border-secondary" style="width: 20%" (click)="openContent(3)">SHARE</span>
-          <span *ngIf="step[4]" class="btn btn-primary text-white" style="width: 20%" (click)="openContent(4)">APPROVE</span>
-          <span *ngIf="!step[4]" class="btn border border-secondary" style="width: 20%" (click)="openContent(4)">APPROVE</span>
+          <span *ngIf="step[0]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(0)">AUDIENCE</span>
+          <span *ngIf="!step[0]" class="col-sm-2 btn border border-secondary" (click)="openContent(0)">AUDIENCE</span>
+          <span *ngIf="step[1]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(1)">IN APP MESSAGES</span>
+          <span *ngIf="!step[1]" class="col-sm-2 btn border border-secondary" (click)="openContent(1)">IN APP MESSAGES</span>
+          <span *ngIf="step[2]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(2)">DEVICE LIST</span>
+          <span *ngIf="!step[2]" class="col-sm-2 btn border border-secondary" (click)="openContent(2)">DEVICE LIST</span>
+          <span *ngIf="step[3]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(3)">SCHEDULE</span>
+          <span *ngIf="!step[3]" class="col-sm-2 btn border border-secondary" (click)="openContent(3)">SCHEDULE</span>
+          <span *ngIf="step[4]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(4)">SHARE</span>
+          <span *ngIf="!step[4]" class="col-sm-2 btn border border-secondary" (click)="openContent(4)">SHARE</span>
+          <span *ngIf="step[5]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(5)">APPROVE</span>
+          <span *ngIf="!step[5]" class="col-sm-2 btn border border-secondary" (click)="openContent(5)">APPROVE</span>
         </div>
-        
+
         <!-- Tab content -->
-        <div class="card p-10">
-          <div *ngIf="step[0]" class="tabcontent">
-            <h3>London</h3>
-            <p>London is the capital city of England.</p>
+        <div *ngIf="step[0]" class="card tabcontent">
+          <div class="card-header bg-secondary text-white">
+            <span>Audience Option</span>
           </div>
-          
-          <div *ngIf="step[1]" class="tabcontent">
-            <h3>Paris</h3>
-            <p>Paris is the capital of France.</p>
+          <div class="card-body p-0">
+            <div style="padding: 10px;">
+              <span>Target user by choosing multiple audience to include further refine</span>
+            </div>
+            <div style="border-top:1px solid #F0F0F0; padding: 10px;">
+              <div class="col-lg-12 d-flex p-1" style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+                <span class="col-md-1"><i class="fa fa-plus"></i></span>
+                <span class="col-md-1"><i class="fas fa-users"></i></span>
+                <span class="col-md-2">Select Filter</span>
+                <select class="form-control">
+                  <option value="?" selected="selected"></option>
+                  <option label="Groceries / C" value="number:123">Groceries / C</option>
+                  <option label="Groceries / Sample SMS List" value="number:119">Groceries / Sample SMS List
+                  </option>
+                  <option label="Unsorted / Go Air SMS" value="number:86">Unsorted / Go Air SMS</option>
+                  <option label="Unsorted / SMS Demo" value="number:60">Unsorted / SMS Demo</option>
+                </select>
+              </div>
+            </div>
+            <div style="border-top:1px solid #F0F0F0; padding: 10px;">
+              <div class="col-lg-12 d-flex p-1" style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+                <span class="col-md-1"><i class="fa fa-plus"></i></span>
+                <span class="col-md-1"><i class="fa fa-mobile-alt"></i></span>
+                <span class="col-md-2">Select Mobile App</span>
+                <select class="form-control">
+                  <option selected="selected"></option>
+                  <option value="number:123">C2C</option>
+                  <option value="number:119">C2CNotify</option>
+                  <option value="number:86">Normal</option>
+                  <option value="number:60">Normal3</option>
+                </select>
+              </div>
+            </div>
+            <div style="border-top:1px solid #F0F0F0; padding: 10px;">
+              <div class="col-lg-12 d-flex p-1" style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+                <span class="col-md-1"><i class="fa fa-plus"></i></span>
+                <span class="col-md-1"><i class="far fa-clock"></i></span>
+                <span class="col-md-2">Select Trigger</span>
+                <select class="form-control">
+                  <option value="?" selected="selected">Has Mobile App</option>
+                  <option value="number:123">Has Mobile App Session</option>
+                  <option value="number:119">Push Notification was not send</option>
+                  <option value="number:86">Push Notification was not tapped</option>
+                  <option value="number:60">Mobile App was opened</option>
+                </select>
+              </div>
+            </div>
           </div>
-          
-          <div *ngIf="step[2]" class="tabcontent">
-            <h3>Tokyo</h3>
-            <p>Tokyo is the capital of Japan.</p>
-          </div>
+        </div>
 
-          <div *ngIf="step[3]" class="tabcontent">
-            <h3>Tiger</h3>
-            <p>Tiger is the capital of Japan.</p>
+        <div *ngIf="step[1]" class="card tabcontent">
+          <div class="card-header bg-secondary text-white">
+            <span>IN APP MESSAGES</span>
           </div>
+          <div class="card-body p-0">
+            <div style="padding: 10px;">
+              <span>Target user by choosing multiple audience to include further refine</span>
+            </div>
+            <div style="border-top:1px solid #F0F0F0; padding: 10px;">
+              <div class="col-lg-12 d-flex p-1" style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+                <span class="col-md-1"><i class="fa fa-plus"></i></span>
+                <span class="col-md-1"><i class="fas fa-users"></i></span>
+                <span class="col-md-2">Add In-App Messages</span>
+                <select class="form-control">
+                  <option value="?" selected="selected"></option>
+                  <option *ngFor="let option of optionList">{{option}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            
+          </div>
+        </div>
 
-          <div *ngIf="step[4]" class="tabcontent">
-            <h3>Viper</h3>
-            <p>Viper is the capital of Japan.</p>
+        <div *ngIf="step[2]" class="card tabcontent">
+          <div class="card-header bg-secondary text-white">
+            <span>App Device Lists</span>
           </div>
+          <div class="card-body p-0">
+            <div style="padding: 10px;">
+              <span>Target user by choosing multiple audience to include further refine</span>
+            </div>
+            <div class="col-lg-12 bg-secondary text-white p-10">
+              <span>Application Name :</span>
+            </div>
+            <div class="col-lg-12 d-flex m-b-100">
+              <div class="col-md-6">Device ID</div>
+              <div class="col-md-6">Status</div>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="step[3]" class="card tabcontent">
+          <div class="card-header bg-secondary text-white">
+            <span>Schedule</span>
+          </div>
+          <div class="card-body p-0">
+            <div class="p-10">
+              <span>Target user by choosing multiple audience to include further refine</span>
+            </div>
+            <div class="col-lg-12 bg-secondary text-white p-10">
+              <span>Schedule</span>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="step[4]" class="card tabcontent">
+          <div class="card-header"></div>
+          <div class="card-body"></div>
+        </div>
+
+        <div *ngIf="step[5]" class="card tabcontent">
+          <div class="card-header"></div>
+          <div class="card-body"></div>
         </div>
       </div>
     </div>
