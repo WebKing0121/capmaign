@@ -9,53 +9,77 @@
           <section class="col-sm-12">
             <h3>Campaign Information</h3>
             <form [formGroup]="formGroup">
-              <div class="row">
-                <div class="col-12 col-lg-6 form-group">
-                  <label>Email Campaign <span class="required-mark-after"></span></label>
-                  <select class="form-control" formControlName="name" [value]="this.formGroup.controls.name"
+              <div class="row m-t-10">
+                <div class="col-md-6 col-sm-12">
+                  <label class="mobile-show">Email Campaign<span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <div class="input-group-prepend mobile-hide"><span class="input-group-text">Email Campaign</span></div>
+                    <select class="form-control" formControlName="name" [value]="this.formGroup.controls.name"
                     (change)="onEmailCampaignTypeChange($event.target.value)">
                     <option *ngFor="let emailCampaign of emailCampaignType" [value]="emailCampaign">{{emailCampaign}}
                     </option>
                   </select>
+                  </div>
                 </div>
-                <div class="col-12 col-lg-6 form-group">
-                  <label>Subject Line <span class="required-mark-after"></span></label>
-                  <input class="form-control" formControlName="subject" disabled>
+                <div class="col-md-6 col-sm-12">
+                  <label class="mobile-show">Subject Line<span class="text-danger">*</span></label>
+                  <div class="input-group">
+                    <div class="input-group-prepend mobile-hide"><span class="input-group-text">Subject Line</span></div>
+                    <input class="form-control" formControlName="subject" disabled>
+                  </div>
                 </div>
-                <div class="col-12 col-lg-6 form-group">
-                  <label>From Address</label>
-                  <input class="form-control" disabled formControlName="fromAddress">
+                <div class="col-md-6 col-sm-12">
+                  <label class="mobile-show">From Address</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend mobile-hide"><span class="input-group-text">From Address</span></div>
+                    <input class="form-control" formControlName="fromAddress" disabled>
+                  </div>
                 </div>
-                <div class="col-12 col-lg-6 form-group">
-                  <label>Reply Address</label>
-                  <input class="form-control" disabled formControlName="replyAddress">
+                <div class="col-md-6 col-sm-12">
+                  <label class="mobile-show">Reply Address</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend mobile-hide"><span class="input-group-text">Reply Address</span></div>
+                    <input class="form-control" disabled formControlName="replyAddress">
+                  </div>
                 </div>
-                <div class="col-12 col-lg-6 form-group">
-                  <label>From Name</label>
-                  <input class="form-control" disabled formControlName="fromName">
+                <div class="col-md-6 col-sm-12">
+                  <label class="mobile-show">From Name</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend mobile-hide"><span class="input-group-text">From Name</span></div>
+                    <input class="form-control" disabled formControlName="fromName">
+                  </div>
                 </div>
-                <div class="col-12 col-lg-6 form-group">
-                  <label>Send as</label>
-                  <select [(ngModel)]="sendAsOption" class="form-control" formControlName="sendAs">
-                    <option [value]="CampaignSendAsType.Commercial" selected>Commercial</option>
-                    <option [value]="CampaignSendAsType.Transactional">Transactional</option>
-                  </select>
+                <div class="col-md-6 col-sm-12">
+                  <label class="mobile-show">Send as</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend mobile-hide"><span class="input-group-text">Send as</span></div>
+                    <select [(ngModel)]="sendAsOption" class="form-control" formControlName="sendAs">
+                      <option [value]="CampaignSendAsType.Commercial" selected>Commercial</option>
+                      <option [value]="CampaignSendAsType.Transactional">Transactional</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="col-12 col-lg-6 form-group">
-                  <label>Lead Scoring</label>
-                  <select class="form-control" formControlName="leadScoring">
-                    <option>WebAnalytics</option>
-                    <option>Social</option>
-                    <option>Web</option>
-                  </select>
+                <div class="col-md-6 col-sm-12">
+                  <label class="mobile-show">Lead Scoring</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend mobile-hide"><span class="input-group-text">Lead Scoring</span></div>
+                    <select class="form-control" formControlName="leadScoring">
+                      <option>WebAnalytics</option>
+                      <option>Social</option>
+                      <option>Web</option>
+                    </select>
+                  </div>
                 </div>
-                <div class="col-12 col-lg-6 form-group">
-                  <label>Lead Grading</label>
-                  <select [(ngModel)]="leadGradingOption" class="form-control" formControlName="leadGrading">
-                    <option [value]="CampaignLeadGradingType.DefaultGrading">Default Grading</option>
-                    <option [value]="CampaignLeadGradingType.LeadGradingProfile">Lead grading profile</option>
-                    <option [value]="CampaignLeadGradingType.RecordsGrading">Records Grading</option>
-                  </select>
+                <div class="col-md-6 col-sm-12">
+                  <label class="mobile-show">Lead Grading</label>
+                  <div class="input-group">
+                    <div class="input-group-prepend mobile-hide"><span class="input-group-text">Lead Grading</span></div>
+                    <select [(ngModel)]="leadGradingOption" class="form-control" formControlName="leadGrading">
+                      <option [value]="CampaignLeadGradingType.DefaultGrading">Default Grading</option>
+                      <option [value]="CampaignLeadGradingType.LeadGradingProfile">Lead grading profile</option>
+                      <option [value]="CampaignLeadGradingType.RecordsGrading">Records Grading</option>
+                    </select>
+                  </div>
                 </div>
               </div>
             </form>
