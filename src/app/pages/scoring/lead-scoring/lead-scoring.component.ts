@@ -26,7 +26,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   tableSource: DataTableSource<Scoring> = new DataTableSource<Scoring>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.createLeadScoring(), },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true }
     // { label: 'Run Profile', icon: 'far fa-gear', click: () => this.clickTemplate() },
   ];
 
@@ -108,11 +108,12 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onActive(event) {
+    let message = '';
+    const scoring = event.row as Scoring;
     // TODO: Simplify later
     if (event.type === 'click') {
       switch (event.cellIndex) {
         case 1:
-          const scoring = event.row as Scoring;
           this.modalService.openModal(CreateLeadScoringComponent, {
             width: '80%',
             data: {
@@ -122,10 +123,24 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           break;
         case 3:
+          message = 'Are You Sure You want to make this profile as default for new record?';
+          this.openSetDefaultConfirmModal(message);
+          break;
         case 4:
+          message = 'Are You Sure You want to make this profile as default for campaign';
+          this.openSetDefaultConfirmModal(message);
+          break;
         case 5:
+          message = 'Are You Sure You want to make this profile as lead scoring profile for website?';
+          this.openSetDefaultConfirmModal(message);
+          break;
         case 6:
-          this.openSetDefaultConfirmModal(event);
+          if (scoring.isActive) {
+            message = 'Are you sure you want to deactivate this Lead Scoring Profile?';
+          } else {
+            message = 'Are you sure you want to activate this Lead Scoring Profile?';
+          }
+          this.openSetDefaultConfirmModal(message);
           break;
       }
     }
@@ -135,12 +150,11 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  openSetDefaultConfirmModal(event) {
+  openSetDefaultConfirmModal(message: string) {
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
       data: {
-        scoring: event.row,
-        selectedIdx: event.cellIndex
+        message: message
       }
     });
   }
@@ -149,11 +163,11 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     e.preventDefault();
   }
 
-  onClickDelete() {
+  onDeleteClicked() {
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
       data: {
-        selectedIdx: 10
+        message: 'Are you sure you want to delete selected Lead Scoring/s?'
       }
     });
   }

@@ -1,0 +1,25 @@
+:host {
+  .input-group {
+    margin: 5px 0;
+  }
+
+  .mobile-show {
+    display: none;
+
+    @media only screen and (max-width: 767px) {
+      display: inherit;
+    }
+  }
+
+  .mobile-hide {
+    display: inherit;
+    
+    .input-group-text {
+      width: 135px;
+    }
+
+    @media only screen and (max-width: 767px) {
+      display: none;
+    }
+  }
+}

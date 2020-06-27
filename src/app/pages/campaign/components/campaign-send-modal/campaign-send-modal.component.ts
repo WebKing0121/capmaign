@@ -12,6 +12,8 @@ import { CampaignLeadGradingType } from '@app-core/enums/campaign-type.enum';
 
 import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { WizardComponent } from 'angular-archwizard';
+import { ModalService } from '@app-components/modal/modal.service';
+import { ScoringConfirmDefaultModalComponent } from 'src/app/pages/scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 interface ComponentProps {
   campaign: Campaign;
 }
@@ -70,6 +72,7 @@ export class CampaignSendModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private modalService: ModalService,
     @Inject(ModalRef) private modalRef: ModalRef<CampaignSendModalComponent>,
     @Inject(MODAL_DATA) private props: ComponentProps
   ) { }
@@ -127,7 +130,13 @@ export class CampaignSendModalComponent implements OnInit {
     const nextFlag = this.includeMailableList.find(item => item.checked === true) ||
       this.includeFiltersList.find(item => item.checked === true);
     if (!nextFlag) {
-      alert('Please select at least one list/filter to send/schedule email.');
+      this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+        width: '400px',
+        data: {
+          mode: 'Warning',
+          message: 'Please select at least one list/filter to send/schedule email.'
+        }
+      })
     } else {
       this.checkedIncludeMailableList = this.includeMailableList.filter(item => item.checked);
       this.checkedIncludeMailableList = this.checkedIncludeMailableList.map(item => ({ ...item, disabled: true }));
@@ -157,5 +166,8 @@ export class CampaignSendModalComponent implements OnInit {
 
   onSelect(event): void {
     this.selectedDate = event;
+  }
+
+  onSelectTime(evnt): void {
   }
 }

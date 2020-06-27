@@ -5,8 +5,8 @@ import { CampaignSendModalComponent } from 'src/app/pages/campaign/components/ca
 import { Scoring } from '@app-core/models/scoring';
 
 interface ComponentProps {
-  scoring: Scoring;
-  selectedIdx: number;
+  mode: string;
+  message: string;
 }
 
 @Component({
@@ -15,49 +15,28 @@ interface ComponentProps {
   styleUrls: ['./scoring-confirm-default-modal.component.scss']
 })
 export class ScoringConfirmDefaultModalComponent implements OnInit {
-  alertText: string;
-  hiddenCancelbtn: boolean;
+  message: string;
+  warningMode: boolean;
 
   constructor(
     private fb: FormBuilder,
     @Inject(ModalRef) private modalRef: ModalRef<CampaignSendModalComponent>,
     @Inject(MODAL_DATA) private props: ComponentProps
   ) {
-    this.alertText = '';
-    this.hiddenCancelbtn = false;
+    this.message = '';
+    this.warningMode = false;
   }
 
   ngOnInit(): void {
-    switch (this.props.selectedIdx) {
-      case -1:
-        this.alertText = 'Please add atleast one Profile Rule';
-        this.hiddenCancelbtn = true;
-        break;
-      case 10:
-        this.alertText = 'Are you sure you want to delete this record/s?';
-        break;
-      case 3:
-        this.alertText = 'Are you sure you want to make this profile as default for new record?';
-        break;
-      case 4:
-        this.alertText = 'Are you sure you want to make this profile as default for campaign?';
-        break;
-      case 5:
-        this.alertText = 'Are you sure you want to make this profile as lead scoring profile for website?';
-        break;
-      case 6:
-        this.alertText = this.props.scoring.isActive
-          ? 'Are you sure you want to deactivate this Lead Scoring Profile?'
-          : 'Are you sure you want to activate this Lead Scoring Profile?';
-        break;
-    }
+    this.message = this.props.message;
+    this.warningMode = this.props.mode ? true : false;
   }
 
-  onCancel() {
+  onCancelClicked() {
     this.modalRef.cancel();
   }
 
-  onYes() {
+  onYesClicked() {
     this.modalRef.cancel();
   }
 }

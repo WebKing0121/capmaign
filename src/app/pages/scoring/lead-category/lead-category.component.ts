@@ -24,7 +24,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   tableSource: DataTableSource<LeadCategory> = new DataTableSource<LeadCategory>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true }
   ];
 
   constructor(
@@ -94,17 +94,13 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  onClickDelete() {
+  onDeleteClicked() {
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
       data: {
-        selectedIdx: 10
+        message: 'Are you sure you want to delete selected Lead Category/s?'
       }
     });
-  }
-
-  onClickConfirmDelete() {
-    this.confirmModal.hide();
   }
 
   onActive(event) {

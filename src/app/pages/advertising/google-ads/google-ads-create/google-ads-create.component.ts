@@ -144,9 +144,9 @@ export class GoogleAdsCreateComponent implements OnInit {
   onCreateAds(headline1, headline2, description) {
     this.googleAdsArr = [...this.googleAdsArr, {
       id: this.googleAdsArr.length,
-      headline1: '{headline1}',
-      headline2: '{headline2}',
-      description: '{description}'
+      headline1: headline1,
+      headline2: headline2,
+      description: description
     }];
   }
 
