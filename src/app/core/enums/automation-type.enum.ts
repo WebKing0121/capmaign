@@ -5,3 +5,8 @@ export enum AutomationType {
   GoogleAds = 'google-ads',
   Facebook = 'facebook'
 }
+
+export enum AutomationModalType {
+  New = 'new',
+  Edit = 'edit'
+}

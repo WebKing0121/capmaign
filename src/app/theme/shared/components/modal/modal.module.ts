@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { ArchwizardModule } from 'angular-archwizard';
 import { PortalModule } from '@angular/cdk/portal';
 import { FileUploadModule } from '@iplab/ngx-file-upload';
 import { SelectModule } from 'ng-select';
+import { GojsAngularModule } from 'gojs-angular';
 
 import { UiModalComponent } from './ui-modal/ui-modal.component';
 import { AnimationModalComponent } from './animation-modal/animation-modal.component';
@@ -17,16 +18,19 @@ import { ImportCsvModalComponent } from './import-csv-modal/import-csv-modal.com
 import { FileFormatOptionComponent } from './import-csv-modal/file-format-option/file-format-option.component';
 import { RecordModalComponent } from './record-modal/record-modal.component';
 import { SendEmailModalComponent } from './send-email-modal/send-email-modal.component';
+import { AutomationModalComponent } from './automation-modal/automation-modal.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     PortalModule,
     DatatableModule,
     ArchwizardModule,
     FileUploadModule,
-    SelectModule
+    SelectModule,
+    GojsAngularModule
   ],
   declarations: [
     UiModalComponent,
@@ -39,6 +43,7 @@ import { SendEmailModalComponent } from './send-email-modal/send-email-modal.com
     FileFormatOptionComponent,
     RecordModalComponent,
     SendEmailModalComponent,
+    AutomationModalComponent,
   ],
   exports: [
     UiModalComponent,
@@ -50,6 +55,7 @@ import { SendEmailModalComponent } from './send-email-modal/send-email-modal.com
     FileFormatOptionComponent,
     RecordModalComponent,
     SendEmailModalComponent,
+    AutomationModalComponent
   ]
 })
 export class ModalModule { }

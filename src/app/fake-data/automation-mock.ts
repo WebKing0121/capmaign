@@ -1,5 +1,3 @@
-import {Automation} from '@app-models/automation';
-
 export const AutomationsMockData = {
   result: {
     totalCount: 27,

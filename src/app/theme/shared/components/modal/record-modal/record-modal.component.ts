@@ -39,7 +39,7 @@ export class RecordModalComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService
   ) {
-    this.type = this.type = RecordModalType.New;
+    this.type = RecordModalType.New;
     this.accountTypeList = [];
     this.tabs.map(x => {
       if (x.key !== 'all') {

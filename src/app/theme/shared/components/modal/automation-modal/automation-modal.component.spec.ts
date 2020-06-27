@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GoDiagramComponent } from './go-diagram.component';
+import { AutomationModalComponent } from './automation-modal.component';
 
-describe('GoDiagramComponent', () => {
-  let component: GoDiagramComponent;
-  let fixture: ComponentFixture<GoDiagramComponent>;
+describe('AutomationModalComponent', () => {
+  let component: AutomationModalComponent;
+  let fixture: ComponentFixture<AutomationModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GoDiagramComponent ]
+      declarations: [ AutomationModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GoDiagramComponent);
+    fixture = TestBed.createComponent(AutomationModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
