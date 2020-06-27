@@ -213,7 +213,7 @@
                 <label class="mobile-show">Campaign budget</label>
                 <div class="input-group m-t-10">
                   <div class="input-group-prepend mobile-hide">
-                    <span class="input-group-text" style="width: 150px;">Campaign budget</span>
+                    <span class="input-group-text" style="width: 180px;">Campaign budget</span>
                   </div>
                   <select id="selectBudget" class="form-control">
                     <option value=""></option>
@@ -234,7 +234,7 @@
                 <label class="mobile-show">Campaign Bid Strategy</label>
                 <div class="input-group m-t-10">
                   <div class="input-group-prepend mobile-hide">
-                    <span class="input-group-text" style="width: 150px;">Campaign Bid Strategy</span>
+                    <span class="input-group-text" style="width: 180px;">Campaign Bid Strategy</span>
                   </div>
                   <select id="selectBidStrategy" ng-model="vm.campaign.bidstrategy" class="form-control">
                     <option value=""></option>
@@ -247,13 +247,17 @@
               <div class="col-lg-12">
                 <div class="form-group form-md-line-input form-md-floating-label no-hint">
                   <label class="text-secondary ">Ad Scheduling</label>
-                  <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
-                    <input type="radio" id="adscheduling1" name="adscheduling" value="allthetime">
-                    <label class="text-secondary" for="adscheduling1">Run ads all the time</label>
+                  <div class="radio radio-secondary m-t-10 m-l-20">
+                    <label class="text-secondary" for="adscheduling1">
+                      <input type="radio" id="adscheduling1" name="adscheduling" value="allthetime">
+                      Run ads all the time
+                    </label>
                   </div>
-                  <div class="radio radio-secondary text-secondary  m-t-10 m-l-20">
-                    <input type="radio" id="adscheduling2" name="adscheduling" value="onschedule">
-                    <label class="text-secondary" for="adscheduling2">Run ads on a schedule</label>
+                  <div class="radio radio-secondary m-t-10 m-l-20">
+                    <label class="text-secondary" for="adscheduling2">
+                      <input type="radio" id="adscheduling2" name="adscheduling" value="onschedule">
+                      Run ads on a schedule
+                    </label>
                   </div>
                 </div>
               </div>
@@ -796,14 +800,18 @@
               <div class="form-group form-md-line-input form-md-floating-label no-hint">
                 <label class="text-secondary ">Ad Scheduling</label>
                 <div class="radio radio-secondary text-secondary m-t-10 m-l-30">
-                  <input type="radio" id="adscheduling3" ng-model="vm.campaign.pacing" name="adschedulingN"
+                  <label class="text-secondary" for="adscheduling3">
+                    <input type="radio" id="adscheduling3" ng-model="vm.campaign.pacing" name="adschedulingN"
                     value="standard" class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
-                  <label class="text-secondary" for="adscheduling3">Run ads all the time</label>
+                    Run ads all the time
+                  </label>
                 </div>
                 <div class="radio radio-secondary text-secondary m-t-10 m-l-30">
-                  <input type="radio" id="adscheduling4" ng-model="vm.campaign.pacing" name="adschedulingN"
+                  <label class="text-secondary" for="adscheduling4">
+                    <input type="radio" id="adscheduling4" ng-model="vm.campaign.pacing" name="adschedulingN"
                     value="day_parting" class="ng-valid ng-not-empty ng-dirty ng-touched">
-                  <label class="text-secondary" for="adscheduling4">Run ads on a schedule</label>
+                    Run ads on a schedule
+                  </label>
                 </div>
               </div>
             </div>
@@ -919,7 +927,7 @@
                     <label class="text-secondary">Website URL</label>
                     <input class="form-control" formControlName="websiteUrl" aria-label="websiteUrl">
                   </div> -->
-                  <div class="" style="margin: 5px 0;">
+                  <div class="">
                     <label class="mobile-show">Website URL</label>
                     <div class="input-group m-t-10">
                       <div class="input-group-prepend mobile-hide">
@@ -928,7 +936,7 @@
                       <input class="form-control" formControlName="websiteUrl" aria-label="websiteUrl">
                     </div>
                   </div>
-                  <div class="m-t-10" style="margin: 5px 0;">
+                  <div class="m-t-10">
                     <label class="mobile-show">Call to Action</label>
                     <div class="input-group m-t-10">
                       <div class="input-group-prepend mobile-hide">
@@ -955,7 +963,7 @@
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <button class="btn-primary border-0 p-10 m-t-10">Generate UTM</button>
+                  <span class="btn btn-primary border-0 p-10 m-t-10">Generate UTM</span>
                 </div>
               </div>
               <div class="col-md-12 m-t-10 p-0">
@@ -1017,7 +1025,7 @@
                 </div>
               </div>
               <div class="col-lg-12 d-flex flex-wrap p-0">
-                <div class="col-lg-6 col-md-12 m-t-10" style="margin: 5px 0;">
+                <div class="col-lg-6 col-md-12 m-t-10">
                   <label class="mobile-show">Lead From Selection</label>
                   <div class="input-group m-t-10">
                     <div class="input-group-prepend mobile-hide">
@@ -1028,7 +1036,7 @@
                     </select>
                   </div>
                 </div>
-                <button class="btn btn-primary border-0 m-t-10">Create Lead Generation Form</button>
+                <span class="btn btn-primary border-0 m-t-20">Create Lead Generation Form</span>
               </div>
             </div>
           </div>
