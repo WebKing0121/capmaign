@@ -8,6 +8,10 @@ import { Automation } from '@app-models/automation';
 import { Subject } from 'rxjs';
 import { AutomationService } from '@app-services/automation.service';
 import { takeUntil } from 'rxjs/operators';
+import {
+  EmailPallete, SmsPallete, TriggerPallete, PreEventPallete,
+  DuringEventPallete, PostEventPallete
+} from '@app-core/enums/gojs-pallete.enum';
 
 @Component({
   selector: 'app-automation-modal',
@@ -38,6 +42,7 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
   private unsubscribe$ = new Subject();
   automationFromDB: any;
   linkJson: any;
+  automationPallete: any[];
 
   automationTypeList: NgSelectData[] = [
     { value: 'email', label: 'Email' },
@@ -118,10 +123,10 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
         return;
       }
 
-      const key = node.data.key;
+      // const key = node.data.key;
       diagram.remove(node);
+
       diagram.commandHandler.deleteSelection();
-      diagram.automationevents = diagram.automationevents.filter(x => x.key !== key);
     };
 
     const startTemplate =
@@ -144,7 +149,7 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
             { font: 'bold 11pt Helvetica, Arial, sans-serif', stroke: 'whitesmoke' },
             new go.Binding('text'))
         ),
-        makePort('T', go.Spot.Top, true, false, 1)
+        makePort('T', go.Spot.Top, false, true, 10)
       );
     const defaultTemplate = $(go.Node, 'Spot',
       defaultNodeStyle(),
@@ -226,7 +231,7 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
         relinkableTo: true,
         resegmentable: true,
       },
-      new go.Binding('points').makeTwoWay(),
+      // new go.Binding('points').makeTwoWay(),
       $(go.Shape),
       $(go.Shape, { toArrow: 'Standard' })
     );
@@ -246,19 +251,91 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
     const $ = go.GraphObject.make;
     const palette = $(go.Palette);
 
-    // define the Node template
-    palette.nodeTemplate =
-      $(go.Node, 'Auto',
-        $(go.Shape, 'RoundedRectangle',
-          {
-            stroke: null
-          },
-          new go.Binding('fill', 'color')
-        ),
-        $(go.TextBlock, { margin: 8 },
-          new go.Binding('text', 'key'))
-      );
+    const makePort = (name, spot, output, input) => {
+      return $(go.Shape, 'Circle',
+        {
+          fill: 'transparent',
+          stroke: null, // this is changed to 'white' in the showPorts function
+          desiredSize: new go.Size(8, 8),
+          alignment: spot,
+          alignmentFocus: spot, // align the port on the main Shape
+          portId: name, // declare this object to be a 'port'
+          fromSpot: spot,
+          toSpot: spot, // declare where links may connect at this port
+          fromLinkable: output,
+          toLinkable: input, // declare whether the user may draw links to/from here
+          cursor: 'pointer' // show a different cursor to indicate potential link point
+        });
 
+    };
+
+    const showPorts = (node, show) => {
+      const { diagram } = node;
+      if (!diagram || diagram.isReadOnly || !diagram.allowLink) {
+        return;
+      }
+      node.ports.each(port => {
+        port.stroke = (show ? '#36c6d3' : null);
+      });
+    };
+
+    const defaultNodeStyle = () => {
+      return [
+        new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
+        {
+          locationSpot: go.Spot.Center,
+          mouseEnter: (e, obj) => { showPorts(obj.part, true); },
+          mouseLeave: (e, obj) => { showPorts(obj.part, false); },
+        }
+      ];
+    };
+
+    const defaultTemplate = $(go.Node, 'Spot',
+      defaultNodeStyle(),
+      $(go.Panel, 'Auto',
+        $(go.Picture,
+          { width: 95, height: 95, },
+          new go.Binding('source')
+        )
+      ),
+      makePort('T', go.Spot.Top, false, true),
+      makePort('L', go.Spot.Left, true, true),
+      makePort('R', go.Spot.Right, true, true),
+      makePort('B', go.Spot.Bottom, true, false)
+    );
+
+    const startTemplate = $(go.Node, 'Spot',
+      defaultNodeStyle(),
+      $(go.Panel, 'Auto',
+        $(go.Shape, 'Rectangle',
+          { minSize: new go.Size(60, 50), fill: '#229954', stroke: null }),
+        $(go.TextBlock, 'Start',
+          { font: 'bold 11pt Helvetica, Arial, sans-serif', stroke: 'whitesmoke' },
+          new go.Binding('text'))
+      ),
+      makePort('L', go.Spot.Left, true, false),
+      makePort('R', go.Spot.Right, true, false),
+      makePort('B', go.Spot.Bottom, true, false)
+    );
+    const endTemplate = $(go.Node, 'Spot',
+      defaultNodeStyle(),
+      $(go.Panel, 'Auto',
+        $(go.Shape, 'Rectangle',
+          { minSize: new go.Size(60, 50), fill: '#229954', stroke: null }),
+        $(go.TextBlock, 'Start',
+          { font: 'bold 11pt Helvetica, Arial, sans-serif', stroke: 'whitesmoke' },
+          new go.Binding('text'))
+      ),
+      makePort('L', go.Spot.Left, true, false),
+      makePort('R', go.Spot.Right, true, false),
+      makePort('B', go.Spot.Bottom, true, false)
+    );
+    const templmap = new go.Map<string, go.Node>(); // In TypeScript you could write: new go.Map<string, go.Node>();
+    // for each of the node categories, specify which template to use
+    templmap.add('', defaultTemplate);
+    templmap.add('Start', startTemplate);
+    templmap.add('End', endTemplate);
+    palette.nodeTemplateMap = templmap;
     palette.model = $(go.GraphLinksModel,
       {
         linkKeyProperty: 'key'  // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
@@ -288,7 +365,7 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnInit() {
-
+    this.onChangeType();
   }
 
   public ngAfterViewInit() {
@@ -322,13 +399,25 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
 
   }
 
+  onChangeType() {
+    this.automationForm.get('type').valueChanges
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(val => {
+        console.log(val);
+        this.setPalleteData(val);
+        this.updatePallete();
+      });
+  }
+
   edit() {
+    const automationType = this.getAutomationTypeKey(this.automation);
     this.automationForm.setValue({
       id: this.automation.id,
-      type: this.getAutomationTypeKey(this.automation),
+      type: automationType,
       name: this.automation.name,
       description: this.automation.description,
     });
+
     this.automationModal.show();
     this.automationService.getAutomation(this.automation.id)
       .pipe(takeUntil(this.unsubscribe$))
@@ -337,6 +426,9 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
           this.automationFromDB = data.result;
           const linkJson = JSON.parse(this.automationFromDB.journeyEventLinkJson);
 
+          this.setPalleteData(automationType);
+
+          this.updatePallete();
           this.updateDiagram(linkJson);
         },
         error => {
@@ -345,6 +437,16 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
       );
   }
 
+  updatePallete() {
+    this.paletteNodeData = [...this.automationPallete];
+
+    setTimeout(() => {
+      this.myPaletteComponent.updateFromAppData();
+      this.myPaletteComponent.palette.scale = 0.8;
+      this.myPaletteComponent.palette.redraw();
+      // this.myPaletteComponent.palette.zoomToRect(this.myPaletteComponent.palette.documentBounds);
+    });
+  }
   updateDiagram(linkJson: any) {
     linkJson.nodeDataArray = linkJson.nodeDataArray.map(x => {
       if (x.source) {
@@ -364,8 +466,8 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
         this.myDiagramComponent.diagram.redraw();
       }
     });
-
   }
+
   create() {
     this.automationForm.reset();
     this.automationForm.setValue({
@@ -381,6 +483,29 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
     this.automationModal.hide();
   }
 
+  setPalleteData(automationType: string) {
+    switch (automationType) {
+      case 'email':
+        this.automationPallete = EmailPallete;
+        break;
+      case 'sms':
+        this.automationPallete = SmsPallete;
+        break;
+      case 'pre-event':
+        this.automationPallete = PreEventPallete;
+        break;
+      case 'during-event':
+        this.automationPallete = DuringEventPallete;
+        break;
+      case 'post-event':
+        this.automationPallete = PostEventPallete;
+        break;
+      default:
+        this.automationPallete = [];
+    }
+    console.log(automationType);
+    console.log(this.automationPallete);
+  }
   getAutomationTypeKey(automation: Automation) {
     if (automation.eventAutomationType === 0 && automation.automationType === 0) {
       return 'email';
