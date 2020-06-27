@@ -111,6 +111,8 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onActive(event) {
+    let message = '';
+    const grading = event.row as Grading;
     // TODO: Simplify later
     if (event.type === 'click') {
       switch (event.cellIndex) {
@@ -124,9 +126,20 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           break;
         case 3:
+          message = 'Are You Sure You want to make this profile as default for new record?';
+          this.openSetDefaultConfirmModal(message);
+          break;
         case 4:
+          message = 'Are You Sure You want to make this profile as default for campaign';
+          this.openSetDefaultConfirmModal(message);
+          break;
         case 5:
-          this.openSetDefaultConfirmModal(event);
+          if (grading.isActive) {
+            message = 'Are you sure you want to deactivate this Lead Scoring Profile?';
+          } else {
+            message = 'Are you sure you want to activate this Lead Scoring Profile?';
+          }
+          this.openSetDefaultConfirmModal(message);
           break;
       }
     }
@@ -136,14 +149,12 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  openSetDefaultConfirmModal(event) {
+  openSetDefaultConfirmModal(message: string) {
     let idx = 0;
-    idx = event.cellIndex === 5 ? 6 : event.cellIndex;
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
       data: {
-        scoring: event.row,
-        selectedIdx: idx
+        message: message
       }
     });
   }
