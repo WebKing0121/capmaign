@@ -80,7 +80,7 @@ export const TriggerPallete = [{
 {
   key: '9',
   text: 'Push Notification',
-  source: 'assets/images/journey/Push_Notification.png',
+  source: 'assets/images/journey/Push_notification.png',
   name: 'PushNotification',
   color: 'white',
   stroke: '#5FB292'
@@ -96,7 +96,7 @@ export const TriggerPallete = [{
 {
   key: '11',
   text: 'PushStatus',
-  source: 'assets/images/journey/Opened_app.png',
+  source: 'assets/images/journey/opened_app.png',
   name: 'PushStatus',
   color: 'white',
   stroke: '#5FB292'

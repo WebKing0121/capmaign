@@ -247,7 +247,8 @@ const NavigationItems = [
         icon: 'feather icon-monitor',
         url: '/automation/automations',
         external: false
-      }, {
+      },
+      {
         id: 'collaborate',
         title: 'Collaborate',
         type: 'collapse',
@@ -461,6 +462,14 @@ const NavigationItems = [
             external: false
           },
         ]
+      },
+      {
+        id: 'setup',
+        title: 'Setup',
+        type: 'item',
+        icon: 'feather icon-monitor',
+        url: '/setup',
+        external: false
       },
     ]
   }

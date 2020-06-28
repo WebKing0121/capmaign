@@ -50,6 +50,7 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
     { value: 'pre-event', label: 'Pre Event' },
     { value: 'during-event', label: 'During Event' },
     { value: 'post-event', label: 'Post Event' },
+    { value: 'mobile-trigger', label: 'Mobile Trigger' },
   ];
 
   // initialize diagram / templates
@@ -500,11 +501,13 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
       case 'post-event':
         this.automationPallete = PostEventPallete;
         break;
+      case 'mobile-trigger':
+        this.automationPallete = TriggerPallete;
+        break;
       default:
         this.automationPallete = [];
     }
-    console.log(automationType);
-    console.log(this.automationPallete);
+
   }
   getAutomationTypeKey(automation: Automation) {
     if (automation.eventAutomationType === 0 && automation.automationType === 0) {
