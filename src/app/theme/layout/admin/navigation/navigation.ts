@@ -468,7 +468,7 @@ const NavigationItems = [
         title: 'Setup',
         type: 'item',
         icon: 'feather icon-monitor',
-        url: '/setup',
+        url: '/setup/shortcuts',
         external: false
       },
     ]
