@@ -1,5 +1,5 @@
 <div class="row mt-3">
-  <div class="col-12 card-lists">
+  <div class="col-12 card-custom-fields">
     <app-datatable [title]="'Custom Fields'"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
@@ -12,7 +12,7 @@
   </div>
 </div>
 
-<app-ui-modal #customFieldsModal dialogClass="modal-dialog-centered modal-list modal-lg">
+<app-ui-modal #customFieldsModal dialogClass="modal-dialog-centered modal-custom-fields modal-lg">
   <div class="app-modal-header">
     <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} Custom Field</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"

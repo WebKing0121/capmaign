@@ -18,7 +18,7 @@
   <span>{{ getFolder(value) }}</span>
 </ng-template>
 
-<app-ui-modal #listModal [containerClick]="false" dialogClass="modal-dialog-centered modal-list modal-lg">
+<app-ui-modal #listModal dialogClass="modal-dialog-centered modal-list modal-lg">
   <div class="app-modal-header">
     <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} List</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="listModal.hide()">
