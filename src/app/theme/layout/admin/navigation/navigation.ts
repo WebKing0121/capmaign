@@ -369,8 +369,8 @@ const NavigationItems = [
             id: 'mobile-push-notification',
             title: 'Push Notification',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/mobile/push-notifications',
+            external: false
           },
           {
             id: 'mobile-triggers',

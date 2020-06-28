@@ -12,12 +12,14 @@ import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { InAppMessagesComponent } from './in-app-messages/in-app-messages.component';
 import { InAppMessageComponent } from './in-app-message/in-app-message.component';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
+import { PushNotificationsComponent } from './push-notifications/push-notifications.component';
 
 @NgModule({
   declarations: [MobileCampaignComponent,
     ManageSmsCampaignComponent,
     InAppMessagesComponent,
-    InAppMessageComponent],
+    InAppMessageComponent,
+    PushNotificationsComponent],
   imports: [
     CommonModule,
     MobileRoutingModule,
