@@ -2,27 +2,76 @@
   <div class="card-header">
     <span>IN APP MESSAGES</span>
   </div>
-  <div class="card-body">
+  <div class="card-body" style="max-height: calc(100vh - 100px); overflow-y: auto;">
 
     <div class="row">
-      <div class="col-sm-12">
-        <div class="tab m-b-20">
-          <span *ngIf="step[0]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(0)">AUDIENCE</span>
-          <span *ngIf="!step[0]" class="col-sm-2 btn border border-secondary" (click)="openContent(0)">AUDIENCE</span>
-          <span *ngIf="step[1]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(1)">IN APP MESSAGES</span>
-          <span *ngIf="!step[1]" class="col-sm-2 btn border border-secondary" (click)="openContent(1)">IN APP MESSAGES</span>
-          <span *ngIf="step[2]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(2)">DEVICE LIST</span>
-          <span *ngIf="!step[2]" class="col-sm-2 btn border border-secondary" (click)="openContent(2)">DEVICE LIST</span>
-          <span *ngIf="step[3]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(3)">SCHEDULE</span>
-          <span *ngIf="!step[3]" class="col-sm-2 btn border border-secondary" (click)="openContent(3)">SCHEDULE</span>
-          <span *ngIf="step[4]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(4)">SHARE</span>
-          <span *ngIf="!step[4]" class="col-sm-2 btn border border-secondary" (click)="openContent(4)">SHARE</span>
-          <span *ngIf="step[5]" class="col-sm-2 btn btn-primary text-white" (click)="openContent(5)">APPROVE</span>
-          <span *ngIf="!step[5]" class="col-sm-2 btn border border-secondary" (click)="openContent(5)">APPROVE</span>
+      <div class="d-flex flex-wrap col-sm-12">
+        <!-- Tabs -->
+        <div class="col-lg-3 m-b-20">
+          <span *ngIf="step[0]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(0)">
+            <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">1</span>
+            AUDIENCE
+          </span>
+          <span *ngIf="!step[0]" class="col-sm-12 btn border border-secondary" (click)="openContent(0)">
+            <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">1</span>
+            AUDIENCE
+          </span>
+          <span *ngIf="step[1]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(1)">
+            <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">2</span>
+            IN APP MESSAGES
+          </span>
+          <span *ngIf="!step[1]" class="col-sm-12 btn border border-secondary" (click)="openContent(1)">
+            <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">2</span>
+            IN APP MESSAGES
+          </span>
+          <span *ngIf="step[2]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(2)">
+            <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">3</span>
+            DEVICE LIST
+          </span>
+          <span *ngIf="!step[2]" class="col-sm-12 btn border border-secondary" (click)="openContent(2)">
+            <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">3</span>
+            DEVICE LIST
+          </span>
+          <span *ngIf="step[3]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(3)">
+            <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">4</span>
+            SCHEDULE
+          </span>
+          <span *ngIf="!step[3]" class="col-sm-12 btn border border-secondary" (click)="openContent(3)">
+            <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">4</span>
+            SCHEDULE
+          </span>
+          <span *ngIf="step[4]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(4)">
+            <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">5</span>
+            SHARE
+          </span>
+          <span *ngIf="!step[4]" class="col-sm-12 btn border border-secondary" (click)="openContent(4)">
+            <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">5</span>
+            SHARE
+          </span>
+          <span *ngIf="step[5]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(5)">
+            <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">6</span>
+            APPROVE
+          </span>
+          <span *ngIf="!step[5]" class="col-sm-12 btn border border-secondary" (click)="openContent(5)">
+            <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
+              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">6</span>
+            APPROVE
+          </span>
         </div>
 
         <!-- Tab content -->
-        <div *ngIf="step[0]" class="card tabcontent">
+        <div *ngIf="step[0]" class="col-lg-9 p-0 card tabcontent">
           <div class="card-header bg-secondary text-white">
             <span>Audience Option</span>
           </div>
@@ -31,7 +80,8 @@
               <span>Target user by choosing multiple audience to include further refine</span>
             </div>
             <div style="border-top:1px solid #F0F0F0; padding: 10px;">
-              <div class="col-lg-12 d-flex p-1" style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+              <div class="col-lg-12 d-flex p-1"
+                style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
                 <span class="col-md-1"><i class="fa fa-plus"></i></span>
                 <span class="col-md-1"><i class="fas fa-users"></i></span>
                 <span class="col-md-2">Select Filter</span>
@@ -46,7 +96,8 @@
               </div>
             </div>
             <div style="border-top:1px solid #F0F0F0; padding: 10px;">
-              <div class="col-lg-12 d-flex p-1" style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+              <div class="col-lg-12 d-flex p-1"
+                style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
                 <span class="col-md-1"><i class="fa fa-plus"></i></span>
                 <span class="col-md-1"><i class="fa fa-mobile-alt"></i></span>
                 <span class="col-md-2">Select Mobile App</span>
@@ -60,7 +111,8 @@
               </div>
             </div>
             <div style="border-top:1px solid #F0F0F0; padding: 10px;">
-              <div class="col-lg-12 d-flex p-1" style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+              <div class="col-lg-12 d-flex p-1"
+                style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
                 <span class="col-md-1"><i class="fa fa-plus"></i></span>
                 <span class="col-md-1"><i class="far fa-clock"></i></span>
                 <span class="col-md-2">Select Trigger</span>
@@ -76,7 +128,7 @@
           </div>
         </div>
 
-        <div *ngIf="step[1]" class="card tabcontent">
+        <div *ngIf="step[1]" class="col-lg-9 p-0 card tabcontent">
           <div class="card-header bg-secondary text-white">
             <span>IN APP MESSAGES</span>
           </div>
@@ -85,7 +137,8 @@
               <span>Target user by choosing multiple audience to include further refine</span>
             </div>
             <div style="border-top:1px solid #F0F0F0; padding: 10px;">
-              <div class="col-lg-12 d-flex p-1" style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+              <div class="col-lg-12 d-flex p-1"
+                style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
                 <span class="col-md-1"><i class="fa fa-plus"></i></span>
                 <span class="col-md-1"><i class="fas fa-users"></i></span>
                 <span class="col-md-2">Add In-App Messages</span>
@@ -96,12 +149,283 @@
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            
+          <div class="row p-15">
+            <!-- Preview panel -->
+            <div class="col-md-6 col-sm-12 p-0">
+              <div class="d-flex bg-secondary text-white" style="height: 40px; padding: 0 20px; align-items: center;">
+                <span>Preview</span>
+              </div>
+              <div class="d-flex flex-wrap justify-content-center">
+                <div class="col-lg-12 d-flex justify-content-center">
+                  <div class="p-10">
+                    <span *ngIf="!isAndroid" (click)="onDeviceModeClicked('android')"><img
+                        src="../../../../assets/images/mobile/Android_deselected.png"></span>
+                    <span *ngIf="isAndroid" (click)="onDeviceModeClicked('android')"><img *ngIf="isAndroid"
+                        src="../../../../assets/images/mobile/Android_selected.png"></span>
+                  </div>
+                  <div class="p-10 m-l-100">
+                    <span *ngIf="!isIphone" (click)="onDeviceModeClicked('iphone')"><img *ngIf="!isIphone"
+                        src="../../../../assets/images/mobile/ios_deselected.png"></span>
+                    <span *ngIf="isIphone" (click)="onDeviceModeClicked('iphone')"><img *ngIf="isIphone"
+                        src="../../../../assets/images/mobile/ios_selected.png"></span>
+                  </div>
+                </div>
+                <div class="">
+                  <div class="display-within-iphone" #mobileCampaign>
+                    <div class="iphone-iframe">
+                      <div class="iphone-editor-area d-flex flex-column">
+                        <div class="iphone-user-avatar p-10"></div>
+                        <img [src]="imagePath" class="p-10" style="width: 100px; height: 100px" />
+                        <h3 class="in-app-msg-txt p-10" [style.font-weight]="txtWeight" [style.font-style]="txtStyle"
+                          [style.text-decoration]="txtUnderline" [style.text-align]="txtAlign"
+                          [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize"
+                          [style.color]="txtColor"
+                        >{{headerTxt}}</h3>
+                        <p class="in-app-msg-txt p-10" [style.font-weight]="txtWeight" [style.font-style]="txtStyle"
+                          [style.text-decoration]="txtUnderline" [style.text-align]="txtAlign"
+                          [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize"
+                          [style.color]="txtColor"
+                        >{{bodyTxt}}</p>
+                        <div class="p-10">
+                          <a *ngIf="btnTxt1" [href]="btnTxt1" class="btn btn-secondary m-b-10"
+                            style="padding: 5px 10px;" (click)="onClickBtn(1, $event)" [style.font-weight]="btnWeight"
+                            [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline">{{btnTxt1}}</a>
+                          <a *ngIf="btnTxt2" [href]="btnTxt2" class="btn btn-secondary m-b-10 m-l-10"
+                            style="padding: 5px 10px;" (click)="onClickBtn(2, $event)" [style.font-weight]="btnWeight"
+                            [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline">{{btnTxt2}}</a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Edit panel -->
+            <div class="col-md-6 col-sm-12 p-0">
+              <div class="col-lg-12 d-flex justify-content-between bg-secondary"
+                style="height: 40px; padding: 0 20px; align-items: center;">
+                <div>
+                  <span class="text-white">Compose data</span>
+                </div>
+                <!-- Tabs -->
+                <div>
+                  <span class="btn btn-secondary" style="padding: 5px 10px;" (click)="onTextTabClicked()">
+                    <i class="p-l-10 p-r-10 fas fa-pencil-alt"></i>
+                  </span>
+                  <span class="btn btn-secondary" style="padding: 5px 10px;" (click)="onStyleTabClicked()">
+                    <i class="p-l-10 p-r-10 fas fa-paint-brush"></i>
+                  </span>
+                  <span class="btn btn-secondary" style="padding: 5px 10px;" (click)="onViewTabClicked()">
+                    <i class="p-l-10 p-r-10 fas fa-eye"></i>
+                  </span>
+                </div>
+              </div>
+              <!-- TextValue Editor -->
+              <div *ngIf="isTextEditPadShow" class="row">
+                <form [formGroup]="formGroup" class="row col-lg-12">
+                  <div class="col-md-12 p-0" style="margin: 5px 0;">
+                    <label class="mobile-show">Header</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text" style="width: 110px;">Header</span>
+                      </div>
+                      <input type="text" class="form-control" [(ngModel)]="headerTxt" formControlName="headerTxt"
+                        autocomplete="off" name="exclude">
+                    </div>
+                  </div>
+                  <div class="col-md-12 p-0" style="margin: 5px 0;">
+                    <label class="mobile-show">Body</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text" style="width: 110px;">Body</span>
+                      </div>
+                      <input type="text" class="form-control" [(ngModel)]="bodyTxt" formControlName="bodyTxt"
+                        autocomplete="off" name="exclude">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-12 p-0" style="margin: 5px 0;">
+                    <label class="mobile-show">Button 1 Text</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text" style="width: 110px;">Button 1</span>
+                      </div>
+                      <input type="text" class="form-control" [(ngModel)]="btnTxt1" formControlName="btnTxt1"
+                        autocomplete="off" name="exclude">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-12 p-0" style="margin: 5px 0;">
+                    <label class="mobile-show">Button 2 Text</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text" style="width: 110px;">Button 2</span>
+                      </div>
+                      <input type="text" class="form-control" [(ngModel)]="btnTxt2" formControlName="btnTxt2"
+                        autocomplete="off" name="exclude">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-12 p-0">
+                    <label class="f-20 p-t-20 p-b-10">On Click Behavior</label>
+                  </div>
+                  <div class="col-md-12 p-0" style="margin: 5px 0;">
+                    <label class="mobile-show">Button 1</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text" style="width: 110px;">Button 1</span>
+                      </div>
+                      <select class="form-control" [(ngModel)]="selectedOption1" formControlName="selectedOption1"
+                        (change)=(onBtnOption(1))>
+                        <option>Display news feed</option>
+                        <option>Redirected Web Url</option>
+                        <option>None</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12 p-0" style="margin: 5px 0;">
+                    <label class="mobile-show">Button 2</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text" style="width: 110px;">Button 2</span>
+                      </div>
+                      <select class="form-control" [(ngModel)]="selectedOption2" formControlName="selectedOption2"
+                        (change)=(onBtnOption(2))>
+                        <option>Select Option</option>
+                        <option>Display news feed</option>
+                        <option>Redirected Web Url</option>
+                        <option>None</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12 p-0" style="margin: 5px 0;">
+                    <label class="mobile-show">Header</label>
+                    <div class="input-group m-t-10">
+                      <div class="input-group-prepend mobile-hide">
+                        <span class="input-group-text" style="width: 110px;">Header</span>
+                      </div>
+                      <select class="form-control">
+                        <option>Select Option</option>
+                        <option>Dismiss Automatically</option>
+                        <option>Wait for user to hit close button</option>
+                      </select>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!-- style editor -->
+              <div *ngIf="isStyleEditPadShow">
+                <label class="btn btn-outline-secondary m-t-10" style="width:100%;">
+                  Import image
+                  <input #file type="file" accept='image/*' class="uploadFile img" value="Upload Media"
+                    style="width: 0px;height: 0px;overflow: hidden;" (change)="uploadImage(file.files)">
+                </label>
+                <hr>
+                <div>
+                  <span>Text</span>
+                </div>
+                <hr>
+                <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                  <div class="col-lg-3 col-md-6 col-sm-12">
+                    <span>Style</span>
+                  </div>
+                  <div class="col-lg-9 col-md-6 col-sm-12">
+                    <span *ngIf="isTxtBold" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                      (click)="onTxtBoldClicked()">B</span>
+                    <span *ngIf="!isTxtBold" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                      (click)="onTxtBoldClicked()">B</span>
+                    <span *ngIf="isTxtItalic" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                      (click)="onTxtItalicClicked()"><i>I</i></span>
+                    <span *ngIf="!isTxtItalic" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                      (click)="onTxtItalicClicked()"><i>I</i></span>
+                    <span *ngIf="isTxtUnderline" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                      (click)="onTxtUnderlineClicked()" style="text-decoration: underline;">U</span>
+                    <span *ngIf="!isTxtUnderline" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                      (click)="onTxtUnderlineClicked()" style="text-decoration: underline;">U</span>
+                  </div>
+                </div>
+                <div class="col-lg-12 d-flex flex-wrap p-t-10" style="align-items: center;">
+                  <div class="col-lg-3 col-md-6 col-sm-12">
+                    <span>Alignment</span>
+                  </div>
+                  <div class="col-lg-9 col-md-6 col-sm-12">
+                    <span *ngIf="txtAlignState[0]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                      (click)="onTxtAlignBtnClicked(0, 'center')"><i class="fas fa-align-center"></i></span>
+                    <span *ngIf="!txtAlignState[0]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                      (click)="onTxtAlignBtnClicked(0, 'center')"><i class="fas fa-align-center"></i></span>
+                    <span *ngIf="txtAlignState[1]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                      (click)="onTxtAlignBtnClicked(1, 'left')"><i class="fas fa-align-left"></i></span>
+                    <span *ngIf="!txtAlignState[1]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                      (click)="onTxtAlignBtnClicked(1, 'left')"><i class="fas fa-align-left"></i></span>
+                    <span *ngIf="txtAlignState[2]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                      (click)="onTxtAlignBtnClicked(2, 'right')"><i class="fas fa-align-right"></i></span>
+                    <span *ngIf="!txtAlignState[2]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                      (click)="onTxtAlignBtnClicked(2, 'right')"><i class="fas fa-align-right"></i></span>
+                    <span *ngIf="txtAlignState[3]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                      (click)="onTxtAlignBtnClicked(3, 'justify')"><i class="fas fa-align-justify"></i></span>
+                    <span *ngIf="!txtAlignState[3]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                      (click)="onTxtAlignBtnClicked(3, 'justify')"><i class="fas fa-align-justify"></i></span>
+                  </div>
+                </div>
+                <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                  <div class="col-lg-3 col-md-12">
+                    <span>Font Family</span>
+                  </div>
+                  <div class="col-lg-9 col-md-12">
+                    <select [ngModel]="txtFontFamily" class="form-control" (change)="onTxtFontFamilySelected($event)">
+                      <option *ngFor="let language of languageList">{{language}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                  <div class="col-lg-3 col-md-12">
+                    <span>Font Size</span>
+                  </div>
+                  <div class="col-lg-9 col-md-12">
+                    <select [ngModel]="txtFontFamily" class="form-control" (change)="onTxtFontSizeSelected($event)">
+                      <option *ngFor="let size of fontSizeList">{{size}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                  <div class="col-lg-3 col-md-12">
+                    <span>Color</span>
+                  </div>
+                  <div class="col-lg-9 col-md-12">
+                    <input type="color" [ngModel]="txtColor" (change)="onTxtColorChanged($event)">
+                  </div>
+                </div>
+                <hr>
+                <div>
+                  <span>Button</span>
+                </div>
+                <hr>
+                <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                  <div class="col-lg-3 col-md-6 col-sm-12">
+                    <span>Style</span>
+                  </div>
+                  <div class="col-lg-9 col-md-6 col-sm-12">
+                    <span *ngIf="isBtnBold" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
+                      (click)="onBtnBoldClicked()">B</span>
+                    <span *ngIf="!isBtnBold" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
+                      (click)="onBtnBoldClicked()">B</span>
+                    <span *ngIf="isBtnItalic" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
+                      (click)="onBtnItalicClicked()"><i>I</i></span>
+                    <span *ngIf="!isBtnItalic" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
+                      (click)="onBtnItalicClicked()"><i>I</i></span>
+                    <span *ngIf="isBtnUnderline" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white" (click)="onBtnUnderlineClicked()"
+                      style="text-decoration: underline;">U</span>
+                    <span *ngIf="!isBtnUnderline" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
+                      (click)="onBtnUnderlineClicked()" style="text-decoration: underline;">U</span>
+                  </div>
+                </div>
+              </div>
+              <!-- viewmode editor -->
+              <div *ngIf="isViewModeEditPadShow">
+                isViewModeEditPadShow
+              </div>
+            </div>
           </div>
         </div>
 
-        <div *ngIf="step[2]" class="card tabcontent">
+        <div *ngIf="step[2]" class="col-lg-9 p-0 card tabcontent">
           <div class="card-header bg-secondary text-white">
             <span>App Device Lists</span>
           </div>
@@ -119,7 +443,7 @@
           </div>
         </div>
 
-        <div *ngIf="step[3]" class="card tabcontent">
+        <div *ngIf="step[3]" class="col-lg-9 p-0 card tabcontent">
           <div class="card-header bg-secondary text-white">
             <span>Schedule</span>
           </div>
@@ -133,12 +457,12 @@
           </div>
         </div>
 
-        <div *ngIf="step[4]" class="card tabcontent">
+        <div *ngIf="step[4]" class="col-lg-9 p-0 card tabcontent">
           <div class="card-header"></div>
           <div class="card-body"></div>
         </div>
 
-        <div *ngIf="step[5]" class="card tabcontent">
+        <div *ngIf="step[5]" class="col-lg-9 p-0 card tabcontent">
           <div class="card-header"></div>
           <div class="card-body"></div>
         </div>

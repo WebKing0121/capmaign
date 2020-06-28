@@ -101,7 +101,7 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
       this.modalService.openModal(InAppMessageComponent, {
         width: '80%',
         data: {
-          createMode: true,
+          createMode: false,
           inAppMessage: inAppMessage
         }
       });
