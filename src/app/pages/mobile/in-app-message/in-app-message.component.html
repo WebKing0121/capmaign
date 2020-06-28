@@ -189,10 +189,16 @@
                         <div class="p-10">
                           <a *ngIf="btnTxt1" [href]="btnTxt1" class="btn btn-secondary m-b-10"
                             style="padding: 5px 10px;" (click)="onClickBtn(1, $event)" [style.font-weight]="btnWeight"
-                            [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline">{{btnTxt1}}</a>
+                            [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline"
+                            [style.font-family]="btnFontFamily" [style.font-size]="btnFontSize"
+                            [style.background-color]="btnColor"
+                          >{{btnTxt1}}</a>
                           <a *ngIf="btnTxt2" [href]="btnTxt2" class="btn btn-secondary m-b-10 m-l-10"
                             style="padding: 5px 10px;" (click)="onClickBtn(2, $event)" [style.font-weight]="btnWeight"
-                            [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline">{{btnTxt2}}</a>
+                            [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline"
+                            [style.font-family]="btnFontFamily" [style.font-size]="btnFontSize"
+                            [style.background-color]="btnColor"
+                          >{{btnTxt2}}</a>
                         </div>
                       </div>
                     </div>
@@ -370,7 +376,7 @@
                   </div>
                   <div class="col-lg-9 col-md-12">
                     <select [ngModel]="txtFontFamily" class="form-control" (change)="onTxtFontFamilySelected($event)">
-                      <option *ngFor="let language of languageList">{{language}}</option>
+                      <option *ngFor="let font of fontList">{{font}}</option>
                     </select>
                   </div>
                 </div>
@@ -384,13 +390,19 @@
                     </select>
                   </div>
                 </div>
-                <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                <div class="col-lg-12 d-flex flex-wrap m-t-10" style="align-items: center;">
                   <div class="col-lg-3 col-md-12">
                     <span>Color</span>
                   </div>
                   <div class="col-lg-9 col-md-12">
                     <input type="color" [ngModel]="txtColor" (change)="onTxtColorChanged($event)">
                   </div>
+                </div>
+                <div class="col-lg-12 m-t-10">
+                  <label>
+                    <input type="checkbox" class="">
+                    Tap Text Action
+                  </label>
                 </div>
                 <hr>
                 <div>
@@ -416,10 +428,63 @@
                       (click)="onBtnUnderlineClicked()" style="text-decoration: underline;">U</span>
                   </div>
                 </div>
+                <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                  <div class="col-lg-3 col-md-12">
+                    <span>Font Family</span>
+                  </div>
+                  <div class="col-lg-9 col-md-12">
+                    <select [ngModel]="btnFontFamily" class="form-control" (change)="onBtnFontFamilySelected($event)">
+                      <option *ngFor="let font of fontList">{{font}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                  <div class="col-lg-3 col-md-12">
+                    <span>Font Size</span>
+                  </div>
+                  <div class="col-lg-9 col-md-12">
+                    <select [ngModel]="btnFontFamily" class="form-control" (change)="onBtnFontSizeSelected($event)">
+                      <option *ngFor="let size of fontSizeList">{{size}}</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-lg-12 d-flex flex-wrap m-t-10">
+                  <div class="col-lg-3 col-md-12">
+                    <span>Button Fill Color</span>
+                  </div>
+                  <div class="col-lg-9 col-md-12">
+                    <!-- <label>
+                      <input type="radio" name="fillType" (click)="onFillTypeClicked(1)">
+                      Fill
+                    </label>
+                    <label class="m-l-10">
+                      <input type="radio" name="fillType" (click)="onFillTypeClicked(2)">
+                      Gradient
+                    </label> -->
+                    <input type="color" class="m-l-10" [ngModel]="btnColor" (change)="onBtnColorChanged($event)">
+                    <!-- <input *ngIf="!btnFill" type="color" class="m-l-10" [ngModel]="btnColor1" (change)="onBtnColorChanged1($event)"> -->
+                  </div>
+                </div>
+                <div class="col-lg-12 m-t-10">
+                  <label>
+                    <input type="checkbox" class="">
+                    Tap Button Action
+                  </label>
+                </div>
               </div>
               <!-- viewmode editor -->
               <div *ngIf="isViewModeEditPadShow">
-                isViewModeEditPadShow
+                <div class="col-lg-12 p-t-10">
+                  <label>
+                    <input type="radio" name="viewType"> Full screen InApp Message
+                  </label>
+                  <label>
+                    <input type="radio" name="viewType"> Modal InApp Message
+                  </label>
+                  <label>
+                    <input type="radio" name="viewType"> Full screen InApp Message
+                  </label>
+                </div>
               </div>
             </div>
           </div>
@@ -452,18 +517,54 @@
               <span>Target user by choosing multiple audience to include further refine</span>
             </div>
             <div class="col-lg-12 bg-secondary text-white p-10">
-              <span>Schedule</span>
+              <label>
+                <input type="radio" name="sendType" (click)="onScheduleOnBtnClicked(false)">
+                Schedule Now
+              </label>
+              <label>
+                <input type="radio" name="sendType" (click)="onScheduleOnBtnClicked(true)">
+                Schedule On
+              </label>
+            </div>
+            <div *ngIf="scheduleOn">
+              <div class="input-group">
+                <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_to" ngbDatepicker
+                  [(ngModel)]="model" #datePicker="ngbDatepicker" (dateSelect)="onDateSelect($event)">
+                <div class="input-group-append">
+                  <span class="input-group-text" (click)="datePicker.toggle()">
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
 
         <div *ngIf="step[4]" class="col-lg-9 p-0 card tabcontent">
-          <div class="card-header"></div>
-          <div class="card-body"></div>
+          <div class="card-header bg-secondary text-white">
+            <span>Share</span>
+          </div>
+          <div class="card-body">
+            <div class="col-lg-12 d-flex" style="align-items: center;">
+              <input type="checkbox">
+              <i class="fa fa-edit m-l-30">
+                Save as Draft
+              </i>
+            </div>
+          </div>
         </div>
 
         <div *ngIf="step[5]" class="col-lg-9 p-0 card tabcontent">
-          <div class="card-header"></div>
+          <div class="card-header bg-secondary text-white">
+            <div class="col-lg-12 d-flex flex-wrap" style="justify-content: space-between; align-items: center;">
+              <div>
+                <span>Approve</span>
+              </div>
+              <div class="btn btn-outline-secondary bg-white">
+                <span>Send InApp Message</span>
+              </div>
+            </div>
+          </div>
           <div class="card-body"></div>
         </div>
       </div>

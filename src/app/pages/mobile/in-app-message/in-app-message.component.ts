@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MODAL_DATA } from '@app-components/modal/modal-ref';
+import { MODAL_DATA, ModalRef } from '@app-components/modal/modal-ref';
 import { Campaign } from '@app-core/models/campaign';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
@@ -48,16 +48,25 @@ export class InAppMessageComponent implements OnInit {
   btnUnderline: string;
   txtAlignState: boolean[];
   txtAlign: string;
-  languageList = ['Arial', 'Verdana', 'Impact', 'cursive,sans-serif', 'Tahoma, Geneva, sans-serif',
+  fontList = ['Arial', 'Verdana', 'Impact', 'cursive,sans-serif', 'Tahoma, Geneva, sans-serif',
     'Verdana, Geneva, sans-serif', 'Courier New, Courier, monospace', 'Georgia, serif'];
   txtFontFamily: string;
   fontSizeList = [8, 9, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 36, 48, 72];
   txtFontSize: string;
   txtColor: any;
+  btnFontFamily: string;
+  btnFontSize: string;
+  btnColor: any;
+  btnColor1
+  btnFill: boolean;
+  scheduleOn: boolean;
+  selectedDate: any;
+  public model: any = {};
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MODAL_DATA) private props: ComponentProps
+    @Inject(MODAL_DATA) private props: ComponentProps,
+    @Inject(ModalRef) private modalRef: ModalRef<InAppMessageComponent>
   ) {
     this.step = [true, false, false, false, false, false];
     this.isAndroid = false;
@@ -78,6 +87,7 @@ export class InAppMessageComponent implements OnInit {
     this.txtAlign = 'left';
     this.txtFontFamily = 'Arial';
     this.txtFontSize = '12px';
+    this.scheduleOn = false;
   }
 
   ngOnInit(): void {
@@ -250,5 +260,38 @@ export class InAppMessageComponent implements OnInit {
 
   onTxtColorChanged(event) {
     this.txtColor = event.target.value;
+  }
+
+  onBtnFontFamilySelected(event) {
+    this.btnFontFamily = event.target.value;
+  }
+
+  onBtnFontSizeSelected(event) {
+    console.log(event.target.value)
+    this.btnFontSize = event.target.value + 'px';
+  }
+
+  onBtnColorChanged(event) {
+    this.btnColor = event.target.value;
+  }
+
+  onBtnColorChanged1(event) {
+    this.btnColor1 = event.target.value;
+  }
+
+  onFillTypeClicked(type: number) {
+    this.btnFill = type === 1 ? true : false;
+  }
+
+  onScheduleOnBtnClicked(showFlag: boolean) {
+    this.scheduleOn = showFlag;
+  }
+
+  onDateSelect(event): void {
+    this.selectedDate = event;
+  }
+
+  sendInAppMessage() {
+    this.modalRef.cancel();
   }
 }

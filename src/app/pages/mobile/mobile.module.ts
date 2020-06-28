@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { NgbDropdownModule, NgbTabsetModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbTabsetModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { EmailCampaignEditorModule } from '@app-components/email-campaign-editor/email-campaign-editor.module';
 
@@ -26,10 +26,10 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
     NgbDropdownModule,
     DatatableModule,
     FormsModule,
-    ReactiveFormsModule,
     CommonModule,
     SharedModule,
-    NgbTabsetModule
+    NgbTabsetModule,
+    NgbDatepickerModule
   ]
 })
 export class MobileModule { }
