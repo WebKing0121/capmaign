@@ -1,0 +1,41 @@
+.modal-send-result {
+  .input-group-prepend {
+    .input-group-text {
+      width: 130px;
+    }
+  }
+
+  .description {
+    color: black;
+    line-height: 25px;
+  }
+
+  ng-select {
+    width: calc(100% - 128px);
+    min-height: 45px;
+    .single {
+      .value {
+        line-height: 43px;
+      }
+    }
+  }
+
+  ng-select > div {
+    min-height: 45px !important;
+  }
+}
+
+.mobile-show {
+  display: none;
+}
+@media only screen and (max-width: 575px) {
+  .mobile-hide {
+    display: none;
+  }
+  .mobile-show {
+    display: inherit;
+  }
+  ng-select {
+    width: 100%;
+  }
+}

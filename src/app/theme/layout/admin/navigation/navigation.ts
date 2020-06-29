@@ -484,6 +484,13 @@ const NavigationItems = [
             url: '/report/sms',
             external: false,
           },
+          {
+            id: 'report-exports',
+            title: 'Exports email',
+            type: 'item',
+            url: '/report/exports',
+            external: false,
+          },
         ]
       },
       {

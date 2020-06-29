@@ -1,0 +1,59 @@
+<app-ui-modal #dateRangeModal [containerClick]="false" dialogClass="modal-dialog-centered modal-date-rage">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === campaignType.Email ? 'Email': 'SMS'}} Sends By Date</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="dateRangeModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <form [formGroup]="dateRangeForm" (ngSubmit)="onClickExport()">
+      <div class="row">
+        <div class="col-12">
+          <p class="description">This report shows delivery metrics for all {{modalType === campaignType.Email ? 'emails': 'sms'}} in a specified date/time range.</p>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-12 col-sm-12">
+          <label class="mobile-show">Start Date</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                Start Date
+              </span>
+            </div>
+            <input class="form-control" autocomplete="off" formControlName="startDate" placeholder="yyyy-mm-dd"
+              name="dp_from" ngbDatepicker #d_f="ngbDatepicker">
+            <div class="input-group-append">
+              <span class="input-group-text" (click)="d_f.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-12 col-sm-12 input-group mt-3">
+          <label class="mobile-show">End Date</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                End Date
+              </span>
+            </div>
+            <input class="form-control" autocomplete="off" formControlName="endDate" placeholder="yyyy-mm-dd"
+              name="dp_to" ngbDatepicker #d_t="ngbDatepicker">
+            <div class="input-group-append">
+              <span class="input-group-text" (click)="d_t.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary mr-2" (click)="onClickExport()"><i
+        class="fa fa-download"></i>Export</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="dateRangeModal.hide()">Close</button>
+  </div>
+</app-ui-modal>

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ReportEmailCampaignComponent } from './email-campaign/email-campaign.component';
 import { ReportSmsCampaignComponent } from './sms-campaign/sms-campaign.component';
+import { ReportExportsComponent } from './exports/exports.component';
 const routes: Routes = [
   {
     path: 'email',
@@ -11,6 +12,11 @@ const routes: Routes = [
     path: 'sms',
     component: ReportSmsCampaignComponent
   },
+  {
+    path: 'exports',
+    component: ReportExportsComponent,
+  },
+
   {
     path: '**',
     redirectTo: 'email'
