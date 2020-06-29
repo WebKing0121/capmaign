@@ -1,30 +1,30 @@
-.social-site{
-    height: 250px;
-    margin: 0;
-    box-shadow: 5px 5px 10px 5px rgba(168, 168, 168, 0.24);
+.social-site {
+  height: 250px;
+  margin: 0;
+  box-shadow: 5px 5px 10px 5px rgba(168, 168, 168, 0.24);
 }
 
 .modal-add-connection {
-    max-width: 720px !important;
+  max-width: 720px !important;
 }
 
 .social-button {
-    margin-bottom: 10px;
-    button {
-        width: 100%;
-        padding: 5px;
-    }
+  margin-bottom: 10px;
+  button {
+    width: 100%;
+    padding: 5px;
+  }
 }
 
 .social-button:last-child {
-    margin-bottom: 0px;
+  margin-bottom: 0px;
 }
 
 @media only screen and (max-width: 600px) {
-    .social-connect-card {
-        margin-top: 20px;
-    }
-    .social-connect-card:first-child {
-        margin-top: 0px;
-    }
+  .social-connect-card {
+    margin-top: 20px;
+  }
+  .social-connect-card:first-child {
+    margin-top: 0px;
+  }
 }
