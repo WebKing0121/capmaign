@@ -6,6 +6,7 @@ import { ManageSmsCampaignComponent } from './manage-sms-campaign/manage-sms-cam
 import { InAppMessagesComponent } from './in-app-messages/in-app-messages.component';
 import { InAppMessageComponent } from './in-app-message/in-app-message.component';
 import { PushNotificationsComponent } from './push-notifications/push-notifications.component';
+import { TriggerAutomationsComponent } from './trigger-automations/trigger-automations.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,9 @@ const routes: Routes = [
   },
   {
     path: 'push-notifications', component: PushNotificationsComponent
+  },
+  {
+    path: 'trigger-automations', component: TriggerAutomationsComponent
   },
   {
     path: ':id', component: MobileCampaignComponent

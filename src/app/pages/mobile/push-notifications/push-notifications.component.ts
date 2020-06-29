@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { Campaign } from '@app-core/models/campaign';
 import { Subject } from 'rxjs';
@@ -14,7 +14,7 @@ import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/sc
   templateUrl: './push-notifications.component.html',
   styleUrls: ['./push-notifications.component.scss']
 })
-export class PushNotificationsComponent implements OnInit {
+export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [

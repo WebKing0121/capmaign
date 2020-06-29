@@ -377,8 +377,8 @@ const NavigationItems = [
             id: 'mobile-triggers',
             title: 'Triggers',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/mobile/trigger-automations',
+            external: false
           },
         ]
       },

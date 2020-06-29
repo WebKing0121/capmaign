@@ -1,0 +1,14 @@
+<div style="height: calc( 100vh - 120px)">
+  <app-datatable [title]="'Trigger Automations'"
+    [dataSource]="tableSource"
+    [buttons]="tableButtons"
+    [selectable]="true"
+    [selectionType]="'checkbox'"
+    (activate)="onActive($event)">
+  </app-datatable>
+</div>
+
+<app-automation-modal #automationModal
+  [modalType]="modalType"
+  [automation]="selectedAutomation"
+></app-automation-modal>
