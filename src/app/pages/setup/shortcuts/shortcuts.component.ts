@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-shortcuts',
   templateUrl: './shortcuts.component.html',
-  styleUrls: ['./shortcuts.component.scss']
+  styleUrls: ['./shortcuts.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ShortcutsComponent implements OnInit {
 
