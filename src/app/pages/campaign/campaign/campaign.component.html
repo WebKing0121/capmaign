@@ -86,7 +86,7 @@
         </div>
         <app-personalization-selector class="d-block mr-2" [editor]="emailCampaignEditor"></app-personalization-selector>
         <button class="col-sm-4 btn btn-primary" style="max-width: 160px;" appEmailCampaignDynamics [editor]="emailCampaignEditor">Dynamics</button>
-        <button class="col-sm-4 btn btn-primary" style="max-width: 160px; margin-left: auto;" appEmailCampaignTemplates>Templates</button>
+        <button class="col-sm-4 btn btn-primary" style="max-width: 160px; margin-left: auto; margin-right: 10px;" appEmailCampaignTemplates>Templates</button>
         <button class="col-sm-4 btn btn-primary" style="max-width: 160px;" *ngIf="campaignMode === 'edit'">Edit</button>
         <button class="col-sm-4 btn btn-primary" style="max-width: 160px;" appEmailCampaignPreview [editor]="emailCampaignEditor">Preview</button>
       </div>

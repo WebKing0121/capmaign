@@ -1,13 +1,14 @@
 <div class="card">
-  <div class="card-header">
+  <div class="card-header d-flex" style="justify-content: space-between;">
     <span>IN APP MESSAGES</span>
+    <span class="m-l-auto" (click)="onCloseModal()">x</span>
   </div>
   <div class="card-body" style="max-height: calc(100vh - 100px); overflow-y: auto;">
 
     <div class="row">
       <div class="d-flex flex-wrap col-sm-12">
         <!-- Tabs -->
-        <div class="col-lg-4 m-b-20" style="min-width: 240px;">
+        <div class="col-lg-3 m-b-20">
           <span *ngIf="step[0]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(0)">
             <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
               style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">1</span>
@@ -71,7 +72,7 @@
         </div>
 
         <!-- Tab content -->
-        <div *ngIf="step[0]" class="col-lg-8 p-0 card tabcontent">
+        <div *ngIf="step[0]" class="col-lg-9 p-0 card tabcontent">
           <div class="card-header bg-secondary text-white">
             <span>Audience Option</span>
           </div>
@@ -82,8 +83,8 @@
             <div style="border-top:1px solid #F0F0F0; padding: 10px;">
               <div class="col-lg-12 d-flex p-1"
                 style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
-                <span class="col-md-1"><i class="fa fa-plus"></i></span>
-                <span class="col-md-1"><i class="fas fa-users"></i></span>
+                <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
+                <span class="col-md-1 col-sm-1"><i class="fas fa-users"></i></span>
                 <span class="col-md-2">Select Filter</span>
                 <select class="form-control">
                   <option value="?" selected="selected"></option>
@@ -98,8 +99,8 @@
             <div style="border-top:1px solid #F0F0F0; padding: 10px;">
               <div class="col-lg-12 d-flex p-1"
                 style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
-                <span class="col-md-1"><i class="fa fa-plus"></i></span>
-                <span class="col-md-1"><i class="fa fa-mobile-alt"></i></span>
+                <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
+                <span class="col-md-1 col-sm-1"><i class="fa fa-mobile-alt"></i></span>
                 <span class="col-md-2">Select Mobile App</span>
                 <select class="form-control">
                   <option selected="selected"></option>
@@ -113,8 +114,8 @@
             <div style="border-top:1px solid #F0F0F0; padding: 10px;">
               <div class="col-lg-12 d-flex p-1"
                 style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
-                <span class="col-md-1"><i class="fa fa-plus"></i></span>
-                <span class="col-md-1"><i class="far fa-clock"></i></span>
+                <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
+                <span class="col-md-1 col-sm-1"><i class="far fa-clock"></i></span>
                 <span class="col-md-2">Select Trigger</span>
                 <select class="form-control">
                   <option value="?" selected="selected">Has Mobile App</option>
@@ -139,8 +140,8 @@
             <div style="border-top:1px solid #F0F0F0; padding: 10px;">
               <div class="col-lg-12 d-flex p-1"
                 style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
-                <span class="col-md-1"><i class="fa fa-plus"></i></span>
-                <span class="col-md-1"><i class="fas fa-users"></i></span>
+                <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
+                <span class="col-md-1 col-sm-1"><i class="fas fa-users"></i></span>
                 <span class="col-md-2">Add In-App Messages</span>
                 <select class="form-control">
                   <option value="?" selected="selected"></option>
@@ -249,7 +250,7 @@
                         autocomplete="off" name="exclude">
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-12 p-0" style="margin: 5px 0;">
+                  <div class="col-md-12 p-0" style="margin: 5px 0;">
                     <label class="mobile-show">Button 1 Text</label>
                     <div class="input-group m-t-10">
                       <div class="input-group-prepend mobile-hide">
@@ -259,7 +260,7 @@
                         autocomplete="off" name="exclude">
                     </div>
                   </div>
-                  <div class="col-lg-6 col-md-12 p-0" style="margin: 5px 0;">
+                  <div class="col-md-12 p-0" style="margin: 5px 0;">
                     <label class="mobile-show">Button 2 Text</label>
                     <div class="input-group m-t-10">
                       <div class="input-group-prepend mobile-hide">
@@ -501,7 +502,7 @@
             <div class="col-lg-12 bg-secondary text-white p-10">
               <span>Application Name :</span>
             </div>
-            <div class="col-lg-12 d-flex m-b-100">
+            <div class="col-lg-12 d-flex m-b-100 m-t-10">
               <div class="col-md-6">Device ID</div>
               <div class="col-md-6">Status</div>
             </div>

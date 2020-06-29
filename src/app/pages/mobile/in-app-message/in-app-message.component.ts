@@ -292,4 +292,8 @@ export class InAppMessageComponent implements OnInit {
   sendInAppMessage() {
     this.modalRef.cancel();
   }
+
+  onCloseModal() {
+    this.modalRef.cancel();
+  }
 }
