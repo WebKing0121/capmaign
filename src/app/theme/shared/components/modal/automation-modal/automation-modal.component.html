@@ -1,6 +1,7 @@
-<app-ui-modal #automationModal [containerClick]="false" dialogClass="modal-dialog-centered modal-automation modal-xl">
+<app-ui-modal #automationModal [containerClick]="false" [dialogClass]="dialogClass">
   <div class="app-modal-header">
     <h5 class="modal-title">{{modalType ===  'new' ? 'New' : 'Edit'}} Automation</h5>
+    <button type="button"  class="maximize" (click)="revertFullScreen()"><i class="fa" [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i></button>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
       (click)="automationModal.hide()">
       <span aria-hidden="true">&times;</span>

@@ -10,7 +10,7 @@
   }
 
   ng-select {
-    width: calc(100% - 128px) ;
+    width: calc(100% - 128px);
     min-height: 45px;
     .single {
       .value {
@@ -53,7 +53,7 @@
         }
       }
     }
-  
+
     ng-select > div {
       min-height: 45px !important;
     }

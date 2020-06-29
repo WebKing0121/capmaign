@@ -43,7 +43,8 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
   automationFromDB: any;
   linkJson: any;
   automationPallete: any[];
-
+  fullScreen: boolean;
+  dialogClass: string;
   automationTypeList: NgSelectData[] = [
     { value: 'email', label: 'Email' },
     { value: 'sms', label: 'SMS' },
@@ -366,6 +367,8 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
   }
 
   ngOnInit() {
+    this.fullScreen = false;
+    this.dialogClass = 'modal-dialog-centered modal-automation ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
     this.onChangeType();
   }
 
@@ -526,5 +529,21 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
       return 'post-event';
     }
     return 'unknown';
+  }
+
+  revertFullScreen() {
+    this.fullScreen = !this.fullScreen;
+    this.dialogClass = 'modal-dialog-centered modal-automation ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
+    setTimeout(() => {
+      // this.myDiagramComponent.updateFromAppData();
+      this.myDiagramComponent.diagram.redraw();
+      this.myDiagramComponent.diagram.zoomToRect(this.myDiagramComponent.diagram.documentBounds);
+      // this.myPaletteComponent.palette.scale = 0.8;
+      this.myPaletteComponent.palette.redraw();
+      // if (this.myDiagramComponent.diagram.scale > 1) {
+      //   this.myDiagramComponent.diagram.scale = 1;
+      //   this.myDiagramComponent.diagram.redraw();
+      // }
+    }, 600);
   }
 }

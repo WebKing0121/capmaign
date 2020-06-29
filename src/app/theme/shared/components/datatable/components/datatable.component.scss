@@ -5,14 +5,13 @@
     box-shadow: none;
   }
 
-  
   ::ng-deep {
     .datatable-header {
       border-top: 1px solid #e2e5e8;
       background-color: #f5f5f6;
       display: flex !important;
       align-items: center;
-      
+
       .datatable-header-cell-wrapper {
         // font-weight: bold;
         .datatable-header-cell-label {
@@ -20,7 +19,7 @@
           white-space: nowrap;
           text-overflow: ellipsis;
           width: 100%;
-          position:relative;
+          position: relative;
           font-size: 14px;
           background-color: #fafafa;
           // color: #ddd;
@@ -41,7 +40,7 @@
         white-space: nowrap;
         text-overflow: ellipsis;
         width: 100%;
-        position:relative;
+        position: relative;
         font-size: 13px;
       }
     }
@@ -79,8 +78,7 @@
       right: 10px;
     }
   }
-  
-  
+
   .show {
     .filter-dropdown {
       border: 1px solid #c29239;
@@ -88,7 +86,8 @@
     }
   }
   .dropdown-menu {
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+      0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
     padding: 0;
     font-size: 12px;
     & > .dropdown-item {
@@ -100,7 +99,8 @@
         padding-left: 0;
         list-style-type: none;
         position: absolute;
-        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
+        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+          0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12) !important;
         margin-right: 20px;
         transform: translate(calc(-100% - 11px));
         border: 1px solid #ddd;
@@ -113,7 +113,7 @@
         li:last-child {
           border-bottom: none;
         }
-        li:hover{
+        li:hover {
           background: #ddd;
         }
         li.checked {
@@ -128,12 +128,12 @@
       border-bottom: 0px solid #ddd;
     }
     & > .dropdown-item:hover {
-      .filter-sub-menu{
+      .filter-sub-menu {
         visibility: visible;
       }
     }
   }
-  
+
   .show-columns {
     display: inline-block;
     padding: 8px 7px 4px 7px;
@@ -150,7 +150,6 @@
     &::after {
       display: none;
     }
-    
   }
   .column-title {
     padding: 10px;
