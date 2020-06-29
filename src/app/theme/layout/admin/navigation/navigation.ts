@@ -464,6 +464,29 @@ const NavigationItems = [
         ]
       },
       {
+        id: 'report',
+        title: 'Report',
+        type: 'collapse',
+        icon: 'feather icon-square',
+        url: 'javascript:',
+        children: [
+          {
+            id: 'report-email',
+            title: 'Email Campaigns',
+            type: 'item',
+            url: '/report/email',
+            external: false,
+          },
+          {
+            id: 'report-sms',
+            title: 'Sms Campaigns',
+            type: 'item',
+            url: '/report/sms',
+            external: false,
+          },
+        ]
+      },
+      {
         id: 'setup',
         title: 'Setup',
         type: 'item',

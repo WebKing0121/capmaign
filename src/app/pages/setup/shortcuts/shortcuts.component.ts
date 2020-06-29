@@ -33,7 +33,7 @@ export class ShortcutsComponent implements OnInit {
         id: 2,
         name: 'Email Campaign Reports',
         children: [
-          {label: 'Active Sends', link: '/' },
+          {label: 'Active Sends', link: '/report/email' },
           {label: 'Email Sent By Dates', link: '/' },
           {label: 'Subscriber Sends', link: '/' },
           {label: 'Email Send Result', link: '/' },
@@ -44,7 +44,7 @@ export class ShortcutsComponent implements OnInit {
         id: 3,
         name: 'SMS Campaign Reports',
         children: [
-          {label: 'Active Sends', link: '/' },
+          {label: 'Active Sends', link: '/report/sms' },
           {label: 'SMS Sent By Dates', link: '/' },
           {label: 'Opt-in Sends', link: '/' },
           {label: 'SMS Send Results', link: '/' },

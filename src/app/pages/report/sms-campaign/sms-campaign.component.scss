@@ -1,0 +1,11 @@
+.card-report-sms-campaigns {
+  height: calc(100vh - 130px);
+}
+
+
+@media only screen and (max-width: 575px) {
+  .card-report-sms-campaigns {
+    padding: 0px;
+    height: 500px;
+  }
+}
