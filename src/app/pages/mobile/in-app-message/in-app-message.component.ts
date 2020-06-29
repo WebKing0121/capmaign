@@ -57,7 +57,7 @@ export class InAppMessageComponent implements OnInit {
   btnFontFamily: string;
   btnFontSize: string;
   btnColor: any;
-  btnColor1
+  btnColor1: any;
   btnFill: boolean;
   scheduleOn: boolean;
   selectedDate: any;
@@ -254,7 +254,6 @@ export class InAppMessageComponent implements OnInit {
   }
 
   onTxtFontSizeSelected(event) {
-    console.log(event.target.value)
     this.txtFontSize = event.target.value + 'px';
   }
 
@@ -267,7 +266,6 @@ export class InAppMessageComponent implements OnInit {
   }
 
   onBtnFontSizeSelected(event) {
-    console.log(event.target.value)
     this.btnFontSize = event.target.value + 'px';
   }
 
