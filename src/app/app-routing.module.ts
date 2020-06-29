@@ -50,6 +50,10 @@ const routes: Routes = [
       {
         path: 'scoring',
         loadChildren: () => import('./pages/scoring/scoring.module').then(module => module.ScoringModule)
+      },
+      {
+        path: 'setup',
+        loadChildren: () => import('./pages/setup/setup.module').then(module => module.SetupModule)
       }
     ]
   },

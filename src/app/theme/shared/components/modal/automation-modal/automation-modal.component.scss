@@ -1,0 +1,29 @@
+.myDiagramDiv {
+  background: whitesmoke;
+  width: 100%;
+  height: 300px;
+  border: 1px solid #eaecec;
+}
+
+.myPaletteDiv {
+  background: lightcyan;
+  border: 1px solid #eaecec;
+  width: 100%;
+  height: 300px;
+}
+
+.myOverviewDiv {
+  width: 200px;
+  height: 150px;
+  background: whitesmoke;
+  border: 1px solid black;
+}
+
+.box {
+  border: solid 1px black;
+  background: whitesmoke;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+ng-select {
+  z-index: 10;
+}

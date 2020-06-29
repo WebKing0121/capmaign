@@ -28,8 +28,6 @@ import { CampaignTasksComponent } from './components/campaign-tasks/campaign-tas
 import { SelectModule } from 'ng-select';
 import { CampaignSubTasksComponent } from './components/campaign-sub-tasks/campaign-sub-tasks.component';
 import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
-import { GoPalleteComponent } from './components/go-pallete/go-pallete.component';
-import { GoDiagramComponent } from './components/go-diagram/go-diagram.component';
 import { DataRecordTabsComponent } from './components/data-record-tabs/data-record-tabs.component';
 import { DataRecordsComponent } from './components/data-records/data-records.component';
 import { DataEventsComponent } from './components/data-events/data-events.component';
@@ -85,8 +83,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CampaignTasksComponent,
     CampaignSubTasksComponent,
     ChatWidgetComponent,
-    GoPalleteComponent,
-    GoDiagramComponent,
     DataRecordTabsComponent,
     DataRecordsComponent,
     DataEventsComponent
@@ -104,8 +100,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CampaignTasksComponent,
     CampaignSubTasksComponent,
     ChatWidgetComponent,
-    GoPalleteComponent,
-    GoDiagramComponent,
     DataRecordTabsComponent,
     DataRecordsComponent,
     DataEventsComponent

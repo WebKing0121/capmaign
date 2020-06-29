@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, Form } from '@angular/forms';
 
 import { Automation } from '@app-models/automation';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
@@ -8,7 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AutomationService } from '@app-core/services/automation.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
-import { NgSelectData } from '@app-models/common';
+import { AutomationModalType } from '@app-core/enums/automation-type.enum';
 
 @Component({
   selector: 'app-automations',
@@ -20,6 +19,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('automationModal', { static: false }) automationModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('templateType') templateType: TemplateRef<any>;
+
 
   private unsubscribe$ = new Subject();
 
@@ -33,16 +33,9 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   selected: Automation[] = [];
 
   // add, edit event modal
-  isModalNew: boolean;
-  automationForm: FormGroup;
+  modalType: string;
+  selectedAutomation: Automation;
 
-  automationTypeList: NgSelectData[] = [
-    { value: 'email', label: 'Email' },
-    { value: 'sms', label: 'SMS' },
-    { value: 'pre-event', label: 'Pre Event' },
-    { value: 'during-event', label: 'During Event' },
-    { value: 'post-event', label: 'Post Event' },
-  ];
 
   // confirm Modal
   confirmButtons = [
@@ -55,7 +48,6 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   sortDirection: number;
 
   constructor(
-    private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
     private automationService: AutomationService
@@ -67,12 +59,6 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.sortDirection = 0;
     this.automations = [];
     this.totalCount = 0;
-    this.automationForm = this.fb.group({
-      id: 0,
-      type: ['', Validators.required],
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-    });
   }
 
   ngOnInit(): void {
@@ -138,31 +124,17 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.tableButtons[1].hide = false;
       if (event.cellIndex === 0 && event.column.frozenLeft) {
 
-        const automation: Automation = event.row as Automation;
-        this.isModalNew = false;
-
-        this.automationForm.setValue({
-          id: automation.id,
-          type: this.getAutomationTypeKey(automation),
-          name: '' + automation.name,
-          description: automation.description
-        });
-
-        this.automationModal.show();
+        this.selectedAutomation = event.row as Automation;
+        this.modalType = AutomationModalType.Edit;
+        setTimeout(() => this.automationModal.edit());
       }
     }
   }
 
   onCreateAutomation() {
-    this.isModalNew = true;
-    this.automationForm.setValue({
-      id: 0,
-      type: 'email',
-      description: '',
-      name: ''
-    });
-
-    this.automationModal.show();
+    this.modalType = AutomationModalType.New;
+    this.selectedAutomation = null;
+    this.automationModal.create();
 
   }
   onDeleteAutomation() {
@@ -173,7 +145,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.confirmModal.hide();
   }
   onSaveAutomation() {
-    console.log(this.automationForm.value);
+
   }
 
   getAutomationType(automation: Automation) {
@@ -213,4 +185,6 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     return 'unknown';
   }
+
+
 }

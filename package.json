@@ -50,6 +50,8 @@
     "datatables.net-dt": "^1.10.19",
     "famfamfam-flags": "^1.0.0",
     "fullcalendar": "^3.10.2",
+    "gojs": "^2.1.19",
+    "gojs-angular": "^1.0.3",
     "highcharts": "^6.2.0",
     "jquery": "^3.4.1",
     "jszip": "^3.2.2",

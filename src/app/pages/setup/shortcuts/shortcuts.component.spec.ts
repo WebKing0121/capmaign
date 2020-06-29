@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GoDiagramComponent } from './go-diagram.component';
+import { ShortcutsComponent } from './shortcuts.component';
 
-describe('GoDiagramComponent', () => {
-  let component: GoDiagramComponent;
-  let fixture: ComponentFixture<GoDiagramComponent>;
+describe('ShortcutsComponent', () => {
+  let component: ShortcutsComponent;
+  let fixture: ComponentFixture<ShortcutsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GoDiagramComponent ]
+      declarations: [ ShortcutsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GoDiagramComponent);
+    fixture = TestBed.createComponent(ShortcutsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

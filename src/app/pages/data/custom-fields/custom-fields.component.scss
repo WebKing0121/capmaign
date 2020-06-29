@@ -1,8 +1,8 @@
-.card-lists {
+.card-custom-fields {
   height: calc(100vh - 130px);
 }
 
-.modal-list {
+.modal-custom-fields {
   .input-group-prepend {
     .input-group-text {
       width: 130px;
@@ -27,8 +27,9 @@
 .mobile-show {
   display: none;
 }
+
 @media only screen and (max-width: 575px) {
-  .card-lists {
+  .card-custom-fields {
     padding: 0px;
     height: 500px;
   }
@@ -42,7 +43,7 @@
     display: inherit;
   }
 
-  .modal-list {
+  .modal-custom-fields {
     ng-select {
       width: 100%;
       min-height: 45px;

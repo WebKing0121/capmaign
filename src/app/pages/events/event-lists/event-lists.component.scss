@@ -1,4 +1,4 @@
-.card-lists, .card-assigned-events {
+.card-event-lists, .card-assigned-events {
   height: calc(100vh - 130px);
 }
 
@@ -6,7 +6,7 @@
   padding-left: 0px;
 }
 
-.modal-list {
+.modal-event-list {
   .input-group-prepend {
     .input-group-text {
       width: 130px;
@@ -31,17 +31,13 @@
     height: 400px !important;
     margin-bottom: 0px;
   }
-  .modal-body {
-    padding-top: 0;
-    padding-bottom: 0;
-  }
 }
 
 .mobile-show {
   display: none;
 }
 @media only screen and (max-width: 575px) {
-  .card-lists, .card-assigned-events {
+  .card-event-lists, .card-assigned-events {
     padding: 0px;
     height: 500px;
   }
@@ -55,7 +51,7 @@
     display: inherit;
   }
 
-  .modal-list {
+  .modal-event-list {
     ng-select {
       width: 100%;
       min-height: 45px;

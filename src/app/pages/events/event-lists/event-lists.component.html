@@ -1,5 +1,5 @@
 <div class="row mt-3">
-  <div class="col-md-4 card-lists">
+  <div class="col-md-4 card-event-lists">
     <app-datatable [title]="'Event List'" [buttons]="tableButtons" [dataSource]="tableSource" [rowHeight]="35"
       [headerHeight]="40" (activate)="onActive($event)"></app-datatable>
   </div>
@@ -18,7 +18,7 @@
   <span>{{ getFolder(value) }}</span>
 </ng-template>
 
-<app-ui-modal #listModal dialogClass="modal-dialog-centered modal-list modal-lg">
+<app-ui-modal #listModal dialogClass="modal-dialog-centered modal-event-list modal-lg">
   <div class="app-modal-header">
     <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} Event List</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="listModal.hide()">
@@ -28,7 +28,7 @@
 
   <div class="app-modal-body">
     <form [formGroup]="eventListForm" (ngSubmit)="onSaveList()">
-      <div class="row">
+      <div class="row mt-3">
         <div class="col-md-12">
           <label class="mobile-show">Name</label>
           <div class="input-group">
@@ -39,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div class="row mt-2">
+      <div class="row mt-3">
         <div class="col-md-12">
           <label class="mobile-show">Description</label>
           <div class="input-group">
@@ -51,7 +51,7 @@
 
         </div>
       </div>
-      <div class="row mt-2">
+      <div class="row mt-3 mb-3">
         <div class="col-md-6">
           <label class="mobile-show">Type</label>
           <div class="input-group">
@@ -86,7 +86,7 @@
   modalMessage="Do you want to remove selected events from the list?" [buttons]="confirmRemoveEventsButtons">
 </app-confirm-modal>
 
-<app-ui-modal #dataEventsModal [containerClick]="false" dialogClass="modal-dialog-centered modal-list modal-xl">
+<app-ui-modal #dataEventsModal [containerClick]="false" dialogClass="modal-dialog-centered modal-event-list modal-xl">
   <div class="app-modal-header">
     <h5 class="modal-title">Select Events</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
