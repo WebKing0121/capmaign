@@ -93,7 +93,7 @@ export class ShortcutsComponent implements OnInit {
         name: 'Miscellaneous',
         children: [
           {label: 'Filters', link: '/data/filters' },
-          {label: 'Usage Dashboard', link: '/' },
+          {label: 'Usage Dashboard', link: '/setup/usage-dashboard' },
           {label: 'Import', link: '/' },
           {label: 'New Import', link: '/' },
           {label: 'Export', link: '/' },
