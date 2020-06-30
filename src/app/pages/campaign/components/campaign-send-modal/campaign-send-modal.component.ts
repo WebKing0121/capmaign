@@ -136,7 +136,7 @@ export class CampaignSendModalComponent implements OnInit {
           mode: 'Warning',
           message: 'Please select at least one list/filter to send/schedule email.'
         }
-      })
+      });
     } else {
       this.checkedIncludeMailableList = this.includeMailableList.filter(item => item.checked);
       this.checkedIncludeMailableList = this.checkedIncludeMailableList.map(item => ({ ...item, disabled: true }));

@@ -12,6 +12,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
+import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 
 @Component({
   selector: 'app-campaigns',
@@ -36,7 +37,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         { label: 'Facebook Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
       ]
     },
-    { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked() },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true },
+    { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked(), hide: true },
   ];
 
   selected: Campaign[] = [];
@@ -142,6 +144,11 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+
+    if (event.type === 'checkbox') {
+      this.tableButtons[1].hide = this.selected.length === 0;
+      this.tableButtons[2].hide = this.selected.length !== 1;
+    }
   }
 
   onCampaignTypeClicked(type: CampaignType) {
@@ -166,6 +173,15 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
     }
+  }
+
+  onDeleteClicked() {
+    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+      width: '400px',
+      data: {
+        message: 'Are you sure you want to delete campaign/s?'
+      }
+    });
   }
 
   onSendClicked() {

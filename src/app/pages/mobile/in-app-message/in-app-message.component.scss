@@ -1,10 +1,102 @@
 :host {
-  .arrow-left {
-    width: 0; 
-    height: 0; 
-    border-top: 10px solid transparent;
-    border-bottom: 10px solid transparent; 
-    
-    border-right:10px solid blue; 
+  $iphone-width: 375px;
+  $iphone-height: 672px;
+
+  .iphone-iframe {
+    z-index: 2;
+    position: relative;
+    overflow: visible;
+    width: $iphone-width;
+    height: $iphone-height;
+
+    @media only screen and (min-width: 320px) {
+      width: 280px;
+      height: 480px;
+    }
+
+    .iphone-editor-area {
+      width: 100%;
+      height: 100%;
+      padding: 17% 8% 19% 9.5%;
+    }
+
+    &:after {
+      z-index: -1;
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: url("../../../../assets/images/campaign/iphone-iframe.png") no-repeat;
+      background-size: $iphone-width $iphone-height;
+      padding-right: $iphone-width;
+      padding-bottom: $iphone-height;
+      content: "";
+
+      @media only screen and (min-width: 320px) {
+        background-size: 280px 480px;
+      }
+    }
+  }
+
+  .iphone-user-avatar {
+    width: 40px;
+    height: 40px;
+    background: url("../../../../assets/images/campaign/user-avatar.png") no-repeat;
+    background-size: 40px 40px;
+    content: "";
+  }
+
+  .mobile-campaign-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: black;
+  }
+
+  .mobile-show {
+    display: none;
+
+    @media only screen and (max-width: 767px) {
+      display: inherit;
+    }
+  }
+
+  .mobile-hide {
+    display: inherit;
+
+    @media only screen and (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  #mediaupload .mediaPreview {
+    width: 100%;
+    height: 180px;
+    background-color: #fff;
+    background-size: cover;
+    display: inline-block;
+    box-shadow: 0px -3px 6px 2px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  fieldset {
+    margin: 2px auto 15px;
+    width: 358px;
+  }
+
+  button {
+    width: 5ex;
+    text-align: center;
+    padding: 1px 3px;
+  }
+
+  .txtBold {
+    font-weight: 600;
+  }
+
+  .txtItalic {
+    font-style: italic;
+  }
+
+  .txtUnderline {
+    text-decoration: underline;
   }
 }

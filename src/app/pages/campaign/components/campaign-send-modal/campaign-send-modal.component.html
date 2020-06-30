@@ -3,7 +3,7 @@
     <h2 class="m-0">Send Campaign</h2>
   </div>
   <div class="modal-body">
-    <aw-wizard #wizard class="arc-wizard" navBarLocation="left">
+    <aw-wizard #wizard class="arc-wizard" navBarLocation="top">
       <aw-wizard-step stepTitle="Draft">
         <div class="row">
           <section class="col-sm-12 m-b-10">
@@ -23,7 +23,7 @@
                   </div>
                 </div>
                 <div class="col-md-6 col-sm-12">
-                  <label class="mobile-show">Subject Line<span class="text-danger">*</span></label>
+                  <label class="mobile-show">Subject Line</label>
                   <div class="input-group">
                     <div class="input-group-prepend mobile-hide"><span class="input-group-text">Subject Line</span>
                     </div>
@@ -92,39 +92,38 @@
           </section>
           <section class="col-sm-12 m-t-10 m-b-10">
             <h3>Segmentation</h3>
-            <div class="d-flex m-t-10">
-              <label class="col-md-2 col-sm-12 mr-3">Ad-hoc Records</label>
-
-              <div class="list-wrapper mr-2" [style.width.px]="300">
+            <div class="d-flex m-t-10 flex-wrap">
+              <label class="col-md-2 col-sm-12 mr-3 m-t-20 m-b-20">Ad-hoc Records</label>
+              <div class="list-wrapper mr-2" style="width: 100%;">
                 <app-check-list></app-check-list>
               </div>
             </div>
-            <div class="d-flex m-t-10">
-              <label class="col-md-2 col-sm-12 mr-3">Audience to Include</label>
+            <div class="d-flex m-t-10 flex-wrap">
+              <label class="col-md-2 col-sm-12 mr-3 m-t-20 m-b-20">Audience to Include</label>
               <div class="d-flex flex-wrap">
-                <div class="list-wrapper mr-2" [style.width.px]="300">
-                  <h5 class="m-b-10">Mailable List</h5>
+                <div class="list-wrapper mr-2" style="width: 100%;">
+                  <h5 class="m-t-10 m-b-10">Mailable List</h5>
                   <app-check-list [(data)]="includeMailableList"></app-check-list>
                 </div>
-                <div class="list-wrapper mr" [style.width.px]="300">
-                  <h5 class="m-b-10">Filters</h5>
+                <div class="list-wrapper mr" style="width: 100%;">
+                  <h5 class="m-t-10 m-b-10">Filters</h5>
                   <app-check-list [(data)]="includeFiltersList"></app-check-list>
                 </div>
               </div>
             </div>
-            <div class="d-flex m-t-10">
-              <label class="col-md-2 col-sm-12 mr-3">Audience to Exclude</label>
+            <div class="d-flex m-t-10 flex-wrap">
+              <label class="col-md-2 col-sm-12 mr-3 m-t-20 m-b-20">Audience to Exclude</label>
               <div class="d-flex flex-wrap">
-                <div class="list-wrapper mr-2" [style.width.px]="300">
-                  <h5 class="m-b-10">Mailable List</h5>
+                <div class="list-wrapper mr-2" style="width: 100%;">
+                  <h5 class="m-t-10 m-b-10">Mailable List</h5>
                   <app-check-list [(data)]="excludeMailableList"></app-check-list>
                 </div>
-                <div class="list-wrapper mr-2" [style.width.px]="300">
-                  <h5 class="m-b-10">Exclusion Lists</h5>
+                <div class="list-wrapper mr-2" style="width: 100%;">
+                  <h5 class="m-t-10 m-b-10">Exclusion Lists</h5>
                   <app-check-list></app-check-list>
                 </div>
-                <div class="list-wrapper mr" [style.width.px]="300">
-                  <h5 class="m-b-10">Filters</h5>
+                <div class="list-wrapper mr" style="width: 100%;">
+                  <h5 class="m-t-10 m-b-10">Filters</h5>
                   <app-check-list [(data)]="excludeFiltersList"></app-check-list>
                 </div>
               </div>
@@ -261,19 +260,19 @@
             <div class="d-flex m-t-10">
               <label class="col-md-2 col-sm-12 mr-3">Ad-hoc Records</label>
 
-              <div class="list-wrapper mr-2" [style.width.px]="300">
+              <div class="list-wrapper mr-2">
                 <app-check-list></app-check-list>
               </div>
             </div>
             <div class="d-flex m-t-10">
               <label class="col-md-2 col-sm-12 mr-3">Audience to Include</label>
               <div class="d-flex flex-wrap">
-                <div class="list-wrapper mr-2" [style.width.px]="300">
-                  <h5 class="m-b-10">Mailable List</h5>
+                <div class="list-wrapper mr-2">
+                  <h5 class="m-t-10 m-b-10">Mailable List</h5>
                   <app-check-list [(data)]="checkedIncludeMailableList"></app-check-list>
                 </div>
-                <div class="list-wrapper mr" [style.width.px]="300">
-                  <h5 class="m-b-10">Filters</h5>
+                <div class="list-wrapper mr">
+                  <h5 class="m-t-10 m-b-10">Filters</h5>
                   <app-check-list [(data)]="checkedIncludeFiltersList"></app-check-list>
                 </div>
               </div>
@@ -281,16 +280,16 @@
             <div class="d-flex m-t-10">
               <label class="col-md-2 col-sm-12 mr-3">Audience to Exclude</label>
               <div class="d-flex flex-wrap">
-                <div class="list-wrapper mr-2" [style.width.px]="300">
-                  <h5 class="m-b-10">Mailable List</h5>
+                <div class="list-wrapper mr-2">
+                  <h5 class="m-t-10 m-b-10">Mailable List</h5>
                   <app-check-list [(data)]="checkedExcludeMailableList"></app-check-list>
                 </div>
-                <div class="list-wrapper mr-2" [style.width.px]="300">
-                  <h5 class="m-b-10">Exclusion Lists</h5>
+                <div class="list-wrapper mr-2">
+                  <h5 class="m-t-10 m-b-10">Exclusion Lists</h5>
                   <app-check-list></app-check-list>
                 </div>
-                <div class="list-wrapper mr" [style.width.px]="300">
-                  <h5 class="m-b-10">Filters</h5>
+                <div class="list-wrapper mr">
+                  <h5 class="m-t-10 m-b-10">Filters</h5>
                   <app-check-list [(data)]="checkedExcludeFiltersList"></app-check-list>
                 </div>
               </div>

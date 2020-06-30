@@ -6,15 +6,15 @@ import { CampaignService } from '@app-core/services/campaign.service';
 import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
-import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { InAppMessageComponent } from '../in-app-message/in-app-message.component';
+import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 
 @Component({
-  selector: 'app-in-app-messages',
-  templateUrl: './in-app-messages.component.html',
-  styleUrls: ['./in-app-messages.component.scss']
+  selector: 'app-push-notifications',
+  templateUrl: './push-notifications.component.html',
+  styleUrls: ['./push-notifications.component.scss']
 })
-export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [
@@ -79,7 +79,7 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'In App Campaign Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
+      { name: 'Push Campaign Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
       { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
     ];
@@ -120,4 +120,5 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
       }
     });
   }
+
 }
