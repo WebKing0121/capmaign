@@ -153,7 +153,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
       data: {
-        message: message
+        message
       }
     });
   }

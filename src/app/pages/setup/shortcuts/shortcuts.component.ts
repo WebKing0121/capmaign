@@ -1,5 +1,7 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { Shortcuts } from '@app-core/enums/shortcuts.enum';
+import { DataListType } from '@app-core/enums/data-list-type.enum';
 
 @Component({
   selector: 'app-shortcuts',
@@ -8,7 +10,15 @@ import { Router } from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class ShortcutsComponent implements OnInit {
+  @ViewChild('emailRange', { static: false }) emailRange;
+  @ViewChild('smsRange', { static: false }) smsRange;
+  @ViewChild('emailSendResult', { static: false }) emailSendResult;
+  @ViewChild('smsSendResult', { static: false }) smsSendResult;
+  @ViewChild('sendSubscriber', { static: false }) sendSubscriber;
+  @ViewChild('addToListModal', { static: false }) lists;
+  @ViewChild('addToEventListModal', { static: false }) eventLists;
 
+  DataListType = DataListType;
   shortcuts: any[];
   constructor(
     private router: Router,
@@ -102,9 +112,14 @@ export class ShortcutsComponent implements OnInit {
     ];
   }
 
-  onClickShortcut(link) {
-    if (link.link !== '/') {
-      this.router.navigate([link.link]);
+  onClickShortcut(shortcut) {
+    const { link } = shortcut;
+    if (link !== '/') {
+      if (link.startsWith('@modal#')) {
+        this[link.substring(7)].show();
+      } else {
+        this.router.navigate([link]);
+      }
     }
   }
 

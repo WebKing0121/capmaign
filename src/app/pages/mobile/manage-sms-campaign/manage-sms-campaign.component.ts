@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { MobileCampaignComponent } from '../mobile-campaign/mobile-campaign.component';
+// tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { Router, ActivatedRoute } from '@angular/router';
 

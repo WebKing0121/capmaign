@@ -3,7 +3,8 @@ export enum CampaignType {
   Mobile = 'mobile',
   Social = 'social',
   GoogleAds = 'google-ads',
-  Facebook = 'facebook'
+  Facebook = 'facebook',
+  SMS = 'sms'
 }
 
 export enum CampaignFilterType {

@@ -1,0 +1,13 @@
+<div class="row mt-3">
+  <div class="col-12 card-report-sms-campaigns">
+    <app-datatable [title]="'Active SMS Sends'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [selectable]="true"
+      [selectionType]="'checkbox'"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
+  </div>
+</div>

@@ -12,6 +12,7 @@ export class UserService {
 
   getAll() {
     // return this.http.get<User[]>(`${environment.apiUrl}/users`);
+    console.log(UsersMockData.result.items.map(x => x.id));
     return of(UsersMockData);
   }
 }

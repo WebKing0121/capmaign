@@ -39,11 +39,14 @@
       .button-text {
         padding-left: 5px;
       }
-    }
 
-    .btn-header-1:hover {
-      border: 1px solid #c29239;
-      background-color: #ffd86b !important;
+      &:hover:not([disabled]) {
+        border: 1px solid #c29239;
+        background-color: #ffd86b;
+      }
+      &:disabled {
+        color: #ddd;
+      }
     }
   }
 

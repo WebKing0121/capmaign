@@ -149,6 +149,29 @@ const NavigationItems = [
         external: false
       },
       {
+        id: 'admin',
+        title: 'Administration',
+        type: 'collapse',
+        icon: 'feather icon-square',
+        url: 'javascript:',
+        children: [
+          {
+            id: 'admin-users',
+            title: 'Users',
+            type: 'item',
+            url: '/admin/users',
+            external: false,
+          },
+          {
+            id: 'admin-user-roles',
+            title: 'User Roles',
+            type: 'item',
+            url: '/admin/roles',
+            external: false,
+          },
+        ]
+      },
+      {
         id: 'data',
         title: 'Data',
         type: 'collapse',
@@ -460,6 +483,36 @@ const NavigationItems = [
             type: 'item',
             url: '/social/policy',
             external: false
+          },
+        ]
+      },
+      {
+        id: 'report',
+        title: 'Report',
+        type: 'collapse',
+        icon: 'feather icon-square',
+        url: 'javascript:',
+        children: [
+          {
+            id: 'report-email',
+            title: 'Email Campaigns',
+            type: 'item',
+            url: '/report/email',
+            external: false,
+          },
+          {
+            id: 'report-sms',
+            title: 'Sms Campaigns',
+            type: 'item',
+            url: '/report/sms',
+            external: false,
+          },
+          {
+            id: 'report-exports',
+            title: 'Exports email',
+            type: 'item',
+            url: '/report/exports',
+            external: false,
           },
         ]
       },

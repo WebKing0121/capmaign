@@ -13,6 +13,7 @@ import { CampaignLeadGradingType } from '@app-core/enums/campaign-type.enum';
 import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { WizardComponent } from 'angular-archwizard';
 import { ModalService } from '@app-components/modal/modal.service';
+// tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from 'src/app/pages/scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 interface ComponentProps {
   campaign: Campaign;

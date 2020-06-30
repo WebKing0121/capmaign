@@ -52,6 +52,14 @@ const routes: Routes = [
         loadChildren: () => import('./pages/scoring/scoring.module').then(module => module.ScoringModule)
       },
       {
+        path: 'report',
+        loadChildren: () => import('./pages/report/report.module').then(module => module.ReportModule)
+      },
+      {
+        path: 'admin',
+        loadChildren: () => import('./pages/admin/admin.module').then(module => module.AdminModule)
+      },
+      {
         path: 'setup',
         loadChildren: () => import('./pages/setup/setup.module').then(module => module.SetupModule)
       }

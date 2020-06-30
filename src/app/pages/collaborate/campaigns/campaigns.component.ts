@@ -150,7 +150,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.allUsers = data.map(x => ({ id: x.id, label: x.firstName + ' ' + x.lastName }));
+          this.allUsers = data.result.items.map(x => ({ id: x.id, label: x.surname + ' ' + x.name }));
           this.loaded++;
         },
         error => {
