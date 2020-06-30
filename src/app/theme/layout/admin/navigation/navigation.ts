@@ -145,8 +145,8 @@ const NavigationItems = [
         title: 'Dashboard',
         type: 'item',
         icon: 'feather icon-home',
-        url: 'javascript:',
-        external: true
+        url: '/dashboard',
+        external: false
       },
       {
         id: 'data',
@@ -469,7 +469,16 @@ const NavigationItems = [
         type: 'item',
         icon: 'feather icon-monitor',
         url: '/setup/shortcuts',
-        external: false
+        external: false,
+        children: [
+          {
+            id: 'setup-usage-dashboard',
+            title: 'Usage Dashboard',
+            type: 'item',
+            url: '/setup/usage-dashboard',
+            external: false
+          },
+        ]
       },
     ]
   }

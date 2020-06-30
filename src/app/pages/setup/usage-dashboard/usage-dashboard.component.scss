@@ -1,0 +1,17 @@
+ng-select {
+  min-width: 170px;
+  display: flex;
+  align-items: center;
+
+  .bellow {
+    display: flex;
+    align-items: center;
+    min-height: 45px;
+  }
+
+  .single {
+    .value {
+      line-height: 43px;
+    }
+  }
+}

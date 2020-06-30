@@ -5,10 +5,12 @@ import { SetupRoutingModule } from './setup-routing.module';
 import { SharedModule } from '../../theme/shared/shared.module';
 import { SelectModule } from 'ng-select';
 import { ShortcutsComponent } from './shortcuts/shortcuts.component';
+import { UsageDashboardComponent } from './usage-dashboard/usage-dashboard.component';
 
 @NgModule({
   declarations: [
-    ShortcutsComponent
+    ShortcutsComponent,
+    UsageDashboardComponent
   ],
   imports: [
     CommonModule,
