@@ -1,15 +1,16 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
-import * as moment from 'moment';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
-import { NgSelectData } from '@app-models/common';
 import { User } from '@app-models/user';
 import { UserService } from '@app-core/services/user.service';
+import { UserModalType } from '@app-core/enums/user-type.enum';
+
+// modals
+import { UserModalComponent } from './modals/user/user-modal.component';
 
 @Component({
   selector: 'app-admin-users',
@@ -18,14 +19,15 @@ import { UserService } from '@app-core/services/user.service';
   encapsulation: ViewEncapsulation.None
 })
 export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('userModal', { static: false }) userModal;
+  @ViewChild('userModal', { static: false }) userModal: UserModalComponent;
   @ViewChild('userTemplate', { static: false }) userTemplate;
   @ViewChild('userStatusTemplate', { static: false }) userStatusTemplate;
 
+  modalType = UserModalType.New;
   private unsubscribe$ = new Subject();
 
   users: User[];
-
+  selectedUser: User;
   tableSource: DataTableSource<User> = new DataTableSource<User>(50);
   totalCount: number;
   selected: User[] = [];
@@ -34,33 +36,12 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     { label: 'Export', icon: 'fa fa-download', click: () => this.onClickExport() },
   ];
 
-  // add, edit list modal
-  isModalNew: boolean;
-  customFieldsForm: FormGroup;
-
-  customFieldsType: NgSelectData[] = [
-    { value: 'Text', label: 'Text' },
-    { value: 'Numeric', label: 'Numeric' },
-    { value: 'Date', label: 'Date' },
-  ];
-
-  defaultValueType: string;
-  defaultValue: any;
-
   constructor(
-    private fb: FormBuilder,
     private userService: UserService
   ) {
     this.totalCount = 0;
     this.users = [];
-    this.isModalNew = true;
-    this.customFieldsForm = this.fb.group({
-      id: 0,
-      name: ['', Validators.required],
-      defaultValue: ['', Validators.required],
-      type: ['', Validators.required],
-    });
-    this.defaultValueType = 'Text';
+
   }
 
   ngOnInit(): void {
@@ -82,25 +63,26 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('error', error.response);
         }
       );
-
-    this.onChangeType();
   }
 
   ngAfterViewInit(): void {
 
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, custom: true, template: this.userTemplate },
-      { name: 'User Name', prop: 'userName', sortable: true },
-      { name: 'Phone', prop: 'phoneNumber', sortable: true },
+      { name: 'User Name', prop: 'userName', sortable: true, maxWidth: 150, cellClass: ['cell-hyperlink'] },
+      { name: 'Phone', prop: 'phoneNumber', sortable: true, maxWidth: 150, },
       {
         name: 'Last Login Date', prop: 'lastLoginTime', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 150,
       },
       {
         name: 'Creation Date', prop: 'creationTime', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 150,
       },
-      { name: 'Status', prop: 'isActive', sortable: true, custom: true, template: this.userStatusTemplate },
+      {
+        name: 'Status', prop: 'isActive', sortable: true, custom: true,
+        template: this.userStatusTemplate, width: 80
+      },
     ];
     this.tableSource.setColumns(columns);
   }
@@ -108,19 +90,6 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
-  }
-
-  onChangeType() {
-    this.customFieldsForm.get('type').valueChanges
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(val => {
-        this.defaultValueType = val;
-        if (val !== 'Date') {
-          this.customFieldsForm.get('defaultValue').setValue('');
-        } else {
-          this.customFieldsForm.get('defaultValue').setValue(this.defaultValue);
-        }
-      });
   }
 
   _updateTable(users: User[]) {
@@ -145,56 +114,22 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   onActive(evt) {
     if (evt.type === 'click') {
       // this.tableButtons[1]. = false;
-      // if (evt.cellIndex === 1) {
-      //   const customField: CustomField = evt.row as CustomField;
-      //   this.isModalNew = false;
-
-      //   let defaultValue;
-      //   if (customField.fieldDataType === 'Date') {
-      //     if (moment(customField.defaultValue).isValid()) {
-      //       const year = Number(moment(customField.defaultValue).format('YYYY'));
-      //       const month = Number(moment(customField.defaultValue).format('MM'));
-      //       const day = Number(moment(customField.defaultValue).format('DD'));
-
-      //       defaultValue = { year, month, day };
-      //     } else {
-      //       defaultValue = null;
-      //     }
-      //     this.defaultValue = defaultValue;
-      //   } else {
-      //     defaultValue = customField.defaultValue;
-      //   }
-
-      //   this.customFieldsForm.setValue({
-      //     id: customField.id,
-      //     name: customField.displayName,
-      //     defaultValue,
-      //     type: customField.fieldDataType,
-      //   });
-      //   this.userModal.show();
-      // }
+      if (evt.cellIndex === 1) {
+        this.modalType = UserModalType.Edit;
+        this.selectedUser = evt.row as User;
+        setTimeout(() => this.userModal.show());
+      }
     }
   }
 
   onClickCreate() {
-    this.isModalNew = true;
-    this.customFieldsForm.reset();
-    this.customFieldsForm.setValue({
-      id: 0,
-      name: '',
-      defaultValue: '',
-      type: 'Text'
-    });
+    this.modalType = UserModalType.New;
+    this.selectedUser = null;
     this.userModal.show();
   }
 
   onClickExport() {
 
   }
-
-  onSaveCustomField() {
-    console.log(this.customFieldsForm.value);
-  }
-
 
 }

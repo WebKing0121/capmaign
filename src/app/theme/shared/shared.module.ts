@@ -85,7 +85,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChatWidgetComponent,
     DataRecordTabsComponent,
     DataRecordsComponent,
-    DataEventsComponent
+    DataEventsComponent,
   ],
   declarations: [
     DataFilterPipe,
@@ -102,7 +102,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChatWidgetComponent,
     DataRecordTabsComponent,
     DataRecordsComponent,
-    DataEventsComponent
+    DataEventsComponent,
   ],
   providers: [
     {

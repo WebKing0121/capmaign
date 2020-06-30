@@ -23,7 +23,6 @@ import { AutomationModalComponent } from './automation-modal/automation-modal.co
 import { ReportDateRangeModalComponent } from './report-date-range-modal/report-date-range-modal.component';
 import { ReportSendResultModalComponent } from './report-send-result-modal/report-send-result-modal.component';
 import { SendSubscriberModalComponent } from './send-subscriber-modal/send-subscriber-modal.component';
-import { UserCreateModalComponent } from './user-create-modal/user-create-modal.component';
 
 @NgModule({
   imports: [
@@ -53,7 +52,6 @@ import { UserCreateModalComponent } from './user-create-modal/user-create-modal.
     ReportDateRangeModalComponent,
     ReportSendResultModalComponent,
     SendSubscriberModalComponent,
-    UserCreateModalComponent,
   ],
   exports: [
     UiModalComponent,

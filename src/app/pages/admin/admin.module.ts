@@ -5,16 +5,23 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from '../../theme/shared/shared.module';
 import { SelectModule } from 'ng-select';
 import { UsersComponent } from './users/users.component';
+import { ArchwizardModule } from 'angular-archwizard';
+
+// components
+import { UserModalComponent } from './users/modals/user/user-modal.component';
+
 @NgModule({
   declarations: [
-    UsersComponent
+    UsersComponent,
+    UserModalComponent
   ],
   imports: [
     CommonModule,
     AdminRoutingModule,
     SharedModule,
     DatatableModule,
-    SelectModule
+    SelectModule,
+    ArchwizardModule
   ]
 })
 export class AdminModule { }
