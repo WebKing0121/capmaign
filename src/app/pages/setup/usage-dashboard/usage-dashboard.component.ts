@@ -35,11 +35,19 @@ export class UsageDashboardComponent implements OnInit {
     {field: 'DB Usage', value: 0}
   ];
 
+  allUsageFields1: AllUsageField[] = [
+    {field: 'Total Number of SMS', value: 0},
+    {field: 'Total Number of Records', value: 0},
+    {field: 'Total Number of SMS Failed', value: 0},
+    {field: 'Total Number of SMS Delivered', value: 0}
+  ];
+
   tableSource: DataTableSource<OrganizationData> = new DataTableSource<OrganizationData>(10);
   tableButtons = [];
 
   allOrganizationData: OrganizationData[];
   destroy$ = new Subject();
+  showMobileUsageDashboard: boolean;
 
   constructor(
     private usageDashboardService: UsageDashboardService,
@@ -93,5 +101,10 @@ export class UsageDashboardComponent implements OnInit {
       { name: 'Disk Space', prop: 'sentEmailCount', sortable: true},
     ];
     this.tableSource.setColumns(columns);
+  }
+
+  onUsagePageSelect(event) {
+    if(event.target.value === '0') return;
+    this.showMobileUsageDashboard = event.target.value === '2';
   }
 }
