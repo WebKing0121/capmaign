@@ -7,6 +7,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { InAppMessageComponent } from '../in-app-message/in-app-message.component';
+// tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 
 @Component({
@@ -102,7 +103,7 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
         width: '80%',
         data: {
           createMode: false,
-          inAppMessage: inAppMessage
+          inAppMessage,
         }
       });
     }

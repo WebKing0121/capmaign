@@ -9,8 +9,8 @@ export const CollaborateChatRoomsMockData: CollaborateChatRoom[] = [
     id: 2, name: 'Digital Marketing Team', newMessageCount: 0, type: 'group',
     lastMessage: 'Sure', lastMessageTime: '2020-06-10 10:32:21'
   },
-  ...UsersMockData.map((x, index) => ({
-    id: 3 + index, name: x.firstName + ' ' + x.lastName,
+  ...UsersMockData.result.items.map((x, index) => ({
+    id: 3 + index, name: x.surname + ' ' + x.name,
     newMessageCount: 0, type: 'person', lastMessage: '', lastMessageTime: '', profileImg: x.profileImg
   }))
 ];

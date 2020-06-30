@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
+// tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { Automation } from '@app-core/models/automation';
 import { AutomationService } from '@app-core/services/automation.service';
@@ -91,6 +92,7 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
+      // tslint:disable-next-line
       { name: 'Modification Date', prop: 'lastModificationTime', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
       { name: 'Created Date', prop: 'creationTime', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
       { name: 'Description', prop: 'description', sortable: true },

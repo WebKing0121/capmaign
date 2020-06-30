@@ -6,6 +6,7 @@ import { CampaignService } from '@app-core/services/campaign.service';
 import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
+// tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { InAppMessageComponent } from '../in-app-message/in-app-message.component';
 
@@ -102,7 +103,7 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
         width: '80%',
         data: {
           createMode: false,
-          inAppMessage: inAppMessage
+          inAppMessage,
         }
       });
     }

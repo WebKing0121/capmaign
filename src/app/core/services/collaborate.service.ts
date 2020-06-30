@@ -53,15 +53,19 @@ export class CollaborateService {
     let newCampaignId = 0;
     let campaign;
     let user;
+    let userIdIndex = 0;
+    const userIdArray = UsersMockData.result.items.map(x => x.id);
+
     while (RecordsPerRequest > 0) {
       lastActivityTime = moment(lastActivityTime).subtract(1, 'm').format('YYYY-MM-DD HH:mm:ss');
-      userId = Math.ceil(Math.random() * 14);
-      user = UsersMockData.find(x => x.id === userId);
+      userIdIndex = Math.ceil(Math.random() * (userIdArray.length - 1));
+      userId = userIdArray[userIdIndex];
+      user = UsersMockData.result.items.find(x => x.id === userId);
       newCampaignId = campaignId > 0 ? campaignId : Math.ceil(Math.random() * 6);
       campaign = CollaborateCampaignsMockData.find(x => x.id === newCampaignId);
       activities.push({
         time: lastActivityTime,
-        user: user.firstName + ' ' + user.lastName,
+        user: user.surname + ' ' + user.name,
         module_id: 1,
         campaign: campaign.name,
         message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'

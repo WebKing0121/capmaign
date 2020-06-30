@@ -33,9 +33,9 @@ export class AuthenticationService {
         if (res.success) {
           const user = new User();
           user.id = 1;
-          user.username = username;
-          user.firstName = '';
-          user.lastName = '';
+          user.userName = username;
+          user.surname = '';
+          user.name = '';
           user.profileImg = '';
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);

@@ -12,6 +12,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
+// tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 
 @Component({

@@ -117,7 +117,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
           this.modalService.openModal(CreateLeadScoringComponent, {
             width: '80%',
             data: {
-              scoring: scoring,
+              scoring,
               mode: 'edit'
             }
           });
@@ -154,7 +154,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
       width: '400px',
       data: {
-        message: message
+        message
       }
     });
   }

@@ -3,7 +3,7 @@ export const Shortcuts = [
     id: 1,
     name: 'Administration',
     children: [
-      {label: 'Users', link: '/' },
+      {label: 'Users', link: '/admin/users' },
       {label: 'Roles', link: '/' },
       {label: 'Organization Units', link: '/' },
       {label: 'Senders Setup', link: '/' },
@@ -16,7 +16,7 @@ export const Shortcuts = [
     children: [
       {label: 'Active Sends', link: '/report/email' },
       {label: 'Email Sent By Dates', link: '@modal#emailRange' },
-      {label: 'Subscriber Sends', link: '/' },
+      {label: 'Subscriber Sends', link: '@modal#sendSubscriber' },
       {label: 'Email Send Result', link: '@modal#emailSendResult' },
       {label: 'Email Send Exports', link: '/report/exports' },
     ]
@@ -64,8 +64,8 @@ export const Shortcuts = [
     id: 6,
     name: 'Lists',
     children: [
-      {label: 'Lists', link: '/data/lists' },
-      {label: 'Event Lists', link: '/events/lists' },
+      {label: 'Lists', link: '@modal#lists' },
+      {label: 'Event Lists', link: '@modal#eventLists' },
       {label: 'List of Values', link: '/' },
     ]
   },

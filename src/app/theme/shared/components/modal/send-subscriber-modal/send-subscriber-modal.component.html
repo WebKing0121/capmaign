@@ -1,0 +1,42 @@
+<app-ui-modal #sendSubscriberModal [containerClick]="false" dialogClass="modal-dialog-centered">
+  <div class="app-modal-header">
+    <h5 class="modal-title">Subscribers Send</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="sendSubscriberModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <div class="row">
+      <div class="col-12">
+        <p class="description">This report shows history of all emails sent to a specific subscriber.</p>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <form [formGroup]="form" (ngSubmit)="onClickSend()">
+        <div class="col-md-12 col-sm-12">
+          <label class="mobile-show">Email Address</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                Email Address
+              </span>
+            </div>
+            <input type="email" class="form-control" formControlName="email" />
+            <div class="input-group-append">
+              <button class="btn btn-primary btn-sm">
+                Validate
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary mr-2">Send</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal"
+      (click)="sendSubscriberModal.hide()">Close</button>
+  </div>
+</app-ui-modal>

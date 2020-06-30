@@ -149,6 +149,29 @@ const NavigationItems = [
         external: true
       },
       {
+        id: 'admin',
+        title: 'Administration',
+        type: 'collapse',
+        icon: 'feather icon-square',
+        url: 'javascript:',
+        children: [
+          {
+            id: 'admin-users',
+            title: 'Users',
+            type: 'item',
+            url: '/admin/users',
+            external: false,
+          },
+          {
+            id: 'admin-user-roles',
+            title: 'User Roles',
+            type: 'item',
+            url: '/admin/roles',
+            external: false,
+          },
+        ]
+      },
+      {
         id: 'data',
         title: 'Data',
         type: 'collapse',

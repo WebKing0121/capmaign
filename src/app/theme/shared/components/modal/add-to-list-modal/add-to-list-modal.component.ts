@@ -85,6 +85,10 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
             console.log('error', error.response);
           }
         );
+      this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
+        .subscribe((res) => res === null && this.store.dispatch({
+          type: AppTypes.GetRecordColumns
+        }));
     } else if (this.type === DataListType.EventList) {
       this.tableTitle = 'Assigned Events';
       this.dataService.getEventLists()
