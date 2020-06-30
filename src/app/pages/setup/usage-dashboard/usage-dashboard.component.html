@@ -1,8 +1,859 @@
 <div class="card">
-  <div class="card-header"></div>
+  <div class="card-header">
+    <span>USAGE DASHBOARD - EMAIL</span>
+  </div>
   <div class="card-body">
-    <div class="row">
-      <ng-select [options]="analyticItems"></ng-select>
+    <div class="view-option-group">
+      <select class="campaign-type form-control">
+        <option value="">Select Campaign Type</option>
+        <option value="1">Usage Dashboard - Email</option>
+        <option value="2">Usage Dashboard - Mobile</option>
+      </select>
+      <div *ngFor="let option of viewOptions" class="view-option">
+        <div class="custom-control custom-radio">
+          <input type="radio" [id]="option.id" name="view-option" class="custom-control-input">
+          <label class="custom-control-label" [for]="option.id">{{option.value}}</label>
+        </div>
+      </div>
+      
+      <div class="refresh-option">
+        <span class="btn btn-primary">
+          Refresh
+        </span>
+      </div>
     </div>
+    <div class="row ">
+      <div class="col-lg-6 col-md-12">
+        <div class="card all-usage-part">
+          <div class="card-header">
+            ALL USAGE
+          </div>
+          <div class="card-body">
+            <div class="card all-usage-table">
+              <div class="card-header all-usage-table_header bg-secondary text-white">
+                <div class="all-usage-table_header_field-part">
+                  <span>Type</span>
+                </div>
+                <div class="all-usage-table_header_value-part">
+                  <span>Count</span>
+                </div>
+              </div>
+              <div class="card-body all-usage-table_content">
+                <div *ngFor="let allUsageField of allUsageFields">
+                  <div class="all-usage-table_content_field">
+                    <span>{{allUsageField.field}}</span>
+                  </div>
+                  <div class="all-usage-table_content_value">
+                    <span>{{allUsageField.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <app-datatable [title]="'ALL ORGANIZATION DATA USAGE'"
+          [dataSource]="tableSource"
+          [buttons]="tableButtons">
+        </app-datatable>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-12">
+      </div>
+    </div>
+
+      <!-- uiView: -->
+      <div ui-view="" class="fade-in-up ng-scope">
+        <div ng-controller="tenant.views.admin.indexCtrl as vm" class="ng-scope">
+          <!-- uiView: -->
+          <div ui-view="" class="ng-scope">
+            <div ng-controller="tenant.views.admin.usageDashboardCtrl as vm" class="ng-scope">
+              <div class="pageBody" id="top">
+                <div busy-if="vm.loading" class="ng-isolate-scope" style="position: static; zoom: 1;">
+                  <div class="modal-body">
+
+                    <!--EMAIL SUmmary-->
+                    <div class="col-lg-12">
+                      <div class="col-lg-8" style="margin-right:50px;">
+                        <div>
+                          <h3 style="color: #3EC1C3">EMAIL USAGE</h3>
+                        </div>
+                        <div>
+                          <!--<i class="fa fa-square" aria-hidden="false" style="color: #7071B0;"></i>-->
+                          <table class="table table-bordered table-striped" style="border: 1px solid #e7ecf1;">
+                            <thead ng-hide="vm.emails.length==0" class="ng-hide">
+                              <tr class="bg-primary">
+                                <!-- ngRepeat: col in vm.emailColumnHeaders -->
+                                <th ng-repeat="col in vm.emailColumnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope">Name</th>
+                                <!-- end ngRepeat: col in vm.emailColumnHeaders -->
+                                <th ng-repeat="col in vm.emailColumnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope ng-hide">Code</th>
+                                <!-- end ngRepeat: col in vm.emailColumnHeaders -->
+                                <th ng-repeat="col in vm.emailColumnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope">2020-06-30</th>
+                                <!-- end ngRepeat: col in vm.emailColumnHeaders -->
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-- ngRepeat: row in vm.emails -->
+                              <tr ng-show="vm.emails.length==0" class="">
+                                <td>No Data Found</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div id="emailsummaryChart" class="c3" style="max-height: 200px; position: relative;"><svg
+                            width="722.25" height="200" style="overflow: hidden;">
+                            <defs>
+                              <clipPath id="c3-1593504933530-clip">
+                                <rect width="660.25" height="166"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504933530-clip-xaxis">
+                                <rect x="-41" y="-20" width="732.25" height="50"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504933530-clip-yaxis">
+                                <rect x="-39" y="-4" width="60" height="190"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504933530-clip-grid">
+                                <rect width="660.25" height="166"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504933530-clip-subchart">
+                                <rect width="660.25"></rect>
+                              </clipPath>
+                            </defs>
+                            <g transform="translate(40.5,4.5)"><text class="c3-text c3-empty" text-anchor="middle"
+                                dominant-baseline="middle" x="330.125" y="83">No Data Available</text>
+                              <rect class="c3-zoom-rect" width="660.25" height="166" style="opacity: 0;"></rect>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip)"
+                                class="c3-regions" style="visibility: visible;"></g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip-grid)"
+                                class="c3-grid" style="visibility: visible;">
+                                <g class="c3-xgrid-focus">
+                                  <line class="c3-xgrid-focus" x1="-10" x2="-10" y1="0" y2="166"
+                                    style="visibility: hidden;"></line>
+                                </g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip)"
+                                class="c3-chart">
+                                <g class="c3-event-rects c3-event-rects-single" style="fill-opacity: 0;"></g>
+                                <g class="c3-chart-bars"></g>
+                                <g class="c3-chart-lines"></g>
+                                <g class="c3-chart-arcs" transform="translate(325.125,83)"><text
+                                    class="c3-chart-arcs-title" style="text-anchor: middle; opacity: 0;"></text></g>
+                                <g class="c3-chart-texts"></g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip-grid)"
+                                class="c3-grid c3-grid-lines">
+                                <g class="c3-xgrid-lines"></g>
+                                <g class="c3-ygrid-lines"></g>
+                              </g>
+                              <g class="c3-axis c3-axis-x"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip-xaxis)"
+                                transform="translate(0,166)" style="visibility: visible; opacity: 1;"><text
+                                  class="c3-axis-x-label" transform="" style="text-anchor: end;" x="660.25" dx="-0.5em"
+                                  dy="-0.5em"></text>
+                                <path class="domain" d="M0,6V0H660.25V6"></path>
+                              </g>
+                              <g class="c3-axis c3-axis-y"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip-yaxis)"
+                                transform="translate(0,0)" style="visibility: visible; opacity: 1;"><text
+                                  class="c3-axis-y-label" transform="rotate(-90)" style="text-anchor: end;" x="0"
+                                  dx="-0.5em" dy="1.2em"></text>
+                                <g class="tick" transform="translate(0,166)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,150)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.1</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,133)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.2</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,117)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.3</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,100)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.4</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,84)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.5</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,67)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.6</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,51)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.7</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,34)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.8</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,18)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.9</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,1)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">1</tspan>
+                                  </text>
+                                </g>
+                                <path class="domain" d="M-6,1H0V166H-6"></path>
+                              </g>
+                              <g class="c3-axis c3-axis-y2" transform="translate(660.25,0)"
+                                style="visibility: hidden; opacity: 1;"><text class="c3-axis-y2-label"
+                                  transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em"
+                                  dy="-0.5em"></text>
+                                <g class="tick" transform="translate(0,166)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,150)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.1</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,133)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.2</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,117)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.3</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,100)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.4</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,84)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.5</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,67)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.6</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,51)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.7</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,34)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.8</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,18)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.9</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,1)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">1</tspan>
+                                  </text>
+                                </g>
+                                <path class="domain" d="M6,1H0V166H6"></path>
+                              </g>
+                            </g>
+                            <g transform="translate(20.5,200.5)" style="visibility: hidden;">
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip-subchart)"
+                                class="c3-chart">
+                                <g class="c3-chart-bars"></g>
+                                <g class="c3-chart-lines"></g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip)"
+                                class="c3-brush"
+                                style="pointer-events: all; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                <rect class="background" x="0" width="647.4444580078125"
+                                  style="visibility: hidden; cursor: crosshair;"></rect>
+                                <rect class="extent" x="0" width="0" style="cursor: move;"></rect>
+                                <g class="resize e" transform="translate(0,0)"
+                                  style="cursor: ew-resize; display: none;">
+                                  <rect x="-3" width="6" height="6" style="visibility: hidden;"></rect>
+                                </g>
+                                <g class="resize w" transform="translate(0,0)"
+                                  style="cursor: ew-resize; display: none;">
+                                  <rect x="-3" width="6" height="6" style="visibility: hidden;"></rect>
+                                </g>
+                              </g>
+                              <g class="c3-axis-x" transform="translate(0,0)"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933530-clip-xaxis)"
+                                style="visibility: hidden; opacity: 1;">
+                                <path class="domain" d="M0,6V0H660.25V6"></path>
+                              </g>
+                            </g>
+                            <g transform="translate(722.25,0)"></g><text class="c3-title" x="361.125" y="0"></text>
+                          </svg>
+                          <div class="c3-tooltip-container"
+                            style="position: absolute; pointer-events: none; display: none;"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--Record SUmmary-->
+                    <div class="col-lg-12">
+                      <div class="col-lg-8" style="margin-right:50px;">
+                        <div>
+                          <h3 style="color: #3EC1C3">RECORD USAGE</h3>
+                        </div>
+                        <div>
+                          <!--<i class="fa fa-square" aria-hidden="false" style="color: #7071B0;"></i>-->
+                          <table class="table table-bordered table-striped" style="border: 1px solid #e7ecf1;">
+                            <thead ng-hide="vm.records.length==0" class="ng-hide">
+                              <tr class="bg-primary">
+                                <!-- ngRepeat: col in vm.columnHeaders -->
+                                <th ng-repeat="col in vm.columnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope">Name</th>
+                                <!-- end ngRepeat: col in vm.columnHeaders -->
+                                <th ng-repeat="col in vm.columnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope ng-hide">Code</th>
+                                <!-- end ngRepeat: col in vm.columnHeaders -->
+                                <th ng-repeat="col in vm.columnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope">2020-06-30</th>
+                                <!-- end ngRepeat: col in vm.columnHeaders -->
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-- ngRepeat: row in vm.records -->
+                              <tr ng-show="vm.records.length==0" class="">
+                                <td>No Data Found</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div id="recordsummaryChart" class="c3" style="max-height: 200px; position: relative;"><svg
+                            width="722.25" height="200" style="overflow: hidden;">
+                            <defs>
+                              <clipPath id="c3-1593504933401-clip">
+                                <rect width="660.25" height="166"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504933401-clip-xaxis">
+                                <rect x="-41" y="-20" width="732.25" height="50"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504933401-clip-yaxis">
+                                <rect x="-39" y="-4" width="60" height="190"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504933401-clip-grid">
+                                <rect width="660.25" height="166"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504933401-clip-subchart">
+                                <rect width="660.25"></rect>
+                              </clipPath>
+                            </defs>
+                            <g transform="translate(40.5,4.5)"><text class="c3-text c3-empty" text-anchor="middle"
+                                dominant-baseline="middle" x="330.125" y="83">No Data Available</text>
+                              <rect class="c3-zoom-rect" width="660.25" height="166" style="opacity: 0;"></rect>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip)"
+                                class="c3-regions" style="visibility: visible;"></g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip-grid)"
+                                class="c3-grid" style="visibility: visible;">
+                                <g class="c3-xgrid-focus">
+                                  <line class="c3-xgrid-focus" x1="-10" x2="-10" y1="0" y2="166"
+                                    style="visibility: hidden;"></line>
+                                </g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip)"
+                                class="c3-chart">
+                                <g class="c3-event-rects c3-event-rects-single" style="fill-opacity: 0;"></g>
+                                <g class="c3-chart-bars"></g>
+                                <g class="c3-chart-lines"></g>
+                                <g class="c3-chart-arcs" transform="translate(325.125,83)"><text
+                                    class="c3-chart-arcs-title" style="text-anchor: middle; opacity: 0;"></text></g>
+                                <g class="c3-chart-texts"></g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip-grid)"
+                                class="c3-grid c3-grid-lines">
+                                <g class="c3-xgrid-lines"></g>
+                                <g class="c3-ygrid-lines"></g>
+                              </g>
+                              <g class="c3-axis c3-axis-x"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip-xaxis)"
+                                transform="translate(0,166)" style="visibility: visible; opacity: 1;"><text
+                                  class="c3-axis-x-label" transform="" style="text-anchor: end;" x="660.25" dx="-0.5em"
+                                  dy="-0.5em"></text>
+                                <path class="domain" d="M0,6V0H660.25V6"></path>
+                              </g>
+                              <g class="c3-axis c3-axis-y"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip-yaxis)"
+                                transform="translate(0,0)" style="visibility: visible; opacity: 1;"><text
+                                  class="c3-axis-y-label" transform="rotate(-90)" style="text-anchor: end;" x="0"
+                                  dx="-0.5em" dy="1.2em"></text>
+                                <g class="tick" transform="translate(0,166)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,150)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.1</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,133)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.2</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,117)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.3</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,100)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.4</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,84)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.5</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,67)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.6</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,51)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.7</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,34)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.8</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,18)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.9</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,1)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">1</tspan>
+                                  </text>
+                                </g>
+                                <path class="domain" d="M-6,1H0V166H-6"></path>
+                              </g>
+                              <g class="c3-axis c3-axis-y2" transform="translate(660.25,0)"
+                                style="visibility: hidden; opacity: 1;"><text class="c3-axis-y2-label"
+                                  transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em"
+                                  dy="-0.5em"></text>
+                                <g class="tick" transform="translate(0,166)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,150)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.1</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,133)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.2</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,117)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.3</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,100)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.4</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,84)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.5</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,67)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.6</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,51)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.7</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,34)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.8</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,18)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.9</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,1)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">1</tspan>
+                                  </text>
+                                </g>
+                                <path class="domain" d="M6,1H0V166H6"></path>
+                              </g>
+                            </g>
+                            <g transform="translate(20.5,200.5)" style="visibility: hidden;">
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip-subchart)"
+                                class="c3-chart">
+                                <g class="c3-chart-bars"></g>
+                                <g class="c3-chart-lines"></g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip)"
+                                class="c3-brush"
+                                style="pointer-events: all; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                <rect class="background" x="0" width="647.4444580078125"
+                                  style="visibility: hidden; cursor: crosshair;"></rect>
+                                <rect class="extent" x="0" width="0" style="cursor: move;"></rect>
+                                <g class="resize e" transform="translate(0,0)"
+                                  style="cursor: ew-resize; display: none;">
+                                  <rect x="-3" width="6" height="6" style="visibility: hidden;"></rect>
+                                </g>
+                                <g class="resize w" transform="translate(0,0)"
+                                  style="cursor: ew-resize; display: none;">
+                                  <rect x="-3" width="6" height="6" style="visibility: hidden;"></rect>
+                                </g>
+                              </g>
+                              <g class="c3-axis-x" transform="translate(0,0)"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504933401-clip-xaxis)"
+                                style="visibility: hidden; opacity: 1;">
+                                <path class="domain" d="M0,6V0H660.25V6"></path>
+                              </g>
+                            </g>
+                            <g transform="translate(722.25,0)"></g><text class="c3-title" x="361.125" y="0"></text>
+                          </svg>
+                          <div class="c3-tooltip-container"
+                            style="position: absolute; pointer-events: none; display: none;"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--Users Summary-->
+                    <div class="col-lg-12">
+                      <div class="col-lg-8" style="margin-right:50px;">
+                        <div>
+                          <h3 style="color: #3EC1C3">USERS USAGE</h3>
+                        </div>
+                        <div>
+                          <!--<i class="fa fa-square" aria-hidden="false" style="color: #7071B0;"></i>-->
+                          <table class="table table-bordered table-striped" style="border: 1px solid #e7ecf1;">
+                            <thead ng-hide="vm.users.length==0" class="ng-hide">
+                              <tr class="bg-primary">
+                                <!-- ngRepeat: col in vm.userColumnHeaders -->
+                                <th ng-repeat="col in vm.userColumnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope">Name</th>
+                                <!-- end ngRepeat: col in vm.userColumnHeaders -->
+                                <th ng-repeat="col in vm.userColumnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope ng-hide">Code</th>
+                                <!-- end ngRepeat: col in vm.userColumnHeaders -->
+                                <th ng-repeat="col in vm.userColumnHeaders" ng-hide="col == 'Code'"
+                                  class="ng-binding ng-scope">2020-06-30</th>
+                                <!-- end ngRepeat: col in vm.userColumnHeaders -->
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <!-- ngRepeat: row in vm.users -->
+                              <tr ng-show="vm.users.length==0" class="">
+                                <td>No Data Found</td>
+                              </tr>
+                            </tbody>
+
+                          </table>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div id="usersummaryChart" class="c3" style="max-height: 200px; position: relative;"><svg
+                            width="722.25" height="200" style="overflow: hidden;">
+                            <defs>
+                              <clipPath id="c3-1593504934040-clip">
+                                <rect width="660.25" height="166"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504934040-clip-xaxis">
+                                <rect x="-41" y="-20" width="732.25" height="50"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504934040-clip-yaxis">
+                                <rect x="-39" y="-4" width="60" height="190"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504934040-clip-grid">
+                                <rect width="660.25" height="166"></rect>
+                              </clipPath>
+                              <clipPath id="c3-1593504934040-clip-subchart">
+                                <rect width="660.25"></rect>
+                              </clipPath>
+                            </defs>
+                            <g transform="translate(40.5,4.5)"><text class="c3-text c3-empty" text-anchor="middle"
+                                dominant-baseline="middle" x="330.125" y="83">No Data Available</text>
+                              <rect class="c3-zoom-rect" width="660.25" height="166" style="opacity: 0;"></rect>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip)"
+                                class="c3-regions" style="visibility: visible;"></g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip-grid)"
+                                class="c3-grid" style="visibility: visible;">
+                                <g class="c3-xgrid-focus">
+                                  <line class="c3-xgrid-focus" x1="-10" x2="-10" y1="0" y2="166"
+                                    style="visibility: hidden;"></line>
+                                </g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip)"
+                                class="c3-chart">
+                                <g class="c3-event-rects c3-event-rects-single" style="fill-opacity: 0;"></g>
+                                <g class="c3-chart-bars"></g>
+                                <g class="c3-chart-lines"></g>
+                                <g class="c3-chart-arcs" transform="translate(325.125,83)"><text
+                                    class="c3-chart-arcs-title" style="text-anchor: middle; opacity: 0;"></text></g>
+                                <g class="c3-chart-texts"></g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip-grid)"
+                                class="c3-grid c3-grid-lines">
+                                <g class="c3-xgrid-lines"></g>
+                                <g class="c3-ygrid-lines"></g>
+                              </g>
+                              <g class="c3-axis c3-axis-x"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip-xaxis)"
+                                transform="translate(0,166)" style="visibility: visible; opacity: 1;"><text
+                                  class="c3-axis-x-label" transform="" style="text-anchor: end;" x="660.25" dx="-0.5em"
+                                  dy="-0.5em"></text>
+                                <path class="domain" d="M0,6V0H660.25V6"></path>
+                              </g>
+                              <g class="c3-axis c3-axis-y"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip-yaxis)"
+                                transform="translate(0,0)" style="visibility: visible; opacity: 1;"><text
+                                  class="c3-axis-y-label" transform="rotate(-90)" style="text-anchor: end;" x="0"
+                                  dx="-0.5em" dy="1.2em"></text>
+                                <g class="tick" transform="translate(0,166)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,150)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.1</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,133)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.2</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,117)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.3</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,100)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.4</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,84)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.5</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,67)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.6</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,51)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.7</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,34)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.8</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,18)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">0.9</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,1)" style="opacity: 1;">
+                                  <line x2="-6"></line><text x="-9" y="0" style="text-anchor: end;">
+                                    <tspan x="-9" dy="3">1</tspan>
+                                  </text>
+                                </g>
+                                <path class="domain" d="M-6,1H0V166H-6"></path>
+                              </g>
+                              <g class="c3-axis c3-axis-y2" transform="translate(660.25,0)"
+                                style="visibility: hidden; opacity: 1;"><text class="c3-axis-y2-label"
+                                  transform="rotate(-90)" style="text-anchor: end;" x="0" dx="-0.5em"
+                                  dy="-0.5em"></text>
+                                <g class="tick" transform="translate(0,166)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,150)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.1</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,133)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.2</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,117)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.3</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,100)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.4</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,84)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.5</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,67)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.6</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,51)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.7</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,34)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.8</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,18)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">0.9</tspan>
+                                  </text>
+                                </g>
+                                <g class="tick" transform="translate(0,1)" style="opacity: 1;">
+                                  <line x2="6" y2="0"></line><text x="9" y="0" style="text-anchor: start;">
+                                    <tspan x="9" dy="3">1</tspan>
+                                  </text>
+                                </g>
+                                <path class="domain" d="M6,1H0V166H6"></path>
+                              </g>
+                            </g>
+                            <g transform="translate(20.5,200.5)" style="visibility: hidden;">
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip-subchart)"
+                                class="c3-chart">
+                                <g class="c3-chart-bars"></g>
+                                <g class="c3-chart-lines"></g>
+                              </g>
+                              <g clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip)"
+                                class="c3-brush"
+                                style="pointer-events: all; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);">
+                                <rect class="background" x="0" width="647.4444580078125"
+                                  style="visibility: hidden; cursor: crosshair;"></rect>
+                                <rect class="extent" x="0" width="0" style="cursor: move;"></rect>
+                                <g class="resize e" transform="translate(0,0)"
+                                  style="cursor: ew-resize; display: none;">
+                                  <rect x="-3" width="6" height="6" style="visibility: hidden;"></rect>
+                                </g>
+                                <g class="resize w" transform="translate(0,0)"
+                                  style="cursor: ew-resize; display: none;">
+                                  <rect x="-3" width="6" height="6" style="visibility: hidden;"></rect>
+                                </g>
+                              </g>
+                              <g class="c3-axis-x" transform="translate(0,0)"
+                                clip-path="url(https://c2cstaging.azurewebsites.net/Application/Index#c3-1593504934040-clip-xaxis)"
+                                style="visibility: hidden; opacity: 1;">
+                                <path class="domain" d="M0,6V0H660.25V6"></path>
+                              </g>
+                            </g>
+                            <g transform="translate(722.25,0)"></g><text class="c3-title" x="361.125" y="0"></text>
+                          </svg>
+                          <div class="c3-tooltip-container"
+                            style="position: absolute; pointer-events: none; display: none;"></div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!--disk space summary-->
+                    <div class="col-lg-12">
+                      <div class="col-lg-8" style="margin-right:50px;">
+                        <div>
+                          <h3 style="color: #3EC1C3">DISK SPACE USAGE</h3>
+                        </div>
+
+                        <!--<i class="fa fa-square" aria-hidden="false" style="color: #7071B0;"></i>-->
+
+                        <table class="table table-bordered table-striped" style="border: 1px solid #e7ecf1;">
+                          <thead ng-hide="vm.diskSpace.length==0" class="ng-hide">
+                            <tr class="bg-primary">
+                              <!-- ngRepeat: col in vm.diskSpaceColumnHeaders -->
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- ngRepeat: row in vm.diskSpace -->
+                            <tr ng-show="vm.diskSpace.length==0" class="">
+                              <td>No Data Found</td>
+                            </tr>
+                          </tbody>
+
+                        </table>
+
+
+                      </div>
+                      <div class="col-lg-6">
+                        <div id="diskSpaceummaryChart"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <script type="text/javascript" class="ng-scope">
+          $('.page-sidebar').attr('style', 'min-height:' + window.innerHeight + 'px !important');
+        </script>
+      </div>
   </div>
 </div>

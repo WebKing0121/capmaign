@@ -1,17 +1,40 @@
-ng-select {
-  min-width: 170px;
-  display: flex;
-  align-items: center;
+:host{
 
-  .bellow {
-    display: flex;
-    align-items: center;
-    min-height: 45px;
+  .campaign-type {
+    width: 220px;
   }
 
-  .single {
-    .value {
-      line-height: 43px;
+  .view-option-group {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .custom-control {
+    display: flex;
+    align-items: center;
+  }
+
+  .all-usage-part {
+    margin-top: 20px;
+    padding: 0;
+  }
+
+  .all-usage-table {
+    margin: 0;
+
+    &_header, &_content > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 5px;
+      padding-right: 20px;
+    }
+
+    &_content {
+      padding: 0;
+
     }
   }
 }
