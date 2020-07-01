@@ -33,24 +33,11 @@
     margin-bottom: 0px;
   }
 }
-
-.mobile-show {
-  display: none;
-}
 @media only screen and (max-width: 575px) {
   .card-lists,
   .card-records {
     padding: 0px;
     height: 500px;
-  }
-  .mobile-mt {
-    margin-top: 9px;
-  }
-  .mobile-hide {
-    display: none;
-  }
-  .mobile-show {
-    display: inherit;
   }
 
   .modal-list {

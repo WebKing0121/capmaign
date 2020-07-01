@@ -2,10 +2,6 @@
   height: calc(100vh - 130px);
 }
 
-.mobile-show {
-  display: none;
-}
-
 .user-container {
   display: flex;
   .user-avatar {
@@ -17,7 +13,7 @@
     margin-right: 10px;
   }
   .user-name-section {
-    flex-grow: 1;
+    width: calc(100% - 50px);
     margin-top: -3px;
     .user-name {
       font-size: 16px;
@@ -48,10 +44,4 @@
     height: 500px;
   }
   
-  .mobile-hide {
-    display: none;
-  }
-  .mobile-show {
-    display: inherit;
-  }
 }

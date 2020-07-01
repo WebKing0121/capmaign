@@ -24,25 +24,12 @@
   }
 }
 
-.mobile-show {
-  display: none;
-}
 
 @media only screen and (max-width: 575px) {
   .card-custom-fields {
     padding: 0px;
     height: 500px;
   }
-  .mobile-mt {
-    margin-top: 9px;
-  }
-  .mobile-hide {
-    display: none;
-  }
-  .mobile-show {
-    display: inherit;
-  }
-
   .modal-custom-fields {
     ng-select {
       width: 100%;

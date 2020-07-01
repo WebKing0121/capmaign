@@ -31,6 +31,7 @@ import { ChatWidgetComponent } from './components/chat-widget/chat-widget.compon
 import { DataRecordTabsComponent } from './components/data-record-tabs/data-record-tabs.component';
 import { DataRecordsComponent } from './components/data-records/data-records.component';
 import { DataEventsComponent } from './components/data-events/data-events.component';
+import { TreeviewComponent } from './components/treeview/treeview.component';
 /*import 'hammerjs';
 import 'mousetrap';
 import { GalleryModule } from '@ks89/angular-modal-gallery';*/
@@ -85,7 +86,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChatWidgetComponent,
     DataRecordTabsComponent,
     DataRecordsComponent,
-    DataEventsComponent
+    DataEventsComponent,
+    TreeviewComponent,
   ],
   declarations: [
     DataFilterPipe,
@@ -102,7 +104,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ChatWidgetComponent,
     DataRecordTabsComponent,
     DataRecordsComponent,
-    DataEventsComponent
+    DataEventsComponent,
+    TreeviewComponent,
   ],
   providers: [
     {

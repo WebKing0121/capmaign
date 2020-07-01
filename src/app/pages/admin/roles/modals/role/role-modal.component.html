@@ -1,0 +1,44 @@
+<app-ui-modal #userRoleModal dialogClass="modal-dialog-centered modal-md">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === UserRoleModalType.New ? 'Create': 'Edit'}} User</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="userRoleModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <form [formGroup]="userRoleForm">
+      <div class="row">
+        <div class="col-12">
+          <label class="mobile-show">Role</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Role</span>
+            </div>
+            <input type="text" class="form-control" formControlName="roleName">
+          </div>
+        </div>
+        <div class="col-12 mt-3 d-flex align-items-center justify-content-between">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check2">
+            <label class="line-height-25" for="check2"> Default </label>
+          </div>
+          <p class="small text-secondary-50">Assign to new users as default.</p>
+        </div>
+      </div>
+    </form>
+    <div class="permission-tree">
+      <app-treeview
+        [checkable]="true"
+        [list]="treeData"
+        [primaryKey]="'name'"
+        [selectedNode]="selectedNode"
+        (selectItem)="onSelectNode($event)"
+      ></app-treeview>
+    </div>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary" (click)="onSave()">{{modalType === UserRoleModalType.New ? 'Create': 'Save'}}</button> &nbsp;
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="userRoleModal.hide()">Close</button>
+  </div>
+</app-ui-modal>

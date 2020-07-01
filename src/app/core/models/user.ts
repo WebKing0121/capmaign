@@ -14,3 +14,33 @@ export class User {
   id: number;
   token?: string;
 }
+
+export class UserRolePage {
+  level: number;
+  parentName: string | null;
+  name: string | null;
+  displayName: string | null;
+  description: string | null;
+  isGrantedByDefault: boolean;
+}
+
+export class UserRole {
+  name: string;
+  displayName: string;
+  isStatic: boolean;
+  isDefault: boolean;
+  creationTime: string;
+  id: number;
+}
+
+export class UserOrganization {
+  parentId: number | null;
+  code: string;
+  displayName: string;
+  memberCount: number;
+  lastModificationTime: string;
+  lastModifierUserId: number;
+  creationTime: string;
+  creatorUserId: number;
+  id: number;
+}
