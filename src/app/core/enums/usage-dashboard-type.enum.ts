@@ -1,4 +1,4 @@
-export enum  UsageViewOptionType{
+export enum  UsageViewOptionType {
   Today = 'Today',
   CurrentWeek = 'Current Week',
   CurrentMonth = 'Current Month',
