@@ -11,13 +11,15 @@ import { UsersComponent } from './users/users.component';
 import { UserModalComponent } from './users/modals/user/user-modal.component';
 import { UserRolesComponent } from './roles/roles.component';
 import { UserRoleModalComponent } from './roles/modals/role/role-modal.component';
+import { OrganizationsComponent } from './organizations/organizations.component';
 
 @NgModule({
   declarations: [
     UsersComponent,
     UserModalComponent,
     UserRolesComponent,
-    UserRoleModalComponent
+    UserRoleModalComponent,
+    OrganizationsComponent
   ],
   imports: [
     CommonModule,

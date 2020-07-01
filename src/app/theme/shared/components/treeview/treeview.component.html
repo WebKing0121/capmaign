@@ -1,0 +1,18 @@
+<ul class="tree-ul">
+  <li *ngFor="let node of list">
+    <i *ngIf="node.children.length > 0"
+      class="fa expand-icon"
+      (click)="onExpandTree(node)"
+      [ngClass]="{'fa-chevron-down': node.expanded, 'fa-chevron-right': !node.expanded}"
+    ></i>
+    <label *ngIf="checkable">
+      <input type="checkbox" [(ngModel)]="node.checked" (ngModelChange)="onCheckTree(node)" />
+    </label>
+    {{node.displayName}}
+    <app-treeview
+      *ngIf="node.children.length > 0 && node.expanded"
+      [checkable]="checkable"
+      [list]="node.children"
+    > </app-treeview>
+  </li>
+</ul>

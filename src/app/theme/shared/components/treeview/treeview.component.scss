@@ -1,0 +1,14 @@
+.tree-ul {
+  margin-left: 20px;
+  li {
+    line-height: 25px;
+    font-size: 14px;
+    position: relative;
+    .expand-icon {
+      position: absolute;
+      left: -16px;
+      top: 5px;
+      cursor: pointer;
+    }
+  }
+}

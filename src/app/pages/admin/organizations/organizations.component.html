@@ -1,0 +1,24 @@
+<div class="row mt-3">
+  <div class="col-md-4 card-pages">
+    <app-card cardTitle="Organizations" cardClass="table-card" [options]="false">
+      
+    </app-card>
+  </div>
+  <div class="col-md-8 card-roles">
+    <!-- <app-datatable [title]="'Roles'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [selectable]="false"
+      [selectionType]="'single'"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable> -->
+  </div>
+</div>
+<ng-template #defaultTemplate let-row="row" let-value let-i="index">
+  <span *ngIf="value" class="default-role">Default</span>
+</ng-template>
+<ng-template #staticTemplate let-row="row" let-value let-i="index">
+  <span *ngIf="value" class="static-role">Static</span>
+</ng-template>

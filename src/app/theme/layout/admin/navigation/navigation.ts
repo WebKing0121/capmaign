@@ -169,6 +169,28 @@ const NavigationItems = [
             url: '/admin/roles',
             external: false,
           },
+          {
+            id: 'admin-organizations',
+            title: 'Organization units',
+            type: 'item',
+            url: '/admin/organizations',
+            external: false,
+          },
+          {
+            id: 'admin-senders',
+            title: 'Senders setup',
+            type: 'item',
+            url: '/admin/senders',
+            external: false,
+          },
+          {
+            id: 'admin-mobile-apps',
+            title: 'Add mobile app',
+            type: 'item',
+            url: '/admin/mobile-apps',
+            external: false,
+          },
+
         ]
       },
       {
