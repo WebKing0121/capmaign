@@ -5,6 +5,7 @@ import { DataTableSource, DataTableColumn } from '@app-components/datatable/data
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { UserService } from '@app-core/services/user.service';
 import { takeUntil } from 'rxjs/operators';
+import { OrganizationModalType } from '@app-core/enums/user-type.enum';
 
 @Component({
   selector: 'app-user-organizations',
@@ -14,7 +15,10 @@ import { takeUntil } from 'rxjs/operators';
 export class UserOrganizationsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('userTemplate', { static: false }) userTemplate;
   @ViewChild('userStatusTemplate', { static: false }) userStatusTemplate;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
+  @ViewChild('organizationModal', { static: false }) organizationModal;
 
+  modalType = OrganizationModalType.Edit;
   private unsubscribe$ = new Subject();
   organizations: UserOrganization[];
   selectedOrganizations: UserOrganization;
@@ -30,7 +34,10 @@ export class UserOrganizationsComponent implements OnInit, OnDestroy, AfterViewI
     { label: 'Add Member', icon: 'fa fa-plus', click: () => this.onClickCreate() },
   ];
 
-
+  // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onDeleteConfirmOrganization.bind(this), class: 'btn-primary' }
+  ];
 
   constructor(private userService: UserService) {
     this.totalCount = 0;
@@ -66,7 +73,7 @@ export class UserOrganizationsComponent implements OnInit, OnDestroy, AfterViewI
       { name: 'Name', prop: 'name', sortable: true, custom: true, template: this.userTemplate },
       { name: 'User Name', prop: 'userName', sortable: true, maxWidth: 150, cellClass: ['cell-hyperlink'] },
       {
-        name: 'Creation Date', prop: 'creationTime', sortable: true,
+        name: 'Creation Date', prop: 'addedTime', sortable: true,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 150,
       }
     ];
@@ -102,11 +109,46 @@ export class UserOrganizationsComponent implements OnInit, OnDestroy, AfterViewI
 
   onSelectNode(node: any) {
     this.selectedNode = node;
-    console.log(this.selectedNode);
+    this.userService.getOrganizationMembers(this.selectedNode.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.members = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.members = [];
+            this.totalCount = 0;
+          }
+          this._updateTable(this.members);
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
   }
   onClickCreate() {
 
   }
+
+  onEditOrganization() {
+    this.modalType = OrganizationModalType.Edit;
+    setTimeout(() => this.organizationModal.show());
+  }
+
+  onCreateSubUnit() {
+    this.modalType = OrganizationModalType.AddSubItem;
+    setTimeout(() => this.organizationModal.show());
+  }
+
+  onDeleteOrganization() {
+    this.confirmModal.show();
+  }
+
+  onDeleteConfirmOrganization() {
+    // delete organization
+  }
+
   _listToTree(list: any[]) {
     const map = {};
     const roots = [];

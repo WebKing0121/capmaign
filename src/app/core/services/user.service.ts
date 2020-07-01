@@ -9,6 +9,7 @@ import { UserRolesPagesMock } from '@app-fake-db/user-roles-pages-mock';
 import { UserRolesMock } from '@app-fake-db/user-roles-mock';
 import { UserRolePermissionsMock, UserPermissionsMock } from '@app-fake-db/user-role-permissions-mock';
 import { UserOrganizationsMock } from '@app-fake-db/user-organizations-mock';
+import { UserOrganizationMemberMocks } from '@app-fake-db/user-organization-members-mock';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -62,5 +63,16 @@ export class UserService {
 
   getOrganizations() {
     return of(UserOrganizationsMock);
+  }
+
+  getOrganizationMembers(organizationId: number): Observable<any> {
+    return of({
+      result: UserOrganizationMemberMocks[organizationId],
+      targetUrl: null,
+      success: true,
+      error: null,
+      unAuthorizedRequest: false,
+      __abp: true
+    });
   }
 }

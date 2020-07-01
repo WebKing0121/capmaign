@@ -1,0 +1,78 @@
+<app-ui-modal #userOrganizationModal dialogClass="modal-dialog-centered modal-md">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === OrganizationModalType.Edit ? 'Edit': 'Create'}} Organization</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="userOrganizationModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-12">
+          <label class="mobile-show">Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+        </div>
+
+        <div class="col-12 mt-3">
+          <h5>Permissions</h5>
+        </div>
+        <div class="col-12 mt-3 ml-3">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check1">
+            <label class="line-height-25" for="check1"> Email Campaign </label>
+          </div>
+        </div>
+        <div class="col-12 mt-3 ml-3">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check2">
+            <label class="line-height-25" for="check2"> SMS Campaign </label>
+          </div>
+        </div>
+        <div class="col-12 mt-3 ml-3">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check3">
+            <label class="line-height-25" for="check3"> Event Campaign </label>
+          </div>
+        </div>
+        <div class="col-12 mt-3 ml-3">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check4">
+            <label class="line-height-25" for="check4"> Social Campaign </label>
+          </div>
+        </div>
+        <div class="col-12 mt-3 ml-3">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check5">
+            <label class="line-height-25" for="check5"> Facebook Ads </label>
+          </div>
+        </div>
+        <div class="col-12 mt-3 ml-3">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check6">
+            <label class="line-height-25" for="check6"> Google Ads </label>
+          </div>
+        </div>
+        <div class="col-12">
+          <hr class="w-100 mb-3 mt-3" />
+        </div>
+        <div class="col-12 ml-3">
+          
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check7">
+            <label class="line-height-25" for="check7"> Active Tenant? </label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary">{{modalType === OrganizationModalType.Edit ? 'Save': 'Create'}}</button> &nbsp;
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="userOrganizationModal.hide()">Close</button>
+  </div>
+</app-ui-modal>

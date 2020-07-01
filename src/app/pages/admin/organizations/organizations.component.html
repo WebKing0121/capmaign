@@ -12,9 +12,9 @@
       </div>
 
       <div class="toolbar" *ngIf="selectedNode">
-        <button class="btn btn-tree" ><i class="fa fa-edit"></i> Edit</button>
-        <button class="btn btn-tree" ><i class="fa fa-plus"></i> Add sub unit</button>
-        <button class="btn btn-tree" ><i class="fa fa-trash"></i> Delete</button>
+        <button class="btn btn-tree" (click)="onEditOrganization()"><i class="fa fa-edit"></i> Edit</button>
+        <button class="btn btn-tree" (click)="onCreateSubUnit()"><i class="fa fa-plus"></i> Add sub unit</button>
+        <button class="btn btn-tree" (click)="onDeleteOrganization()"><i class="fa fa-trash"></i> Delete</button>
       </div>
     </app-card>
   </div>
@@ -22,7 +22,7 @@
     <app-datatable [title]="'Members'"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
-      [rowHeight]="35"
+      [rowHeight]="55"
       [selectable]="false"
       [selectionType]="'single'"
       [headerHeight]="40"
@@ -47,3 +47,10 @@
   <span *ngIf="value" class="user-active">Active</span>
   <span *ngIf="!value" class="user-disabled">Disabled</span>
 </ng-template>
+
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete the selected organization?"
+	[buttons]="confirmButtons"></app-confirm-modal>
+<app-user-organization #organizationModal
+  [modalType]="modalType"
+  [organization]="selectedNode"
+></app-user-organization>
