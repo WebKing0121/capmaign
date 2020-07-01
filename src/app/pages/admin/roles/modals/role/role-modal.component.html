@@ -30,6 +30,9 @@
       <app-treeview
         [checkable]="true"
         [list]="treeData"
+        [primaryKey]="'name'"
+        [selectedNode]="selectedNode"
+        (select)="onSelectNode($event)"
       ></app-treeview>
     </div>
   </div>

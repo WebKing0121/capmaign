@@ -11,7 +11,7 @@ import { UsersComponent } from './users/users.component';
 import { UserModalComponent } from './users/modals/user/user-modal.component';
 import { UserRolesComponent } from './roles/roles.component';
 import { UserRoleModalComponent } from './roles/modals/role/role-modal.component';
-import { OrganizationsComponent } from './organizations/organizations.component';
+import { UserOrganizationsComponent } from './organizations/organizations.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { OrganizationsComponent } from './organizations/organizations.component'
     UserModalComponent,
     UserRolesComponent,
     UserRoleModalComponent,
-    OrganizationsComponent
+    UserOrganizationsComponent
   ],
   imports: [
     CommonModule,

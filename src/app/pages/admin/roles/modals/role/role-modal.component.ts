@@ -25,6 +25,8 @@ export class UserRoleModalComponent implements OnInit, OnDestroy {
 
   treeData: any[];
   selectedTreeData: any[];
+  selectedNode:any;
+
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
@@ -43,6 +45,11 @@ export class UserRoleModalComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  onSelectNode(node: any) {
+    this.selectedNode = node;
+    console.log(this.selectedNode);
   }
 
   onSave() {

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-treeview',
@@ -7,9 +7,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class TreeviewComponent implements OnInit {
   @Input() checkable: boolean;
+  @Input() primaryKey: string;
   @Input() list: any[];
-
+  @Input() selectedNode: any;
+  @Output() select: EventEmitter<any> = new EventEmitter();
+  
   treedata: any[];
+
   constructor() { }
 
   ngOnInit(): void {
@@ -32,4 +36,7 @@ export class TreeviewComponent implements OnInit {
     node.expanded = !node.expanded;
   }
 
+  onClickItem(node) {
+    this.select.emit(node);
+  }
 }

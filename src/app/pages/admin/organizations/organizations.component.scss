@@ -1,0 +1,44 @@
+.card-organizations,
+.card-members {
+  height: calc(100vh - 130px);
+}
+.card-members {
+  padding-left: 0px;
+}
+
+.card-organizations {
+  .organization-tree {
+    height: calc(100% - 42px);
+    overflow: auto;
+  }
+  .toolbar {
+    height: 40px;
+    border-top: 1px solid #ddd;
+    padding: 4px 10px;
+    .btn-tree {
+      margin-right: 10px;
+      margin-top: 0px;
+      padding: 7px !important;
+      border: 1px solid #efefef;
+      background: none;
+      border-radius: 4px;
+      color: #5e7d8a;
+      font-size: 12px;
+
+      &:hover:not([disabled]) {
+        border: 1px solid #c29239;
+        background-color: #ffd86b;
+      }
+      &:disabled {
+        color: #ddd;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .card-members {
+    padding: 0px;
+    height: 500px;
+  }
+}

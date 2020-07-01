@@ -1,11 +1,25 @@
 <div class="row mt-3">
-  <div class="col-md-4 card-pages">
+  <div class="col-md-4 card-organizations">
     <app-card cardTitle="Organizations" cardClass="table-card" [options]="false">
-      
+      <div class="p-3 organization-tree">
+        <app-treeview
+          [checkable]="false"
+          [list]="treeData"
+          [primaryKey]="'id'"
+          [selectedNode]="selectedNode"
+          (select)="onSelectNode($event)"
+        ></app-treeview>
+      </div>
+
+      <div class="toolbar" *ngIf="selectedNode">
+        <button class="btn btn-tree" ><i class="fa fa-edit"></i> Edit</button>
+        <button class="btn btn-tree" ><i class="fa fa-plus"></i> Add sub unit</button>
+        <button class="btn btn-tree" ><i class="fa fa-trash"></i> Delete</button>
+      </div>
     </app-card>
   </div>
-  <div class="col-md-8 card-roles">
-    <!-- <app-datatable [title]="'Roles'"
+  <div class="col-md-8 card-members">
+    <app-datatable [title]="'Members'"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"
@@ -13,12 +27,23 @@
       [selectionType]="'single'"
       [headerHeight]="40"
       (activate)="onActive($event)"
-    ></app-datatable> -->
+    ></app-datatable>
   </div>
 </div>
-<ng-template #defaultTemplate let-row="row" let-value let-i="index">
-  <span *ngIf="value" class="default-role">Default</span>
+<ng-template #userTemplate let-row="row" let-value let-i="index">
+  <div class="user-container">
+    <img class="user-avatar" [src]="row.profileImg ? row.profileImg : ''" />
+    <div class="user-name-section">
+      <div class="user-name">
+        {{row.name}} {{row.surname}}
+      </div>
+      <div class="user-email">
+        {{row.emailAddress}}
+      </div>
+    </div>
+  </div>
 </ng-template>
-<ng-template #staticTemplate let-row="row" let-value let-i="index">
-  <span *ngIf="value" class="static-role">Static</span>
+<ng-template #userStatusTemplate let-row="row" let-value let-i="index">
+  <span *ngIf="value" class="user-active">Active</span>
+  <span *ngIf="!value" class="user-disabled">Disabled</span>
 </ng-template>

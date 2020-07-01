@@ -1,14 +1,26 @@
 .tree-ul {
   margin-left: 20px;
-  li {
+  & > li {
     line-height: 25px;
     font-size: 14px;
     position: relative;
+    
     .expand-icon {
       position: absolute;
-      left: -16px;
-      top: 5px;
+      left: -22px;
+      top: 6px;
       cursor: pointer;
+    }
+    .item {
+      margin: 0 7px;
+      padding: 0 7px;
+      border: 1px solid #fff;
+      background: none;
+      border-radius: 4px;
+    }
+    & > .selected {
+      border: 1px solid #c29239;
+      background-color: #ffd86b;
     }
   }
 }

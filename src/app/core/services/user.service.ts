@@ -8,6 +8,7 @@ import { of, Observable } from 'rxjs';
 import { UserRolesPagesMock } from '@app-fake-db/user-roles-pages-mock';
 import { UserRolesMock } from '@app-fake-db/user-roles-mock';
 import { UserRolePermissionsMock, UserPermissionsMock } from '@app-fake-db/user-role-permissions-mock';
+import { UserOrganizationsMock } from '@app-fake-db/user-organizations-mock';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -57,5 +58,9 @@ export class UserService {
         __abp: true
       });
     }
+  }
+
+  getOrganizations() {
+    return of(UserOrganizationsMock);
   }
 }

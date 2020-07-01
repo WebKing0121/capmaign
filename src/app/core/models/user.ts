@@ -32,3 +32,15 @@ export class UserRole {
   creationTime: string;
   id: number;
 }
+
+export class UserOrganization {
+  parentId: number | null;
+  code: string;
+  displayName: string;
+  memberCount: number;
+  lastModificationTime: string;
+  lastModifierUserId: number;
+  creationTime: string;
+  creatorUserId: number;
+  id: number;
+}
