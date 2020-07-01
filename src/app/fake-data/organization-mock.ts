@@ -17,4 +17,4 @@ export const OrganizationMockData: OrganizationData[] = [
     userCount: 5,
     diskSpace: 100
   }
-]
+];

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { UsageViewOpion } from '@app-core/models/usage-dashboard';
 import { UsageViewOptionType } from '@app-core/enums/usage-dashboard-type.enum';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
@@ -18,7 +18,7 @@ class AllUsageField {
   templateUrl: './usage-dashboard.component.html',
   styleUrls: ['./usage-dashboard.component.scss']
 })
-export class UsageDashboardComponent implements OnInit {
+export class UsageDashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   viewOptions: UsageViewOpion[] = [
     { id: 'today', value: UsageViewOptionType.Today },
@@ -29,17 +29,17 @@ export class UsageDashboardComponent implements OnInit {
   ];
 
   allUsageFields: AllUsageField[] = [
-    {field: 'Total Number of Emails', value: 0},
-    {field: 'Total Number of Records', value: 0},
-    {field: 'Total Number of Users', value: 0},
-    {field: 'DB Usage', value: 0}
+    { field: 'Total Number of Emails', value: 0 },
+    { field: 'Total Number of Records', value: 0 },
+    { field: 'Total Number of Users', value: 0 },
+    { field: 'DB Usage', value: 0 }
   ];
 
   allUsageFields1: AllUsageField[] = [
-    {field: 'Total Number of SMS', value: 0},
-    {field: 'Total Number of Records', value: 0},
-    {field: 'Total Number of SMS Failed', value: 0},
-    {field: 'Total Number of SMS Delivered', value: 0}
+    { field: 'Total Number of SMS', value: 0 },
+    { field: 'Total Number of Records', value: 0 },
+    { field: 'Total Number of SMS Failed', value: 0 },
+    { field: 'Total Number of SMS Delivered', value: 0 }
   ];
 
   tableSource: DataTableSource<OrganizationData> = new DataTableSource<OrganizationData>(10);
@@ -64,9 +64,9 @@ export class UsageDashboardComponent implements OnInit {
         error => {
           console.log('error', error);
         }
-      )
+      );
 
-    this.tableSource.next(this.allOrganizationData.slice(0, 50), this.allOrganizationData.length);
+    this.tableSource.next(this.allOrganizationData.slice(0, 10), this.allOrganizationData.length);
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
@@ -94,17 +94,19 @@ export class UsageDashboardComponent implements OnInit {
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true},
-      { name: 'Record Count', prop: 'recordCount', sortable: true},
-      { name: 'Sent Email Count', prop: 'sentEmailCount', sortable: true},
-      { name: 'User Count', prop: 'sentEmailCount', sortable: true},
-      { name: 'Disk Space', prop: 'sentEmailCount', sortable: true},
+      { name: 'Name', prop: 'name', sortable: true },
+      { name: 'Record Count', prop: 'recordCount', sortable: true },
+      { name: 'Sent Email Count', prop: 'sentEmailCount', sortable: true },
+      { name: 'User Count', prop: 'sentEmailCount', sortable: true },
+      { name: 'Disk Space', prop: 'sentEmailCount', sortable: true },
     ];
     this.tableSource.setColumns(columns);
   }
 
   onUsagePageSelect(event) {
-    if(event.target.value === '0') return;
+    if (event.target.value === '0') {
+      return;
+    }
     this.showMobileUsageDashboard = event.target.value === '2';
   }
 }
