@@ -25,7 +25,7 @@ export class UserRoleModalComponent implements OnInit, OnDestroy {
 
   treeData: any[];
   selectedTreeData: any[];
-  selectedNode:any;
+  selectedNode: any;
 
   constructor(
     private fb: FormBuilder,

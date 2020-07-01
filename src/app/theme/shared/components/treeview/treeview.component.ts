@@ -10,8 +10,8 @@ export class TreeviewComponent implements OnInit {
   @Input() primaryKey: string;
   @Input() list: any[];
   @Input() selectedNode: any;
-  @Output() select: EventEmitter<any> = new EventEmitter();
-  
+  @Output() selectItem: EventEmitter<any> = new EventEmitter();
+
   treedata: any[];
 
   constructor() { }
@@ -37,6 +37,6 @@ export class TreeviewComponent implements OnInit {
   }
 
   onClickItem(node) {
-    this.select.emit(node);
+    this.selectItem.emit(node);
   }
 }

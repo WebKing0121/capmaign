@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
 import { User, UserOrganization } from '@app-core/models/user';
 import { Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
@@ -11,7 +11,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './organizations.component.html',
   styleUrls: ['./organizations.component.scss']
 })
-export class UserOrganizationsComponent implements OnInit, OnDestroy {
+export class UserOrganizationsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('userTemplate', { static: false }) userTemplate;
   @ViewChild('userStatusTemplate', { static: false }) userStatusTemplate;
 
