@@ -7,7 +7,7 @@ export const Shortcuts = [
       {label: 'Roles', link: '/admin/roles' },
       {label: 'Organization Units', link: '/admin/organizations' },
       {label: 'Senders Setup', link: '/admin/senders' },
-      {label: 'Add Mobile App', link: '/' },
+      {label: 'Add Mobile App', link: '/admin/mobile-apps' },
     ]
   },
   {
