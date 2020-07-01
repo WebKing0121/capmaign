@@ -1,0 +1,18 @@
+<div class="row mt-3">
+  <div class="col-12 card-mobile-apps">
+    <app-card cardTitle="Mobile Apps" cardClass="table-card" [options]="false">
+      <div class="p-3 d-flex flex-wrap">
+        <div *ngFor="let mobile of apps" class="mobile-app">
+          <img *ngIf="mobile.osType !== 1" class="mobile-icon" src="assets/images/mobile/iphone.png" />
+          <img *ngIf="mobile.osType === 1" class="mobile-icon" src="assets/images/mobile/android.png" />
+          <div class="app-description">
+            <div class="app-name">{{mobile.name}}</div>
+            <hr class="m-1" />
+            <div class="app-desc">{{mobile.description}}</div>
+          </div>
+          <button class="btn btn-danger btn-normal-padding w-100">Remove</button>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>

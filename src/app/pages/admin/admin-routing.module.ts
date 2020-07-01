@@ -4,6 +4,7 @@ import { UsersComponent } from './users/users.component';
 import { UserRolesComponent } from './roles/roles.component';
 import { UserOrganizationsComponent } from './organizations/organizations.component';
 import { SendersComponent } from './senders/senders.component';
+import { MobileAppsComponent } from './mobile-apps/mobile-apps.component';
 
 const routes: Routes = [
   {
@@ -22,7 +23,10 @@ const routes: Routes = [
     path: 'senders',
     component: SendersComponent
   },
-
+  {
+    path: 'mobile-apps',
+    component: MobileAppsComponent
+  },
   {
     path: '**',
     redirectTo: 'users'

@@ -11,6 +11,7 @@ import { UserRolePermissionsMock, UserPermissionsMock } from '@app-fake-db/user-
 import { UserOrganizationsMock } from '@app-fake-db/user-organizations-mock';
 import { UserOrganizationMemberMocks } from '@app-fake-db/user-organization-members-mock';
 import { UserSendersMock } from '@app-fake-db/user-senders-mock';
+import { UserMobileAppsMock } from '@app-fake-db/user-mobile-apps-mock';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -132,5 +133,9 @@ export class UserService {
       unAuthorizedRequest: false,
       __abp: true
     });
+  }
+
+  getMobileApps(): Observable<any> {
+    return of(UserMobileAppsMock);
   }
 }
