@@ -13,7 +13,7 @@
     margin-right: 10px;
   }
   .user-name-section {
-    flex-grow: 1;
+    width: calc(100% - 50px);
     margin-top: -3px;
     .user-name {
       font-size: 16px;

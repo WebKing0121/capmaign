@@ -4,7 +4,7 @@ export const Shortcuts = [
     name: 'Administration',
     children: [
       {label: 'Users', link: '/admin/users' },
-      {label: 'Roles', link: '/' },
+      {label: 'Roles', link: '/admin/roles' },
       {label: 'Organization Units', link: '/' },
       {label: 'Senders Setup', link: '/' },
       {label: 'Add Mobile App', link: '/' },

@@ -5,6 +5,8 @@ import { environment } from '../../../environments/environment';
 import { User } from '@app-models/user';
 import { UsersMockData } from '@app-fake-db/users-mock';
 import { of } from 'rxjs';
+import { UserRolesPagesMock } from '@app-fake-db/user-roles-pages-mock';
+import { UserRolesMock } from '@app-fake-db/user-roles-mock';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -12,7 +14,14 @@ export class UserService {
 
   getAll() {
     // return this.http.get<User[]>(`${environment.apiUrl}/users`);
-    console.log(UsersMockData.result.items.map(x => x.id));
     return of(UsersMockData);
+  }
+
+  getRolePages() {
+    return of(UserRolesPagesMock);
+  }
+
+  getRoleUserRoles() {
+    return of(UserRolesMock);
   }
 }
