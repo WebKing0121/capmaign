@@ -12,3 +12,8 @@ export enum OrganizationModalType {
   Edit = 'edit',
   AddSubItem = 'add-sub-item'
 }
+
+export enum SenderModalType {
+  New = 'new',
+  Edit = 'edit'
+}

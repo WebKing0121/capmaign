@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { UsersComponent } from './users/users.component';
 import { UserRolesComponent } from './roles/roles.component';
 import { UserOrganizationsComponent } from './organizations/organizations.component';
+import { SendersComponent } from './senders/senders.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,11 @@ const routes: Routes = [
     path: 'organizations',
     component: UserOrganizationsComponent
   },
+  {
+    path: 'senders',
+    component: SendersComponent
+  },
+
   {
     path: '**',
     redirectTo: 'users'
