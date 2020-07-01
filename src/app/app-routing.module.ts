@@ -62,6 +62,10 @@ const routes: Routes = [
       {
         path: 'setup',
         loadChildren: () => import('./pages/setup/setup.module').then(module => module.SetupModule)
+      },
+      {
+        path: 'dashboard',
+        loadChildren: () => import('./pages/dashboard/dashboard.module').then(module => module.DashboardModule)
       }
     ]
   },

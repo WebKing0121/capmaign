@@ -1,0 +1,38 @@
+:host {
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .dashboard_top-card {
+    width: 20%;
+
+    @media only screen and (max-width: 767px) {
+      width: 50%;
+    }
+
+    &_header {
+      margin-bottom: 10px;
+    }
+  }
+
+  .dateRangerPicker {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    z-index: 100;
+    background: white;
+  }
+
+  .fromDate,
+  .toDate {
+    width: 200px;
+    margin: 0 10px;
+  }
+
+  .datePreview {
+    display: flex;
+    align-items: center;
+  }
+}

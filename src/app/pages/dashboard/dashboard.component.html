@@ -1,0 +1,266 @@
+<div class="card" #content>
+  <div class="card-header d-flex">
+    <div class="pageInfo">
+      <select (change)="redirectTo($event)" class="form-control bg-secondary text-white">
+        <option value="email">Email Analytics</option>
+        <option value="mobile">Mobile Analytics</option>
+        <option value="social">Social &amp; PPC Analytics</option>
+        <option value="website">Website Analytics</option>
+        <option value="event">Event Analytics</option>
+        <option value="QRCode">QRCode Analytics</option>
+        <option value="lead">Lead Analytics</option>
+      </select>
+    </div>
+    <div class="">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="datePreview">
+            <span class="border-primary fromDate form-control"
+              (click)="showDateRangePicker()">{{ parserFormatter.format(fromDate) }} -
+              {{ parserFormatter.format(toDate) }}</span>
+            Compare to
+            <span class="border-primary toDate form-control">{{ parserFormatter.format(compareFromDate) }} -
+              {{ parserFormatter.format(compareToDate) }}</span>
+          </div>
+          <div *ngIf="showDateRangePickerFlag" class="horizontal-scroll dateRangerPicker">
+            <ngb-datepicker #dp ngModel (ngModelChange)="onDateChange($event)" [displayMonths]="2" [dayTemplate]="t">
+            </ngb-datepicker>
+
+            <ng-template #t let-date="date" let-focused="focused">
+              <span class="custom-range-datepicker" [class.focused]="focused"
+                [class.range]="isFrom(date) || isTo(date) || isInside(date) || isHovered(date)"
+                [class.faded]="isHovered(date) || isInside(date)" (mouseenter)="hoveredDate = date"
+                (mouseleave)="hoveredDate = null">
+                {{ date.day }}
+              </span>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="row m-b-10">
+
+      <a class="menuMobile p-10">
+        <label>Download
+          <i class="fa fa-download fa-fa-icon" (click)="downLoadPDF()"></i>
+        </label>
+      </a>
+
+      <a class="menuMobile p-10">
+        <label>Full Screen
+          <i class="fa fa-expand fa-fa-icon"></i>
+        </label>
+      </a>
+      <a class="menuMobile p-10">
+        <label>Print
+          <i class="fa fa-print fa-fa-icon"></i>
+        </label>
+      </a>
+      <a class="menuMobile p-10">
+        <label>Refresh
+          <i class="fas fa-sync-alt"></i>
+        </label>
+      </a>
+    </div>
+
+    <div *ngIf="showEmailAnalytics">
+      <div class="row m-0">
+        <div class="dashboard_top-card">
+          <app-card [hidHeader]="true">
+            <div class="d-flex justify-content-between m-b-5">
+              <div class="d-block">
+                <div class="dashboard_top-card_header">
+                  <span class="d-block font-15 text-dark font-weight-500">Click - through</span>
+                </div>
+                <div>
+                  <small class="d-block">All Customs Value</small>
+                </div>
+              </div>
+              <div>
+                <span class="text-success font-14 font-weight-500">+10%</span>
+              </div>
+            </div>
+            <div class="progress mt-2" style="height:5px">
+              <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                style="width:60%"></div>
+            </div>
+            <div class="d-flex justify-content-between m-t-5">
+              <div>
+                <small class="d-block">Charge</small>
+              </div>
+              <div>
+                <span class="text-danger font-14 font-weight-500">-8%</span>
+              </div>
+            </div>
+          </app-card>
+        </div>
+        <div class="dashboard_top-card">
+          <app-card [hidHeader]="true">
+            <div class="d-flex justify-content-between m-b-5">
+              <div class="d-block">
+                <div class="dashboard_top-card_header">
+                  <span class="d-block font-15 text-dark font-weight-500">Open</span>
+                </div>
+                <div>
+                  <small class="d-block">All Customs Value</small>
+                </div>
+              </div>
+              <div>
+                <span class="text-danger font-14 font-weight-500">-21.05%</span>
+              </div>
+            </div>
+            <div class="progress mt-2" style="height:5px">
+              <div class="progress-bar bg-c-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                style="width:60%"></div>
+            </div>
+            <div class="d-flex justify-content-between m-t-5">
+              <div>
+                <small class="d-block">Charge</small>
+              </div>
+              <div>
+                <span class="text-danger font-14 font-weight-500">-8%</span>
+              </div>
+            </div>
+          </app-card>
+        </div>
+        <div class="dashboard_top-card">
+          <app-card [hidHeader]="true">
+            <div class="d-flex justify-content-between m-b-5">
+              <div class="d-block">
+                <div class="dashboard_top-card_header">
+                  <span class="d-block font-15 text-dark font-weight-500">Bounce</span>
+                </div>
+                <div>
+                  <small class="d-block">All Customs Value</small>
+                </div>
+              </div>
+              <div>
+                <span class="text-success font-14 font-weight-500">+10.53%</span>
+              </div>
+            </div>
+            <div class="progress mt-2" style="height:5px">
+              <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                style="width:1%"></div>
+            </div>
+            <div class="d-flex justify-content-between m-t-5">
+              <div>
+                <small class="d-block">Charge</small>
+              </div>
+              <div>
+                <span class="text-danger font-14 font-weight-500">1%</span>
+              </div>
+            </div>
+          </app-card>
+        </div>
+        <div class="dashboard_top-card">
+          <app-card [hidHeader]="true">
+            <div class="d-flex justify-content-between m-b-5">
+              <div class="d-block">
+                <div class="dashboard_top-card_header">
+                  <span class="d-block font-15 text-dark font-weight-500">Delivery</span>
+                </div>
+                <div>
+                  <small class="d-block">All Customs Value</small>
+                </div>
+              </div>
+              <div>
+                <span class="text-success font-14 font-weight-500">+18.00%</span>
+              </div>
+            </div>
+            <div class="progress mt-2" style="height:5px">
+              <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                style="width:60%"></div>
+            </div>
+            <div class="d-flex justify-content-between m-t-5">
+              <div>
+                <small class="d-block">Charge</small>
+              </div>
+              <div>
+                <span class="text-success font-14 font-weight-500">+18.00%</span>
+              </div>
+            </div>
+          </app-card>
+        </div>
+        <div class="dashboard_top-card">
+          <app-card [hidHeader]="true">
+            <div class="d-flex justify-content-between m-b-5">
+              <div class="d-block">
+                <div class="dashboard_top-card_header">
+                  <span class="d-block font-15 text-dark font-weight-500">Unsubscribe</span>
+                </div>
+                <div>
+                  <small class="d-block">All Customs Value</small>
+                </div>
+              </div>
+              <div>
+                <span class="text-success font-14 font-weight-500"></span>
+              </div>
+            </div>
+            <div class="progress mt-2" style="height:5px">
+              <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                style="width:0%"></div>
+            </div>
+            <div class="d-flex justify-content-between m-t-5">
+              <div>
+                <small class="d-block">Charge</small>
+              </div>
+              <div>
+                <span class="text-danger font-14 font-weight-500"></span>
+              </div>
+            </div>
+          </app-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-7 col-md-12">
+          <app-datatable [title]="'Top Performing Campaigns'" [dataSource]="topPerformingTableSource"
+            [buttons]="topPerformingTableButtons">
+          </app-datatable>
+        </div>
+        <div class="col-lg-5 col-md-12">
+          <app-card cardTitle="Users by Gender & Age">
+            <app-apex-chart chartID="top-performing-campaign-crm" [chartConfig]="topPerformingCampaignData">
+            </app-apex-chart>
+          </app-card>
+        </div>
+      </div>
+      <app-datatable [title]="'Upcoming Campaigns'" [dataSource]="upComingCampTableSource"
+        [buttons]="upComingCampTableButtons">
+      </app-datatable>
+      <div class="row">
+        <div class="col-lg-6 col-md-12">
+          <app-card cardTitle="Subscribers">
+            <app-apex-chart chartID="subscribe-crm" [chartConfig]="subscribersData"></app-apex-chart>
+          </app-card>
+        </div>
+        <div class="col-lg-6 col-md-12">
+          <app-card cardTitle="Unsubscribers">
+            <app-apex-chart chartID="unsubscribers-crm" [chartConfig]="unsubscribers"></app-apex-chart>
+          </app-card>
+        </div>
+      </div>
+      <app-datatable [title]="'Bounce Email'" [dataSource]="tableSource" [buttons]="tableButtons">
+      </app-datatable>
+    </div>
+    <div *ngIf="showMobileAnalytics">
+      <h1>MobileAnalytics</h1>
+    </div>
+    <div *ngIf="showSocialAnalytics">
+      <h1>SocialAnalytics</h1>
+    </div>
+    <div *ngIf="showWebsiteAnalytics">
+      <h1>WevsiteAnalytics</h1>
+    </div>
+    <div *ngIf="showEventAnalytics">
+      <h1>EventAnalytics</h1>
+    </div>
+    <div *ngIf="showQRCodeAnalytics">
+      <h1>QRCodeAnalytics</h1>
+    </div>
+    <div *ngIf="showLeadAnalytics">
+      <h1>LeadAnalytics</h1>
+    </div>
+  </div>
+</div>
