@@ -38,8 +38,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         { label: 'Facebook Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
       ]
     },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true },
-    { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked(), hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false },
+    { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked(), disabled: true, hide: false },
   ];
 
   selected: Campaign[] = [];
@@ -58,20 +58,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // let url = 'https://someurl.com';
-    // let options = {
-    //             method: 'POST',
-    //             url: url,
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json;charset=UTF-8'
-    //             },
-    //             data: {
-    //                 property_one: value_one,
-    //                 property_two: value_two
-    //             }
-    //         };
-    // let response = await axios(options);
 
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);
 
@@ -147,8 +133,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (event.type === 'checkbox') {
-      this.tableButtons[1].hide = this.selected.length === 0;
-      this.tableButtons[2].hide = this.selected.length !== 1;
+      this.tableButtons[1].disabled = this.selected.length === 0;
+      this.tableButtons[2].disabled = this.selected.length !== 1;
     }
   }
 
