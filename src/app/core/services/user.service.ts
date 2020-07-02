@@ -10,6 +10,8 @@ import { UserRolesMock } from '@app-fake-db/user-roles-mock';
 import { UserRolePermissionsMock, UserPermissionsMock } from '@app-fake-db/user-role-permissions-mock';
 import { UserOrganizationsMock } from '@app-fake-db/user-organizations-mock';
 import { UserOrganizationMemberMocks } from '@app-fake-db/user-organization-members-mock';
+import { UserSendersMock } from '@app-fake-db/user-senders-mock';
+import { UserMobileAppsMock } from '@app-fake-db/user-mobile-apps-mock';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
@@ -74,5 +76,66 @@ export class UserService {
       unAuthorizedRequest: false,
       __abp: true
     });
+  }
+
+  getSenders(): Observable<any> {
+    return of(UserSendersMock);
+  }
+
+  getSender(senderId: number): Observable<any> {
+    if (senderId === 33) {
+      return of({
+        result: {
+          id: 33,
+          senderName: 'Palskem',
+          senderFromAddress: 'anything@success.palskem.com',
+          senderReplyAddress: 'reply@success.palskem.com',
+          senderBounceAddress: 'bounce@success.palskem.com',
+          mailingDomain: 'success.palskem.com',
+          ipAddress: null,
+          streetNumber: null,
+          streetName1: null,
+          streetName2: null,
+          city: null,
+          state: null,
+          country: null,
+          mobilePhoneNumber: null,
+          officePhoneNumber: null
+        },
+        targetUrl: null,
+        success: true,
+        error: null,
+        unAuthorizedRequest: false,
+        __abp: true
+      });
+    }
+    return of({
+      result: {
+        id: 4,
+        senderName: 'CampaignToCash',
+        senderFromAddress: 'anything@success.campaigntocash.com',
+        senderReplyAddress: 'reply@success.campaigntocash.com',
+        senderBounceAddress: 'Bounce@success.campaigntocash.com',
+        mailingDomain: 'success.campaigntocash.com',
+        ipAddress: null,
+        streetNumber: null,
+        streetName1: null,
+        streetName2: null,
+        city: null,
+        state: null,
+        country: null,
+        mobilePhoneNumber: null,
+        officePhoneNumber: null
+      },
+      targetUrl: null,
+      success: true,
+      error: null,
+      unAuthorizedRequest: false,
+      __abp: true
+    });
+  }
+
+  getMobileApps(): Observable<any> {
+    return of(UserMobileAppsMock);
   }
 }

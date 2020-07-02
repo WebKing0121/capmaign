@@ -1,0 +1,37 @@
+.card-mobile-apps {
+  height: calc(100vh - 130px);
+  .mobile-app {
+    width: 120px;
+    height: 200px;
+    border-radius: 10px;
+    border: 1px solid;
+    margin-right: 20px;
+    text-align: center;
+    padding: 0 15px;
+    .mobile-icon {
+      margin-top: 15px;
+      height: 60px;
+      width: auto;
+    }
+    .app-description {
+      margin-top: 15px;
+      margin-bottom: 15px;
+      height: 47px;
+      overflow: hidden;
+      .app-name {
+        font-weight: bold;
+      }
+      .app-desc {
+        font-size: 12px;
+        color: #aaa;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .card-mobile-apps {
+    padding: 0px;
+    height: 500px;
+  }
+}

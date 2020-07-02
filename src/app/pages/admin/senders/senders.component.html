@@ -1,0 +1,15 @@
+<div class="row mt-3">
+  <div class="col-12 card-senders">
+    <app-datatable [title]="'Senders'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [selectable]="false"
+      [selectionType]="'single'"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
+  </div>
+</div>
+
+<app-senders-sender-modal #senderModal [modalType]="modalType" [sender]="selectedSender"></app-senders-sender-modal>
