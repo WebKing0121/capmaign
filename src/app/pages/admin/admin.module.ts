@@ -16,6 +16,8 @@ import { UserOrganizationModalComponent } from './organizations/modals/organizat
 import { SendersComponent } from './senders/senders.component';
 import { SenderModalComponent } from './senders/modals/sender/sender-modal.component';
 import { MobileAppsComponent } from './mobile-apps/mobile-apps.component';
+import { MobileAppModalComponent } from './mobile-apps/modals/mobile-app/mobile-app.component';
+
 @NgModule({
   declarations: [
     UsersComponent,
@@ -26,7 +28,8 @@ import { MobileAppsComponent } from './mobile-apps/mobile-apps.component';
     UserOrganizationModalComponent,
     SendersComponent,
     SenderModalComponent,
-    MobileAppsComponent
+    MobileAppsComponent,
+    MobileAppModalComponent
   ],
   imports: [
     CommonModule,

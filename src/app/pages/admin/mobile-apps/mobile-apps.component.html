@@ -1,8 +1,10 @@
 <div class="row mt-3">
   <div class="col-12 card-mobile-apps">
-    <app-card cardTitle="Mobile Apps" cardClass="table-card" [options]="false">
+    <app-card cardTitle="Mobile Apps" [cardButtons]="tableButtons" cardClass="table-card" [options]="false">
       <div class="p-3 d-flex flex-wrap">
-        <div *ngFor="let mobile of apps" class="mobile-app">
+        <div *ngFor="let mobile of apps" class="mobile-app" (click)="onSelectApp(mobile)"
+          (dblclick)="onEditApp(mobile)"
+          [ngClass]="{'selected': selectedApp && mobile.id === selectedApp.id}">
           <img *ngIf="mobile.osType !== 1" class="mobile-icon" src="assets/images/mobile/iphone.png" />
           <img *ngIf="mobile.osType === 1" class="mobile-icon" src="assets/images/mobile/android.png" />
           <div class="app-description">
@@ -10,9 +12,16 @@
             <hr class="m-1" />
             <div class="app-desc">{{mobile.description}}</div>
           </div>
-          <button class="btn btn-danger btn-normal-padding w-100">Remove</button>
+          <button class="btn btn-danger btn-remove" (click)="onDeleteApp()"><i class="fa fa-times"></i></button>
         </div>
       </div>
     </app-card>
   </div>
 </div>
+
+<app-mobile-app-modal #mobileAppModal [modalType]="modalType"
+  [mobileApp]="selectedApp"
+></app-mobile-app-modal>
+
+<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to remove the mobile app?"
+  [buttons]="confirmButtons"></app-confirm-modal>

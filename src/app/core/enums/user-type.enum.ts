@@ -17,3 +17,8 @@ export enum SenderModalType {
   New = 'new',
   Edit = 'edit'
 }
+
+export enum MobileAppModalType {
+  New = 'new',
+  Edit = 'edit'
+}

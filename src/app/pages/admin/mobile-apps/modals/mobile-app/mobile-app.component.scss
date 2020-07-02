@@ -1,0 +1,17 @@
+.mobile-app-modal {
+  .mobile-icon {
+    height: 60px;
+    cursor: pointer;
+  }
+
+  .mobile-app-input-section {
+    height: 285px;
+    .input-group {
+      .input-group-prepend {
+        .input-group-text {
+          width: 135px;
+        }
+      }
+    }
+  }
+}
