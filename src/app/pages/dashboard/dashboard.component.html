@@ -220,7 +220,7 @@
           </app-datatable>
         </div>
         <div class="col-lg-5 col-md-12">
-          <app-card cardTitle="Users by Gender & Age">
+          <app-card cardTitle="Top Performing Campaigns">
             <app-apex-chart chartID="top-performing-campaign-crm" [chartConfig]="topPerformingCampaignData">
             </app-apex-chart>
           </app-card>
@@ -245,10 +245,345 @@
       </app-datatable>
     </div>
     <div *ngIf="showMobileAnalytics">
-      <h1>MobileAnalytics</h1>
+      <div class="row m-0">
+        <div class="sms-cards card">
+          <div class="card-header bg-secondary text-white">
+            <span>SMS Campaign</span>
+          </div>
+          <div class="card-body d-flex">
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="card_content">
+                  <div class="d-flex justify-content-between m-b-5">
+                    <div class="d-block">
+                      <div class="dashboard_top-card_header">
+                        <span class="d-block font-15 text-dark font-weight-500">Click - through</span>
+                      </div>
+                      <div>
+                        <small class="d-block">All Customs Value</small>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="text-success font-14 font-weight-500">+10%</span>
+                    </div>
+                  </div>
+                  <div class="progress mt-2" style="height:5px">
+                    <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                      style="width:60%"></div>
+                  </div>
+                  <div class="d-flex justify-content-between m-t-5">
+                    <div>
+                      <small class="d-block">Charge</small>
+                    </div>
+                    <div>
+                      <span class="text-danger font-14 font-weight-500">-8%</span>
+                    </div>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">Open Link</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500">+20.00%</span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:60%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="font-14 font-weight-500">0.00%</span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">Engagement</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500">0.00%</span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:1%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="text-danger font-14 font-weight-500">0.00%</span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">Churn Rate</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500">+18.00%</span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:18%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500">+18.00%</span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <img src="../../../assets/images/dashboard/android.svg">
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <img src="../../../assets/images/dashboard/App_store.svg">
+              </app-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row m-0">
+        <div class="push-cards card">
+          <div class="card-header bg-secondary text-white">
+            <span>Push Campaign</span>
+          </div>
+          <div class="card-body">
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">Open</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500">0.00%</span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:60%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="text-danger font-14 font-weight-500">+453.33%</span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">Received</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-danger font-14 font-weight-500">-0.00%</span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:60%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="text-danger font-14 font-weight-500">-8%</span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">Discarded</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-danger font-14 font-weight-500">0.00%</span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:1%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="text-danger font-14 font-weight-500">1%</span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">Engagement</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500">0.00%</span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:60%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500">+18.00%</span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">App Installed</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500"></span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:0%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="text-danger font-14 font-weight-500"></span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+            <div class="col-lg-2 col-xl-2 p-0">
+              <app-card [hidHeader]="true">
+                <div class="d-flex justify-content-between m-b-5">
+                  <div class="d-block">
+                    <div class="dashboard_top-card_header">
+                      <span class="d-block font-15 text-dark font-weight-500">App UnInstalled</span>
+                    </div>
+                    <div>
+                      <small class="d-block">All Customs Value</small>
+                    </div>
+                  </div>
+                  <div>
+                    <span class="text-success font-14 font-weight-500"></span>
+                  </div>
+                </div>
+                <div class="progress mt-2" style="height:5px">
+                  <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+                    style="width:0%"></div>
+                </div>
+                <div class="d-flex justify-content-between m-t-5">
+                  <div>
+                    <small class="d-block">Charge</small>
+                  </div>
+                  <div>
+                    <span class="text-danger font-14 font-weight-500"></span>
+                  </div>
+                </div>
+              </app-card>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-7 col-md-12">
+          <app-datatable [title]="'Top Performing Campaigns'" [dataSource]="topPerformingTableSource"
+            [buttons]="topPerformingTableButtons">
+          </app-datatable>
+        </div>
+        <div class="col-lg-5 col-md-12">
+          <app-card cardTitle="Top Performing Campaigns">
+            <app-apex-chart chartID="top-performing-campaign-crm" [chartConfig]="topPerformingCampaignData">
+            </app-apex-chart>
+          </app-card>
+        </div>
+      </div>
+      <app-datatable [title]="'Upcoming Campaigns'" [dataSource]="upComingCampTableSource"
+        [buttons]="upComingCampTableButtons">
+      </app-datatable>
     </div>
     <div *ngIf="showSocialAnalytics">
-      <h1>SocialAnalytics</h1>
+      
     </div>
     <div *ngIf="showWebsiteAnalytics">
       <h1>WevsiteAnalytics</h1>

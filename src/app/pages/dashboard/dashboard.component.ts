@@ -244,6 +244,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showEventAnalytics = event.target.value === 'event';
     this.showQRCodeAnalytics = event.target.value === 'QRCode';
     this.showLeadAnalytics = event.target.value === 'lead';
+    console.log("table info: ", this.topPerformingTableSource);
   }
 
   chosenDate(event) {
