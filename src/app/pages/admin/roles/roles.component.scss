@@ -53,6 +53,10 @@
   }
 }
 @media only screen and (max-width: 575px) {
+  .card-pages {
+    padding: 0;
+    height: auto;
+  }
   .card-roles {
     padding: 0px;
     height: 500px;
