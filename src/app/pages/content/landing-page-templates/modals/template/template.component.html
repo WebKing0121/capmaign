@@ -1,6 +1,7 @@
-<app-ui-modal #templateModal dialogClass="modal-dialog-centered modal-xl mobile-app-modal">
+<app-ui-modal #templateModal [dialogClass]="dialogClass">
   <div class="app-modal-header">
     <h5 class="modal-title">{{modalType === LandingPageTemplateModalType.New ? 'Create' : 'Edit'}} Template</h5>
+    <button type="button"  class="maximize" (click)="revertFullScreen()"><i class="fa" [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i></button>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
       (click)="templateModal.hide()">
       <span aria-hidden="true">&times;</span>
@@ -58,6 +59,20 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="row mt-5 content-editor">
+        <div class="col-12 preview-toolbar mb-1 d-flex align-items-center">
+          <app-personalization-selector class="d-block mr-2" [editor]="emailCampaignEditor"></app-personalization-selector>
+          <button class="btn btn-success" appEmailCampaignDynamics [editor]="emailCampaignEditor">Dynamics</button>
+          <button class="btn btn-success ml-auto mr-2" appEmailCampaignTemplates>Templates</button>
+          <button class="btn btn-success" appEmailCampaignPreview [editor]="emailCampaignEditor">Preview</button>
+        </div>
+
+        <div class="col-12">
+          <app-email-campaign-editor #emailCampaignEditor formControlName="content"></app-email-campaign-editor>
+        </div>
+
       </div>
     </form>
   </div>

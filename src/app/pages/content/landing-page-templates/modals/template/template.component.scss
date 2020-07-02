@@ -22,6 +22,12 @@
   }
 }
 
+.modal-fullscreen {
+  .content-editor {
+    height: calc(100vh - 358px);
+  }
+}
+
 @media only screen and (max-width: 575px) {
   .template-input-section {
     ng-select {

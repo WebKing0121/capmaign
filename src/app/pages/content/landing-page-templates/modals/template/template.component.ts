@@ -21,6 +21,9 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject();
 
+  fullScreen: boolean;
+  dialogClass: string;
+
   categories: NgSelectData[];
   types: NgSelectData[];
 
@@ -29,6 +32,8 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private contentService: ContentService
   ) {
+    this.fullScreen = false;
+    this.dialogClass = 'modal-dialog-centered ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
   }
 
   ngOnInit(): void {
@@ -100,4 +105,8 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
     this.templateModal.hide();
   }
 
+  revertFullScreen() {
+    this.fullScreen = !this.fullScreen;
+    this.dialogClass = 'modal-dialog-centered ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
+  }
 }
