@@ -5,7 +5,7 @@ import { DataTableSource, DataTableColumn } from '@app-components/datatable/data
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { UserService } from '@app-core/services/user.service';
 import { takeUntil } from 'rxjs/operators';
-import { OrganizationModalType } from '@app-core/enums/user-type.enum';
+import { OrganizationModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-user-organizations',

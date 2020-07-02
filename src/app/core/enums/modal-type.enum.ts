@@ -22,3 +22,13 @@ export enum MobileAppModalType {
   New = 'new',
   Edit = 'edit'
 }
+
+export enum LandingPageTemplateCategoryModalType {
+  New = 'new',
+  Edit = 'edit'
+}
+
+export enum LandingPageTemplateModalType {
+  New = 'new',
+  Edit = 'edit'
+}

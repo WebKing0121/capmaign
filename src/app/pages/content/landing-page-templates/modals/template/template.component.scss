@@ -1,0 +1,31 @@
+.template-input-section {
+  margin-top: -1rem;
+  .input-group {
+    .input-group-prepend {
+      .input-group-text {
+        width: 130px;
+      }
+    }
+  }
+  ng-select {
+    width: calc(100% - 128px);
+    height: 45px;
+    & > div {
+      height: 45px !important;
+      .single {
+        .placeholder,
+        .value {
+          line-height: 45px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .template-input-section {
+    ng-select {
+      width: 100%;
+    }
+  }
+}

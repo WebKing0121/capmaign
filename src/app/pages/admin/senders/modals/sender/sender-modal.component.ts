@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
-import { SenderModalType } from '@app-core/enums/user-type.enum';
+import { SenderModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Sender } from '@app-models/sender';
 import { UserService } from '@app-services/user.service';

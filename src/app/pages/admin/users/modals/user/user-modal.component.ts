@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { UserModalType } from '@app-core/enums/user-type.enum';
+import { UserModalType } from '@app-core/enums/modal-type.enum';
 import { User } from '@app-models/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 

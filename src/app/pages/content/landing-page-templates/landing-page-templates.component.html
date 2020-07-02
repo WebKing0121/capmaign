@@ -13,10 +13,14 @@
             <!-- <span class="template-count">{{category.templateCount}}</span> -->
           </span>
         </div>
-        <hr class="w-100" />
+        <hr class="w-100 mt-3" />
         <div class="templates row">
           <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" *ngFor="let template of filteredTemplates">
-            <div class="template">
+            <div class="template" (click)="onSelectTemplate(template.id)"
+              [ngClass]="{'selected': selectedTemplates.indexOf(template.id) >= 0}">
+              <div class="template-selected-bar" *ngIf="selectedTemplates.indexOf(template.id) >= 0">
+                <div class="triangle"></div>
+              </div>
               <img [src]="template.templateURL + '/thumbnail.jpg'" class="thumb-image" />
               <div class="details">
                 <div class="name">
@@ -38,6 +42,25 @@
 <app-mobile-app-modal #mobileAppModal [modalType]="modalType"
   [mobileApp]="selectedApp"
 ></app-mobile-app-modal>
+-->
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete selected template(s)?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>
 
-<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to remove the mobile app?"
-  [buttons]="confirmButtons"></app-confirm-modal> -->
+<app-confirm-modal #confirmCategoryModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete selected category?"
+  [buttons]="confirmCategoryButtons"
+></app-confirm-modal>
+
+<app-landing-page-template-category-modal #categoryModal
+  [modalType]="categoryModalType"
+  [category]="categoryObject"
+></app-landing-page-template-category-modal>
+
+<app-landing-page-template-modal #templateModal
+  [modalType]="templateModalType"
+  [template]="templateObject"
+></app-landing-page-template-modal>
