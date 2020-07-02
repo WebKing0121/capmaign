@@ -1,0 +1,92 @@
+.card-landing-page-templates {
+  min-height: calc(100vh - 130px);
+  .normal-page {
+    margin-top: 5px;
+    padding: 20px;
+  }
+  .item-all {
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    margin-right: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    &.selected {
+      background-color: #b8e4f7;
+    }
+  }
+
+  .item {
+    border: 1px solid #ddd;
+    padding: 5px 10px;
+    margin-left: 10px;
+    cursor: pointer;
+    border-radius: 6px;
+    &.selected {
+      background-color: #b8e4f7;
+    }
+  }
+
+  .template-count {
+    background: #00acf0;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    border-radius: 10px;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    font-weight: bold;
+    padding-top: 3px;
+    margin-left: 20px;
+  }
+
+  .templates {
+    .template {
+      position: relative;
+      background: #fff;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      border-radius: 3px;
+      padding: 1px;
+      overflow: hidden;
+      .thumb-image {
+        border-radius: 3px;
+        width: 100%;
+        opacity: 0.7;
+      }
+      &:hover {
+        box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+          0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+        .thumb-image {
+          opacity: 1;
+        }
+      }
+      .details {
+        padding: 20px;
+        .name {
+          width: 100%;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+        .buttons {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+          .btn {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .card-landing-page-templates {
+    padding: 0px;
+    height: auto;
+  }
+}

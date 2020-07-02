@@ -260,8 +260,8 @@ const NavigationItems = [
             id: 'contents-landing-page-templates',
             title: 'Landing Page Templates',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/content/landing-page-templates',
+            external: false
           }, {
             id: 'contents-dynamic-qr-codes',
             title: 'Dynamic QR codes',
