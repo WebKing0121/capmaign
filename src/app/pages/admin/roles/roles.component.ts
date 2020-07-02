@@ -109,7 +109,7 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   createUserRole() {
     this.modalType = UserRoleModalType.New;
     this.selectedRole = null;
-    this.userRoleModal.show();
+    setTimeout(() => this.userRoleModal.show());
   }
 
   onActive(evt) {

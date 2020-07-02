@@ -17,12 +17,12 @@ export class ManageRecordsComponent implements OnInit {
   @ViewChild('sendEmailModal', { static: false }) sendEmailModal;
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
-    { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
+    { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), disabled: true },
     { label: 'Import', icon: 'fa fa-upload', click: () => this.onClickImport() },
     { label: 'Export', icon: 'fa fa-download', click: () => this.onClickExport() },
-    { label: 'Send Email', icon: 'fa fa-envelope', click: () => this.onClickSendEmail(), hide: true },
-    { label: 'Send SMS', icon: 'fa fa-envelope', click: () => this.onClickSendSMS(), hide: true },
+    { label: 'Send Email', icon: 'fa fa-envelope', click: () => this.onClickSendEmail(), disabled: true },
+    { label: 'Send SMS', icon: 'fa fa-envelope', click: () => this.onClickSendSMS(), disabled: true },
     { label: 'View Columns', icon: 'fa fa-eye', click: () => this.onClickViewColumns() },
   ];
 
@@ -40,11 +40,11 @@ export class ManageRecordsComponent implements OnInit {
   onActive(evt: any) {
     const { event, selected } = evt;
     if (event.type === 'checkbox') {
-      this.tableButtons[1].hide = selected.length === 0;
-      this.tableButtons[2].hide = selected.length === 0;
+      this.tableButtons[1].disabled = selected.length === 0;
+      this.tableButtons[2].disabled = selected.length === 0;
 
-      this.tableButtons[5].hide = selected.length !== 1;
-      this.tableButtons[6].hide = selected.length !== 1;
+      this.tableButtons[5].disabled = selected.length !== 1;
+      this.tableButtons[6].disabled = selected.length !== 1;
     }
   }
 

@@ -36,7 +36,7 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   selected: List[] = [];
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
   ];
 
   records: any[];
@@ -49,8 +49,8 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   totalRecordsCount: number;
   selectedRecords: any[] = [];
   recordsTableButtons = [
-    { label: 'Add Records', icon: 'fa fa-plus', click: () => this.onClickAddRecords(), hide: true },
-    { label: 'Remove Records', icon: 'fa fa-trash', click: () => this.onClickRemoveRecords(), color: 'red', hide: true },
+    { label: 'Add Records', icon: 'fa fa-plus', click: () => this.onClickAddRecords(), disabled: true },
+    { label: 'Remove Records', icon: 'fa fa-trash', click: () => this.onClickRemoveRecords(), color: 'red', disabled: true },
   ];
 
   // add, edit list modal
@@ -225,9 +225,9 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   onActive(evt) {
     if (evt.type === 'click') {
       const list: List = evt.row as List;
-      this.tableButtons[1].hide = false;
-      this.recordsTableButtons[0].hide = false;
-      this.recordsTableButtons[1].hide = true;
+      this.tableButtons[1].disabled = false;
+      this.recordsTableButtons[0].disabled = false;
+      this.recordsTableButtons[1].disabled = true;
       this.dataService.getRecordsByListId(list.listId)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
@@ -303,7 +303,7 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   // activate event in data-records table
   onActiveRecords(event) {
     if (event.type === 'click') {
-      this.recordsTableButtons[1].hide = this.selectedRecords.length === 0;
+      this.recordsTableButtons[1].disabled = this.selectedRecords.length === 0;
     }
   }
 

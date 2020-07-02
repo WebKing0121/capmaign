@@ -254,8 +254,8 @@ const NavigationItems = [
             id: 'contents-email-templates',
             title: 'Email Templates',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/content/email-templates',
+            external: false
           }, {
             id: 'contents-landing-page-templates',
             title: 'Landing Page Templates',

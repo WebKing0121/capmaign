@@ -25,8 +25,8 @@
   </div>
 
   <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" *ngIf="modalType === LandingPageTemplateCategoryModalType.Edit">Delete</button>
     <button type="button" class="btn btn-primary">{{modalType === LandingPageTemplateCategoryModalType.New ? 'Create' : 'Save'}}</button>
-    &nbsp;
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="categoryModal.hide()">Close</button>
   </div>
 </app-ui-modal>

@@ -36,7 +36,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
   selected: List[] = [];
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
   ];
 
   records: any[];
@@ -49,8 +49,8 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
   totalEventsCount: number;
   selectedEvents: any[] = [];
   eventsTableButtons = [
-    { label: 'Add Events', icon: 'fa fa-plus', click: () => this.onClickAddEvents(), hide: true },
-    { label: 'Remove Events', icon: 'fa fa-trash', click: () => this.onClickRemoveEvents(), color: 'red', hide: true },
+    { label: 'Add Events', icon: 'fa fa-plus', click: () => this.onClickAddEvents(), disabled: true },
+    { label: 'Remove Events', icon: 'fa fa-trash', click: () => this.onClickRemoveEvents(), color: 'red', disabled: true },
   ];
 
   // add, edit list modal
@@ -231,9 +231,9 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
   onActive(evt) {
     if (evt.type === 'click') {
       const list: List = evt.row as List;
-      this.tableButtons[1].hide = false;
-      this.eventsTableButtons[0].hide = false;
-      this.eventsTableButtons[1].hide = true;
+      this.tableButtons[1].disabled = false;
+      this.eventsTableButtons[0].disabled = false;
+      this.eventsTableButtons[1].disabled = true;
       this.dataService.getEventsByListId(list.listId)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
@@ -309,7 +309,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
   // activate event in data-records table
   onActiveEvents(event) {
     if (event.type === 'click') {
-      this.eventsTableButtons[1].hide = this.selectedEvents.length === 0;
+      this.eventsTableButtons[1].disabled = this.selectedEvents.length === 0;
     }
   }
 

@@ -28,7 +28,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateAutomation() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteAutomation(), color: 'red', hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteAutomation(), color: 'red', disabled: true },
   ];
   selected: Automation[] = [];
 
@@ -121,7 +121,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(event) {
     if (event.type === 'click') {
-      this.tableButtons[1].hide = false;
+      this.tableButtons[1].disabled = false;
       if (event.cellIndex === 0 && event.column.frozenLeft) {
 
         this.selectedAutomation = event.row as Automation;

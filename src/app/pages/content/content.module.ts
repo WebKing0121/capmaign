@@ -9,12 +9,16 @@ import { EmailCampaignEditorModule } from '@app-components/email-campaign-editor
 import { LandingPageTemplatesComponent } from './landing-page-templates/landing-page-templates.component';
 import { LandingPageTemplateCategoryModalComponent } from './landing-page-templates/modals/category/category.component';
 import { LandingPageTemplateModalComponent } from './landing-page-templates/modals/template/template.component';
+import { EmailTemplatesComponent } from './email-templates/email-templates.component';
+import { AssetsComponent } from './assets/assets.component';
 
 @NgModule({
   declarations: [
     LandingPageTemplatesComponent,
     LandingPageTemplateCategoryModalComponent,
-    LandingPageTemplateModalComponent
+    LandingPageTemplateModalComponent,
+    EmailTemplatesComponent,
+    AssetsComponent
   ],
   imports: [
     CommonModule,
