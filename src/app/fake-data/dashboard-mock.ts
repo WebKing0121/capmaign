@@ -263,7 +263,15 @@ export class MobileDashCrm {
       borderColor: '#e2e5e829',
     },
     xaxis: {
-      categories: ['11 April Event', '11 April Event', 'Demo SMS', 'EventQA1', 'Summer Del-Goa 10 %offer', 'test', 'Website analysis campaign'],
+      categories: [
+        '11 April Event',
+        '11 April Event',
+        'Demo SMS',
+        'EventQA1',
+        'Summer Del-Goa 10 %offer',
+        'test',
+        'Website analysis campaign'
+      ],
     },
     fill: {
       opacity: 0.85
@@ -332,7 +340,7 @@ export const RecentEvnetMockData: RecentEvnet[] = [
     feedback: '',
     unsubscribe: ''
   },
-]
+];
 
 export class EventDashCrm {
   public static EngagementDrivingChannelsData = {
@@ -482,7 +490,7 @@ export const RegistrationByCountryMockData: RegistrationByCountry[] = [
     sessions: 670,
     pageviews: 300
   }
-]
+];
 
 export const RecentRegistrationMockData: RecentRegistration[] = [
   {
@@ -593,4 +601,4 @@ export const RecentRegistrationMockData: RecentRegistration[] = [
     registeredDate: '4/10/2020 11:24:24 AM	',
     source: ''
   },
-]
+];

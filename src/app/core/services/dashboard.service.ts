@@ -3,7 +3,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
-import { BounceEmailMockData, TopPerformingCampaignsMockData, RecentEvnetMockData, RegistrationByCountryMockData, RecentRegistrationMockData } from '@app-fake-db/dashboard-mock';
+import { 
+  BounceEmailMockData,
+  TopPerformingCampaignsMockData,
+  RecentEvnetMockData,
+  RegistrationByCountryMockData,
+  RecentRegistrationMockData
+} from '@app-fake-db/dashboard-mock';
+
 @Injectable({
   providedIn: 'root'
 })

@@ -72,7 +72,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   recentEventTableButtons = [];
   allRecentEvents: RecentEvnet[];
 
-  // Recent 
+  // Recent
   registrationByCountryTableSource: DataTableSource<RegistrationByCountry> = new DataTableSource<RegistrationByCountry>(10, false);
   registrationByCountryTableButtons = [];
   registrationsByCountry: RegistrationByCountry[];
@@ -94,7 +94,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   // mobile chart info
   public topPerformingMobileData: any;
 
-  //event-dash/engagement driving channel chart info
+  // event-dash/engagement driving channel chart info
   public engagementDrivingChannelsData: any;
   public invitedRegistrationsData: any;
 
@@ -284,11 +284,12 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           this.registrationByCountryTableSource.next(
-            mockData.slice(change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+            mockData.slice(change.pagination.pageSize * (change.pagination.pageNumber - 1),
+              change.pagination.pageSize * (change.pagination.pageNumber)),
             mockData.length
           );
         }
-      )
+      );
 
     // Get Recent Registration Info
     this.dashboardService.getRecentRegistrations()
@@ -301,9 +302,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log('error', error);
         }
       );
-    
+
     this.recentRegistrationTableSource.next(this.recentRegistrations.slice(0, 10), this.recentRegistrations.length);
-    
+
     this.recentRegistrationTableSource.changed$
       .pipe(takeUntil(this.destroy$))
       .subscribe(
@@ -316,11 +317,12 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
           }
 
           this.recentRegistrationTableSource.next(
-            mockData.slice(change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+            mockData.slice(change.pagination.pageSize * (change.pagination.pageNumber - 1),
+              change.pagination.pageSize * (change.pagination.pageNumber)),
             mockData.length
           );
         }
-      )
+      );
   }
 
   ngOnDestroy(): void {
