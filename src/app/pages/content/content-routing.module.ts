@@ -5,8 +5,15 @@ import { EmailTemplatesComponent } from './email-templates/email-templates.compo
 import { ContentAssetsComponent } from './assets/assets.component';
 import { LandingPagesComponent } from './landing-pages/landing-pages.component';
 import { DynamicContentsComponent } from './dynamic-contents/dynamic-contents.component';
+import { QrCodesComponent } from './qr-codes/qr-codes.component';
+import { ContentCategoriesComponent } from './categories/categories.component';
 
 const routes: Routes = [
+
+  {
+    path: 'categories',
+    component: ContentCategoriesComponent
+  },
   {
     path: 'landing-page-templates',
     component: LandingPageTemplatesComponent
@@ -22,6 +29,10 @@ const routes: Routes = [
   {
     path: 'email-templates',
     component: EmailTemplatesComponent
+  },
+  {
+    path: 'qr-codes',
+    component: QrCodesComponent
   },
   {
     path: 'assets',

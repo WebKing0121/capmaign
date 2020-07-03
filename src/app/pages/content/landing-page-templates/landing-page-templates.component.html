@@ -49,17 +49,6 @@
   [buttons]="confirmButtons"
 ></app-confirm-modal>
 
-<app-confirm-modal #confirmCategoryModal
-  modalTitle="Confirm"
-  modalMessage="Do you want to delete selected category?"
-  [buttons]="confirmCategoryButtons"
-></app-confirm-modal>
-
-<app-landing-page-template-category-modal #categoryModal
-  [modalType]="categoryModalType"
-  [category]="categoryObject"
-></app-landing-page-template-category-modal>
-
 <app-landing-page-template-modal #templateModal
   [modalType]="templateModalType"
   [template]="templateObject"

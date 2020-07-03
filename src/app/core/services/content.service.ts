@@ -18,7 +18,7 @@ export class ContentService {
 
   constructor(private http: HttpClient) { }
 
-  getLandingPageCategories(): Observable<any> {
+  getCategories(): Observable<any> {
     return of(LandingPageCategoryMock);
   }
 

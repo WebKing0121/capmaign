@@ -1,4 +1,4 @@
-<app-ui-modal #categoryModal dialogClass="modal-dialog-centered modal-md mobile-app-modal">
+<app-ui-modal #categoryModal dialogClass="modal-dialog-centered modal-md">
   <div class="app-modal-header">
     <h5 class="modal-title">{{modalType === ModalType.New ? 'Create' : 'Edit'}} Category</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
@@ -8,16 +8,14 @@
   </div>
   <div class="app-modal-body">
     <form [formGroup]="form">
-      <div class="mobile-app-input-section">
-        <div class="row">
-          <div class="col-12">
-            <label class="mobile-show">Name</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Name</span>
-              </div>
-              <input type="text" class="form-control" formControlName="name">
+      <div class="row">
+        <div class="col-12">
+          <label class="mobile-show">Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Name</span>
             </div>
+            <input type="text" class="form-control" formControlName="name">
           </div>
         </div>
       </div>

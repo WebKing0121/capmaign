@@ -52,7 +52,7 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
       { value: '2', label: 'Dynamic / Responsive' },
     ];
 
-    this.contentService.getLandingPageCategories()
+    this.contentService.getCategories()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {

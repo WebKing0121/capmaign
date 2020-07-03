@@ -52,7 +52,7 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       { value: 'Published', label: 'Published' },
     ];
 
-    this.contentService.getLandingPageCategories()
+    this.contentService.getCategories()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {

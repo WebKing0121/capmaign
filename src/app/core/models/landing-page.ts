@@ -1,9 +1,3 @@
-export class LandingPageCategory {
-  categoryId: number;
-  category: string;
-  templateCount: number;
-}
-
 export class LandingPageTemplate {
   organizationUnitId: number;
   name: string;

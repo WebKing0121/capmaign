@@ -3,11 +3,11 @@ import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-landing-page-template-category-modal',
+  selector: 'app-content-category-modal',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class LandingPageTemplateCategoryModalComponent implements OnInit {
+export class ContentCategoryModalComponent implements OnInit {
   @Input() modalType = ModalType.New;
   @Input() category: any;
   @ViewChild('categoryModal', { static: false }) categoryModal;

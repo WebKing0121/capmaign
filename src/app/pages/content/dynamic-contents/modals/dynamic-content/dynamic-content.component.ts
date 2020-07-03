@@ -52,7 +52,7 @@ export class DynamicContentModalComponent implements OnInit, OnDestroy {
       { value: '3', label: 'Mobile Content' },
     ];
 
-    this.contentService.getLandingPageCategories()
+    this.contentService.getCategories()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
