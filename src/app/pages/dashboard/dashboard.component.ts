@@ -1,6 +1,13 @@
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BounceEmail, TopPerformingCampaign, RecentEvnet, RegistrationByCountry, RecentRegistration } from '@app-core/models/dashboard';
+import {
+  BounceEmail,
+  TopPerformingCampaign,
+  RecentEvnet,
+  RegistrationByCountry,
+  RecentRegistration,
+  GoogleLead
+} from '@app-core/models/dashboard';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { Subject } from 'rxjs';
 import { DashboardService } from '@app-core/services/dashboard.service';
@@ -81,6 +88,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   recentRegistrationTableSource: DataTableSource<RecentRegistration> = new DataTableSource<RecentRegistration>(10, false);
   recentRegistrationTableButtons = [];
   recentRegistrations: RecentRegistration[];
+
+  // Google lead Info
+  googleLeadTableSource: DataTableSource<GoogleLead> = new DataTableSource<GoogleLead>(10, false);
+  googleLeadTableButtons = [];
+  googleLeads: GoogleLead[];
 
   destroy$ = new Subject();
   destroyMobile$ = new Subject();
@@ -323,6 +335,37 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
           );
         }
       );
+
+    // Get google lead info
+    this.dashboardService.getGoogleLeadMockData()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.googleLeads = data;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
+    this.googleLeadTableSource.next(this.googleLeads.slice(0, 10), this.googleLeads.length);
+    this.googleLeadTableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        change => {
+          let mockData = [];
+          if (change.search) {
+            mockData = this.googleLeads.filter(item => item.name.includes(change.search));
+          } else {
+            mockData = this.googleLeads;
+          }
+
+          this.googleLeadTableSource.next(
+            mockData.slice(change.pagination.pageSize * (change.pagination.pageNumber - 1),
+              change.pagination.pageSize * change.pagination.pageNumber),
+            mockData.length
+          );
+        }
+      );
   }
 
   ngOnDestroy(): void {
@@ -335,6 +378,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.recentEventTableSource.destroy();
     this.registrationByCountryTableSource.destroy();
     this.recentRegistrationTableSource.destroy();
+    this.googleLeadTableSource.destroy();
   }
 
   ngAfterViewInit(): void {
@@ -393,6 +437,19 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: 'Source', prop: 'source', sortable: true },
     ];
     this.recentRegistrationTableSource.setColumns(recentRegistrationColumns);
+
+    const googleLeadColumns: DataTableColumn[] = [
+      { name: 'Record ID', prop: 'id', sortable: true },
+      { name: 'Campaign Name', prop: 'name', sortable: true },
+      { name: 'Page Title', prop: 'title', sortable: true },
+      { name: 'Page Views', prop: 'views', sortable: true },
+      { name: 'Source', prop: 'source', sortable: true },
+      { name: 'Time On Page', prop: 'timeOnPage', sortable: true },
+      { name: 'First Name', prop: 'firstName', sortable: true },
+      { name: 'Last Name', prop: 'lastName', sortable: true },
+      { name: 'Email', prop: 'email', sortable: true },
+    ];
+    this.googleLeadTableSource.setColumns(googleLeadColumns);
   }
 
   redirectTo(tab) {

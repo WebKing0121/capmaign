@@ -1,4 +1,11 @@
-import { BounceEmail, TopPerformingCampaign, RecentEvnet, RegistrationByCountry, RecentRegistration } from '@app-core/models/dashboard';
+import {
+  BounceEmail,
+  TopPerformingCampaign,
+  RecentEvnet,
+  RegistrationByCountry,
+  RecentRegistration,
+  GoogleLead
+} from '@app-core/models/dashboard';
 
 export const BounceEmailMockData: BounceEmail[] = [
   {
@@ -601,4 +608,40 @@ export const RecentRegistrationMockData: RecentRegistration[] = [
     registeredDate: '4/10/2020 11:24:24 AM	',
     source: ''
   },
+];
+
+export const GoogleLeadMockData: GoogleLead[] = [
+  {
+    id: '0',
+    name: 'C2C WebSite',
+    title: 'C2CWeb2020',
+    views: 200,
+    source: 'dkdkeidkkdjskj',
+    timeOnPage: '20hr 30min',
+    firstName: 'Samir',
+    lastName: 'Sahu',
+    email: 'samir.sahu@camapaigntocash.com'
+  },
+  {
+    id: '1',
+    name: 'Camp',
+    title: 'C2CWeb2020',
+    views: 150,
+    source: 'dkdkeidkkdjskj',
+    timeOnPage: '10hr 30min',
+    firstName: 'Jack',
+    lastName: '',
+    email: 'samir.sahu@camapaigntocash.com'
+  },
+  {
+    id: '3',
+    name: 'C2C WebSite',
+    title: 'C2CWeb2020',
+    views: 200,
+    source: 'dkdkeidkkdjskj',
+    timeOnPage: '20hr 30min',
+    firstName: 'Tom',
+    lastName: '',
+    email: 'samir.sahu@camapaigntocash.com'
+  }
 ];

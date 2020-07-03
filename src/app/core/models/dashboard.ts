@@ -50,3 +50,15 @@ export class RecentRegistration {
   registeredDate: string;
   source: string;
 }
+
+export class GoogleLead {
+  id: string;
+  name: string;
+  title: string;
+  views: number;
+  source: string;
+  timeOnPage: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+}
