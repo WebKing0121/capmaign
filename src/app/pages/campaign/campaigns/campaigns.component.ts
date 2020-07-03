@@ -14,6 +14,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
 // tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
+import { CampaignComponent } from '../campaign/campaign.component';
 
 @Component({
   selector: 'app-campaigns',
@@ -122,7 +123,14 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       switch (campaign.type) {
         case CampaignType.Email: {
-          this.router.navigate([campaign.id], { relativeTo: this.route });
+          // this.router.navigate([campaign.id], { relativeTo: this.route });
+          this.modalService.openModal(CampaignComponent, {
+            width: '100%',
+            data: {
+              mode: 'edit',
+              id: campaign.id
+            }
+          })
           return;
         }
         case CampaignType.Mobile: {
@@ -141,7 +149,13 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   onCampaignTypeClicked(type: CampaignType) {
     switch (type) {
       case CampaignType.Email: {
-        this.router.navigate(['new-email'], { relativeTo: this.route });
+        // this.router.navigate(['new-email'], { relativeTo: this.route });
+        this.modalService.openModal(CampaignComponent, {
+          width: '100%',
+          data: {
+            mode: 'new'
+          }
+        })
         return;
       }
       case CampaignType.Mobile: {

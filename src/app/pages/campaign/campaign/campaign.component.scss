@@ -1,4 +1,18 @@
 :host {
+
+  .campaign-modal {
+    padding: 0 10%;
+    
+    @media only screen and (max-width: 425px) {
+      padding: 0 10px;
+    }
+  }
+
+  .card-body {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+  }
+
   .email-campaign-preview {
     .campaign-preview-header {
       padding: 10px 8px;
@@ -20,5 +34,40 @@
     @media only screen and (max-width: 767px) {
       display: none;
     }
+  }
+
+  .preview-toolbar {
+    margin-bottom: 10px;
+    
+    .btn-primary {
+      width: 160px;
+      margin: 5px;
+
+      @media screen and (max-width: 576px) {
+        width: 120px;
+      }
+    }
+
+    .templateBtn {
+      margin-left: auto;
+
+      @media screen and (max-width: 993px) {
+        margin-left: 5px;
+      }
+    }
+
+    @media only screen and (max-width: 993px) {
+
+    }
+  }
+
+  .email-campaign-form_input-form {
+    margin: 5px 0;
+  }
+
+  .personal-selector {
+    display: flex;
+    align-self: baseline;
+    padding: 5px 0;
   }
 }

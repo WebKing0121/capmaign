@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -7,6 +7,12 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { Campaign } from '@app-models/campaign';
 import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
+import { MODAL_DATA, ModalRef } from '@app-components/modal/modal-ref';
+
+interface ComponentProps {
+  id: string;
+  mode: string;
+}
 
 @Component({
   selector: 'app-campaign',
@@ -21,16 +27,21 @@ export class CampaignComponent implements OnInit {
 
   formGroup: FormGroup;
 
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private modalService: ModalService
+    private modalService: ModalService,
+    @Inject(MODAL_DATA) private props: ComponentProps,
+    @Inject(ModalRef) private modalRef: ModalRef<CampaignComponent>,
   ) { }
 
   ngOnInit(): void {
-    const { id } = this.route.snapshot.params;
-    const { mode } = this.route.snapshot.data;
+    // const { id } = this.route.snapshot.params;
+    // const { mode } = this.route.snapshot.data;
+    const id = this.props.id;
+    const mode = this.props.mode;
 
     const data = CampaignResponseMockData.find(d => d.id === id);
     this.campaign = data;
@@ -56,6 +67,8 @@ export class CampaignComponent implements OnInit {
       this.formGroup.controls.emailContent.setValidators(Validators.required);
       this.formGroup.controls.emailContent.updateValueAndValidity();
     }
+
+    
   }
 
   onSave() {
@@ -63,7 +76,7 @@ export class CampaignComponent implements OnInit {
   }
 
   onCancel() {
-    this.router.navigate(['..'], { relativeTo: this.route });
+    this.modalRef.cancel();
   }
 
   sendEmail(mode: 'full' | 'test') {
