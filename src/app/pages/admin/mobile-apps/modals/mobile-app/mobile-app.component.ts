@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MobileAppModalType } from '@app-core/enums/user-type.enum';
+import { MobileAppModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({

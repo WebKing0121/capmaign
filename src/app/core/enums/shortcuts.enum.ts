@@ -55,9 +55,9 @@ export const Shortcuts = [
     id: 5,
     name: 'Content Setup',
     children: [
-      {label: 'Landing Page Template', link: '/' },
-      {label: 'Email Template', link: '/' },
-      {label: 'Assets upload', link: '/' },
+      {label: 'Landing Page Template', link: '/content/landing-page-templates' },
+      {label: 'Email Template', link: '/content/email-templates' },
+      {label: 'Assets upload', link: '/content/assets' },
     ]
   },
   {

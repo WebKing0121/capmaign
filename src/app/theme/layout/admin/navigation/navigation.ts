@@ -236,8 +236,8 @@ const NavigationItems = [
             id: 'contents-assets',
             title: 'Assets',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/content/assets',
+            external: false
           }, {
             id: 'contents-landing-pages',
             title: 'Landing Pages',
@@ -254,23 +254,17 @@ const NavigationItems = [
             id: 'contents-email-templates',
             title: 'Email Templates',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/content/email-templates',
+            external: false
           }, {
             id: 'contents-landing-page-templates',
             title: 'Landing Page Templates',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/content/landing-page-templates',
+            external: false
           }, {
             id: 'contents-dynamic-qr-codes',
             title: 'Dynamic QR codes',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          }, {
-            id: 'contents-creatives',
-            title: 'Creatives',
             type: 'item',
             url: 'javascript:',
             external: true

@@ -6,6 +6,8 @@
       [dataSource]="tableSource"
       [rowHeight]="35"
       [headerHeight]="40"
+      [selectable]="true"
+      [selectionType]="'checkbox'"
       (activate)="onActive($event)"
     ></app-datatable>
   </div>

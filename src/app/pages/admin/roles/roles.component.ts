@@ -7,7 +7,7 @@ import { UserRolePage, UserRole, User } from '@app-models/user';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { TreeViewData } from '@app-core/models/tree';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
-import { UserRoleModalType, UserModalType } from '@app-core/enums/user-type.enum';
+import { UserRoleModalType, UserModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-user-roles',
@@ -109,7 +109,7 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   createUserRole() {
     this.modalType = UserRoleModalType.New;
     this.selectedRole = null;
-    this.userRoleModal.show();
+    setTimeout(() => this.userRoleModal.show());
   }
 
   onActive(evt) {

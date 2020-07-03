@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { UserService } from '@app-core/services/user.service';
-import { SenderModalType } from '@app-core/enums/user-type.enum';
+import { SenderModalType } from '@app-core/enums/modal-type.enum';
 
 // modals
 import { SenderModalComponent } from './modals/sender/sender-modal.component';

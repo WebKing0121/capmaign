@@ -37,8 +37,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   selected: Event[] = [];
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateEvent() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEvent(), color: 'red', hide: true },
-    { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEvent(), color: 'red', disabled: true },
+    { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), disabled: true },
   ];
 
   // add, edit event modal
@@ -175,8 +175,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(evt) {
     if (evt.type === 'click') {
-      this.tableButtons[1].hide = false;
-      this.tableButtons[2].hide = false;
+      this.tableButtons[1].disabled = this.selected.length === 0;
+      this.tableButtons[2].disabled = this.selected.length === 0;
       if (evt.cellIndex === 1) {
         const event: Event = evt.row as Event;
         this.isModalNew = false;

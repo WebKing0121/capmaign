@@ -1,0 +1,66 @@
+<div class="row mt-3">
+  <div class="col-12 card-landing-page-templates">
+    <app-card cardTitle="Landing Page Templates" cardClass="table-card" [cardButtons]="cardButtons" [options]="false">
+      <div class="normal-page">
+        <div class="category">
+          <span class="item-all" [ngClass]="{'selected': selectedCategory === 0}" (click)="onSelectCategory(0)">All
+            <!-- <span class="template-count">{{totalCount}}</span> -->
+          </span> |
+          <span *ngFor="let category of categories" class="item"
+            [ngClass]="{'selected': selectedCategory === category.categoryId}"
+            (click)="onSelectCategory(category.categoryId)">
+            {{category.category}}
+            <!-- <span class="template-count">{{category.templateCount}}</span> -->
+          </span>
+        </div>
+        <hr class="w-100 mt-3" />
+        <div class="templates row">
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" *ngFor="let template of filteredTemplates">
+            <div class="template" (click)="onSelectTemplate(template.id)"
+              [ngClass]="{'selected': selectedTemplates.indexOf(template.id) >= 0}">
+              <div class="template-selected-bar" *ngIf="selectedTemplates.indexOf(template.id) >= 0">
+                <div class="triangle"></div>
+              </div>
+              <img [src]="template.templateURL + '/thumbnail.jpg'" class="thumb-image" />
+              <div class="details">
+                <div class="name">
+                  {{template.name}}
+                </div>
+                <div class="buttons">
+                  <button class="btn btn-primary mr-3"> <i class="fa fa-eye"></i> View Demo </button>
+                  <button class="btn btn-outline-success"> <i class="fa fa-download"></i> Download </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </app-card>
+  </div>
+</div>
+<!-- 
+<app-mobile-app-modal #mobileAppModal [modalType]="modalType"
+  [mobileApp]="selectedApp"
+></app-mobile-app-modal>
+-->
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete selected template(s)?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>
+
+<app-confirm-modal #confirmCategoryModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete selected category?"
+  [buttons]="confirmCategoryButtons"
+></app-confirm-modal>
+
+<app-landing-page-template-category-modal #categoryModal
+  [modalType]="categoryModalType"
+  [category]="categoryObject"
+></app-landing-page-template-category-modal>
+
+<app-landing-page-template-modal #templateModal
+  [modalType]="templateModalType"
+  [template]="templateObject"
+></app-landing-page-template-modal>

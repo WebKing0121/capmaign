@@ -33,7 +33,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   selected: Filter[] = [];
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
   ];
 
   // add, edit list modal
@@ -244,7 +244,7 @@ export class FiltersComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(evt) {
     if (evt.type === 'click') {
-      this.tableButtons[1].hide = false;
+      this.tableButtons[1].disabled = this.selected.length === 0;
       if (evt.cellIndex === 1) {
         const filter: Filter = evt.row as Filter;
         this.isModalNew = false;

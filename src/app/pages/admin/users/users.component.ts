@@ -7,7 +7,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { User } from '@app-models/user';
 import { UserService } from '@app-core/services/user.service';
-import { UserModalType } from '@app-core/enums/user-type.enum';
+import { UserModalType } from '@app-core/enums/modal-type.enum';
 
 // modals
 import { UserModalComponent } from './modals/user/user-modal.component';

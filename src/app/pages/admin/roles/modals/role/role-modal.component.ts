@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
-import { UserRoleModalType } from '@app-core/enums/user-type.enum';
+import { UserRoleModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Subject } from 'rxjs';

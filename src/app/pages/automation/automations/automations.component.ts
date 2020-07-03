@@ -28,7 +28,9 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateAutomation() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteAutomation(), color: 'red', hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteAutomation(), color: 'red', disabled: true },
+    { label: 'Pause', icon: 'fa fa-pause', click: () => this.onClickPause(), disabled: true },
+    { label: 'Resume', icon: 'fa fa-play', click: () => this.onClickLive(), disabled: true },
   ];
   selected: Automation[] = [];
 
@@ -79,7 +81,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
+      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
       { name: 'Description', prop: 'description', sortable: true },
       { name: 'Type', prop: 'automationType', sortable: true, custom: true, template: this.templateType },
       { name: 'Status', prop: 'status', sortable: true },
@@ -121,8 +123,12 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(event) {
     if (event.type === 'click') {
-      this.tableButtons[1].hide = false;
-      if (event.cellIndex === 0 && event.column.frozenLeft) {
+      this.tableButtons[1].disabled = this.selected.length === 0;
+      this.tableButtons[2].disabled = !(this.selected.length === 1 && this.selected
+        .filter(x => x.status === 'Scheduled' || x.status === 'Active' ).length === 1);
+      this.tableButtons[3].disabled = !(this.selected.length === 1 && this.selected
+        .filter(x => x.status === 'Scheduled' || x.status === 'Active' || x.status === 'Paused' ).length === 1);
+      if (event.cellIndex === 1 ) {
 
         this.selectedAutomation = event.row as Automation;
         this.modalType = AutomationModalType.Edit;
@@ -131,11 +137,18 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  onClickLive() {
+
+  }
+
+  onClickPause() {
+
+  }
+
   onCreateAutomation() {
     this.modalType = AutomationModalType.New;
     this.selectedAutomation = null;
-    this.automationModal.create();
-
+    setTimeout(() => this.automationModal.create());
   }
   onDeleteAutomation() {
     this.confirmModal.show();

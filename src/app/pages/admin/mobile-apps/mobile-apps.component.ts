@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { UserService } from '@app-core/services/user.service';
 import { takeUntil } from 'rxjs/operators';
-import { MobileAppModalType } from '@app-core/enums/user-type.enum';
+import { MobileAppModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-mobile-apps',

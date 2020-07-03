@@ -77,7 +77,8 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSaveCustomField()">{{isModalNew ? 'Create' : 'Save'}}</button> &nbsp;
+    <button type="button" class="btn btn-danger" *ngIf="!isModalNew">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveCustomField()">{{isModalNew ? 'Create' : 'Save'}}</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="customFieldsModal.hide()">Close</button>
   </div>
 </app-ui-modal>

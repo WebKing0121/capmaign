@@ -75,8 +75,8 @@
   </div>
 
   <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" *ngIf="!isModalNew">Delete</button>
     <button type="button" class="btn btn-primary" (click)="onSaveList()">{{isModalNew ? 'Create' : 'Save'}}</button>
-    &nbsp;
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="listModal.hide()">Close</button>
   </div>
 </app-ui-modal>
@@ -101,7 +101,6 @@
 
   <div class="app-modal-footer">
     <button type="button" class="btn btn-primary" (click)="onSaveList()">Add Records</button>
-    &nbsp;
     <button type="button" class="btn btn-secondary" data-dismiss="modal"
       (click)="dataRecordsModal.hide()">Close</button>
   </div>

@@ -38,7 +38,8 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary" (click)="onSave()">{{modalType === UserRoleModalType.New ? 'Create': 'Save'}}</button> &nbsp;
+    <button type="button" class="btn btn-danger" *ngIf="modalType === UserRoleModalType.Edit">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="onSave()">{{modalType === UserRoleModalType.New ? 'Create': 'Save'}}</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="userRoleModal.hide()">Close</button>
   </div>
 </app-ui-modal>
