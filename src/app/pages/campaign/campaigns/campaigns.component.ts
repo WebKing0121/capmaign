@@ -131,7 +131,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
               mode: 'edit',
               id: campaign.id
             }
-          })
+          });
           return;
         }
         case CampaignType.Mobile: {
@@ -142,7 +142,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
               mode: 'edit',
               id: campaign.id
             }
-          })
+          });
           return;
         }
       }
@@ -163,7 +163,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
           data: {
             mode: 'new'
           }
-        })
+        });
         return;
       }
       case CampaignType.Mobile: {
@@ -173,7 +173,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
           data: {
             mode: 'new'
           }
-        })
+        });
         return;
       }
       case CampaignType.Social: {
