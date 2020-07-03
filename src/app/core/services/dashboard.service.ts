@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { of } from 'rxjs';
 
-import { BounceEmailMockData, TopPerformingCampaignsMockData } from '@app-fake-db/dashboard-mock';
+import { BounceEmailMockData, TopPerformingCampaignsMockData, RecentEvnetMockData, RegistrationByCountryMockData, RecentRegistrationMockData } from '@app-fake-db/dashboard-mock';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,5 +17,17 @@ export class DashboardService {
 
   getTopPerformingCampaignsMockData() {
     return of(TopPerformingCampaignsMockData);
+  }
+
+  getRecentEventsMockData() {
+    return of(RecentEvnetMockData);
+  }
+
+  getRegistrationByCountry() {
+    return of(RegistrationByCountryMockData);
+  }
+
+  getRecentRegistrations() {
+    return of(RecentRegistrationMockData);
   }
 }
