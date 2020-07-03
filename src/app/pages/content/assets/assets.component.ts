@@ -5,7 +5,6 @@ import { Asset } from '@app-core/models/asset';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
-import { AutomationModalType } from '@app-core/enums/automation-type.enum';
 
 @Component({
   selector: 'app-content-assets',
@@ -14,19 +13,29 @@ import { AutomationModalType } from '@app-core/enums/automation-type.enum';
 })
 export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('fileSizeTemplate', { static: false }) fileSizeTemplate: TemplateRef<any>;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
+  @ViewChild('renameModal', { static: false }) renameModal;
+  @ViewChild('createAssetModal', { static: false }) createAssetModal;
+  @ViewChild('uploadAssetModal', { static: false }) uploadAssetModal;
 
   private unsubscribe$ = new Subject();
 
   assets: Asset[];
   tableSource: DataTableSource<Asset> = new DataTableSource<Asset>(50);
   totalCount: number;
+  tableView: boolean;
   tableButtons = [
+    { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Upload', icon: 'fa fa-upload', click: () => this.onClickUpload() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
     { label: 'Download', icon: 'fa fa-download', click: () => this.onClickDownload(), disabled: true },
   ];
+  tableViewButtons = [
+    { label: 'Table View', icon: 'fa fa-th-list', click: () => this.onClickTableView(), selected: true, },
+    { label: 'List View', icon: 'fa fa-th-large', click: () => this.onClickListView(), selected: false },
+  ];
   selected: Asset[] = [];
-
+  selectedAssets: number[];
   // add, edit modal
   modalType: string;
   selectedAsset: Asset;
@@ -38,9 +47,12 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   constructor(
     private contentService: ContentService
-  ) { }
+  ) {
+    this.selectedAssets = [];
+  }
 
   ngOnInit(): void {
+    this.tableView = true;
     this.contentService.getAssets()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -53,20 +65,6 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
           console.log('error', error.response);
         }
       );
-  }
-
-  onClickUpload() {
-
-  }
-  onClickDownload() {
-
-  }
-  onClickDelete() {
-
-  }
-
-  onConfirmDelete() {
-
   }
 
   ngAfterViewInit(): void {
@@ -89,6 +87,53 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  onClickCreate() {
+    this.createAssetModal.show();
+  }
+
+  onClickUpload() {
+    this.uploadAssetModal.show();
+  }
+  onClickDownload() {
+
+  }
+  onClickDelete() {
+    this.confirmModal.show();
+  }
+
+  onConfirmDelete() {
+    this.confirmModal.hide();
+  }
+
+  onClickTableView() {
+    this.tableView = true;
+    this.tableViewButtons[0].selected = true;
+    this.tableViewButtons[1].selected = false;
+    this.selectedAssets = [];
+    this.tableButtons[2].disabled = true;
+    this.tableButtons[3].disabled = true;
+  }
+
+  onClickListView() {
+    this.tableView = false;
+    this.tableViewButtons[0].selected = false;
+    this.tableViewButtons[1].selected = true;
+    this.selectedAssets = [];
+    this.tableButtons[2].disabled = true;
+    this.tableButtons[3].disabled = true;
+  }
+
+  onSelectAsset(assetId: number) {
+    const pos = this.selectedAssets.indexOf(assetId);
+    if (pos < 0) {
+      this.selectedAssets.push(assetId);
+    } else {
+      this.selectedAssets.splice(pos, 1);
+    }
+    this.tableButtons[2].disabled = !(this.selectedAssets.length > 0);
+    this.tableButtons[3].disabled = !(this.selectedAssets.length > 0);
   }
 
   _updateTable(assets: Asset[]) {
@@ -124,17 +169,12 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   onActive(event) {
     if (event.type === 'click') {
-      // this.tableButtons[1].disabled = this.selected.length === 0;
-      // this.tableButtons[2].disabled = !(this.selected.length === 1 && this.selected
-      //   .filter(x => x.status === 'Scheduled' || x.status === 'Active').length === 1);
-      // this.tableButtons[3].disabled = !(this.selected.length === 1 && this.selected
-      //   .filter(x => x.status === 'Scheduled' || x.status === 'Active' || x.status === 'Paused').length === 1);
-      // if (event.cellIndex === 1) {
-
-      //   this.selectedAsset = event.row as Asset;
-      //   this.modalType = AutomationModalType.Edit;
-      //   setTimeout(() => this.automationModal.edit());
-      // }
+      this.tableButtons[1].disabled = this.selected.length === 0;
+      this.tableButtons[2].disabled = this.selected.length === 0;
+      if (event.cellIndex === 1) {
+        this.selectedAsset = event.row as Asset;
+        setTimeout(() => this.renameModal.show());
+      }
     }
   }
 }

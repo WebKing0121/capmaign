@@ -39,7 +39,8 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() selectionType = SelectionType.single;
   @Input() filter = [];
   @Input() dataSource: DataTableSource<any>;
-
+  @Input() tableView = true;
+  @Input() tableViewButtons = [];
   @Output() activate: EventEmitter<any> = new EventEmitter<any>();
 
   innerColumns: DataTableColumn[] = [];
@@ -97,11 +98,13 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   }
 
   ngAfterContentInit(): void {
-    setTimeout(() => {
-      this.handle.recalculate();
-      this.handle.recalculatePages();
-      this.handle.recalculateColumns();
-    });
+    if (this.tableView) {
+      setTimeout(() => {
+        this.handle.recalculate();
+        this.handle.recalculatePages();
+        this.handle.recalculateColumns();
+      });
+    }
   }
 
   onSelect(event: { selected: any[] }) {

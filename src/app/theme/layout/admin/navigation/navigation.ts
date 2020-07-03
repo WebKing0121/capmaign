@@ -268,12 +268,6 @@ const NavigationItems = [
             type: 'item',
             url: 'javascript:',
             external: true
-          }, {
-            id: 'contents-creatives',
-            title: 'Creatives',
-            type: 'item',
-            url: 'javascript:',
-            external: true
           },
         ]
       },

@@ -9,10 +9,36 @@
       [selectable]="true"
       [selectionType]="'checkbox'"
       (activate)="onActive($event)"
-    ></app-datatable>
+      [tableView]="tableView"
+      [tableViewButtons]="tableViewButtons"
+    >
+      <div class="row assets">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" *ngFor="let asset of assets">
+          <div class="asset" (click)="onSelectAsset(asset.id)"
+            [ngClass]="{'selected': selectedAssets.indexOf(asset.id) >= 0}">
+            <div class="asset-selected-bar" *ngIf="selectedAssets.indexOf(asset.id) >= 0">
+              <div class="triangle"></div>
+            </div>
+            <img [src]="asset.imgPhysicalPath" class="thumb-image" />
+          </div>
+        </div>
+      </div>
+    </app-datatable>
   </div>
 </div>
 
 <ng-template #fileSizeTemplate let-row="row" let-value let-i="index">
   <span>{{ formatBytes(value) }}</span>
 </ng-template>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm" modalMessage="Do you want to delete the selected assets?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>
+
+<app-content-rename-asset-modal #renameModal
+  [asset]="selectedAsset"
+></app-content-rename-asset-modal>
+
+<app-content-create-asset-modal #createAssetModal></app-content-create-asset-modal>
+<app-content-upload-asset-modal #uploadAssetModal></app-content-upload-asset-modal>

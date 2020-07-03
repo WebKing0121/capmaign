@@ -1,0 +1,51 @@
+.normal-post {
+  width: 150px;
+  height: 150px;
+  margin: 10px;
+  background: #d3d3d3;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  p {
+    color: black;
+    font-size: 14px;
+    line-height: 25px;
+    text-align: center;
+    width: 100%;
+  }
+  button {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    right: 15px;
+    padding: 5px 15px;
+    width: calc(100% - 30px);
+  }
+}
+
+.big-post {
+  margin: 10px;
+  width: 150px;
+  background: #d3d3d3;
+  height: 212px;
+  padding: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  p {
+    color: black;
+    font-size: 14px;
+    line-height: 25px;
+    text-align: center;
+    width: 100%;
+  }
+  button {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    right: 15px;
+    padding: 5px 15px;
+    width: calc(100% - 30px);
+  }
+}
