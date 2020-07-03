@@ -8,7 +8,7 @@ import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { Automation } from '@app-core/models/automation';
 import { AutomationService } from '@app-core/services/automation.service';
-import { AutomationModalType } from '@app-core/enums/automation-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-trigger-automations',
@@ -102,7 +102,7 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   onCreateClicked() {
-    this.modalType = AutomationModalType.New;
+    this.modalType = ModalType.New;
     this.selectedAutomation = null;
     this.automationModal.create();
   }
@@ -115,7 +115,7 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
     if (event.type === 'click' && event.cellIndex === 1) {
       const triggerAutomation = event.row as Automation;
       this.selectedAutomation = event.row as Automation;
-      this.modalType = AutomationModalType.Edit;
+      this.modalType = ModalType.Edit;
       setTimeout(() => this.automationModal.edit());
     }
 

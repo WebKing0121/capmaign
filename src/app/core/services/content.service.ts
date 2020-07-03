@@ -5,6 +5,9 @@ import { of, Observable } from 'rxjs';
 import { LandingPageTemplatesMock } from '@app-fake-db/content-landing-page-templates-mock';
 import { LandingPageCategoryMock } from '@app-fake-db/content-landing-page-templates-category-mock';
 import { AssetsMock } from '@app-fake-db/content-assets-mock';
+import { EmailTemplatesMock } from '@app-fake-db/content-email-templates-mock';
+import { LandingPagesMock } from '@app-fake-db/content-landing-pages-mock';
+import { DynamicContentsMock } from '@app-fake-db/content-dynamic-contents-mock';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +27,18 @@ export class ContentService {
   }
 
   getAssets(): Observable<any> {
-    return of (AssetsMock);
+    return of(AssetsMock);
+  }
+
+  getEmailTemplates(): Observable<any> {
+    return of(EmailTemplatesMock);
+  }
+
+  getLandingPages(): Observable<any> {
+    return of(LandingPagesMock);
+  }
+
+  getDynamicContents(): Observable<any> {
+    return of(DynamicContentsMock);
   }
 }

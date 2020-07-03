@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { LandingPageTemplateCategoryModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -8,10 +8,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./category.component.scss']
 })
 export class LandingPageTemplateCategoryModalComponent implements OnInit {
-  @Input() modalType = LandingPageTemplateCategoryModalType.New;
+  @Input() modalType = ModalType.New;
   @Input() category: any;
   @ViewChild('categoryModal', { static: false }) categoryModal;
-  LandingPageTemplateCategoryModalType = LandingPageTemplateCategoryModalType;
+  ModalType = ModalType;
 
   form: FormGroup;
   constructor(
@@ -26,7 +26,7 @@ export class LandingPageTemplateCategoryModalComponent implements OnInit {
     });
   }
   show() {
-    if (this.modalType === LandingPageTemplateCategoryModalType.New) {
+    if (this.modalType === ModalType.New) {
       this.form.setValue({
         id: 0,
         name: '',

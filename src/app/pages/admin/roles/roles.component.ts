@@ -7,7 +7,7 @@ import { UserRolePage, UserRole, User } from '@app-models/user';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { TreeViewData } from '@app-core/models/tree';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
-import { UserRoleModalType, UserModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-user-roles',
@@ -18,7 +18,7 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('userRoleModal', { static: false }) userRoleModal;
   @ViewChild('defaultTemplate', { static: false }) defaultTemplate;
   @ViewChild('staticTemplate', { static: false }) staticTemplate;
-  modalType = UserRoleModalType.New;
+  modalType = ModalType.New;
   private unsubscribe$ = new Subject();
 
   pages: UserRolePage[];
@@ -107,7 +107,7 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   createUserRole() {
-    this.modalType = UserRoleModalType.New;
+    this.modalType = ModalType.New;
     this.selectedRole = null;
     setTimeout(() => this.userRoleModal.show());
   }
@@ -116,7 +116,7 @@ export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
     if (evt.type === 'click') {
       // this.tableButtons[1]. = false;
       if (evt.cellIndex === 0) {
-        this.modalType = UserRoleModalType.Edit;
+        this.modalType = ModalType.Edit;
         this.selectedRole = evt.row as UserRole;
         setTimeout(() => this.userRoleModal.show());
       }

@@ -1,34 +1,5 @@
-export enum UserModalType {
+export enum ModalType {
   New = 'new',
-  Edit = 'edit'
-}
-
-export enum UserRoleModalType {
-  New = 'new',
-  Edit = 'edit'
-}
-
-export enum OrganizationModalType {
   Edit = 'edit',
   AddSubItem = 'add-sub-item'
-}
-
-export enum SenderModalType {
-  New = 'new',
-  Edit = 'edit'
-}
-
-export enum MobileAppModalType {
-  New = 'new',
-  Edit = 'edit'
-}
-
-export enum LandingPageTemplateCategoryModalType {
-  New = 'new',
-  Edit = 'edit'
-}
-
-export enum LandingPageTemplateModalType {
-  New = 'new',
-  Edit = 'edit'
 }

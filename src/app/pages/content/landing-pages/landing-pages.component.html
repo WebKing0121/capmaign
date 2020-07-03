@@ -1,0 +1,23 @@
+<div class="row mt-3">
+  <div class="col-12 card-landing-pages">
+    <app-datatable [title]="'Landing Pages'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [selectable]="true"
+      [selectionType]="'checkbox'"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
+  </div>
+</div>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm" modalMessage="Do you want to delete the selected landing page?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>
+
+<app-content-landing-page-modal #landingPageModal
+  [modalType]="modalType"
+  [landingPage]="landingPage"
+></app-content-landing-page-modal>

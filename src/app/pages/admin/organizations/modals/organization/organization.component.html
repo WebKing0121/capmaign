@@ -1,6 +1,6 @@
 <app-ui-modal #userOrganizationModal dialogClass="modal-dialog-centered modal-md">
   <div class="app-modal-header">
-    <h5 class="modal-title">{{modalType === OrganizationModalType.Edit ? 'Edit': 'Create'}} Organization</h5>
+    <h5 class="modal-title">{{modalType === ModalType.Edit ? 'Edit': 'Create'}} Organization</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="userOrganizationModal.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -72,7 +72,7 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary">{{modalType === OrganizationModalType.Edit ? 'Save': 'Create'}}</button> &nbsp;
+    <button type="button" class="btn btn-primary">{{modalType === ModalType.Edit ? 'Save': 'Create'}}</button> &nbsp;
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="userOrganizationModal.hide()">Close</button>
   </div>
 </app-ui-modal>

@@ -3,7 +3,7 @@ import { LandingPageCategory, LandingPageTemplate } from '@app-core/models/landi
 import { ContentService } from '@app-core/services/content.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LandingPageTemplateCategoryModalType, LandingPageTemplateModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-landing-page-templates',
@@ -26,11 +26,11 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
 
   selectedCategory: number;
   categoryObject: LandingPageCategory;
-  categoryModalType = LandingPageTemplateCategoryModalType.New;
+  categoryModalType = ModalType.New;
 
   selectedTemplates: number[];
   templateObject: LandingPageTemplate;
-  templateModalType = LandingPageTemplateModalType.New;
+  templateModalType = ModalType.New;
 
   cardButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
@@ -127,14 +127,14 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
 
   onClickCreate() {
     this.templateObject = null;
-    this.templateModalType = LandingPageTemplateModalType.New;
+    this.templateModalType = ModalType.New;
     setTimeout(() => this.templateModal.show());
   }
 
   onClickEdit() {
     const templateId = this.selectedTemplates[0];
     this.templateObject = this.templates.find(x => x.id === templateId);
-    this.templateModalType = LandingPageTemplateModalType.Edit;
+    this.templateModalType = ModalType.Edit;
     setTimeout(() => this.templateModal.show());
   }
 
@@ -148,13 +148,13 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
 
   onClickCreateCategory() {
     this.categoryObject = null;
-    this.categoryModalType = LandingPageTemplateCategoryModalType.New;
+    this.categoryModalType = ModalType.New;
     setTimeout(() => this.categoryModal.show());
   }
 
   onClickEditCategory() {
     this.categoryObject = this.categories.find(x => x.categoryId === this.selectedCategory);
-    this.categoryModalType = LandingPageTemplateCategoryModalType.Edit;
+    this.categoryModalType = ModalType.Edit;
     setTimeout(() => this.categoryModal.show());
   }
 

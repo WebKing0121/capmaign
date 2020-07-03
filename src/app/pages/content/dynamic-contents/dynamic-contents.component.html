@@ -1,0 +1,23 @@
+<div class="row mt-3">
+  <div class="col-12 card-dynamic-contents">
+    <app-datatable [title]="'Dynamic Contents'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [selectable]="true"
+      [selectionType]="'checkbox'"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
+  </div>
+</div>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm" modalMessage="Do you want to delete the selected content?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>
+
+<app-content-dynamic-content-modal #dynamicContentModal
+  [modalType]="modalType"
+  [content]="content"
+></app-content-dynamic-content-modal>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { UserModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 import { User } from '@app-models/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -10,9 +10,9 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class UserModalComponent implements OnInit {
   @ViewChild('userModal', { static: false }) userModal;
-  @Input() modalType = UserModalType.New;
+  @Input() modalType = ModalType.New;
   @Input() user: User;
-  UserModalType = UserModalType;
+  ModalType = ModalType;
 
   userForm: FormGroup;
   constructor(
@@ -37,7 +37,7 @@ export class UserModalComponent implements OnInit {
   }
 
   show() {
-    if (this.modalType === UserModalType.Edit) {
+    if (this.modalType === ModalType.Edit) {
       this.userForm.setValue({
         id: this.user.id,
         name: this.user.name,

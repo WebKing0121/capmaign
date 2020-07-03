@@ -1,6 +1,6 @@
 <app-ui-modal #userModal dialogClass="modal-dialog-centered modal-lg">
   <div class="app-modal-header">
-    <h5 class="modal-title">{{modalType === UserModalType.New ? 'Create': 'Edit'}} User</h5>
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'Create': 'Edit'}} User</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="userModal.hide()">
       <span aria-hidden="true">&times;</span>
     </button>

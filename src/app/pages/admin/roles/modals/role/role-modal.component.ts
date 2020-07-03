@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
-import { UserRoleModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { Subject } from 'rxjs';
@@ -15,9 +15,9 @@ import { UserService } from '@app-services/user.service';
 })
 export class UserRoleModalComponent implements OnInit, OnDestroy {
   @ViewChild('userRoleModal', { static: false }) userRoleModal;
-  @Input() modalType = UserRoleModalType.New;
+  @Input() modalType = ModalType.New;
   @Input() role: UserRole;
-  UserRoleModalType = UserRoleModalType;
+  ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
   userRoleForm: FormGroup;
@@ -57,7 +57,7 @@ export class UserRoleModalComponent implements OnInit, OnDestroy {
   }
 
   show() {
-    if (this.modalType === UserRoleModalType.Edit) {
+    if (this.modalType === ModalType.Edit) {
       this.userRoleForm.setValue({
         id: this.role.id,
         roleName: this.role.displayName,

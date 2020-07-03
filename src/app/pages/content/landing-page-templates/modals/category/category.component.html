@@ -1,6 +1,6 @@
 <app-ui-modal #categoryModal dialogClass="modal-dialog-centered modal-md mobile-app-modal">
   <div class="app-modal-header">
-    <h5 class="modal-title">{{modalType === LandingPageTemplateCategoryModalType.New ? 'Create' : 'Edit'}} Category</h5>
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'Create' : 'Edit'}} Category</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
       (click)="categoryModal.hide()">
       <span aria-hidden="true">&times;</span>
@@ -25,8 +25,8 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" *ngIf="modalType === LandingPageTemplateCategoryModalType.Edit">Delete</button>
-    <button type="button" class="btn btn-primary">{{modalType === LandingPageTemplateCategoryModalType.New ? 'Create' : 'Save'}}</button>
+    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit">Delete</button>
+    <button type="button" class="btn btn-primary">{{modalType === ModalType.New ? 'Create' : 'Save'}}</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="categoryModal.hide()">Close</button>
   </div>
 </app-ui-modal>

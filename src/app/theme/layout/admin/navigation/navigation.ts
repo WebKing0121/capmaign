@@ -242,14 +242,14 @@ const NavigationItems = [
             id: 'contents-landing-pages',
             title: 'Landing Pages',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/content/landing-pages',
+            external: false
           }, {
             id: 'contents-dynamic-contents',
             title: 'Dynamic Contents',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/content/dynamic-contents',
+            external: false
           }, {
             id: 'contents-email-templates',
             title: 'Email Templates',

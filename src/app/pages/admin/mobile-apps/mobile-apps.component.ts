@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { UserService } from '@app-core/services/user.service';
 import { takeUntil } from 'rxjs/operators';
-import { MobileAppModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-mobile-apps',
@@ -13,7 +13,7 @@ export class MobileAppsComponent implements OnInit, OnDestroy {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('mobileAppModal', { static: false }) mobileAppModal;
 
-  modalType = MobileAppModalType.New;
+  modalType = ModalType.New;
   private unsubscribe$ = new Subject();
   apps: any[];
   selectedApp: any;
@@ -58,12 +58,12 @@ export class MobileAppsComponent implements OnInit, OnDestroy {
 
   onEditApp(app) {
     this.selectedApp = app;
-    this.modalType = MobileAppModalType.Edit;
+    this.modalType = ModalType.Edit;
     setTimeout(() => this.mobileAppModal.show());
   }
 
   onClickAdd() {
-    this.modalType = MobileAppModalType.New;
+    this.modalType = ModalType.New;
     this.selectedApp = null;
     setTimeout(() => this.mobileAppModal.show());
   }
