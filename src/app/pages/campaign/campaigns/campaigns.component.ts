@@ -15,6 +15,7 @@ import { CampaignSendModalComponent } from '../components/campaign-send-modal/ca
 // tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CampaignComponent } from '../campaign/campaign.component';
+import { MobileCampaignComponent } from '../../mobile/mobile-campaign/mobile-campaign.component';
 
 @Component({
   selector: 'app-campaigns',
@@ -134,7 +135,14 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
           return;
         }
         case CampaignType.Mobile: {
-          this.router.navigate(['mobile', campaign.id]);
+          // this.router.navigate(['mobile', campaign.id]);
+          this.modalService.openModal(MobileCampaignComponent, {
+            width: '100%',
+            data: {
+              mode: 'edit',
+              id: campaign.id
+            }
+          })
           return;
         }
       }
@@ -159,7 +167,13 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         return;
       }
       case CampaignType.Mobile: {
-        this.router.navigate(['mobile', 'new-campaign']);
+        // this.router.navigate(['mobile', 'new-campaign']);
+        this.modalService.openModal(MobileCampaignComponent, {
+          width: '100%',
+          data: {
+            mode: 'new'
+          }
+        })
         return;
       }
       case CampaignType.Social: {
