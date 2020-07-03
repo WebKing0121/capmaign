@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import { LandingPageTemplatesMock } from '@app-fake-db/content-landing-page-templates-mock';
 import { LandingPageCategoryMock } from '@app-fake-db/content-landing-page-templates-category-mock';
+import { AssetsMock } from '@app-fake-db/content-assets-mock';
 
 @Injectable({
   providedIn: 'root'
@@ -20,5 +21,9 @@ export class ContentService {
 
   getLandingPageTemplates(): Observable<any> {
     return of(LandingPageTemplatesMock);
+  }
+
+  getAssets(): Observable<any> {
+    return of (AssetsMock);
   }
 }

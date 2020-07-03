@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LandingPageTemplatesComponent } from './landing-page-templates/landing-page-templates.component';
 import { EmailTemplatesComponent } from './email-templates/email-templates.component';
+import { ContentAssetsComponent } from './assets/assets.component';
 
 const routes: Routes = [
   {
@@ -11,6 +12,10 @@ const routes: Routes = [
   {
     path: 'email-templates',
     component: EmailTemplatesComponent
+  },
+  {
+    path: 'assets',
+    component: ContentAssetsComponent
   },
   {
     path: '**',

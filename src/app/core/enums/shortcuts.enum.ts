@@ -57,7 +57,7 @@ export const Shortcuts = [
     children: [
       {label: 'Landing Page Template', link: '/content/landing-page-templates' },
       {label: 'Email Template', link: '/content/email-templates' },
-      {label: 'Assets upload', link: '/' },
+      {label: 'Assets upload', link: '/content/assets' },
     ]
   },
   {

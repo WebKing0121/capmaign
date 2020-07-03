@@ -236,8 +236,8 @@ const NavigationItems = [
             id: 'contents-assets',
             title: 'Assets',
             type: 'item',
-            url: 'javascript:',
-            external: true
+            url: '/content/assets',
+            external: false
           }, {
             id: 'contents-landing-pages',
             title: 'Landing Pages',

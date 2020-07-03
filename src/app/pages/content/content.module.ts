@@ -10,7 +10,7 @@ import { LandingPageTemplatesComponent } from './landing-page-templates/landing-
 import { LandingPageTemplateCategoryModalComponent } from './landing-page-templates/modals/category/category.component';
 import { LandingPageTemplateModalComponent } from './landing-page-templates/modals/template/template.component';
 import { EmailTemplatesComponent } from './email-templates/email-templates.component';
-import { AssetsComponent } from './assets/assets.component';
+import { ContentAssetsComponent } from './assets/assets.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { AssetsComponent } from './assets/assets.component';
     LandingPageTemplateCategoryModalComponent,
     LandingPageTemplateModalComponent,
     EmailTemplatesComponent,
-    AssetsComponent
+    ContentAssetsComponent
   ],
   imports: [
     CommonModule,
