@@ -11,6 +11,8 @@ import { Campaign } from '@app-core/models/campaign';
 import { CampaignService } from '@app-core/services/campaign.service';
 import * as moment from 'moment';
 import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
+import { Tab } from '@app-core/models/common';
+import { DashboardTabs } from '@app-core/enums/dashboard-type.enum';
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
@@ -31,15 +33,10 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
 export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('content') content: ElementRef;
 
-  viewOptions: any[] = [
-    { value: 'email', label: 'Email Analytics' },
-    { value: 'mobile', label: 'Mobile Analytics' },
-    { value: 'social&ppc', label: 'Social & PPC Analytics' },
-    { value: 'website', label: 'Website Analytics' },
-    { value: 'event', label: 'Event Analytics' },
-    { value: 'qrCode', label: 'QRCode Analytics' },
-    { value: 'lead', label: 'Lead Analytics' },
-  ];
+  tabs: Tab[] = DashboardTabs;
+  dashboardType: string;
+  // columns
+  records: any[];
 
   // Date Range Picker
   hoveredDate: NgbDateStruct;
@@ -58,34 +55,36 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   showLeadAnalytics: boolean;
 
   // BounceEmail Information
-  tableSource: DataTableSource<BounceEmail> = new DataTableSource<BounceEmail>(10);
+  tableSource: DataTableSource<BounceEmail> = new DataTableSource<BounceEmail>(10, false);
   tableButtons = [];
   allBounceEmail: BounceEmail[];
   // TopPerforming Information
-  topPerformingTableSource: DataTableSource<TopPerformingCampaign> = new DataTableSource<TopPerformingCampaign>(10);
+  topPerformingTableSource: DataTableSource<TopPerformingCampaign> = new DataTableSource<TopPerformingCampaign>(10, false);
   topPerformingTableButtons = [];
   alltopPerformingCampaign: TopPerformingCampaign[];
   // Upcoming Campaign Information
-  upComingCampTableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(10);
+  upComingCampTableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(10, false);
   upComingCampTableButtons = [];
   allUpcommingCamp: Campaign[];
 
   // Recent Event Information
-  recentEventTableSource: DataTableSource<RecentEvnet> = new DataTableSource<RecentEvnet>(10);
+  recentEventTableSource: DataTableSource<RecentEvnet> = new DataTableSource<RecentEvnet>(10, false);
   recentEventTableButtons = [];
   allRecentEvents: RecentEvnet[];
 
   // Recent 
-  registrationByCountryTableSource: DataTableSource<RegistrationByCountry> = new DataTableSource<RegistrationByCountry>(10);
+  registrationByCountryTableSource: DataTableSource<RegistrationByCountry> = new DataTableSource<RegistrationByCountry>(10, false);
   registrationByCountryTableButtons = [];
   registrationsByCountry: RegistrationByCountry[];
 
   // Recent Registration Info
-  recentRegistrationTableSource: DataTableSource<RecentRegistration> = new DataTableSource<RecentRegistration>(10);
+  recentRegistrationTableSource: DataTableSource<RecentRegistration> = new DataTableSource<RecentRegistration>(10, false);
   recentRegistrationTableButtons = [];
   recentRegistrations: RecentRegistration[];
 
   destroy$ = new Subject();
+  destroyMobile$ = new Subject();
+  destroyEvent$ = new Subject();
 
   // chart
   public topPerformingCampaignData: any;
@@ -327,6 +326,13 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnDestroy(): void {
     this.destroy$.next(true);
     this.destroy$.unsubscribe();
+
+    this.tableSource.destroy();
+    this.topPerformingTableSource.destroy();
+    this.upComingCampTableSource.destroy();
+    this.recentEventTableSource.destroy();
+    this.registrationByCountryTableSource.destroy();
+    this.recentRegistrationTableSource.destroy();
   }
 
   ngAfterViewInit(): void {
@@ -387,14 +393,26 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.recentRegistrationTableSource.setColumns(recentRegistrationColumns);
   }
 
-  redirectTo(event) {
-    this.showEmailAnalytics = event.target.value === 'email';
-    this.showMobileAnalytics = event.target.value === 'mobile';
-    this.showSocialAnalytics = event.target.value === 'social';
-    this.showWebsiteAnalytics = event.target.value === 'website';
-    this.showEventAnalytics = event.target.value === 'event';
-    this.showQRCodeAnalytics = event.target.value === 'QRCode';
-    this.showLeadAnalytics = event.target.value === 'lead';
+  redirectTo(tab) {
+    const dashboardType = tab.target.value;
+    this.showEmailAnalytics = dashboardType === 'email';
+    this.showMobileAnalytics = dashboardType === 'mobile';
+    this.showSocialAnalytics = dashboardType === 'social';
+    this.showWebsiteAnalytics = dashboardType === 'website';
+    this.showEventAnalytics = dashboardType === 'event';
+    this.showQRCodeAnalytics = dashboardType === 'QRCode';
+    this.showLeadAnalytics = dashboardType === 'lead';
+
+    const prevTab = this.tabs.find((x: Tab) => x.selected);
+    if (prevTab) {
+      prevTab.selected = false;
+    }
+
+    // if (tab) {
+    //   this.dashboardType = tab.key;
+    //   tab.selected = true;
+    //   this.dashboardService.get
+    // }
   }
 
   chosenDate(event) {

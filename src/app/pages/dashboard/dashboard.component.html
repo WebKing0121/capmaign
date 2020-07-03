@@ -2,13 +2,7 @@
   <div class="dashboard-header card-header d-flex">
     <div class="pageInfo">
       <select (change)="redirectTo($event)" class="form-control">
-        <option value="email">Email Analytics</option>
-        <option value="mobile">Mobile Analytics</option>
-        <option value="social">Social &amp; PPC Analytics</option>
-        <option value="website">Website Analytics</option>
-        <option value="event">Event Analytics</option>
-        <option value="QRCode">QRCode Analytics</option>
-        <option value="lead">Lead Analytics</option>
+        <option *ngFor="let tab of tabs" [value]="tab.key">{{tab.label}}</option>
       </select>
     </div>
     <div class="">
