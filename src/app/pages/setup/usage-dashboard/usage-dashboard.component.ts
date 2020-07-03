@@ -49,10 +49,20 @@ export class UsageDashboardComponent implements OnInit, OnDestroy, AfterViewInit
   destroy$ = new Subject();
   showMobileUsageDashboard: boolean;
 
+  emailUsageInfo: any[];
+  recordUsageInfo: any[];
+  usersUsageInfo: any[];
+  diskSpaceUsageInfo: any[];
+
   constructor(
     private usageDashboardService: UsageDashboardService,
     private modalService: ModalService
-  ) { }
+  ) {
+    this.emailUsageInfo = [];
+    this.recordUsageInfo = [];
+    this.usersUsageInfo = [];
+    this.diskSpaceUsageInfo = [];
+  }
 
   ngOnInit(): void {
     this.usageDashboardService.getAllOrganizationMockData()

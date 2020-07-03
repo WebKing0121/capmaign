@@ -1,14 +1,37 @@
 :host{
 
+  .usage-dashboard {
+
+    @media only screen and (max-width: 767px) {
+      margin-left: -15px;
+      margin-right: -15px;
+    }
+  }
+
   .campaign-type {
     width: 220px;
   }
 
   .view-option-group {
     display: flex;
+    flex-wrap: wrap;
     width: 100%;
     justify-content: space-between;
     align-items: center;
+
+    @media only screen and (max-width: 1440px) {
+      display: block;
+    }
+
+    .view-radio-option-group {
+      display: flex;
+      flex-wrap: wrap;
+      margin-left: auto;
+
+      .view-option {
+        margin: 10px 10px 10px 0;
+      }
+    }
   }
 
   .custom-control {
@@ -32,6 +55,10 @@
       padding-right: 20px;
     }
 
+    &_header {
+      background-color: whitesmoke;
+    }
+
     &_content {
       padding: 0;
 
@@ -40,5 +67,10 @@
 
   .modal-body {
     margin: 0 -50px;
+  }
+
+  .empty-table {
+    height: 133px;
+    overflow-y: auto;
   }
 }
