@@ -31,6 +31,7 @@ export class DataTableSource<T> {
   selection$ = this.selectionSubject.asObservable();
 
   alive = true;
+  disconnectWhenTableDestroying = true;
   changed$ = new EventEmitter();
   recalculate$ = new EventEmitter();
   columnsChanged$ = new EventEmitter();
@@ -78,8 +79,10 @@ export class DataTableSource<T> {
     return this.selected.length;
   }
 
-  constructor(pageSize: number = DEFAULT_PAGE_SIZE) {
+  constructor(pageSize: number = DEFAULT_PAGE_SIZE, disconnectWhenTableDestroying = true) {
     this.pagination.setPageSize(pageSize);
+
+    this.disconnectWhenTableDestroying = disconnectWhenTableDestroying;
 
     this.searchSubject.asObservable().pipe(
       debounceTime(500),
@@ -91,20 +94,39 @@ export class DataTableSource<T> {
   }
 
   disconnect() {
-    this.loadingSubject.complete();
-    this.loadingSubject.unsubscribe();
-    this.dataSubject.complete();
-    this.dataSubject.unsubscribe();
-    this.totalCountSubject.complete();
-    this.totalCountSubject.unsubscribe();
-    this.orderSubject.complete();
-    this.orderSubject.unsubscribe();
-    this.searchSubject.complete();
-    this.searchSubject.unsubscribe();
-    this.selectionSubject.complete();
-    this.selectionSubject.unsubscribe();
+    if (this.disconnectWhenTableDestroying) {
+      this.loadingSubject.complete();
+      this.loadingSubject.unsubscribe();
+      this.dataSubject.complete();
+      this.dataSubject.unsubscribe();
+      this.totalCountSubject.complete();
+      this.totalCountSubject.unsubscribe();
+      this.orderSubject.complete();
+      this.orderSubject.unsubscribe();
+      this.searchSubject.complete();
+      this.searchSubject.unsubscribe();
+      this.selectionSubject.complete();
+      this.selectionSubject.unsubscribe();
+    }
 
     this.alive = false;
+  }
+
+  destroy() {
+    if (!this.disconnectWhenTableDestroying) {
+      this.loadingSubject.complete();
+      this.loadingSubject.unsubscribe();
+      this.dataSubject.complete();
+      this.dataSubject.unsubscribe();
+      this.totalCountSubject.complete();
+      this.totalCountSubject.unsubscribe();
+      this.orderSubject.complete();
+      this.orderSubject.unsubscribe();
+      this.searchSubject.complete();
+      this.searchSubject.unsubscribe();
+      this.selectionSubject.complete();
+      this.selectionSubject.unsubscribe();
+    }
   }
 
   resetData() {
