@@ -9,7 +9,6 @@ import { UserService } from '@app-core/services/user.service';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 
 // modals
-import { SenderModalComponent } from './modals/sender/sender-modal.component';
 import { Sender } from '@app-models/sender';
 
 @Component({
@@ -18,8 +17,8 @@ import { Sender } from '@app-models/sender';
   styleUrls: ['./senders.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SendersComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('senderModal', { static: false }) senderModal: SenderModalComponent;
+export class AdminSendersComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('senderModal', { static: false }) senderModal;
 
   modalType = ModalType.New;
   private unsubscribe$ = new Subject();

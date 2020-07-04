@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SenderModalComponent } from './sender-modal.component';
+import { AdminUserModalComponent } from './user-modal.component';
 
-describe('SenderModalComponent', () => {
-  let component: SenderModalComponent;
-  let fixture: ComponentFixture<SenderModalComponent>;
+describe('AdminUserModalComponent', () => {
+  let component: AdminUserModalComponent;
+  let fixture: ComponentFixture<AdminUserModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SenderModalComponent ]
+      declarations: [ AdminUserModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SenderModalComponent);
+    fixture = TestBed.createComponent(AdminUserModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -10,11 +10,11 @@ import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-user-roles',
+  selector: 'app-admin-roles',
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.scss']
 })
-export class UserRolesComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('userRoleModal', { static: false }) userRoleModal;
   @ViewChild('defaultTemplate', { static: false }) defaultTemplate;
   @ViewChild('staticTemplate', { static: false }) staticTemplate;

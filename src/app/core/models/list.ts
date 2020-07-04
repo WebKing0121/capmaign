@@ -15,3 +15,11 @@ export class List {
   id: number;
 }
 
+export class ListValue {
+  id: number;
+  tenantId: number | null;
+  tableName: string;
+  value: string;
+  displayName: string;
+  isDeleted: boolean;
+}

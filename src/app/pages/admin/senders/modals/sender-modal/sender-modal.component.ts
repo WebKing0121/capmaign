@@ -7,11 +7,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
 @Component({
-  selector: 'app-senders-sender-modal',
+  selector: 'app-admin-sender-modal',
   templateUrl: './sender-modal.component.html',
   styleUrls: ['./sender-modal.component.scss']
 })
-export class SenderModalComponent implements OnInit, OnDestroy {
+export class AdminSenderModalComponent implements OnInit, OnDestroy {
   @ViewChild('senderModal', { static: false }) senderModal;
   @Input() modalType = ModalType.New;
   @Input() sender: Sender;

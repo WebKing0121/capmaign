@@ -30,4 +30,7 @@
   <span *ngIf="!value" class="user-disabled">Disabled</span>
 </ng-template>
 
-<app-users-user-modal #userModal [modalType]="modalType" [user]="selectedUser"></app-users-user-modal>
+<app-admin-user-modal #userModal
+  [modalType]="modalType"
+  [user]="selectedUser"
+></app-admin-user-modal>

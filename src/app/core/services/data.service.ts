@@ -15,6 +15,7 @@ import { MapsMappingImportMocks } from '@app-fake-db/data-import-maps-mock';
 import { EventListsMockData } from '@app-fake-db/data-list-event-mock';
 import { EventsMockData } from '@app-fake-db/events-mock';
 import { DataFiltersMock, filterColumnsMock } from '@app-fake-db/data-filters-mock';
+import { ListValuesMock } from '@app-fake-db/data-list-values-mock';
 
 @Injectable({
   providedIn: 'root'
@@ -126,6 +127,10 @@ export class DataService {
 
   getFilterColumns(): Observable<any> {
     return of(filterColumnsMock);
+  }
+
+  getListValues(): Observable<any> {
+    return of(ListValuesMock);
   }
 
   splitArray(query: string) {

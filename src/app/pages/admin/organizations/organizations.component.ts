@@ -8,11 +8,11 @@ import { takeUntil } from 'rxjs/operators';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-user-organizations',
+  selector: 'app-admin-organizations',
   templateUrl: './organizations.component.html',
   styleUrls: ['./organizations.component.scss']
 })
-export class UserOrganizationsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('userTemplate', { static: false }) userTemplate;
   @ViewChild('userStatusTemplate', { static: false }) userStatusTemplate;
   @ViewChild('confirmModal', { static: false }) confirmModal;
