@@ -5,77 +5,75 @@
   </div>
   <div class="card-body" style="max-height: calc(100vh - 100px); overflow-y: auto;">
 
-    <div class="row">
-      <div class="d-flex flex-wrap col-sm-12">
+    <div class="d-block">
+      <div class="d-block flex-wrap col-sm-12">
         <!-- Tabs -->
-        <div class="col-lg-3 m-b-20">
-          <span *ngIf="step[0]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(0)">
+        <app-data-record-tabs [tabs]="tabs" (selectTab)="onSelectTab($event)"></app-data-record-tabs>
+        <!-- <div class="tab-group">
+          <span *ngIf="step[0]" class="selected-tab" (click)="openContent(0)">
             <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">1</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">1</span>
             AUDIENCE
           </span>
-          <span *ngIf="!step[0]" class="col-sm-12 btn border border-secondary" (click)="openContent(0)">
+          <span *ngIf="!step[0]" class="d-flex btn border border-secondary" (click)="openContent(0)">
             <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">1</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">1</span>
             AUDIENCE
           </span>
-          <span *ngIf="step[1]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(1)">
+          <span *ngIf="step[1]" class="selected-tab" (click)="openContent(1)">
             <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">2</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">2</span>
             IN APP MESSAGES
           </span>
-          <span *ngIf="!step[1]" class="col-sm-12 btn border border-secondary" (click)="openContent(1)">
+          <span *ngIf="!step[1]" class="d-flex btn border border-secondary" (click)="openContent(1)">
             <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">2</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">2</span>
             IN APP MESSAGES
           </span>
-          <span *ngIf="step[2]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(2)">
+          <span *ngIf="step[2]" class="selected-tab" (click)="openContent(2)">
             <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">3</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">3</span>
             DEVICE LIST
           </span>
-          <span *ngIf="!step[2]" class="col-sm-12 btn border border-secondary" (click)="openContent(2)">
+          <span *ngIf="!step[2]" class="d-flex btn border border-secondary" (click)="openContent(2)">
             <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">3</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">3</span>
             DEVICE LIST
           </span>
-          <span *ngIf="step[3]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(3)">
+          <span *ngIf="step[3]" class="selected-tab" (click)="openContent(3)">
             <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">4</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">4</span>
             SCHEDULE
           </span>
-          <span *ngIf="!step[3]" class="col-sm-12 btn border border-secondary" (click)="openContent(3)">
+          <span *ngIf="!step[3]" class="d-flex btn border border-secondary" (click)="openContent(3)">
             <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">4</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">4</span>
             SCHEDULE
           </span>
-          <span *ngIf="step[4]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(4)">
+          <span *ngIf="step[4]" class="selected-tab" (click)="openContent(4)">
             <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">5</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">5</span>
             SHARE
           </span>
-          <span *ngIf="!step[4]" class="col-sm-12 btn border border-secondary" (click)="openContent(4)">
+          <span *ngIf="!step[4]" class="d-flex btn border border-secondary" (click)="openContent(4)">
             <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">5</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">5</span>
             SHARE
           </span>
-          <span *ngIf="step[5]" class="col-sm-12 btn btn-secondary justify-content-center" (click)="openContent(5)">
+          <span *ngIf="step[5]" class="selected-tab" (click)="openContent(5)">
             <span class="d-flex justify-content-center bg-white m-r-10 text-secondary"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">6</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">6</span>
             APPROVE
           </span>
-          <span *ngIf="!step[5]" class="col-sm-12 btn border border-secondary" (click)="openContent(5)">
+          <span *ngIf="!step[5]" class="d-flex btn border border-secondary" (click)="openContent(5)">
             <span class="d-flex justify-content-center bg-secondary m-r-10 text-white"
-              style="position: absolute; left: 20px; width: 20px; height: 20px; align-items: center; border-radius: 50%;">6</span>
+              style="width: 20px; height: 20px; align-items: center; border-radius: 50%;">6</span>
             APPROVE
           </span>
-        </div>
+        </div> -->
 
         <!-- Tab content -->
-        <div *ngIf="step[0]" class="col-lg-9 p-0 card tabcontent">
-          <div class="card-header bg-secondary text-white">
-            <span>Audience Option</span>
-          </div>
+        <div *ngIf="step[0]" class="col-lg-12 p-0 card tabcontent">
           <div class="card-body p-0">
             <div style="padding: 10px;">
               <span>Target user by choosing multiple audience to include further refine</span>
@@ -129,11 +127,8 @@
           </div>
         </div>
 
-        <div *ngIf="step[1]" class="col-lg-9 p-0 card tabcontent">
-          <div class="card-header bg-secondary text-white">
-            <span>IN APP MESSAGES</span>
-          </div>
-          <div class="card-body p-0">
+        <div *ngIf="step[1]" class="col-lg-12 p-0 card tabcontent">
+          <div class="col-lg-12 card-body p-0">
             <div style="padding: 10px;">
               <span>Target user by choosing multiple audience to include further refine</span>
             </div>
@@ -333,7 +328,7 @@
                   <div class="col-lg-3 col-md-6 col-sm-12">
                     <span>Style</span>
                   </div>
-                  <div class="col-lg-9 col-md-6 col-sm-12">
+                  <div class="col-sm-12">
                     <span *ngIf="isTxtBold" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
                       (click)="onTxtBoldClicked()">B</span>
                     <span *ngIf="!isTxtBold" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
@@ -352,7 +347,7 @@
                   <div class="col-lg-3 col-md-6 col-sm-12">
                     <span>Alignment</span>
                   </div>
-                  <div class="col-lg-9 col-md-6 col-sm-12">
+                  <div class="col-sm-12">
                     <span *ngIf="txtAlignState[0]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
                       (click)="onTxtAlignBtnClicked(0, 'center')"><i class="fas fa-align-center"></i></span>
                     <span *ngIf="!txtAlignState[0]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
@@ -475,7 +470,7 @@
               </div>
               <!-- viewmode editor -->
               <div *ngIf="isViewModeEditPadShow">
-                <div class="col-lg-12 p-t-10">
+                <div class="col-lg-12 p-t-10 d-block">
                   <label>
                     <input type="radio" name="viewType"> Full screen InApp Message
                   </label>
@@ -483,7 +478,7 @@
                     <input type="radio" name="viewType"> Modal InApp Message
                   </label>
                   <label>
-                    <input type="radio" name="viewType"> Full screen InApp Message
+                    <input type="radio" name="viewType"> Traditional Slideup
                   </label>
                 </div>
               </div>
@@ -491,38 +486,33 @@
           </div>
         </div>
 
-        <div *ngIf="step[2]" class="col-lg-9 p-0 card tabcontent">
-          <div class="card-header bg-secondary text-white">
-            <span>App Device Lists</span>
-          </div>
-          <div class="card-body p-0">
+        <div *ngIf="step[2]" class="col-lg-12 p-0 card tabcontent">
+          <div class="col-lg-12 card-body p-0">
             <div style="padding: 10px;">
               <span>Target user by choosing multiple audience to include further refine</span>
             </div>
-            <div class="col-lg-12 bg-secondary text-white p-10">
-              <span>Application Name :</span>
+            <hr>
+            <div class="col-lg-12 p-10">
+              <span>Application Name</span>
             </div>
-            <div class="col-lg-12 d-flex m-b-100 m-t-10">
+            <div class="col-lg-12 d-flex m-b-50 m-t-20">
               <div class="col-md-6">Device ID</div>
               <div class="col-md-6">Status</div>
             </div>
           </div>
         </div>
 
-        <div *ngIf="step[3]" class="col-lg-9 p-0 card tabcontent">
-          <div class="card-header bg-secondary text-white">
-            <span>Schedule</span>
-          </div>
-          <div class="card-body p-0">
+        <div *ngIf="step[3]" class="col-lg-12 p-0 card tabcontent">
+          <div class="col-lg-12 card-body p-0">
             <div class="p-10">
               <span>Target user by choosing multiple audience to include further refine</span>
             </div>
-            <div class="col-lg-12 bg-secondary text-white p-10">
+            <div class="col-lg-12 p-20">
               <label>
                 <input type="radio" name="sendType" (click)="onScheduleOnBtnClicked(false)">
                 Schedule Now
               </label>
-              <label>
+              <label class="m-l-10">
                 <input type="radio" name="sendType" (click)="onScheduleOnBtnClicked(true)">
                 Schedule On
               </label>
@@ -541,11 +531,8 @@
           </div>
         </div>
 
-        <div *ngIf="step[4]" class="col-lg-9 p-0 card tabcontent">
-          <div class="card-header bg-secondary text-white">
-            <span>Share</span>
-          </div>
-          <div class="card-body">
+        <div *ngIf="step[4]" class="col-lg-12 p-0 card tabcontent">
+          <div class="col-lg-12 card-body">
             <div class="col-lg-12 d-flex" style="align-items: center;">
               <input type="checkbox">
               <i class="fa fa-edit m-l-30">
@@ -555,18 +542,12 @@
           </div>
         </div>
 
-        <div *ngIf="step[5]" class="col-lg-9 p-0 card tabcontent">
-          <div class="card-header bg-secondary text-white">
-            <div class="col-lg-12 d-flex flex-wrap" style="justify-content: space-between; align-items: center;">
-              <div>
-                <span>Approve</span>
-              </div>
-              <div class="btn btn-outline-secondary bg-white" (click)="sendInAppMessage()">
-                <span>Send InApp Message</span>
-              </div>
+        <div *ngIf="step[5]" class="col-lg-12 p-0 card tabcontent">
+          <div class="col-lg-12 card-body d-flex justify-content-end">
+            <div class="btn btn-outline-secondary bg-white m-l-auto" (click)="sendInAppMessage()">
+              <span>Send InApp Message</span>
             </div>
           </div>
-          <div class="card-body"></div>
         </div>
       </div>
     </div>

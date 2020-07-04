@@ -14,4 +14,111 @@
       display: none;
     }
   }
+
+  .fields-list {
+    height: calc(100vh - 350px);
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 15px;
+    .search {
+      height: 30px;
+      & > input {
+        width: calc(100% - 20px);
+        height: 30px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+        margin: 0 10px;
+        padding: 0 5px;
+      }
+    }
+    .left-fields {
+      width: 100%;
+      border: 1px dashed;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+      padding-bottom: 20px;
+      overflow-y: auto;
+      .csv-fields {
+        overflow-y: auto;
+  
+        &::-webkit-scrollbar {
+          width: 2px;
+        }
+      }
+    }
+  
+    .field-action {
+      width: 24px;
+      background: #01cc71;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      cursor: pointer;
+    }
+  }
+
+  .right-fields {
+    border: 1px dashed;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 10px;
+    padding-bottom: 20px;
+    overflow-y: auto;
+    height: calc(100vh - 350px);
+  }
+
+  ul.fields {
+    li {
+      margin: 5px 10px;
+      width: calc(100% - 18px);
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      .field-name {
+        padding: 0px 10px;
+        border: 1px solid #45bce1;
+        overflow: hidden;
+        height: 30px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: calc(100% - 24px);
+        line-height: 30px;
+        font-size: 13px;
+      }
+      .field-action {
+        width: 24px;
+        background: #01cc71;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        cursor: pointer;
+      }
+      .field-type {
+        border-radius: 2px;
+        width: 14px;
+        height: 14px;
+        position: absolute;
+        right: 8px;
+        top: 7px;
+        font-size: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        &.number {
+          background-color: #f597ff;
+          color: black;
+        }
+        &.string {
+          background-color: #dcff2d;
+          color: black;
+        }
+        &.boolean {
+          background-color: #ffcc97;
+          color: black;
+        }
+      }
+    }
+  }
 }

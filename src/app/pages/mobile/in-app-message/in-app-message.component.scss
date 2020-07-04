@@ -2,6 +2,30 @@
   $iphone-width: 375px;
   $iphone-height: 672px;
 
+  .tab-group {
+    display: flex;
+
+    .tab {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .selected-tab {
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+      z-index: 10;
+    }
+
+    .unselected-tab {
+
+    }
+  }
+
+  .tabcontent {
+    margin-top: -1px;
+  }
+
   .iphone-iframe {
     z-index: 2;
     position: relative;

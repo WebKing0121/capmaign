@@ -34,7 +34,8 @@ import { TriggerAutomationsComponent } from './trigger-automations/trigger-autom
     CommonModule,
     SharedModule,
     NgbTabsetModule,
-    NgbDatepickerModule
+    NgbDatepickerModule,
+    SharedModule
   ]
 })
 export class MobileModule { }

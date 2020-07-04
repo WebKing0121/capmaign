@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MODAL_DATA, ModalRef } from '@app-components/modal/modal-ref';
 import { Campaign } from '@app-core/models/campaign';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Tab } from '@app-core/models/common';
 
 interface ComponentProps {
   createMode: boolean;
@@ -21,6 +22,38 @@ export class InAppMessageComponent implements OnInit {
 
   optionList: string[];
   step: boolean[];
+  tabs: Tab[] = [
+    {
+      label: 'Audience',
+      key: '0',
+      selected: true
+    },
+    {
+      label: 'In App Messages',
+      key: '1',
+      selected: false 
+    },
+    {
+      label: 'Device List',
+      key: '2',
+      selected: false 
+    },
+    {
+      label: 'Schedule',
+      key: '3',
+      selected: false 
+    },
+    {
+      label: 'Share',
+      key: '4',
+      selected: false 
+    },
+    {
+      label: 'Approve',
+      key: '5',
+      selected: false 
+    }
+  ]
 
   isTextEditPadShow: boolean;
   isStyleEditPadShow: boolean;
@@ -106,6 +139,15 @@ export class InAppMessageComponent implements OnInit {
   openContent(tab: number) {
     this.step = this.step.map(flag => flag = false);
     this.step[tab] = true;
+  }
+
+  onSelectTab(tab: Tab) {
+    const prevTab = this.tabs.find((x: Tab) => x.selected);
+    if (prevTab) {
+      prevTab.selected = false;
+    }
+    tab.selected = true;
+    this.openContent(parseInt(tab.key));
   }
 
   onDeviceModeClicked(deviceType: string) {
