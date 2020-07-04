@@ -1,7 +1,8 @@
 <div class="campaign-modal">
   <div class="card mt-4">
     <div class="card-header campaign-header">
-      <h3 class="m-0" *ngIf="campaignMode === 'edit'">Email Campaign: <strong class="font-weight-bold">{{formGroup.controls.name.value}}</strong></h3>
+      <h3 class="m-0" *ngIf="campaignMode === 'edit'">Email Campaign: <strong
+          class="font-weight-bold">{{formGroup.controls.name.value}}</strong></h3>
       <h3 class="m-0" *ngIf="campaignMode === 'new'">Create Email Campaign</h3>
     </div>
 
@@ -18,7 +19,7 @@
                 <input class="form-control" formControlName="name">
               </div>
             </div>
-            
+
             <div class="email-campaign-form_input-form col-lg-6 col-md-12">
               <label class="mobile-show">Campaign Subject<span class="text-danger">*</span></label>
               <div class="input-group m-t-10">
@@ -47,7 +48,8 @@
                 <div class="input-group-prepend mobile-hide">
                   <span class="input-group-text" style="width: 150px;">From Address</span>
                 </div>
-                <input class="form-control border-0" style="cursor: not-allowed;" readonly formControlName="fromAddress">
+                <input class="form-control border-0" style="cursor: not-allowed;" readonly
+                  formControlName="fromAddress">
               </div>
             </div>
             <div class="email-campaign-form_input-form col-lg-6 col-md-12">
@@ -56,7 +58,8 @@
                 <div class="input-group-prepend mobile-hide">
                   <span class="input-group-text" style="width: 150px;">Reply Address</span>
                 </div>
-                <input class="form-control border-0" style="cursor: not-allowed;" readonly formControlName="replyAddress">
+                <input class="form-control border-0" style="cursor: not-allowed;" readonly
+                  formControlName="replyAddress">
               </div>
             </div>
             <div class="email-campaign-form_input-form col-lg-6 col-md-12">
@@ -86,7 +89,8 @@
               <a class="dropdown-item cursor-pointer" (click)="sendEmail('test')">Test Send</a>
             </div>
           </div>
-          <app-personalization-selector class="personal-selector d-block mr-2" [editor]="emailCampaignEditor"></app-personalization-selector>
+          <app-personalization-selector class="personal-selector d-block mr-2" [editor]="emailCampaignEditor">
+          </app-personalization-selector>
           <button class="btn btn-primary" appEmailCampaignDynamics [editor]="emailCampaignEditor">Dynamics</button>
           <button class="templateBtn btn btn-primary" appEmailCampaignTemplates>Templates</button>
           <button class="btn btn-primary" *ngIf="campaignMode === 'edit'">Edit</button>

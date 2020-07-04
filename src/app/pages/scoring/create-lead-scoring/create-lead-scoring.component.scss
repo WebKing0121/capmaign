@@ -40,13 +40,13 @@
       overflow-y: auto;
       .csv-fields {
         overflow-y: auto;
-  
+
         &::-webkit-scrollbar {
           width: 2px;
         }
       }
     }
-  
+
     .field-action {
       width: 24px;
       background: #01cc71;

@@ -1,9 +1,18 @@
 :host {
-
   .text-wrap {
     overflow-wrap: anywhere;
   }
 
+  .btn-del {
+    &:hover {
+      background-color: red;
+    }
+  }
+
+  .main-bg-color {
+    background-color: whitesmoke;
+    border: 1px solid;
+  }
 
   .mobile-show {
     display: none;

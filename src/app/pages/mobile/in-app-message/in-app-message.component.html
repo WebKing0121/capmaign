@@ -174,27 +174,23 @@
                         <img [src]="imagePath" class="p-10" style="width: 100px; height: 100px" />
                         <h3 class="in-app-msg-txt p-10" [style.font-weight]="txtWeight" [style.font-style]="txtStyle"
                           [style.text-decoration]="txtUnderline" [style.text-align]="txtAlign"
-                          [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize"
-                          [style.color]="txtColor"
-                        >{{headerTxt}}</h3>
+                          [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize" [style.color]="txtColor">
+                          {{headerTxt}}</h3>
                         <p class="in-app-msg-txt p-10" [style.font-weight]="txtWeight" [style.font-style]="txtStyle"
                           [style.text-decoration]="txtUnderline" [style.text-align]="txtAlign"
-                          [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize"
-                          [style.color]="txtColor"
-                        >{{bodyTxt}}</p>
+                          [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize" [style.color]="txtColor">
+                          {{bodyTxt}}</p>
                         <div class="p-10">
                           <a *ngIf="btnTxt1" [href]="btnTxt1" class="btn btn-secondary m-b-10"
                             style="padding: 5px 10px;" (click)="onClickBtn(1, $event)" [style.font-weight]="btnWeight"
                             [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline"
                             [style.font-family]="btnFontFamily" [style.font-size]="btnFontSize"
-                            [style.background-color]="btnColor"
-                          >{{btnTxt1}}</a>
+                            [style.background-color]="btnColor">{{btnTxt1}}</a>
                           <a *ngIf="btnTxt2" [href]="btnTxt2" class="btn btn-secondary m-b-10 m-l-10"
                             style="padding: 5px 10px;" (click)="onClickBtn(2, $event)" [style.font-weight]="btnWeight"
                             [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline"
                             [style.font-family]="btnFontFamily" [style.font-size]="btnFontSize"
-                            [style.background-color]="btnColor"
-                          >{{btnTxt2}}</a>
+                            [style.background-color]="btnColor">{{btnTxt2}}</a>
                         </div>
                       </div>
                     </div>
@@ -418,8 +414,8 @@
                       (click)="onBtnItalicClicked()"><i>I</i></span>
                     <span *ngIf="!isBtnItalic" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
                       (click)="onBtnItalicClicked()"><i>I</i></span>
-                    <span *ngIf="isBtnUnderline" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white" (click)="onBtnUnderlineClicked()"
-                      style="text-decoration: underline;">U</span>
+                    <span *ngIf="isBtnUnderline" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
+                      (click)="onBtnUnderlineClicked()" style="text-decoration: underline;">U</span>
                     <span *ngIf="!isBtnUnderline" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
                       (click)="onBtnUnderlineClicked()" style="text-decoration: underline;">U</span>
                   </div>

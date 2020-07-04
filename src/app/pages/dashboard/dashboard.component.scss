@@ -1,7 +1,5 @@
 :host {
-
   .dashboard {
-
     @media only screen and (max-width: 767px) {
       margin-left: -15px;
       margin-right: -15px;
@@ -13,7 +11,7 @@
     align-items: center;
 
     @media screen and (max-width: 767px) {
-      display: block!important;
+      display: block !important;
 
       .datePreview {
         width: 100%;
@@ -34,7 +32,7 @@
           .fromDate {
             margin-bottom: 10px;
           }
-  
+
           .toDate {
             margin-left: 0;
             margin-top: 10px;
@@ -79,9 +77,10 @@
     align-items: center;
   }
 
-  .sms-cards, .push-cards {
+  .sms-cards,
+  .push-cards {
     width: 100%;
-    
+
     .card-body {
       display: flex;
       padding: 0;

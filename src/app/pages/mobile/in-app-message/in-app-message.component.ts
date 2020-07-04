@@ -31,27 +31,27 @@ export class InAppMessageComponent implements OnInit {
     {
       label: 'In App Messages',
       key: '1',
-      selected: false 
+      selected: false
     },
     {
       label: 'Device List',
       key: '2',
-      selected: false 
+      selected: false
     },
     {
       label: 'Schedule',
       key: '3',
-      selected: false 
+      selected: false
     },
     {
       label: 'Share',
       key: '4',
-      selected: false 
+      selected: false
     },
     {
       label: 'Approve',
       key: '5',
-      selected: false 
+      selected: false
     }
   ]
 

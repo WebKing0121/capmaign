@@ -22,7 +22,7 @@ import { TriggerAutomationsComponent } from './trigger-automations/trigger-autom
     InAppMessageComponent,
     PushNotificationsComponent,
     TriggerAutomationsComponent,
-    ],
+  ],
   imports: [
     CommonModule,
     MobileRoutingModule,

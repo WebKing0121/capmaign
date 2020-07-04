@@ -1,8 +1,7 @@
 :host {
-
   .campaign-modal {
     padding: 0 10%;
-    
+
     @media only screen and (max-width: 425px) {
       padding: 0 10px;
     }
@@ -38,7 +37,7 @@
 
   .preview-toolbar {
     margin-bottom: 10px;
-    
+
     .btn-primary {
       width: 160px;
       margin: 5px;
@@ -57,7 +56,6 @@
     }
 
     @media only screen and (max-width: 993px) {
-
     }
   }
 

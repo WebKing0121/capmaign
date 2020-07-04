@@ -40,8 +40,7 @@
             </div>
 
             <div class="col-12 col-lg-12">
-              <div
-                class="d-flex justify-content-center align-items-center m-t-10 p-t-10 p-b-10 bg-secondary text-white">
+              <div class="d-flex justify-content-center align-items-center m-t-10 p-t-10 p-b-10 main-bg-color">
                 <span>Choose Campaign Objective</span>
               </div>
             </div>
@@ -49,7 +48,7 @@
               <div class="col-lg-4 col-sm-12 m-t-10">
                 <div class="border border-secondary">
                   <div class="padding-10px bg-blue text-center">
-                    <label class="bg-secondary text-white d-flex justify-content-center p-10">AWARENESS</label>
+                    <label class="main-bg-color d-flex justify-content-center p-10">AWARENESS</label>
                   </div>
                   <div class="p-t-10 p-b-30 p-l-15">
                     <div class="text-center"><i class="fa fa-lg fa-globe-americas text-secondary"
@@ -71,7 +70,7 @@
               <div class="col-lg-4 col-sm-12 m-t-10">
                 <div class="border border border-secondary">
                   <div class="padding-10px bg-blue text-center">
-                    <label class="bg-secondary text-white d-flex justify-content-center p-10">CONSIDERATION</label>
+                    <label class="main-bg-color d-flex justify-content-center p-10">CONSIDERATION</label>
                   </div>
                   <div class="p-t-10 p-b-30 p-l-15">
                     <div class="text-center"><i class="fab fa-lg fa-facebook-f text-secondary" aria-hidden="true"></i>
@@ -112,7 +111,7 @@
               <div class="col-lg-4 col-sm-12 m-t-10">
                 <div class="border border-secondary">
                   <div class="padding-10px bg-blue text-center">
-                    <label class="bg-secondary text-white d-flex justify-content-center p-10">CONVERSION</label>
+                    <label class="main-bg-color d-flex justify-content-center p-10">CONVERSION</label>
                   </div>
                   <div class="p-t-10 p-b-30 p-l-15">
                     <div class="text-center"><i class="fa fa-lg fa-mobile-alt text-secondary" aria-hidden="true"></i>
@@ -526,7 +525,7 @@
                       </label>
                       <label class="containerCheck m-t-10" id="facebook_newsfeed">
                         <input type="checkbox" (click)="onFacebookNewsFeed()">
-                        <span class="bg-secondary border-secondary">
+                        <span class="main-bg-color border-secondary">
                           <i *ngIf="facebookNewsFeed" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookNewsFeed" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -534,11 +533,11 @@
                       </label>
                       <label class="containerCheck" id="instagram_feed">
                         <input type="checkbox" (click)="onInstagramFeed()">
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="instagramFeed" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramFeed" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="instagramFeed" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramFeed" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -546,7 +545,7 @@
                       </label>
                       <label class="containerCheck" id="facebook_marketplace">
                         <input type="checkbox" (click)="onFacebookMarketplace()">
-                        <span class="bg-secondary border-secondary">
+                        <span class="main-bg-color border-secondary">
                           <i *ngIf="facebookMarketplace" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookMarketplace" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -554,11 +553,11 @@
                       </label>
                       <label class="containerCheck" id="facebook_videofeed">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onFacebookVideoFeeds()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookVideoFeeds" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookVideoFeeds" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookVideoFeeds" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookVideoFeeds" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -566,11 +565,11 @@
                       </label>
                       <label class="containerCheck" id="facebook_rightcolumn">
                         <input type="checkbox" (click)="onFacebookRightColumn()">
-                        <span *ngIf="desktopMode" class="bg-secondary border-secondary">
+                        <span *ngIf="desktopMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookRightColumn" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookRightColumn" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!desktopMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!desktopMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookRightColumn" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookRightColumn" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -578,11 +577,11 @@
                       </label>
                       <label class="containerCheck" id="instagram_explore">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onInstagramExplore()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="instagramExplore" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramExplore" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="instagramExplore" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramExplore" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -590,11 +589,11 @@
                       </label>
                       <label class="containerCheck" id="messenger_inbox">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onMessengerInbox()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="messengerInbox" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!messengerInbox" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="messengerInbox" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!messengerInbox" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -607,11 +606,11 @@
                         <small>(Tell a rich, visual story with immersive, full screen vertical ads)</small></label>
                       <label class="containerCheck m-t-10" id="facebook_stories">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onFacebookStories()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -619,11 +618,11 @@
                       </label>
                       <label class="containerCheck" id="instagram_stories">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onInstagramStories()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="instagramStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="instagramStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!instagramStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -631,11 +630,11 @@
                       </label>
                       <label class="containerCheck" id="messenger_stories">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onMessengerStories()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="messengerStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!messengerStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="messengerStories" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!messengerStories" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -648,7 +647,7 @@
                         <small>(Quickly capture people's attention while they're watching videos)</small></label>
                       <label class="containerCheck m-t-10" id="facebook_instream">
                         <input type="checkbox" (click)="onFacebookInStreamVideos()">
-                        <span class="bg-secondary border-secondary">
+                        <span class="main-bg-color border-secondary">
                           <i *ngIf="facebookInStreamVideos" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookInStreamVideos" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -661,11 +660,11 @@
                         <small>(Get visibility for your business as people search on Facebook)</small></label>
                       <label class="containerCheck m-t-10" id="facebook_search">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onFacebookSearchResults()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookSearchResults" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookSearchResults" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookSearchResults" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookSearchResults" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -679,7 +678,7 @@
                           business)</small></label>
                       <label class="containerCheck m-t-10" id="messenger_messages">
                         <input type="checkbox" (click)="onMessengerSponsoredMessages()">
-                        <span class="bg-secondary border-secondary">
+                        <span class="main-bg-color border-secondary">
                           <i *ngIf="messengerSponsoredMessages" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!messengerSponsoredMessages" class="fa fa-check"
@@ -694,11 +693,11 @@
                         <small>(Engage with people who are reading content from publishers)</small></label>
                       <label class="containerCheck m-t-10" id="facebook_articles">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onFacebookInstantArticles()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookInstantArticles" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookInstantArticles" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="facebookInstantArticles" class="fa fa-check" style="color: white; opacity: 1;"></i>
                           <i *ngIf="!facebookInstantArticles" class="fa fa-check" style="color: white; opacity: 0;"></i>
                         </span>
@@ -712,13 +711,13 @@
                       <label class="containerCheck m-t-10" id="audience_classicgroup">
                         <input *ngIf="mobileMode" type="checkbox"
                           (click)="onAudienceNetworkNativeBannerAndInterstitial()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="audienceNetworkNativeBannerAndInterstitial" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!audienceNetworkNativeBannerAndInterstitial" class="fa fa-check"
                             style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="audienceNetworkNativeBannerAndInterstitial" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!audienceNetworkNativeBannerAndInterstitial" class="fa fa-check"
@@ -730,13 +729,13 @@
                         data-type="img" data-full="https://static.xx.fbcdn.net/rsrc.php/v3/yq/r/RbGZHFNttoD.png"
                         data-original-title="" title="">
                         <input *ngIf="mobileMode" type="checkbox" (click)="onAudienceNetworkRewardedVideos()">
-                        <span *ngIf="mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="audienceNetworkRewardedVideos" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!audienceNetworkRewardedVideos" class="fa fa-check"
                             style="color: white; opacity: 0;"></i>
                         </span>
-                        <span *ngIf="!mobileMode" class="bg-secondary border-secondary">
+                        <span *ngIf="!mobileMode" class="main-bg-color border-secondary">
                           <i *ngIf="audienceNetworkRewardedVideos" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!audienceNetworkRewardedVideos" class="fa fa-check"
@@ -748,7 +747,7 @@
                         data-type="video" data-full="https://business.facebook.com/450d6c6b-93eb-4d0a-aa90-dcde9ee527c9"
                         data-original-title="" title="">
                         <input type="checkbox" (click)="onAudienceNetworkInStreamVideos()">
-                        <span class="bg-secondary border-secondary">
+                        <span class="main-bg-color border-secondary">
                           <i *ngIf="audienceNetworkInStreamVideos" class="fa fa-check"
                             style="color: white; opacity: 1;"></i>
                           <i *ngIf="!audienceNetworkInStreamVideos" class="fa fa-check"
@@ -802,14 +801,14 @@
                 <div class="radio radio-secondary text-secondary m-t-10 m-l-30">
                   <label class="text-secondary" for="adscheduling3">
                     <input type="radio" id="adscheduling3" ng-model="vm.campaign.pacing" name="adschedulingN"
-                    value="standard" class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
+                      value="standard" class="ng-valid ng-not-empty ng-dirty ng-valid-parse ng-touched">
                     Run ads all the time
                   </label>
                 </div>
                 <div class="radio radio-secondary text-secondary m-t-10 m-l-30">
                   <label class="text-secondary" for="adscheduling4">
                     <input type="radio" id="adscheduling4" ng-model="vm.campaign.pacing" name="adschedulingN"
-                    value="day_parting" class="ng-valid ng-not-empty ng-dirty ng-touched">
+                      value="day_parting" class="ng-valid ng-not-empty ng-dirty ng-touched">
                     Run ads on a schedule
                   </label>
                 </div>
@@ -997,11 +996,13 @@
                     <div class="imgUp d-flex flex-wrap flex-start col-lg-12">
                       <div *ngFor="let image of imageArr" class="col-lg-2 col-md-4 col-sm-12 p-t-10"
                         style="overflow-x: hidden; min-width: 250px;">
+                        <i *ngIf="imageArr.length > 1" class="fa fa-times text-danger remove_me border-3 round-5"
+                          (click)="remove_me(image.id)"></i>
                         <!-- <div class="mediaPreview d-flex justify-content-center"> -->
                         <div class="mediaPreview" [ngStyle]="{ 'background-image': 'url(' + image.path + ')'}">
                           <!-- <img [src]="image.path" style="object-fit: none;"> -->
                         </div>
-                        <label class="btn btn-secondary" style="width:100%;">
+                        <label class="btn btn-primary" style="width:100%;">
                           Upload from Local Drive
                           <input #file type="file" accept='image/*' class="uploadFile img" value="Upload Media"
                             style="width: 0px;height: 0px;overflow: hidden;"
