@@ -182,7 +182,6 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
       this.leadCategories = this.csvFields.filter(x => !x.hidden)
         .filter(x => x.name.toLowerCase().indexOf(searchIdx.toLowerCase()) >= 0);
     }
-    console.log(this.leadCategories)
   }
 
   onClickLeadCategory(field: any) {

@@ -53,7 +53,7 @@ export class InAppMessageComponent implements OnInit {
       key: '5',
       selected: false
     }
-  ]
+  ];
 
   isTextEditPadShow: boolean;
   isStyleEditPadShow: boolean;
@@ -147,7 +147,7 @@ export class InAppMessageComponent implements OnInit {
       prevTab.selected = false;
     }
     tab.selected = true;
-    this.openContent(parseInt(tab.key));
+    this.openContent(parseInt(tab.key, 10));
   }
 
   onDeviceModeClicked(deviceType: string) {
