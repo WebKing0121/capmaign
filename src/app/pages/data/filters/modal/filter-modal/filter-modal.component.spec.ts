@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ContentCategoryModalComponent } from './category.component';
+import { DataFilterModalComponent } from './filter-modal.component';
 
-describe('ContentCategoryModalComponent', () => {
-  let component: ContentCategoryModalComponent;
-  let fixture: ComponentFixture<ContentCategoryModalComponent>;
+describe('DataFilterModalComponent', () => {
+  let component: DataFilterModalComponent;
+  let fixture: ComponentFixture<DataFilterModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ContentCategoryModalComponent ]
+      declarations: [ DataFilterModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ContentCategoryModalComponent);
+    fixture = TestBed.createComponent(DataFilterModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
