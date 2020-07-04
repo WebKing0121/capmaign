@@ -1,6 +1,6 @@
 <app-ui-modal #mobileAppModal dialogClass="modal-dialog-centered modal-md mobile-app-modal">
   <div class="app-modal-header">
-    <h5 class="modal-title">{{modalType === MobileAppModalType.Edit ? 'Edit': 'Add'}} a Mobile App</h5>
+    <h5 class="modal-title">{{modalType === ModalType.Edit ? 'Edit': 'Add'}} a Mobile App</h5>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
       (click)="mobileAppModal.hide()">
       <span aria-hidden="true">&times;</span>
@@ -70,7 +70,7 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary">{{modalType === MobileAppModalType.Edit ? 'Save': 'Add'}}</button>
+    <button type="button" class="btn btn-primary">{{modalType === ModalType.Edit ? 'Save': 'Add'}}</button>
     &nbsp;
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="mobileAppModal.hide()">Close</button>
   </div>

@@ -7,7 +7,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { User } from '@app-models/user';
 import { UserService } from '@app-core/services/user.service';
-import { UserModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 // modals
 import { UserModalComponent } from './modals/user/user-modal.component';
@@ -23,7 +23,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('userTemplate', { static: false }) userTemplate;
   @ViewChild('userStatusTemplate', { static: false }) userStatusTemplate;
 
-  modalType = UserModalType.New;
+  modalType = ModalType.New;
   private unsubscribe$ = new Subject();
 
   users: User[];
@@ -115,7 +115,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
     if (evt.type === 'click') {
       // this.tableButtons[1]. = false;
       if (evt.cellIndex === 1) {
-        this.modalType = UserModalType.Edit;
+        this.modalType = ModalType.Edit;
         this.selectedUser = evt.row as User;
         setTimeout(() => this.userModal.show());
       }
@@ -123,7 +123,7 @@ export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onClickCreate() {
-    this.modalType = UserModalType.New;
+    this.modalType = ModalType.New;
     this.selectedUser = null;
     this.userModal.show();
   }

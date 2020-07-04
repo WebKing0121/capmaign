@@ -5,7 +5,7 @@ import { DataTableSource, DataTableColumn } from '@app-components/datatable/data
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { UserService } from '@app-core/services/user.service';
 import { takeUntil } from 'rxjs/operators';
-import { OrganizationModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-user-organizations',
@@ -18,7 +18,7 @@ export class UserOrganizationsComponent implements OnInit, OnDestroy, AfterViewI
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('organizationModal', { static: false }) organizationModal;
 
-  modalType = OrganizationModalType.Edit;
+  modalType = ModalType.Edit;
   private unsubscribe$ = new Subject();
   organizations: UserOrganization[];
   selectedOrganizations: UserOrganization;
@@ -132,12 +132,12 @@ export class UserOrganizationsComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onEditOrganization() {
-    this.modalType = OrganizationModalType.Edit;
+    this.modalType = ModalType.Edit;
     setTimeout(() => this.organizationModal.show());
   }
 
   onCreateSubUnit() {
-    this.modalType = OrganizationModalType.AddSubItem;
+    this.modalType = ModalType.AddSubItem;
     setTimeout(() => this.organizationModal.show());
   }
 

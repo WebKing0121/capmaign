@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { OrganizationModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
@@ -11,8 +11,8 @@ export class UserOrganizationModalComponent implements OnInit {
   @ViewChild('userOrganizationModal', { static: false }) userOrganizationModal;
 
   @Input() organization: any;
-  @Input() modalType = OrganizationModalType.Edit;
-  OrganizationModalType = OrganizationModalType;
+  @Input() modalType = ModalType.Edit;
+  ModalType = ModalType;
 
   form: FormGroup;
   constructor(
@@ -26,7 +26,7 @@ export class UserOrganizationModalComponent implements OnInit {
   }
 
   show() {
-    if (this.modalType === OrganizationModalType.Edit) {
+    if (this.modalType === ModalType.Edit) {
       this.form.setValue({
         name: this.organization.displayName
       });

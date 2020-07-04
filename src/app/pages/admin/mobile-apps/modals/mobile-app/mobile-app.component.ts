@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, ViewEncapsulation } from '@angular/core';
-import { MobileAppModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
@@ -9,11 +9,11 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   encapsulation: ViewEncapsulation.None,
 })
 export class MobileAppModalComponent implements OnInit {
-  @Input() modalType = MobileAppModalType.New;
+  @Input() modalType = ModalType.New;
   @Input() mobileApp: any;
   @ViewChild('mobileAppModal', { static: false }) mobileAppModal;
 
-  MobileAppModalType = MobileAppModalType;
+  ModalType = ModalType;
   mobileType: number;
   form: FormGroup;
   constructor(
@@ -37,7 +37,7 @@ export class MobileAppModalComponent implements OnInit {
     this.mobileType = mobileType;
   }
   show() {
-    if (this.modalType === MobileAppModalType.New) {
+    if (this.modalType === ModalType.New) {
       this.form.setValue({
         id: 0,
         description: '',

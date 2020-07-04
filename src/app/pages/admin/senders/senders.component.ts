@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { UserService } from '@app-core/services/user.service';
-import { SenderModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 // modals
 import { SenderModalComponent } from './modals/sender/sender-modal.component';
@@ -21,7 +21,7 @@ import { Sender } from '@app-models/sender';
 export class SendersComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('senderModal', { static: false }) senderModal: SenderModalComponent;
 
-  modalType = SenderModalType.New;
+  modalType = ModalType.New;
   private unsubscribe$ = new Subject();
 
   senders: Sender[];
@@ -102,7 +102,7 @@ export class SendersComponent implements OnInit, AfterViewInit, OnDestroy {
     if (evt.type === 'click') {
       // this.tableButtons[1]. = false;
       if (evt.cellIndex === 0) {
-        this.modalType = SenderModalType.Edit;
+        this.modalType = ModalType.Edit;
         this.selectedSender = evt.row as Sender;
         setTimeout(() => this.senderModal.show());
       }
@@ -110,7 +110,7 @@ export class SendersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onClickCreate() {
-    this.modalType = SenderModalType.New;
+    this.modalType = ModalType.New;
     this.selectedSender = null;
     setTimeout(() => this.senderModal.show());
   }

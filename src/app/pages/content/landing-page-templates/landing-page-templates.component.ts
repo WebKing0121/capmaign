@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { LandingPageCategory, LandingPageTemplate } from '@app-core/models/landing-page';
+import { LandingPageTemplate } from '@app-core/models/landing-page';
 import { ContentService } from '@app-core/services/content.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { LandingPageTemplateCategoryModalType, LandingPageTemplateModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
+import { ContentCategory } from '@app-core/models/content-category';
 
 @Component({
   selector: 'app-landing-page-templates',
@@ -19,35 +20,26 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject();
 
-  categories: LandingPageCategory[];
+  categories: ContentCategory[];
   totalCount: number;
   templates: LandingPageTemplate[];
   filteredTemplates: LandingPageTemplate[];
 
   selectedCategory: number;
-  categoryObject: LandingPageCategory;
-  categoryModalType = LandingPageTemplateCategoryModalType.New;
 
   selectedTemplates: number[];
   templateObject: LandingPageTemplate;
-  templateModalType = LandingPageTemplateModalType.New;
+  templateModalType = ModalType.New;
 
   cardButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Edit', icon: 'fa fa-edit', click: () => this.onClickEdit(), disabled: true },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
-    { label: 'Add Category', icon: 'fa fa-plus', click: () => this.onClickCreateCategory() },
-    { label: 'Edit Category', icon: 'fa fa-edit', click: () => this.onClickEditCategory(), disabled: true },
-    { label: 'Delete Category', icon: 'fa fa-trash', click: () => this.onClickDeleteCategory(), color: 'red', disabled: true },
   ];
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onDeleteConfirm.bind(this), class: 'btn-primary' }
   ];
-  confirmCategoryButtons = [
-    { label: 'Yes', action: this.onDeleteCategoryConfirm.bind(this), class: 'btn-primary' }
-  ];
-
 
   constructor(
     private contentService: ContentService
@@ -58,7 +50,7 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.contentService.getLandingPageCategories()
+    this.contentService.getCategories()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
@@ -103,8 +95,7 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
       this.cardButtons[1].disabled = true;
       this.cardButtons[2].disabled = true;
     }
-    this.cardButtons[4].disabled = category === 0;
-    this.cardButtons[5].disabled = category === 0;
+
     this.selectedCategory = category;
     if (category === 0) {
       this.filteredTemplates = this.templates;
@@ -127,14 +118,14 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
 
   onClickCreate() {
     this.templateObject = null;
-    this.templateModalType = LandingPageTemplateModalType.New;
+    this.templateModalType = ModalType.New;
     setTimeout(() => this.templateModal.show());
   }
 
   onClickEdit() {
     const templateId = this.selectedTemplates[0];
     this.templateObject = this.templates.find(x => x.id === templateId);
-    this.templateModalType = LandingPageTemplateModalType.Edit;
+    this.templateModalType = ModalType.Edit;
     setTimeout(() => this.templateModal.show());
   }
 
@@ -144,25 +135,5 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
 
   onDeleteConfirm() {
     this.confirmModal.hide();
-  }
-
-  onClickCreateCategory() {
-    this.categoryObject = null;
-    this.categoryModalType = LandingPageTemplateCategoryModalType.New;
-    setTimeout(() => this.categoryModal.show());
-  }
-
-  onClickEditCategory() {
-    this.categoryObject = this.categories.find(x => x.categoryId === this.selectedCategory);
-    this.categoryModalType = LandingPageTemplateCategoryModalType.Edit;
-    setTimeout(() => this.categoryModal.show());
-  }
-
-  onClickDeleteCategory() {
-    this.confirmCategoryModal.show();
-  }
-
-  onDeleteCategoryConfirm() {
-    this.confirmCategoryModal.hide();
   }
 }

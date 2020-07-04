@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { AutomationService } from '@app-core/services/automation.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
-import { AutomationModalType } from '@app-core/enums/automation-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-automations',
@@ -131,7 +131,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
       if (event.cellIndex === 1 ) {
 
         this.selectedAutomation = event.row as Automation;
-        this.modalType = AutomationModalType.Edit;
+        this.modalType = ModalType.Edit;
         setTimeout(() => this.automationModal.edit());
       }
     }
@@ -146,7 +146,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onCreateAutomation() {
-    this.modalType = AutomationModalType.New;
+    this.modalType = ModalType.New;
     this.selectedAutomation = null;
     setTimeout(() => this.automationModal.create());
   }

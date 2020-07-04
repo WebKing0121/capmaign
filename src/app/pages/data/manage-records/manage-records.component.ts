@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
-import { RecordModalType } from '@app-core/enums/data-list-type.enum';
-import { Tab } from '@app-core/models/common';
 
 @Component({
   selector: 'app-manage-records',

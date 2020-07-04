@@ -1,6 +1,6 @@
 <app-ui-modal #templateModal [dialogClass]="dialogClass">
   <div class="app-modal-header">
-    <h5 class="modal-title">{{modalType === LandingPageTemplateModalType.New ? 'Create' : 'Edit'}} Template</h5>
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'Create' : 'Edit'}} Template</h5>
     <button type="button" class="maximize" (click)="revertFullScreen()"><i class="fa"
         [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i></button>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
@@ -80,9 +80,9 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" *ngIf="modalType === LandingPageTemplateModalType.Edit">Delete</button>
+    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit">Delete</button>
     <button type="button" class="btn btn-primary">
-      {{modalType === LandingPageTemplateModalType.New ? 'Create' : 'Save'}}
+      {{modalType === ModalType.New ? 'Create' : 'Save'}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="templateModal.hide()">Close</button>
   </div>

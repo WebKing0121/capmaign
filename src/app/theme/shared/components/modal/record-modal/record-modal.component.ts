@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
-import { RecordModalType } from '@app-core/enums/data-list-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 import { Tab, NgSelectData } from '@app-models/common';
 import { Tabs } from '@app-core/enums/data-tabs.enum';
 import { DataService } from '@app-core/services/data.service';
@@ -39,7 +39,7 @@ export class RecordModalComponent implements OnInit, OnDestroy {
   constructor(
     private dataService: DataService
   ) {
-    this.type = RecordModalType.New;
+    this.type = ModalType.New;
     this.accountTypeList = [];
     this.tabs.map(x => {
       if (x.key !== 'all') {
@@ -180,9 +180,9 @@ export class RecordModalComponent implements OnInit, OnDestroy {
   onChangeAccountType(event: string) {
     const selectedTab = this.tabs.find(x => x.key === event);
     this.recordType = event;
-    if (this.type === RecordModalType.New) {
+    if (this.type === ModalType.New) {
       this.modalTitle = 'Create a new ' + this.getSingleForm(selectedTab.label);
-    } else if (this.type === RecordModalType.Edit) {
+    } else if (this.type === ModalType.Edit) {
       this.modalTitle = 'Edit ' + this.getSingleForm(selectedTab.label);
     }
     this.rebuildFields();
@@ -231,7 +231,7 @@ export class RecordModalComponent implements OnInit, OnDestroy {
 
   newRecord() {
     this.record = null;
-    this.type = RecordModalType.New;
+    this.type = ModalType.New;
     const selectedTab = this.tabs.find(x => x.key === this.recordType);
     this.modalTitle = 'Create a new ' + this.getSingleForm(selectedTab.label);
     this.recordModal.show();
@@ -243,7 +243,7 @@ export class RecordModalComponent implements OnInit, OnDestroy {
 
   editRecord(record: any) {
     this.record = record;
-    this.type = RecordModalType.Edit;
+    this.type = ModalType.Edit;
     this.recordModal.show();
   }
 

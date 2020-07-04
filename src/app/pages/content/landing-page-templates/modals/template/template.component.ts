@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
-import { LandingPageTemplateModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LandingPageTemplate } from '@app-core/models/landing-page';
 import { NgSelectData } from '@app-core/models/common';
@@ -14,10 +14,10 @@ import { takeUntil } from 'rxjs/operators';
   encapsulation: ViewEncapsulation.None
 })
 export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
-  @Input() modalType = LandingPageTemplateModalType.New;
+  @Input() modalType = ModalType.New;
   @Input() template: LandingPageTemplate;
   @ViewChild('templateModal', { static: false }) templateModal;
-  LandingPageTemplateModalType = LandingPageTemplateModalType;
+  ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
 
@@ -52,7 +52,7 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
       { value: '2', label: 'Dynamic / Responsive' },
     ];
 
-    this.contentService.getLandingPageCategories()
+    this.contentService.getCategories()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
@@ -76,7 +76,7 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
   }
 
   show() {
-    if (this.modalType === LandingPageTemplateModalType.New) {
+    if (this.modalType === ModalType.New) {
       this.form.setValue({
         id: 0,
         name: '',

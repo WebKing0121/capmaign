@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy } from '@angular/core';
-import { SenderModalType } from '@app-core/enums/modal-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Sender } from '@app-models/sender';
 import { UserService } from '@app-services/user.service';
@@ -13,10 +13,10 @@ import { Subject } from 'rxjs';
 })
 export class SenderModalComponent implements OnInit, OnDestroy {
   @ViewChild('senderModal', { static: false }) senderModal;
-  @Input() modalType = SenderModalType.New;
+  @Input() modalType = ModalType.New;
   @Input() sender: Sender;
 
-  SenderModalType = SenderModalType;
+  ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
 
@@ -52,7 +52,7 @@ export class SenderModalComponent implements OnInit, OnDestroy {
   }
 
   show() {
-    if (this.modalType === SenderModalType.Edit) {
+    if (this.modalType === ModalType.Edit) {
       this.userService.getSender(this.sender.id)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
