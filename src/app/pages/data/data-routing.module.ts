@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ManageRecordsComponent } from './manage-records/manage-records.component';
-import { ListsComponent } from './lists/lists.component';
+import { DataListsComponent } from './lists/lists.component';
 import { DataCustomFieldsComponent } from './custom-fields/custom-fields.component';
 import { DataFiltersComponent } from './filters/filters.component';
 
@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     path: 'lists',
-    component: ListsComponent
+    component: DataListsComponent
   },
   {
     path: 'custom-fields',

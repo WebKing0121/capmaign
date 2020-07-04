@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataListsComponent } from './lists.component';
+import { DataListModalComponent } from './list-modal.component';
 
-describe('DataListsComponent', () => {
-  let component: DataListsComponent;
-  let fixture: ComponentFixture<DataListsComponent>;
+describe('DataListModalComponent', () => {
+  let component: DataListModalComponent;
+  let fixture: ComponentFixture<DataListModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataListsComponent ]
+      declarations: [ DataListModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataListsComponent);
+    fixture = TestBed.createComponent(DataListModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

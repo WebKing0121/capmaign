@@ -1,6 +1,5 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 
 import { Subject, Observable } from 'rxjs';
@@ -11,8 +10,11 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { NgSelectData, GridColumn } from '@app-models/common';
 import { List } from '@app-models/list';
+
 import { Store } from '@ngrx/store';
 import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
+import { ModalType } from '@app-core/enums/modal-type.enum';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-data-lists',
@@ -20,7 +22,7 @@ import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
   styleUrls: ['./lists.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('listModal', { static: false }) listModal;
   @ViewChild('dataRecordsModal', { static: false }) dataRecordsModal;
 
@@ -30,7 +32,6 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   private unsubscribe$ = new Subject();
 
   lists: List[];
-
   tableSource: DataTableSource<List> = new DataTableSource<List>(50);
   totalCount: number;
   selected: List[] = [];
@@ -40,7 +41,6 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   records: any[];
-
   // columns
   recordColumns$: Observable<GridColumn[]>;
 
@@ -54,72 +54,30 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   // add, edit list modal
-  isModalNew: boolean;
-  listForm: FormGroup;
+  modalType = ModalType.New;
+  selectedList: List;
 
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
+
   confirmRemoveRecordsButtons = [
     { label: 'Yes', action: this.onRemoveRecordsConfirm.bind(this), class: 'btn-primary' }
   ];
 
   tableRecordsButtons = [];
 
-  typeList: NgSelectData[];
-  folderList: NgSelectData[];
-  folders: any[]; // data from API;
-  dataLoaded: number;
-
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
     private dataService: DataService,
-    private eventService: EventService,
     private store: Store<AppState>
   ) {
     this.totalCount = 0;
     this.lists = [];
-    this.isModalNew = true;
-    this.listForm = fb.group({
-      id: 0,
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      folderId: ['0', Validators.required],
-      type: ['', Validators.required],
-    });
-    this.dataLoaded = 0;
     this.recordColumns$ = this.store.select(selectRecordColumns);
   }
 
   ngOnInit(): void {
-    this.eventService.getFolders()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.folders = data.result;
-          this.folderList = data.result.map(x => ({ value: '' + x.folderId, label: x.folderName }));
-          this.dataLoaded++;
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
-    this.dataService.getTypeList()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.typeList = data;
-          this.dataLoaded++;
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
     this.dataService.getLists()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -131,8 +89,7 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
             this.lists = [];
             this.totalCount = 0;
           }
-
-          this.dataLoaded++;
+          this._updateTable(this.lists);
         },
         error => {
           console.log('error', error.response);
@@ -144,15 +101,6 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
         type: AppTypes.GetRecordColumns
       }));
 
-    setTimeout(() => this.checkLoaded());
-  }
-
-  checkLoaded() {
-    if (this.dataLoaded === 3) {
-      this._updateTable(this.lists);
-    } else {
-      setTimeout(() => this.checkLoaded);
-    }
   }
 
   ngAfterViewInit(): void {
@@ -224,11 +172,13 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(evt) {
     if (evt.type === 'click') {
-      const list: List = evt.row as List;
+      this.selectedList = evt.row as List;
+
       this.tableButtons[1].disabled = false;
       this.recordsTableButtons[0].disabled = false;
       this.recordsTableButtons[1].disabled = true;
-      this.dataService.getRecordsByListId(list.listId)
+
+      this.dataService.getRecordsByListId(this.selectedList.listId)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           data => {
@@ -247,37 +197,16 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
         );
 
       if (evt.cellIndex === 0 && evt.column.frozenLeft) {
-        this.isModalNew = false;
-
-        this.listForm.setValue({
-          id: list.listId,
-          name: list.name,
-          description: list.description,
-          folderId: `${list.folderId}`,
-          type: list.type,
-        });
-
-        this.listModal.show();
+        this.modalType = ModalType.Edit;
+        setTimeout(() => this.listModal.show());
       }
     }
   }
 
   onClickCreate() {
-    this.isModalNew = true;
-    this.listForm.setValue({
-      id: 0,
-      name: '',
-      description: '',
-      folderId: '0',
-      type: ''
-    });
-
-    this.listModal.show();
-  }
-
-  // event form submit
-  onSaveList() {
-    console.log(this.listForm.value);
+    this.modalType = ModalType.New;
+    this.selectedList = null;
+    setTimeout(() => this.listModal.show());
   }
 
   onClickDelete() {
@@ -315,11 +244,4 @@ export class ListsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  getTypeList(value: string | null) {
-    return value ? this.typeList.find(x => x.value === value).label : '';
-  }
-
-  getFolder(value: string) {
-    return this.folderList.find(x => x.value === value).label;
-  }
 }

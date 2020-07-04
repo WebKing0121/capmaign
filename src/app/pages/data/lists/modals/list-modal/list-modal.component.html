@@ -1,0 +1,48 @@
+<app-ui-modal #listModal dialogClass="modal-dialog-centered modal-list modal-lg">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'New' : 'Edit'}} List</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="listModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body">
+    <form [formGroup]="form" (ngSubmit)="onSave()">
+      <div class="row list-input-section">
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Type</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Type</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" formControlName="type" [options]="typeList"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="name" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+        <div class="col-md-12 mt-3">
+          <label class="mobile-show">Description</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Description</span>
+            </div>
+            <input type="text" class="form-control" formControlName="description" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="onSave()">{{modalType === ModalType.New ? 'Create' : 'Save'}}</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="listModal.hide()">Close</button>
+  </div>
+</app-ui-modal>

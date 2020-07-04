@@ -13,7 +13,8 @@ import {
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { ManageRecordsComponent } from './manage-records/manage-records.component';
-import { ListsComponent } from './lists/lists.component';
+import { DataListsComponent } from './lists/lists.component';
+import { DataListModalComponent } from './lists/modals/list-modal/list-modal.component';
 import { DataCustomFieldsComponent } from './custom-fields/custom-fields.component';
 import { DataCustomFieldModalComponent } from './custom-fields/modals/custom-field-modal/custom-field-modal.component';
 import { DataFiltersComponent } from './filters/filters.component';
@@ -22,11 +23,12 @@ import { DataFilterModalComponent } from './filters/modal/filter-modal/filter-mo
 @NgModule({
   declarations: [
     ManageRecordsComponent,
-    ListsComponent,
+    DataListsComponent,
+    DataListModalComponent,
     DataCustomFieldsComponent,
     DataCustomFieldModalComponent,
     DataFiltersComponent,
-    DataFilterModalComponent
+    DataFilterModalComponent,
   ],
   imports: [
     CommonModule,
