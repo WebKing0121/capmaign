@@ -536,8 +536,15 @@ const NavigationItems = [
             external: false,
           },
           {
+            id: 'report-imports',
+            title: 'Imports',
+            type: 'item',
+            url: '/report/imports',
+            external: false,
+          },
+          {
             id: 'report-exports',
-            title: 'Exports email',
+            title: 'Exports',
             type: 'item',
             url: '/report/exports',
             external: false,
