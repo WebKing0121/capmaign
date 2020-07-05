@@ -203,13 +203,19 @@ const NavigationItems = [
             id: 'data-all-records',
             title: 'All Records',
             type: 'item',
-            url: '/data/manage-records/',
+            url: '/data/records',
             external: false
           }, {
             id: 'data-lists',
             title: 'Lists',
             type: 'item',
             url: '/data/lists',
+            external: false
+          }, {
+            id: 'data-list-values',
+            title: 'List of Values',
+            type: 'item',
+            url: '/data/list-values',
             external: false
           }, {
             id: 'data-custom-fields',

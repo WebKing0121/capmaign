@@ -1,0 +1,36 @@
+<!-- <app-data-records #dataRecords
+	[buttons]="tableButtons"
+	(activate)="onActive($event)"
+></app-data-records> -->
+
+<div class="row mt-3">
+  <app-data-record-tabs [tabs]="tabs" (selectTab)="onSelectTab($event)"></app-data-record-tabs>
+  <div class="col-12 data-records">
+    <app-datatable
+      [title]="''"
+      [buttons]="buttons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [selectable]="true"
+      [headerHeight]="40"
+      [selectionType]="'checkbox'"
+      (activate)="onActive($event)"
+    ></app-datatable>
+  </div>
+</div>
+<app-record-modal #recordModal
+  [recordType]="recordType"
+></app-record-modal>
+
+
+<app-add-to-list-modal #addToListModal modalTitle="Add To List"></app-add-to-list-modal>
+
+<app-confirm-modal #confirmModal
+	modalTitle="Confirm"
+	modalMessage="Do you want to delete selected records?"
+	[buttons]="confirmButtons"
+></app-confirm-modal>
+
+<app-view-columns #viewColumnsModal></app-view-columns>
+<app-import-csv-modal #importCSVModal></app-import-csv-modal>
+<app-send-email-modal #sendEmailModal></app-send-email-modal>

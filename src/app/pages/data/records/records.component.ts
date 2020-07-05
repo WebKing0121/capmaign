@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'app-manage-records',
-  templateUrl: './manage-records.component.html',
-  styleUrls: ['./manage-records.component.scss'],
+  selector: 'app-data-all-records',
+  templateUrl: './records.component.html',
+  styleUrls: ['./records.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ManageRecordsComponent implements OnInit {
+export class DataRecordsComponent implements OnInit {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('addToListModal', { static: false }) addToListModal;
   @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
