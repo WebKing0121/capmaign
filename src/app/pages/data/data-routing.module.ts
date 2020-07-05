@@ -1,18 +1,23 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ManageRecordsComponent } from './manage-records/manage-records.component';
+import { DataRecordsComponent } from './records/records.component';
 import { DataListsComponent } from './lists/lists.component';
 import { DataCustomFieldsComponent } from './custom-fields/custom-fields.component';
 import { DataFiltersComponent } from './filters/filters.component';
+import { DataListValuesComponent } from './list-values/list-values.component';
 
 const routes: Routes = [
   {
-    path: 'manage-records',
-    component: ManageRecordsComponent
+    path: 'records',
+    component: DataRecordsComponent
   },
   {
     path: 'lists',
     component: DataListsComponent
+  },
+  {
+    path: 'list-values',
+    component: DataListValuesComponent
   },
   {
     path: 'custom-fields',

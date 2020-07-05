@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageRecordsComponent } from './manage-records.component';
+import { DataListValuesComponent } from './list-values.component';
 
-describe('ManageRecordsComponent', () => {
-  let component: ManageRecordsComponent;
-  let fixture: ComponentFixture<ManageRecordsComponent>;
+describe('DataListValuesComponent', () => {
+  let component: DataListValuesComponent;
+  let fixture: ComponentFixture<DataListValuesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageRecordsComponent ]
+      declarations: [ DataListValuesComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageRecordsComponent);
+    fixture = TestBed.createComponent(DataListValuesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

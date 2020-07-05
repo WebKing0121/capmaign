@@ -11,9 +11,8 @@ import { Tab } from '@app-models/common';
 export class DataRecordTabsComponent implements OnInit {
   @Input() tabs: Tab[] = [];
   @Output() selectTab: EventEmitter<any> = new EventEmitter<any>();
-  constructor(
-  ) {
 
+  constructor() {
   }
 
   ngOnInit(): void {
