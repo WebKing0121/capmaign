@@ -2,47 +2,9 @@
   height: calc(100vh - 130px);
 }
 
-.modal-custom-fields {
-  .input-group-prepend {
-    .input-group-text {
-      width: 130px;
-    }
-  }
-
-  ng-select {
-    width: calc(100% - 128px);
-    min-height: 45px;
-    .single {
-      .value {
-        line-height: 43px;
-      }
-    }
-  }
-
-  ng-select > div {
-    min-height: 45px !important;
-  }
-}
-
-
 @media only screen and (max-width: 575px) {
   .card-custom-fields {
     padding: 0px;
     height: 500px;
-  }
-  .modal-custom-fields {
-    ng-select {
-      width: 100%;
-      min-height: 45px;
-      .single {
-        .value {
-          line-height: 43px;
-        }
-      }
-    }
-
-    ng-select > div {
-      min-height: 45px !important;
-    }
   }
 }

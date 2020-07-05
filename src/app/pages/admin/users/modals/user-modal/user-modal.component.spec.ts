@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MobileAppModalComponent } from './mobile-app.component';
+import { AdminUserModalComponent } from './user-modal.component';
 
-describe('MobileAppModalComponent', () => {
-  let component: MobileAppModalComponent;
-  let fixture: ComponentFixture<MobileAppModalComponent>;
+describe('AdminUserModalComponent', () => {
+  let component: AdminUserModalComponent;
+  let fixture: ComponentFixture<AdminUserModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MobileAppModalComponent ]
+      declarations: [ AdminUserModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MobileAppModalComponent);
+    fixture = TestBed.createComponent(AdminUserModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

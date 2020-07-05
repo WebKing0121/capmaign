@@ -6,30 +6,32 @@ import { SharedModule } from '../../theme/shared/shared.module';
 import { SelectModule } from 'ng-select';
 import { ArchwizardModule } from 'angular-archwizard';
 
+import { AdminUsersComponent } from './users/users.component';
+import { AdminUserModalComponent } from './users/modals/user-modal/user-modal.component';
+import { AdminRolesComponent } from './roles/roles.component';
+import { AdminRoleModalComponent } from './roles/modals/role-modal/role-modal.component';
+import { AdminOrganizationsComponent } from './organizations/organizations.component';
+import { AdminOrganizationModalComponent } from './organizations/modals/organization-modal/organization-modal.component';
+import { AdminSendersComponent } from './senders/senders.component';
+import { AdminSenderModalComponent } from './senders/modals/sender-modal/sender-modal.component';
+import { AdminMobileAppsComponent } from './mobile-apps/mobile-apps.component';
+import { AdminMobileAppModalComponent } from './mobile-apps/modals/mobile-app-modal/mobile-app-modal.component';
+
 // components
-import { UsersComponent } from './users/users.component';
-import { UserModalComponent } from './users/modals/user/user-modal.component';
-import { UserRolesComponent } from './roles/roles.component';
-import { UserRoleModalComponent } from './roles/modals/role/role-modal.component';
-import { UserOrganizationsComponent } from './organizations/organizations.component';
-import { UserOrganizationModalComponent } from './organizations/modals/organization/organization.component';
-import { SendersComponent } from './senders/senders.component';
-import { SenderModalComponent } from './senders/modals/sender/sender-modal.component';
-import { MobileAppsComponent } from './mobile-apps/mobile-apps.component';
-import { MobileAppModalComponent } from './mobile-apps/modals/mobile-app/mobile-app.component';
+
 
 @NgModule({
   declarations: [
-    UsersComponent,
-    UserModalComponent,
-    UserRolesComponent,
-    UserRoleModalComponent,
-    UserOrganizationsComponent,
-    UserOrganizationModalComponent,
-    SendersComponent,
-    SenderModalComponent,
-    MobileAppsComponent,
-    MobileAppModalComponent
+    AdminUsersComponent,
+    AdminUserModalComponent,
+    AdminRolesComponent,
+    AdminRoleModalComponent,
+    AdminOrganizationsComponent,
+    AdminOrganizationModalComponent,
+    AdminSendersComponent,
+    AdminSenderModalComponent,
+    AdminMobileAppsComponent,
+    AdminMobileAppModalComponent
   ],
   imports: [
     CommonModule,

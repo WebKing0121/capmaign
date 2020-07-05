@@ -26,11 +26,16 @@
     ></app-datatable>
   </div>
 </div>
+
 <ng-template #defaultTemplate let-row="row" let-value let-i="index">
   <span *ngIf="value" class="default-role">Default</span>
 </ng-template>
+
 <ng-template #staticTemplate let-row="row" let-value let-i="index">
   <span *ngIf="value" class="static-role">Static</span>
 </ng-template>
 
-<app-user-role-modal #userRoleModal [modalType]="modalType" [role]="selectedRole"></app-user-role-modal>
+<app-admin-role-modal #userRoleModal
+  [modalType]="modalType"
+  [role]="selectedRole"
+></app-admin-role-modal>

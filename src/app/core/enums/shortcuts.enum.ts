@@ -67,7 +67,7 @@ export const Shortcuts = [
     children: [
       { label: 'Lists', link: '@modal#lists' },
       { label: 'Event Lists', link: '@modal#eventLists' },
-      { label: 'List of Values', link: '/' },
+      { label: 'List of Values', link: '@modal#listValues' },
     ]
   },
   {

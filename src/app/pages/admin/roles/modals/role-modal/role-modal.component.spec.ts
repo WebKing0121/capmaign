@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataListsComponent } from './lists.component';
+import { AdminRoleModalComponent } from './role-modal.component';
 
-describe('DataListsComponent', () => {
-  let component: DataListsComponent;
-  let fixture: ComponentFixture<DataListsComponent>;
+describe('AdminRoleModalComponent', () => {
+  let component: AdminRoleModalComponent;
+  let fixture: ComponentFixture<AdminRoleModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ DataListsComponent ]
+      declarations: [ AdminRoleModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DataListsComponent);
+    fixture = TestBed.createComponent(AdminRoleModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

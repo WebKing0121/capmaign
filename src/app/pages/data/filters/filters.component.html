@@ -12,124 +12,13 @@
   </div>
 </div>
 
-<app-ui-modal #filterModal [containerClick]="false" dialogClass="modal-dialog-centered modal-filter modal-xl">
-  <div class="app-modal-header">
-    <h5 class="modal-title">{{isModalNew ? 'New' : 'Edit'}} Filter</h5>
-    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
-      (click)="filterModal.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete selected filters?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>
 
-  <div class="app-modal-body">
-    <form [formGroup]="filterForm" (ngSubmit)="onSaveFilters()">
-      <div class="row">
-        <div class="col-md-6">
-          <label class="mobile-show">Filter Name</label>
-          <div class="input-group">
-            <div class="input-group-prepend mobile-hide">
-              <span class="input-group-text">Name</span>
-            </div>
-            <input type="text" class="form-control" formControlName="name">
-          </div>
-        </div>
-        <div class="col-md-6 mobile-mt">
-          <label class="mobile-show">Filter Description</label>
-          <div class="input-group">
-            <div class="input-group-prepend mobile-hide">
-              <span class="input-group-text">Description</span>
-            </div>
-            <input type="text" class="form-control" formControlName="description">
-          </div>
-        </div>
-      </div> 
-      <div class="row mt-3">
-        <div class="col-md-12">
-          <label class="mobile-show">Informed Query</label>
-          <div class="input-group">
-            <div class="input-group-prepend mobile-hide">
-              <span class="input-group-text">Informed Query</span>
-            </div>
-            <input type="text" readonly class="form-control" formControlName="booleanQuery">
-          </div>
-        </div>
-      </div>
-        
-    </form>
-    <div class="row mt-3">
-      <div class="col-md-12">
-        <div class="filter-section">
-          <div class="filter-condition">
-            <button class="btn btn-success btn-md w-100" (click)="onClickAddCondition()">Add Condition</button>
-            <button class="btn btn-success btn-md w-100 mt-3" (click)="onClickAddGroup()">Add Group</button>
-          </div>
-          <div class="filter-content">
-            <div *ngFor="let item of filterConditions">
-              <div *ngIf="item.type==='Item'" class="filter-item">
-                <div class="filter-parent-op">
-                  <ng-select *ngIf="item.parentOp !== 'None'" [(ngModel)]="item.parentOp" [ngClass]="'ng-select'" [options]="conditionOperators"></ng-select>
-                </div>
-                <div class="filter-name">
-                  <ng-select [ngClass]="'ng-select'" [(ngModel)]="item.fieldName" [options]="filterFields"></ng-select>
-                </div>
-                <div class="filter-op">
-                  <ng-select [ngClass]="'ng-select'" [(ngModel)]="item.conditionOp" [options]="filterOperators"></ng-select>
-                </div>
-                
-                <div class="filter-value">
-                  <input type="text" *ngIf="item.conditionOp !== 'null' && item.conditionOp !== 'not_null'"
-                    placeholder="Condition Value..."
-                    [(ngModel)]="item.value" />
-                </div>
-                <button class="filter-remove" (click)="onClickRemoveCondition(item)">
-                  <i class="fa fa-trash"></i>
-                </button>
-              </div>  
-              <div *ngIf="item.type==='Group'" class="filter-item">
-                <div class="filter-parent-op">
-                  <ng-select *ngIf="item.parentOp !== 'None'" [ngClass]="'ng-select'" 
-                    [(ngModel)]="item.parentOp"
-                    [options]="conditionOperators"
-                  ></ng-select>
-                </div>
-                <div class="filter-group">
-                  <button class="add-condition" (click)="onClickAddConditionInGroup(item)"><i class="fa fa-plus"></i></button>
-                  <button class="group-remove" (click)="onClickRemoveGroup(item)"><i class="fa fa-times"></i></button>
-                  <div *ngFor="let subItem of item.children" class="filter-item">
-                    <div class="filter-parent-op">
-                      <ng-select *ngIf="subItem.parentOp !== 'None'" [(ngModel)]="subItem.parentOp" [ngClass]="'ng-select'" [options]="conditionOperators"></ng-select>
-                    </div>
-                    <div class="filter-name">
-                      <ng-select [ngClass]="'ng-select'" [(ngModel)]="subItem.fieldName" [options]="filterFields"></ng-select>
-                    </div>
-                    <div class="filter-op">
-                      <ng-select [ngClass]="'ng-select'" [(ngModel)]="subItem.conditionOp" [options]="filterOperators"></ng-select>
-                    </div>
-                    <div class="filter-value">
-                      <input type="text" *ngIf="subItem.conditionOp !== 'null' && subItem.conditionOp !== 'not_null'"
-                        placeholder="Condition Value..."
-                        [(ngModel)]="subItem.value" />
-                    </div>
-                    <button class="filter-remove" (click)="onClickRemoveConditionInGroup(item, subItem)">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary float-left" (click)="onSaveFilters()">Run</button> &nbsp;
-    
-    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" (click)="filterModal.hide()">Close</button>
-    <button type="button" class="btn btn-primary float-right" (click)="onSaveFilters()">{{isModalNew ? 'Create' : 'Save'}}</button>
-    <button type="button" class="btn btn-danger float-right" *ngIf="!isModalNew">Delete</button>
-  </div>
-</app-ui-modal>
-<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected filters?"
-	[buttons]="confirmButtons"></app-confirm-modal>
+<app-data-filter-modal #filterModal
+  [modalType]="modalType"
+  [filter]="selectedFilter"
+></app-data-filter-modal>

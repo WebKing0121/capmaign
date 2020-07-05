@@ -1,31 +1,32 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { UsersComponent } from './users/users.component';
-import { UserRolesComponent } from './roles/roles.component';
-import { UserOrganizationsComponent } from './organizations/organizations.component';
-import { SendersComponent } from './senders/senders.component';
-import { MobileAppsComponent } from './mobile-apps/mobile-apps.component';
+
+import { AdminUsersComponent } from './users/users.component';
+import { AdminRolesComponent } from './roles/roles.component';
+import { AdminOrganizationsComponent } from './organizations/organizations.component';
+import { AdminSendersComponent } from './senders/senders.component';
+import { AdminMobileAppsComponent } from './mobile-apps/mobile-apps.component';
 
 const routes: Routes = [
   {
     path: 'users',
-    component: UsersComponent
+    component: AdminUsersComponent
   },
   {
     path: 'roles',
-    component: UserRolesComponent
+    component: AdminRolesComponent
   },
   {
     path: 'organizations',
-    component: UserOrganizationsComponent
+    component: AdminOrganizationsComponent
   },
   {
     path: 'senders',
-    component: SendersComponent
+    component: AdminSendersComponent
   },
   {
     path: 'mobile-apps',
-    component: MobileAppsComponent
+    component: AdminMobileAppsComponent
   },
   {
     path: '**',

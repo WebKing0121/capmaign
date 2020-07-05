@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LandingPageTemplateCategoryModalComponent } from './category.component';
+import { ContentCategoryModalComponent } from './category.component';
 
-describe('LandingPageTemplateCategoryModalComponent', () => {
-  let component: LandingPageTemplateCategoryModalComponent;
-  let fixture: ComponentFixture<LandingPageTemplateCategoryModalComponent>;
+describe('ContentCategoryModalComponent', () => {
+  let component: ContentCategoryModalComponent;
+  let fixture: ComponentFixture<ContentCategoryModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LandingPageTemplateCategoryModalComponent ]
+      declarations: [ ContentCategoryModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LandingPageTemplateCategoryModalComponent);
+    fixture = TestBed.createComponent(ContentCategoryModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

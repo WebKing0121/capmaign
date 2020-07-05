@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserModalComponent } from './user-modal.component';
+import { DataFilterModalComponent } from './filter-modal.component';
 
-describe('UserModalComponent', () => {
-  let component: UserModalComponent;
-  let fixture: ComponentFixture<UserModalComponent>;
+describe('DataFilterModalComponent', () => {
+  let component: DataFilterModalComponent;
+  let fixture: ComponentFixture<DataFilterModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserModalComponent ]
+      declarations: [ DataFilterModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserModalComponent);
+    fixture = TestBed.createComponent(DataFilterModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

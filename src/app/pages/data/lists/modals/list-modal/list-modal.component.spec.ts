@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SenderModalComponent } from './sender-modal.component';
+import { DataListModalComponent } from './list-modal.component';
 
-describe('SenderModalComponent', () => {
-  let component: SenderModalComponent;
-  let fixture: ComponentFixture<SenderModalComponent>;
+describe('DataListModalComponent', () => {
+  let component: DataListModalComponent;
+  let fixture: ComponentFixture<DataListModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SenderModalComponent ]
+      declarations: [ DataListModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SenderModalComponent);
+    fixture = TestBed.createComponent(DataListModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { UserRoleModalComponent } from './role-modal.component';
+import { AdminMobileAppModalComponent } from './mobile-app-modal.component';
 
-describe('UserRoleModalComponent', () => {
-  let component: UserRoleModalComponent;
-  let fixture: ComponentFixture<UserRoleModalComponent>;
+describe('AdminMobileAppModalComponent', () => {
+  let component: AdminMobileAppModalComponent;
+  let fixture: ComponentFixture<AdminMobileAppModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserRoleModalComponent ]
+      declarations: [ AdminMobileAppModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(UserRoleModalComponent);
+    fixture = TestBed.createComponent(AdminMobileAppModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

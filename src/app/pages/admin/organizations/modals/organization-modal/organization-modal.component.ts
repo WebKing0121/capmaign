@@ -3,12 +3,12 @@ import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 @Component({
-  selector: 'app-user-organization',
-  templateUrl: './organization.component.html',
-  styleUrls: ['./organization.component.scss']
+  selector: 'app-admin-organization-modal',
+  templateUrl: './organization-modal.component.html',
+  styleUrls: ['./organization-modal.component.scss']
 })
-export class UserOrganizationModalComponent implements OnInit {
-  @ViewChild('userOrganizationModal', { static: false }) userOrganizationModal;
+export class AdminOrganizationModalComponent implements OnInit {
+  @ViewChild('organizationModal', { static: false }) organizationModal;
 
   @Input() organization: any;
   @Input() modalType = ModalType.Edit;
@@ -35,10 +35,10 @@ export class UserOrganizationModalComponent implements OnInit {
         name: ''
       });
     }
-    this.userOrganizationModal.show();
+    this.organizationModal.show();
   }
 
   hide() {
-    this.userOrganizationModal.hide();
+    this.organizationModal.hide();
   }
 }

@@ -10,7 +10,7 @@ import { UserService } from '@app-core/services/user.service';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 
 // modals
-import { UserModalComponent } from './modals/user/user-modal.component';
+import { AdminUserModalComponent } from './modals/user-modal/user-modal.component';
 
 @Component({
   selector: 'app-admin-users',
@@ -18,8 +18,8 @@ import { UserModalComponent } from './modals/user/user-modal.component';
   styleUrls: ['./users.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class UsersComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('userModal', { static: false }) userModal: UserModalComponent;
+export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('userModal', { static: false }) userModal: AdminUserModalComponent;
   @ViewChild('userTemplate', { static: false }) userTemplate;
   @ViewChild('userStatusTemplate', { static: false }) userStatusTemplate;
 

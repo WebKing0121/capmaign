@@ -5,11 +5,11 @@ import { takeUntil } from 'rxjs/operators';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-mobile-apps',
+  selector: 'app-admin-mobile-apps',
   templateUrl: './mobile-apps.component.html',
   styleUrls: ['./mobile-apps.component.scss']
 })
-export class MobileAppsComponent implements OnInit, OnDestroy {
+export class AdminMobileAppsComponent implements OnInit, OnDestroy {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('mobileAppModal', { static: false }) mobileAppModal;
 

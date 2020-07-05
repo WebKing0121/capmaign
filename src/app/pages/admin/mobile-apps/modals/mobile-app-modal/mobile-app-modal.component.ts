@@ -3,12 +3,12 @@ import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-mobile-app-modal',
-  templateUrl: './mobile-app.component.html',
-  styleUrls: ['./mobile-app.component.scss'],
+  selector: 'app-admin-mobile-app-modal',
+  templateUrl: './mobile-app-modal.component.html',
+  styleUrls: ['./mobile-app-modal.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
-export class MobileAppModalComponent implements OnInit {
+export class AdminMobileAppModalComponent implements OnInit {
   @Input() modalType = ModalType.New;
   @Input() mobileApp: any;
   @ViewChild('mobileAppModal', { static: false }) mobileAppModal;

@@ -1,15 +1,13 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
-import * as moment from 'moment';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataService } from '@app-services/data.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
-import { NgSelectData } from '@app-models/common';
 import { CustomField } from '@app-models/custom-field';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-data-customfields',
@@ -17,8 +15,8 @@ import { CustomField } from '@app-models/custom-field';
   styleUrls: ['./custom-fields.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('customFieldsModal', { static: false }) customFieldsModal;
+export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('customFieldModal', { static: false }) customFieldModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
 
   private unsubscribe$ = new Subject();
@@ -34,37 +32,18 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   // add, edit list modal
-  isModalNew: boolean;
-  customFieldsForm: FormGroup;
-
+  modalType = ModalType.New;
+  selectedCustomField: CustomField;
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
-  customFieldsType: NgSelectData[] = [
-    { value: 'Text', label: 'Text' },
-    { value: 'Numeric', label: 'Numeric' },
-    { value: 'Date', label: 'Date' },
-  ];
-
-  defaultValueType: string;
-  defaultValue: any;
-
   constructor(
-    private fb: FormBuilder,
     private dataService: DataService
   ) {
     this.totalCount = 0;
     this.customFields = [];
-    this.isModalNew = true;
-    this.customFieldsForm = this.fb.group({
-      id: 0,
-      name: ['', Validators.required],
-      defaultValue: ['', Validators.required],
-      type: ['', Validators.required],
-    });
-    this.defaultValueType = 'Text';
   }
 
   ngOnInit(): void {
@@ -86,8 +65,6 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('error', error.response);
         }
       );
-
-    this.onChangeType();
   }
 
   ngAfterViewInit(): void {
@@ -113,19 +90,6 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  onChangeType() {
-    this.customFieldsForm.get('type').valueChanges
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(val => {
-        this.defaultValueType = val;
-        if (val !== 'Date') {
-          this.customFieldsForm.get('defaultValue').setValue('');
-        } else {
-          this.customFieldsForm.get('defaultValue').setValue(this.defaultValue);
-        }
-      });
-  }
-
   _updateTable(customFields: CustomField[]) {
     this.tableSource.next(customFields.slice(0, 50), customFields.length);
     this.tableSource.changed$
@@ -144,55 +108,25 @@ export class CustomFieldsComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-
   onActive(evt) {
     if (evt.type === 'click') {
       this.tableButtons[1].disabled = this.selected.length === 0;
       if (evt.cellIndex === 1) {
-        const customField: CustomField = evt.row as CustomField;
-        this.isModalNew = false;
-
-        let defaultValue;
-        if (customField.fieldDataType === 'Date') {
-          if (moment(customField.defaultValue).isValid()) {
-            const year = Number(moment(customField.defaultValue).format('YYYY'));
-            const month = Number(moment(customField.defaultValue).format('MM'));
-            const day = Number(moment(customField.defaultValue).format('DD'));
-
-            defaultValue = { year, month, day };
-          } else {
-            defaultValue = null;
-          }
-          this.defaultValue = defaultValue;
-        } else {
-          defaultValue = customField.defaultValue;
-        }
-
-        this.customFieldsForm.setValue({
-          id: customField.id,
-          name: customField.displayName,
-          defaultValue,
-          type: customField.fieldDataType,
-        });
-        this.customFieldsModal.show();
+        this.selectedCustomField = evt.row as CustomField;
+        this.modalType = ModalType.Edit;
+        setTimeout(() => this.customFieldModal.show());
       }
     }
   }
 
   onClickCreate() {
-    this.isModalNew = true;
-    this.customFieldsForm.reset();
-    this.customFieldsForm.setValue({
-      id: 0,
-      name: '',
-      defaultValue: '',
-      type: 'Text'
-    });
-    this.customFieldsModal.show();
+    this.modalType = ModalType.New;
+    this.selectedCustomField = null;
+    setTimeout(() => this.customFieldModal.show());
   }
 
   onSaveCustomField() {
-    console.log(this.customFieldsForm.value);
+    // console.log(this.customFieldsForm.value);
   }
 
   onClickDelete() {

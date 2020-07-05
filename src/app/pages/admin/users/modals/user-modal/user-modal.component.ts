@@ -4,11 +4,11 @@ import { User } from '@app-models/user';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-users-user-modal',
+  selector: 'app-admin-user-modal',
   templateUrl: './user-modal.component.html',
   styleUrls: ['./user-modal.component.scss']
 })
-export class UserModalComponent implements OnInit {
+export class AdminUserModalComponent implements OnInit {
   @ViewChild('userModal', { static: false }) userModal;
   @Input() modalType = ModalType.New;
   @Input() user: User;

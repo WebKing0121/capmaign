@@ -9,11 +9,11 @@ import { UserRole } from '@app-models/user';
 import { UserService } from '@app-services/user.service';
 
 @Component({
-  selector: 'app-user-role-modal',
+  selector: 'app-admin-role-modal',
   templateUrl: './role-modal.component.html',
   styleUrls: ['./role-modal.component.scss']
 })
-export class UserRoleModalComponent implements OnInit, OnDestroy {
+export class AdminRoleModalComponent implements OnInit, OnDestroy {
   @ViewChild('userRoleModal', { static: false }) userRoleModal;
   @Input() modalType = ModalType.New;
   @Input() role: UserRole;
