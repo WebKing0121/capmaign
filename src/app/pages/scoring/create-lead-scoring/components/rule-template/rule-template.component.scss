@@ -1,0 +1,36 @@
+:host {
+
+  .header {
+
+    &:hover {
+
+      .remove-me {
+        visibility: visible;
+      }
+    }
+  }
+
+  .header-field {
+    width: 100%;
+  }
+
+  .remove-me {
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    background-color: white;
+    width: 20px;
+    height: 20px;
+    border: 1px solid;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    visibility: hidden;
+    color: red;
+
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
+}

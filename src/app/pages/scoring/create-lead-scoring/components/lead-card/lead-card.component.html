@@ -1,5 +1,5 @@
 <div class="card m-t-15">
-  <div class="card-header main-header p-10" style="align-items: center;">
+  <div class="card-header main-header">
     <form [formGroup]="formGroup" class="d-flex">
       <div class="col-md-4">
         <label class="mobile-show">Profile Rules-Lead</label>
@@ -20,31 +20,31 @@
         <div class="input-group">
           <div class="input-group-prepend mobile-hide"><span class="input-group-text">Weightage</span></div>
           <input type="text" formControlName="weightage" class="form-control ng-untouched ng-pristine ng-invalid">
-          <span class="m-l-10 d-flex" style="align-items: center;">
-            <i class="fa fa-trash f-24" (click)="remove_me()"></i>
-          </span>
         </div>
       </div>
+      <span class="m-l-10 d-flex remove-me" (click)="remove_me()">
+        <i class="fa fa-times"></i>
+      </span>
     </form>
   </div>
   <div class="card-body p-0">
-    <div class="col-lg-12 d-flex m-t-10 m-b-10">
-      <div class="col-sm-3 d-flex" style="align-items: center;">
+    <div class="col-lg-12 d-flex p-0">
+      <div class="col-sm-3 d-flex header-field">
         <span>Rule Description</span>
       </div>
-      <div class="col-sm-3 d-flex" style="align-items: center;">
+      <div class="col-sm-3 d-flex header-field">
         <span>Condition</span>
       </div>
-      <div class="col-sm-3 d-flex" style="align-items: center;">
+      <div class="col-sm-4 d-flex header-field">
         <span>Value</span>
       </div>
-      <div class="col-sm-3 d-flex" style="align-items: center;">
-        <div class="col-sm-10">Point</div>
-        <span class="m-l-10 d-flex" style="align-items: center;">
-          <i class="text-secondary fa fa-plus f-20" (click)="add()"></i>
-        </span>
+      <div class="col-sm-2 d-flex header-field">
+        <span>Point</span>
       </div>
     </div>
+    <span class="m-l-10 d-flex add-card">
+      <i class="fa fa-plus" (click)="add()"></i>
+    </span>
     <ng-template #ruleList></ng-template>
   </div>
 </div>

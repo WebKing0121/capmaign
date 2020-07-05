@@ -141,9 +141,8 @@ export class LeadCategoryModalComponent implements OnInit {
     this.modalRef.cancel();
   }
 
-  revertFullScreen () {
+  revertFullScreen() {
     this.fullScreen = !this.fullScreen;
     this.modalClass = 'modal-wrapper' + (this.fullScreen ? ' full-screen' : '');
-    console.log(this.modalClass)
   }
 }

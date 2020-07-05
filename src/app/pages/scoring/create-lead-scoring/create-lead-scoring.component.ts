@@ -63,6 +63,8 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
   leadProfileReferences = Array<ComponentRef<LeadCardComponent>>();
 
   formGroup: FormGroup;
+  fullScreen: boolean;
+  modalClass: string;
 
   constructor(
     private scoringService: ScoringService,
@@ -100,6 +102,8 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
     this.mappingFields = [];
     this.searchIdx = '';
     this.searchDB = '';
+    this.fullScreen = false;
+    this.modalClass = "modal-wrapper";
   }
 
   ngOnDestroy(): void {
@@ -206,12 +210,8 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
 
   }
 
-  // searchDbQuery(searchQuery: string) {
-  //   if (searchQuery === '') {
-  //     this.filteredDbFields = this.dbFields.filter(x => !x.hidden);
-  //   } else {
-  //     this.filteredDbFields = this.dbFields.filter(x => !x.hidden)
-  //       .filter(x => x.name.toLowerCase().indexOf(searchQuery.toLowerCase()) >= 0);
-  //   }
-  // }
+  revertFullScreen () {
+    this.fullScreen = !this.fullScreen;
+    this.modalClass = 'modal-wrapper' + (this.fullScreen ? ' full-screen' : '');
+  }
 }
