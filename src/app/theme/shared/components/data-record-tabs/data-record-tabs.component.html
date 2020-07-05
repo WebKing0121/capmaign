@@ -1,5 +1,7 @@
-<ul class="btn-tabs">
+<ul class="btn-tabs" #tabContainer>
   <li *ngFor="let tab of tabs" (click)="onClickTab(tab)" [ngClass]="{'selected': tab.selected}">
     {{tab.label}}
   </li>
 </ul>
+<button class="btn-left" *ngIf="leftScroll" (click)="onClickLeft()"><i class="fa fa-chevron-left"></i></button>
+<button class="btn-right" *ngIf="rightScroll" (click)="onClickRight()"><i class="fa fa-chevron-right"></i></button>
