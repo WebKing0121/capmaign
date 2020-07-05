@@ -89,7 +89,7 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
 
   onCreateClicked() {
     this.modalService.openModal(InAppMessageComponent, {
-      width: '80%',
+      width: '100%',
       data: {
         createMode: true
       }
@@ -100,7 +100,7 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
     if (event.type === 'click' && event.cellIndex === 1) {
       const inAppMessage = event.row as Campaign;
       this.modalService.openModal(InAppMessageComponent, {
-        width: '80%',
+        width: '100%',
         data: {
           createMode: false,
           inAppMessage,
