@@ -1,8 +1,8 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { Tab, GridColumn } from '@app-core/models/common';
 import { Tabs } from '@app-core/enums/data-tabs.enum';
 import { Observable, Subject } from 'rxjs';
-import { DataTableSource } from '@app-components/datatable/datatable-source';
+import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { DataService } from '@app-core/services/data.service';
 import { takeUntil } from 'rxjs/operators';
 
@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./list-values.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DataListValuesComponent implements OnInit {
+export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('addToListModal', { static: false }) addToListModal;
   @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
@@ -25,12 +25,6 @@ export class DataListValuesComponent implements OnInit {
   buttons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
-    { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), disabled: true },
-    { label: 'Import', icon: 'fa fa-upload', click: () => this.onClickImport() },
-    { label: 'Export', icon: 'fa fa-download', click: () => this.onClickExport() },
-    { label: 'Send Email', icon: 'fa fa-envelope', click: () => this.onClickSendEmail(), disabled: true },
-    { label: 'Send SMS', icon: 'fa fa-envelope', click: () => this.onClickSendSMS(), disabled: true },
-    { label: 'View Columns', icon: 'fa fa-eye', click: () => this.onClickViewColumns() },
   ];
 
   tabs: Tab[];
@@ -39,6 +33,7 @@ export class DataListValuesComponent implements OnInit {
   recordColumns$: Observable<GridColumn[]>;
 
   records: any[];
+  filteredRecords: any[];
 
   tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   totalCount: number;
@@ -60,9 +55,9 @@ export class DataListValuesComponent implements OnInit {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          console.log(data);
           if (data.result) {
             this.records = data.result.items;
+            this.filteredRecords = this.records;
             this.totalCount = data.result.totalCount;
 
             const tmp = this.records.map(x => ({ label: x.tableName, key: x.tableName, selected: false }));
@@ -72,13 +67,12 @@ export class DataListValuesComponent implements OnInit {
                 this.tabs.push({ ...x });
               }
             });
-            //this._updateTable(this.records);
           } else {
             this.records = [];
+            this.filteredRecords = this.records;
             this.totalCount = 0;
-            //this._updateTable(this.records);
           }
-
+          this._updateTable(this.filteredRecords);
         },
         error => {
           console.log('error', error);
@@ -86,6 +80,23 @@ export class DataListValuesComponent implements OnInit {
       );
 
   }
+
+  ngAfterViewInit(): void {
+
+    const columns: DataTableColumn[] = [
+      { name: 'Table Name', prop: 'tableName', sortable: true },
+      { name: 'Display Name', prop: 'displayName', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Value', prop: 'value', sortable: true },
+      { name: 'Status', prop: 'isDeleted', sortable: true },
+    ];
+    this.tableSource.setColumns(columns);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   setRecordType(tab: Tab) {
     this.recordType = tab.key === 'all' ? 'accounts' : tab.key;
   }
@@ -99,28 +110,14 @@ export class DataListValuesComponent implements OnInit {
     if (tab) {
 
       this.setRecordType(tab);
-
-      // this.selectedTab.emit(tab);
       tab.selected = true;
-      // this.dataService.getRecords(tab.key)
-      //   .pipe(takeUntil(this.unsubscribe$))
-      //   .subscribe(
-      //     data => {
-      //       if (data.result) {
-      //         this.records = data.result.items;
-      //         this.totalCount = data.result.totalCount;
-      //         this._updateTable(this.records);
-      //       } else {
-      //         this.records = [];
-      //         this.totalCount = 0;
-      //         this._updateTable(this.records);
-      //       }
+      if (tab.key === 'all') {
+        this.filteredRecords = this.records;
+      } else {
+        this.filteredRecords = this.records.filter(x => x.tableName === tab.label);
+      }
+      this._updateTable(this.filteredRecords);
 
-      //     },
-      //     error => {
-      //       console.log('error', error);
-      //     }
-      //   );
     }
   }
 
@@ -136,7 +133,7 @@ export class DataListValuesComponent implements OnInit {
   }
 
   onClickCreate() {
-    this.dataRecords.createRecord();
+    // this.dataRecords.createRecord();
   }
 
   onClickDelete() {
@@ -147,27 +144,23 @@ export class DataListValuesComponent implements OnInit {
     this.confirmModal.hide();
   }
 
-  onClickAddToList() {
-    this.addToListModal.show();
+
+  _updateTable(listvalues: any[]) {
+    this.tableSource.next(listvalues.slice(0, 50), listvalues.length);
+    this.tableSource.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(change => {
+        this.tableSource.next(
+          listvalues.slice(
+            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+          listvalues.length
+        );
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
   }
 
-  onClickViewColumns() {
-    this.viewColumnsModal.show();
-  }
-
-  onClickImport() {
-    this.importCSVModal.show();
-  }
-
-  onClickExport() {
-
-  }
-
-  onClickSendEmail() {
-    this.sendEmailModal.show();
-  }
-
-  onClickSendSMS() {
-
-  }
 }
