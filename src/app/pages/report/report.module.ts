@@ -9,12 +9,14 @@ import { SelectModule } from 'ng-select';
 import { ReportEmailCampaignComponent } from './email-campaign/email-campaign.component';
 import { ReportSmsCampaignComponent } from './sms-campaign/sms-campaign.component';
 import { ReportExportsComponent } from './exports/exports.component';
+import { ReportImportsComponent } from './imports/imports.component';
 
 @NgModule({
   declarations: [
     ReportEmailCampaignComponent,
     ReportSmsCampaignComponent,
     ReportExportsComponent,
+    ReportImportsComponent,
   ],
   imports: [
     CommonModule,

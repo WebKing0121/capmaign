@@ -76,9 +76,10 @@ export const Shortcuts = [
     children: [
       { label: 'Filters', link: '/data/filters' },
       { label: 'Usage Dashboard', link: '/setup/usage-dashboard' },
-      { label: 'Import', link: '/' },
-      { label: 'New Import', link: '/' },
-      { label: 'Export', link: '/' },
+      { label: 'Import', link: '@modal#import' },
+      { label: 'Import Status', link: '/report/import-status' },
+      { label: 'Export', link: '@modal#export' },
+      { label: 'Export Status', link: '/report/exports' },
     ]
   }
 ];
