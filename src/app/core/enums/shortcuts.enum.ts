@@ -67,7 +67,7 @@ export const Shortcuts = [
     children: [
       { label: 'Lists', link: '@modal#lists' },
       { label: 'Event Lists', link: '@modal#eventLists' },
-      { label: 'List of Values', link: '@modal#listValues' },
+      { label: 'List of Values', link: '/data/list-values' },
     ]
   },
   {
@@ -75,7 +75,7 @@ export const Shortcuts = [
     name: 'Miscellaneous',
     children: [
       { label: 'Filters', link: '/data/filters' },
-      { label: 'Usage Dashboard', link: '/' },
+      { label: 'Usage Dashboard', link: '/setup/usage-dashboard' },
       { label: 'Import', link: '/' },
       { label: 'New Import', link: '/' },
       { label: 'Export', link: '/' },

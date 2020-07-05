@@ -1,0 +1,10 @@
+.card-data-list-values {
+  height: calc(100vh - 130px);
+}
+
+@media only screen and (max-width: 575px) {
+  .card-data-list-values {
+    padding: 0px;
+    height: 500px;
+  }
+}
