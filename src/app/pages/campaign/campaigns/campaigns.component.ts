@@ -204,7 +204,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     } else {
       this.modalService.openModal(CampaignSendModalComponent, {
-        width: '80%',
+        width: '100%',
         data: {
           campaign: this.tableSource.selected[0]
         }
