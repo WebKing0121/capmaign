@@ -1,0 +1,27 @@
+:host {
+
+  .row {
+    margin: 0;
+
+    div {
+      padding: 0;
+    }
+  }
+  
+  .field {
+    width: 100%;
+  }
+
+  .remove-btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: red;
+
+    &:hover {
+      background-color: red;
+      color: white;
+    }
+  }
+}

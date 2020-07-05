@@ -1,4 +1,54 @@
 :host {
+
+  .modal-wrapper {
+    padding: 0 20%;
+
+    @media only screen and (max-width: 1024px) {
+      padding: 0 5%;
+    }
+
+    @media only screen and (max-width: 425px) {
+      padding: 0 10px;
+    }
+  }
+
+  .card-body {
+    max-height: calc(100vh - 450px);
+    overflow-y: auto;
+    padding: 0;
+
+    .row {
+      margin: 0;
+    }
+
+    .sub-header {
+      padding: 10px 0;
+    }
+  }
+
+  .full-screen {
+    padding: 0;
+    
+    .card {
+      height: 100vh;
+      top: -28px;
+
+      .card-body {
+        max-height: calc( 100vh - 120px);
+      }
+    }
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .maximize {
+      margin-top: 3px;
+    }
+  }
+
   .input-item {
     margin-bottom: 10px;
   }
@@ -23,7 +73,23 @@
     }
   }
 
+  .main-table {
+    margin: 15px;
+  }
+
   .main-header {
     background-color: whitesmoke;
+  }
+
+  .sub-header {
+    border: 1px solid;
+  }
+
+  .add-btn {
+
+    &:hover {
+      background-color: #00acf0;
+      color: white;
+    }
   }
 }
