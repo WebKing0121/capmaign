@@ -1,12 +1,12 @@
-<div class="card">
+<div class="card main-card">
   <div class="card-header">
     <span>Manage lead timeframes</span>
   </div>
 
-  <div class="card-body">
+  <div class="card-body main-body">
     <form [formGroup]="formGroup">
       <div class="row">
-        <div class="col-md-6 input-item">
+        <div class="col-md-12 input-item">
           <label class="mobile-show">Lead Scoring</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide"><span class="input-group-text">Lead Scoring</span></div>
@@ -16,23 +16,24 @@
           </div>
         </div>
       </div>
-      <div class="card">
+      <div class="card m-l-15 m-r-15">
         <div class="card-header main-header">
           <span>Profile Details</span>
         </div>
 
-        <div class="card-body" style="max-height: calc(100vh - 450px); overflow-y: auto;">
+        <div class="card-body p-0">
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 text-center sub-header">
               <span>Scoring Profile TimeFrame</span>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 text-center sub-header">
               <span>Weightage/Percent</span>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4 text-center sub-header">
+              <span>Status</span>
             </div>
-            <div class="col-md-2">
-              <span (click)="add()"><i class="fa fa-plus"></i></span>
+            <div class="col-md-1 text-center sub-header add-btn" (click)="add()">
+              <span><i class="fa fa-plus"></i></span>
             </div>
           </div>
           <ng-template #timeFrameList></ng-template>
