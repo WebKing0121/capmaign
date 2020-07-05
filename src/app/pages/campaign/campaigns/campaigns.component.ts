@@ -14,6 +14,8 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
 // tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
+import { CampaignComponent } from '../campaign/campaign.component';
+import { MobileCampaignComponent } from '../../mobile/mobile-campaign/mobile-campaign.component';
 
 @Component({
   selector: 'app-campaigns',
@@ -38,8 +40,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         { label: 'Facebook Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
       ]
     },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true },
-    { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked(), hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false },
+    { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked(), disabled: true, hide: false },
   ];
 
   selected: Campaign[] = [];
@@ -58,20 +60,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // let url = 'https://someurl.com';
-    // let options = {
-    //             method: 'POST',
-    //             url: url,
-    //             headers: {
-    //                 'Accept': 'application/json',
-    //                 'Content-Type': 'application/json;charset=UTF-8'
-    //             },
-    //             data: {
-    //                 property_one: value_one,
-    //                 property_two: value_two
-    //             }
-    //         };
-    // let response = await axios(options);
 
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);
 
@@ -136,30 +124,56 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       switch (campaign.type) {
         case CampaignType.Email: {
-          this.router.navigate([campaign.id], { relativeTo: this.route });
+          // this.router.navigate([campaign.id], { relativeTo: this.route });
+          this.modalService.openModal(CampaignComponent, {
+            width: '100%',
+            data: {
+              mode: 'edit',
+              id: campaign.id
+            }
+          });
           return;
         }
         case CampaignType.Mobile: {
-          this.router.navigate(['mobile', campaign.id]);
+          // this.router.navigate(['mobile', campaign.id]);
+          this.modalService.openModal(MobileCampaignComponent, {
+            width: '100%',
+            data: {
+              mode: 'edit',
+              id: campaign.id
+            }
+          });
           return;
         }
       }
     }
 
     if (event.type === 'checkbox') {
-      this.tableButtons[1].hide = this.selected.length === 0;
-      this.tableButtons[2].hide = this.selected.length !== 1;
+      this.tableButtons[1].disabled = this.selected.length === 0;
+      this.tableButtons[2].disabled = this.selected.length !== 1;
     }
   }
 
   onCampaignTypeClicked(type: CampaignType) {
     switch (type) {
       case CampaignType.Email: {
-        this.router.navigate(['new-email'], { relativeTo: this.route });
+        // this.router.navigate(['new-email'], { relativeTo: this.route });
+        this.modalService.openModal(CampaignComponent, {
+          width: '100%',
+          data: {
+            mode: 'new'
+          }
+        });
         return;
       }
       case CampaignType.Mobile: {
-        this.router.navigate(['mobile', 'new-campaign']);
+        // this.router.navigate(['mobile', 'new-campaign']);
+        this.modalService.openModal(MobileCampaignComponent, {
+          width: '100%',
+          data: {
+            mode: 'new'
+          }
+        });
         return;
       }
       case CampaignType.Social: {
@@ -190,7 +204,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       return;
     } else {
       this.modalService.openModal(CampaignSendModalComponent, {
-        width: '80%',
+        width: '100%',
         data: {
           campaign: this.tableSource.selected[0]
         }

@@ -1,4 +1,45 @@
 :host {
+
+  .campaign-modal {
+    width: 100vw;
+    padding: 0 20%;
+    padding-top: 50px;
+    padding-bottom: 100px;
+    margin-top: -29px;
+
+    @media only screen and (max-width: 1024px) {
+      padding: 0 5%;
+    }
+
+    @media only screen and (max-width: 425px) {
+      padding: 0 10px;
+    }
+
+    .sendCampaign-content {
+      max-height: calc(100vh - 400px);
+      overflow-y: auto;
+    }
+  }
+
+  .modal-header {
+    align-items: center;
+  }
+
+  .campaign-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .full-screen {
+    padding: 0;
+    height: 100vh;
+    
+    .sendCampaign-content {
+      max-height: calc(100vh - 265px);
+    }
+  }
+
   .input-group {
     margin: 5px 0;
   }
@@ -21,5 +62,13 @@
     @media only screen and (max-width: 1024px) {
       display: none;
     }
+  }
+
+  .basic-close {
+    padding-left: 0;
+  }
+
+  .list-wrapper {
+    min-width: 260px;
   }
 }

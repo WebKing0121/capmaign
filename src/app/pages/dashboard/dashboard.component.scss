@@ -1,0 +1,118 @@
+:host {
+  .dashboard {
+    @media only screen and (max-width: 767px) {
+      margin-left: -15px;
+      margin-right: -15px;
+    }
+  }
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    @media screen and (max-width: 767px) {
+      display: block !important;
+
+      .datePreview {
+        width: 100%;
+        justify-content: space-between;
+        margin: 10px 0;
+
+        .fromDate {
+          margin-left: 0;
+        }
+
+        .toDate {
+          margin-right: 0;
+        }
+
+        @media screen and (max-width: 584px) {
+          display: block;
+
+          .fromDate {
+            margin-bottom: 10px;
+          }
+
+          .toDate {
+            margin-left: 0;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .dashboard_top-card {
+    width: 20%;
+
+    @media only screen and (max-width: 767px) {
+      width: 50%;
+    }
+
+    @media only screen and (max-width: 375px) {
+      width: 100%;
+    }
+
+    &_header {
+      margin-bottom: 10px;
+    }
+  }
+
+  .dateRangerPicker {
+    position: absolute;
+    right: 0;
+    top: 50px;
+    z-index: 100;
+    background: white;
+  }
+
+  .fromDate,
+  .toDate {
+    width: 200px;
+    margin: 0 10px;
+  }
+
+  .datePreview {
+    display: flex;
+    align-items: center;
+  }
+
+  .sms-cards,
+  .push-cards {
+    width: 100%;
+
+    .card-body {
+      display: flex;
+      padding: 0;
+
+      .card {
+        min-height: 150px;
+      }
+    }
+  }
+
+  .event-cards {
+    margin: 20px 0;
+  }
+
+  .event_card {
+    padding: 0;
+
+    div {
+      margin: 10px 0;
+    }
+    .title {
+      font-weight: 600;
+      text-align: center;
+    }
+  }
+
+  .dashboard_top_card {
+    min-height: 130px;
+    margin-bottom: 30px;
+    padding: 20px;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eaecec;
+    border-radius: 5px;
+  }
+}

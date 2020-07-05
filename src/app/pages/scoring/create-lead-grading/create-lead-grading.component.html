@@ -1,4 +1,3 @@
-
 <div class="card mt-4" style="height: calc( 100vh - 120px );">
   <div class="card-header">
     <span>{{createMode?'CREATE ':'EDIT '}}LEAD GRADING PROFILE</span>
@@ -23,8 +22,8 @@
         </div>
       </div>
       <div class="card" style="margin: 30px;">
-        <div class="card-header bg-secondary">
-          <span class="text-white">Profile Rules</span>
+        <div class="main-header card-header">
+          <span>Profile Rules</span>
         </div>
         <div class="card-body">
           <div class="col-lg-12 d-flex">
@@ -42,7 +41,7 @@
               </span>
             </div>
           </div>
-          <ng-template #ruleList ></ng-template>
+          <ng-template #ruleList></ng-template>
         </div>
       </div>
     </form>
@@ -51,8 +50,10 @@
     <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
       <div>
         <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
-        <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i class="fa fa-save m-r-10"></i>Save</span>
-        <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i class="fa fa-save m-r-10"></i>Save</span>
+        <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i
+            class="fa fa-save m-r-10"></i>Save</span>
+        <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i
+            class="fa fa-save m-r-10"></i>Save</span>
       </div>
     </div>
   </div>

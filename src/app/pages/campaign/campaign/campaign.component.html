@@ -1,107 +1,119 @@
-<div class="card mt-4">
-  <div class="card-header campaign-header">
-    <h3 class="m-0" *ngIf="campaignMode === 'edit'">Email Campaign: <strong class="font-weight-bold">{{formGroup.controls.name.value}}</strong></h3>
-    <h3 class="m-0" *ngIf="campaignMode === 'new'">Create Email Campaign</h3>
-  </div>
-
-  <div class="card-body">
-    <div class="email-campaign-form-wrapper">
-      <form [formGroup]="formGroup">
-        <div class="row">
-          <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
-            <label class="mobile-show">Campaign Name<span class="text-danger">*</span></label>
-            <div class="input-group m-t-10">
-              <div class="input-group-prepend mobile-hide">
-                <span class="input-group-text" style="width: 150px;">Campaign Name</span>
-              </div>
-              <input class="form-control" formControlName="name">
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
-            <label class="mobile-show">Campaign Subject<span class="text-danger">*</span></label>
-            <div class="input-group m-t-10">
-              <div class="input-group-prepend mobile-hide">
-                <span class="input-group-text" style="width: 150px;">Campaign Subject</span>
-              </div>
-              <input class="form-control" formControlName="subject">
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
-            <label class="mobile-show">From Display</label>
-            <div class="input-group m-t-10">
-              <div class="input-group-prepend mobile-hide">
-                <span class="input-group-text" style="width: 150px;">From Display</span>
-              </div>
-              <select class="form-control" formControlName="fromDisplay">
-                <option></option>
-                <option [value]="CampaignFromDisplayType.CampaignToCash">CampaignToCash</option>
-                <option [value]="CampaignFromDisplayType.Palskem">Palskem</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
-            <label class="mobile-show">From Address</label>
-            <div class="input-group m-t-10">
-              <div class="input-group-prepend mobile-hide">
-                <span class="input-group-text" style="width: 150px;">From Address</span>
-              </div>
-              <input class="form-control border-0" style="cursor: not-allowed;" readonly formControlName="fromAddress">
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
-            <label class="mobile-show">Reply Address</label>
-            <div class="input-group m-t-10">
-              <div class="input-group-prepend mobile-hide">
-                <span class="input-group-text" style="width: 150px;">Reply Address</span>
-              </div>
-              <input class="form-control border-0" style="cursor: not-allowed;" readonly formControlName="replyAddress">
-            </div>
-          </div>
-          <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
-            <label class="mobile-show">Folder Name</label>
-            <div class="input-group m-t-10">
-              <div class="input-group-prepend mobile-hide">
-                <span class="input-group-text" style="width: 150px;">Folder Name</span>
-              </div>
-              <select class="form-control" formControlName="folderName" aria-label="Folder Name">
-                <option></option>
-                <option>Groceries</option>
-                <option>Pharmacy</option>
-                <option>Real Estate</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </form>
+<div [class]="modalClass">
+  <div class="card mt-4">
+    <div class="card-header campaign-header">
+      <h3 class="m-0" *ngIf="campaignMode === 'edit'">Email Campaign: <strong
+          class="font-weight-bold">{{formGroup.controls.name.value}}</strong></h3>
+      <h3 class="m-0" *ngIf="campaignMode === 'new'">Create Email Campaign</h3>
+      <button type="button"  class="maximize m-l-auto" (click)="revertFullScreen()"><i class="fa" [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i></button>
+      <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+        (click)="onCancel()">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
 
-    <div class="email-campaign-preview mt-5">
-      <div class="col-lg-12 preview-toolbar mb-1 d-flex flex-wrap align-items-center p-0">
-        <div class="btn-group mr-2 dropdown" ngbDropdown placement="bottom-left" *ngIf="campaignMode==='edit'">
-          <button class="btn btn-primary" ngbDropdownToggle type="button">Send Mail</button>
-          <div ngbDropdownMenu>
-            <a class="dropdown-item cursor-pointer" (click)="sendEmail('full')">Full Send</a>
-            <a class="dropdown-item cursor-pointer" (click)="sendEmail('test')">Test Send</a>
+    <div class="card-body">
+      <div class="email-campaign-form-wrapper">
+        <form [formGroup]="formGroup">
+          <div class="row">
+            <div class="email-campaign-form_input-form col-lg-6 col-md-12">
+              <label class="mobile-show">Campaign Name<span class="text-danger">*</span></label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 150px;">Campaign Name</span>
+                </div>
+                <input class="form-control" formControlName="name">
+              </div>
+            </div>
+
+            <div class="email-campaign-form_input-form col-lg-6 col-md-12">
+              <label class="mobile-show">Campaign Subject<span class="text-danger">*</span></label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 150px;">Campaign Subject</span>
+                </div>
+                <input class="form-control" formControlName="subject">
+              </div>
+            </div>
+            <div class="email-campaign-form_input-form col-lg-6 col-md-12">
+              <label class="mobile-show">From Display</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 150px;">From Display</span>
+                </div>
+                <select class="form-control" formControlName="fromDisplay">
+                  <option></option>
+                  <option [value]="CampaignFromDisplayType.CampaignToCash">CampaignToCash</option>
+                  <option [value]="CampaignFromDisplayType.Palskem">Palskem</option>
+                </select>
+              </div>
+            </div>
+            <div class="email-campaign-form_input-form col-lg-6 col-md-12">
+              <label class="mobile-show">From Address</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 150px;">From Address</span>
+                </div>
+                <input class="form-control border-0" style="cursor: not-allowed;" readonly
+                  formControlName="fromAddress">
+              </div>
+            </div>
+            <div class="email-campaign-form_input-form col-lg-6 col-md-12">
+              <label class="mobile-show">Reply Address</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 150px;">Reply Address</span>
+                </div>
+                <input class="form-control border-0" style="cursor: not-allowed;" readonly
+                  formControlName="replyAddress">
+              </div>
+            </div>
+            <div class="email-campaign-form_input-form col-lg-6 col-md-12">
+              <label class="mobile-show">Folder Name</label>
+              <div class="input-group m-t-10">
+                <div class="input-group-prepend mobile-hide">
+                  <span class="input-group-text" style="width: 150px;">Folder Name</span>
+                </div>
+                <select class="form-control" formControlName="folderName" aria-label="Folder Name">
+                  <option></option>
+                  <option>Groceries</option>
+                  <option>Pharmacy</option>
+                  <option>Real Estate</option>
+                </select>
+              </div>
+            </div>
           </div>
+        </form>
+      </div>
+
+      <div class="email-campaign-preview mt-5">
+        <div class="col-lg-12 preview-toolbar mb-1 d-flex flex-wrap p-0">
+          <div class="btn-group mr-2 dropdown" ngbDropdown placement="bottom-left" *ngIf="campaignMode==='edit'">
+            <button class="btn btn-primary m-t-auto" ngbDropdownToggle type="button">Send Mail</button>
+            <div ngbDropdownMenu>
+              <a class="dropdown-item cursor-pointer" (click)="sendEmail('full')">Full Send</a>
+              <a class="dropdown-item cursor-pointer" (click)="sendEmail('test')">Test Send</a>
+            </div>
+          </div>
+          <app-personalization-selector class="personal-selector d-block mr-2" [editor]="emailCampaignEditor">
+          </app-personalization-selector>
+          <button class="btn btn-primary" appEmailCampaignDynamics [editor]="emailCampaignEditor">Dynamics</button>
+          <button class="templateBtn btn btn-primary" appEmailCampaignTemplates>Templates</button>
+          <button class="btn btn-primary" *ngIf="campaignMode === 'edit'">Edit</button>
+          <button class="btn btn-primary" appEmailCampaignPreview [editor]="emailCampaignEditor">Preview</button>
         </div>
-        <app-personalization-selector class="d-block mr-2" [editor]="emailCampaignEditor"></app-personalization-selector>
-        <button class="col-sm-4 btn btn-primary" style="max-width: 160px;" appEmailCampaignDynamics [editor]="emailCampaignEditor">Dynamics</button>
-        <button class="col-sm-4 btn btn-primary" style="max-width: 160px; margin-left: auto; margin-right: 10px;" appEmailCampaignTemplates>Templates</button>
-        <button class="col-sm-4 btn btn-primary" style="max-width: 160px;" *ngIf="campaignMode === 'edit'">Edit</button>
-        <button class="col-sm-4 btn btn-primary" style="max-width: 160px;" appEmailCampaignPreview [editor]="emailCampaignEditor">Preview</button>
-      </div>
 
-      <div [formGroup]="formGroup">
-        <app-email-campaign-editor #emailCampaignEditor formControlName="emailContent"></app-email-campaign-editor>
-      </div>
+        <div [formGroup]="formGroup">
+          <app-email-campaign-editor #emailCampaignEditor formControlName="emailContent"></app-email-campaign-editor>
+        </div>
 
+      </div>
     </div>
-  </div>
 
-  <div class="card-footer">
-    <div class="wrapper d-flex">
-      <button class="btn btn-secondary ml-auto mr-2" (click)="onCancel()">Cancel</button>
-      <button class="btn btn-primary" (click)="onSave()">Save</button>
+    <div class="card-footer">
+      <div class="wrapper d-flex">
+        <button class="btn btn-secondary ml-auto mr-2" (click)="onCancel()">Cancel</button>
+        <button class="btn btn-primary" (click)="onSave()">Save</button>
+      </div>
     </div>
   </div>
 </div>

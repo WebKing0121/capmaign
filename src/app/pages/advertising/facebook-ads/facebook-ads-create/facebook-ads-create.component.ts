@@ -424,6 +424,10 @@ export class FacebookAdsCreateComponent implements OnInit {
     }];
   }
 
+  remove_me(id) {
+    this.imageArr = this.imageArr.filter(item => item.id !== id);
+  }
+
   cancel() {
     this.location.back();
   }

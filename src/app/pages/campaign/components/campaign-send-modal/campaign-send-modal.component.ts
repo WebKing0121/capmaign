@@ -68,6 +68,9 @@ export class CampaignSendModalComponent implements OnInit {
   sendAsOption: CampaignSendAsType;
   leadGradingOption: CampaignLeadGradingType;
 
+  fullScreen: boolean;
+  modalClass: string;
+
   @ViewChild(WizardComponent)
   wizard: WizardComponent;
 
@@ -76,7 +79,10 @@ export class CampaignSendModalComponent implements OnInit {
     private modalService: ModalService,
     @Inject(ModalRef) private modalRef: ModalRef<CampaignSendModalComponent>,
     @Inject(MODAL_DATA) private props: ComponentProps
-  ) { }
+  ) {
+    this.modalClass = "campaign-modal";
+    this.fullScreen = false;
+  }
 
   ngOnInit(): void {
     this.includeMailableList = MAILABLE_LIST.map(item => ({
@@ -170,5 +176,11 @@ export class CampaignSendModalComponent implements OnInit {
   }
 
   onSelectTime(evnt): void {
+  }
+
+  revertFullScreen () {
+    this.fullScreen = !this.fullScreen;
+    this.modalClass = 'campaign-modal' + (this.fullScreen ? ' full-screen' : '');
+    console.log(this.modalClass)
   }
 }

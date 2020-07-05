@@ -87,7 +87,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onClickCreate() {
     this.modalService.openModal(LeadCategoryModalComponent, {
-      width: '80%',
+      width: '100%',
       data: {
         createMode: true
       }
@@ -107,8 +107,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event.type === 'click' && event.cellIndex === 1) {
       const leadCategory = event.row as LeadCategory;
       this.modalService.openModal(LeadCategoryModalComponent, {
-        width: '80%',
-        height: '90%',
+        width: '100%',
         data: {
           leadCategory,
           createMode: false

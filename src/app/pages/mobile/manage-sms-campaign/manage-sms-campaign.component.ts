@@ -95,13 +95,26 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onCreateClicked() {
-    this.router.navigate(['create'], { relativeTo: this.route });
+    // this.router.navigate(['create'], { relativeTo: this.route });
+    this.modalService.openModal(MobileCampaignComponent, {
+      width: '100%',
+      data: {
+        mode: 'new'
+      }
+    });
   }
 
   onActive(event) {
     if (event.type === 'click' && event.cellIndex === 1) {
       const campaign = event.row as Campaign;
-      this.router.navigate(['mobile', campaign.id]);
+      // this.router.navigate(['mobile', campaign.id]);
+      this.modalService.openModal(MobileCampaignComponent, {
+        width: '100%',
+        data: {
+          mode: 'edit',
+          id: campaign.id
+        }
+      });
     }
 
     if (event.type === 'checkbox') {

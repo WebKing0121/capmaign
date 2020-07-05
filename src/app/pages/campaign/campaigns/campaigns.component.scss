@@ -1,4 +1,12 @@
 :host {
+  .campaigns-page {
+
+    @media screen and (max-width: 767px) {
+      margin-left: -15px;
+      margin-right: -15px;
+    }
+  }
+
   .campaigns-table {
     position: relative;
     height: calc(100% - 80px);
