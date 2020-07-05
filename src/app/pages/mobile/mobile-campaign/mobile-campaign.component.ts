@@ -23,6 +23,8 @@ export class MobileCampaignComponent implements OnInit {
   campaignMode: 'new' | 'edit';
 
   formGroup: FormGroup;
+  fullScreen: boolean;
+  modalClass: string;
 
   constructor(
     private fb: FormBuilder,
@@ -30,7 +32,10 @@ export class MobileCampaignComponent implements OnInit {
     private route: ActivatedRoute,
     @Inject(MODAL_DATA) private props: ComponentProps,
     @Inject(ModalRef) private modalRef: ModalRef<MobileCampaignComponent>,
-  ) { }
+  ) {
+    this.fullScreen = false;
+    this.modalClass = "campaign-modal";
+  }
 
   ngOnInit(): void {
     // const { id } = this.route.snapshot.params;
@@ -64,5 +69,11 @@ export class MobileCampaignComponent implements OnInit {
   onCancel() {
     // this.location.back();
     this.modalRef.cancel();
+  }
+
+  revertFullScreen () {
+    this.fullScreen = !this.fullScreen;
+    this.modalClass = 'campaign-modal' + (this.fullScreen ? ' full-screen' : '');
+    console.log(this.modalClass)
   }
 }

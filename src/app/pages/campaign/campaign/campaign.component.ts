@@ -26,6 +26,8 @@ export class CampaignComponent implements OnInit {
   campaignMode: 'new' | 'edit';
 
   formGroup: FormGroup;
+  fullScreen: boolean;
+  modalClass: string;
 
 
   constructor(
@@ -35,7 +37,10 @@ export class CampaignComponent implements OnInit {
     private modalService: ModalService,
     @Inject(MODAL_DATA) private props: ComponentProps,
     @Inject(ModalRef) private modalRef: ModalRef<CampaignComponent>,
-  ) { }
+  ) {
+    this.fullScreen = false;
+    this.modalClass = 'campaign-modal';
+  }
 
   ngOnInit(): void {
     // const { id } = this.route.snapshot.params;
@@ -68,7 +73,6 @@ export class CampaignComponent implements OnInit {
       this.formGroup.controls.emailContent.updateValueAndValidity();
     }
 
-    
   }
 
   onSave() {
@@ -91,5 +95,11 @@ export class CampaignComponent implements OnInit {
         mode
       }
     });
+  }
+
+  revertFullScreen () {
+    this.fullScreen = !this.fullScreen;
+    this.modalClass = 'campaign-modal' + (this.fullScreen ? ' full-screen' : '');
+    console.log(this.modalClass)
   }
 }
