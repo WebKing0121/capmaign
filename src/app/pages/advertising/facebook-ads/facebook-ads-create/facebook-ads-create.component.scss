@@ -1,4 +1,15 @@
 :host {
+  .main-bg-color {
+    background-color: whitesmoke;
+    border: 1px solid;
+  }
+
+  .remove_me {
+    position: absolute;
+    right: 20px;
+    top: 13px;
+  }
+
   .mobile-show {
     display: none;
 
@@ -76,7 +87,7 @@
   }
 
   .radio-group-multitoggle {
-    border: solid 3px #6c757d;
+    border: solid 3px;
     width: 230px;
     margin: 20px;
     border-radius: 4px;
@@ -92,7 +103,7 @@
     }
 
     input[type="radio"]:checked + label {
-      background-color: #6c757d;
+      background-color: #2196f3;
       color: white;
     }
 

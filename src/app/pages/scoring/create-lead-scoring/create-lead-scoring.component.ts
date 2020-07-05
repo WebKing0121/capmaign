@@ -42,6 +42,14 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
     }
   ];
 
+  searchIdx: string;
+  leadCategories: any[];
+  csvFields: any[];
+  mappingFields: any[];
+  dbFields: any[];
+  filteredDbFields: any[];
+  searchDB: string;
+
   destroy$ = new Subject();
   leadScoringCardList: LeadCard[];
 
@@ -64,6 +72,34 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
     @Inject(MODAL_DATA) private props: ComponentProps
   ) {
     this.childUniqueKey = 0;
+    this.searchIdx = '';
+    this.csvFields = [
+      { id: 1, name: 'Location', hidden: false, },
+      { id: 2, name: 'Same Email Campaign', hidden: false, },
+      { id: 3, name: 'Dummy', hidden: false, },
+      { id: 4, name: 'Test Record', hidden: false, },
+      { id: 5, name: 'Test Default', hidden: false, },
+      { id: 6, name: 'Commented on Ads', hidden: false, },
+      { id: 7, name: 'Page Visited', hidden: false, },
+      { id: 8, name: 'Number of Employees', hidden: false, },
+      { id: 9, name: 'Title of role', hidden: false, },
+      { id: 10, name: 'Location', hidden: false, },
+      { id: 11, name: 'Buy Time', hidden: false, },
+      { id: 12, name: 'Tool', hidden: false, },
+      { id: 13, name: 'Dummy', hidden: false, },
+      { id: 14, name: 'Test Record', hidden: false, },
+      { id: 15, name: 'Test Default', hidden: false, },
+      { id: 16, name: 'Commented on Ads', hidden: false, },
+      { id: 17, name: 'Page Visited', hidden: false, },
+      { id: 18, name: 'Number of Employees', hidden: false, },
+      { id: 19, name: 'Title of role', hidden: false, },
+      { id: 20, name: 'Location', hidden: false, },
+      { id: 21, name: 'Buy Time', hidden: false, },
+      { id: 22, name: 'Tool', hidden: false, },
+    ];
+    this.mappingFields = [];
+    this.searchIdx = '';
+    this.searchDB = '';
   }
 
   ngOnDestroy(): void {
@@ -72,10 +108,12 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.searchLeadCategoryQuery(this.searchIdx);
+    // this.searchDbQuery(this.searchDB);
     this.formGroup = this.fb.group({
       searchLeadCard: '',
       profileName: [this.props.scoring && this.props.scoring.name, [Validators.required]],
-      description: this.props.scoring && this.props.scoring.description
+      description: this.props.scoring && this.props.scoring.description,
     });
 
     this.createMode = this.props.mode === 'new' ? true : false;
@@ -136,5 +174,44 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
   //   if (!term) return value;
   //   return (value || []).filter(item => keys.split(',').some(key => item.hasOwnProperty(key) && new RegExp(term, 'gi').test(item[key])));
 
+  // }
+  searchLeadCategoryQuery(searchIdx) {
+    if (searchIdx === '') {
+      this.leadCategories = this.csvFields.filter(x => !x.hidden);
+    } else {
+      this.leadCategories = this.csvFields.filter(x => !x.hidden)
+        .filter(x => x.name.toLowerCase().indexOf(searchIdx.toLowerCase()) >= 0);
+    }
+  }
+
+  onClickLeadCategory(field: any) {
+    field.hidden = true;
+    this.searchLeadCategoryQuery(this.searchIdx);
+    this.openProfile(0);
+  }
+
+  onClickRemoveMappingRow(index: number) {
+    const mapRow = this.mappingFields[index];
+    if (mapRow.left) {
+      mapRow.leftField.hidden = false;
+      this.searchLeadCategoryQuery(this.searchIdx);
+
+    }
+    if (mapRow.right) {
+      mapRow.rightField.hidden = false;
+      // this.searchDbQuery(this.searchDB);
+    }
+
+    this.mappingFields.splice(index, 1);
+
+  }
+
+  // searchDbQuery(searchQuery: string) {
+  //   if (searchQuery === '') {
+  //     this.filteredDbFields = this.dbFields.filter(x => !x.hidden);
+  //   } else {
+  //     this.filteredDbFields = this.dbFields.filter(x => !x.hidden)
+  //       .filter(x => x.name.toLowerCase().indexOf(searchQuery.toLowerCase()) >= 0);
+  //   }
   // }
 }

@@ -1,0 +1,236 @@
+<div class="usage-dashboard card">
+  <div class="card-header">
+    <span>USAGE DASHBOARD - EMAIL</span>
+  </div>
+  <div class="card-body">
+    <div class="view-option-group">
+      <select class="campaign-type form-control" (change)="onUsagePageSelect($event)">
+        <option value="0">Select Campaign Type</option>
+        <option value="1">Usage Dashboard - Email</option>
+        <option value="2">Usage Dashboard - Mobile</option>
+      </select>
+      <div class="view-radio-option-group">
+        <div *ngFor="let option of viewOptions" class="view-option">
+          <div class="custom-control custom-radio">
+            <input type="radio" [id]="option.id" name="view-option" class="custom-control-input">
+            <label class="custom-control-label" [for]="option.id">{{option.value}}</label>
+          </div>
+        </div>
+      </div>
+      <div class="refresh-option">
+        <span class="btn btn-primary">
+          Refresh
+        </span>
+      </div>
+    </div>
+    <div class="row ">
+      <div class="col-lg-6 col-md-12">
+        <div class="card all-usage-part">
+          <div class="card-header">
+            All Usage
+          </div>
+          <div class="card-body">
+            <div class="card all-usage-table">
+              <div class="card-header all-usage-table_header">
+                <div class="all-usage-table_header_field-part">
+                  <span>Type</span>
+                </div>
+                <div class="all-usage-table_header_value-part">
+                  <span>Count</span>
+                </div>
+              </div>
+              <div *ngIf="!showMobileUsageDashboard" class="card-body all-usage-table_content">
+                <div *ngFor="let allUsageField of allUsageFields">
+                  <div class="all-usage-table_content_field">
+                    <span>{{allUsageField.field}}</span>
+                  </div>
+                  <div class="all-usage-table_content_value">
+                    <span>{{allUsageField.value}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="showMobileUsageDashboard" class="card-body all-usage-table_content">
+                <div *ngFor="let allUsageField of allUsageFields1">
+                  <div class="all-usage-table_content_field">
+                    <span>{{allUsageField.field}}</span>
+                  </div>
+                  <div class="all-usage-table_content_value">
+                    <span>{{allUsageField.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <app-datatable [title]="'All Organization Data Usage'"
+          [dataSource]="tableSource"
+          [buttons]="tableButtons">
+        </app-datatable>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-6 col-md-12">
+        <div *ngIf="!showMobileUsageDashboard" class="card all-usage-part">
+          <div class="card-header">
+            Email Usage
+          </div>
+          <div class="card-body">
+            <div *ngIf="emailUsageInfo.length > 0" class="card all-usage-table">
+              <div class="card-header all-usage-table_header">
+                <div class="all-usage-table_header_field-part">
+                  <span>Type</span>
+                </div>
+                <div class="all-usage-table_header_value-part">
+                  <span>Count</span>
+                </div>
+              </div>
+              <div *ngIf="!showMobileUsageDashboard" class="card-body all-usage-table_content">
+                <div *ngFor="let allUsageField of allUsageFields">
+                  <div class="all-usage-table_content_field">
+                    <span>{{allUsageField.field}}</span>
+                  </div>
+                  <div class="all-usage-table_content_value">
+                    <span>{{allUsageField.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="emailUsageInfo.length === 0" class="empty-table d-flex justify-content-center align-items-center h-150">
+              <span>No Data Find</span>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="showMobileUsageDashboard" class="card all-usage-part">
+          <div class="card-header">
+            SMS Usage
+          </div>
+          <div class="card-body">
+            <div *ngIf="emailUsageInfo.length > 0" class="card all-usage-table">
+              <div class="card-header all-usage-table_header">
+                <div class="all-usage-table_header_field-part">
+                  <span>Type</span>
+                </div>
+                <div class="all-usage-table_header_value-part">
+                  <span>Count</span>
+                </div>
+              </div>
+              <div *ngIf="!showMobileUsageDashboard" class="card-body all-usage-table_content">
+                <div *ngFor="let allUsageField of allUsageFields">
+                  <div class="all-usage-table_content_field">
+                    <span>{{allUsageField.field}}</span>
+                  </div>
+                  <div class="all-usage-table_content_value">
+                    <span>{{allUsageField.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="emailUsageInfo.length === 0" class="empty-table d-flex justify-content-center align-items-center h-150">
+              <span>No Data Find</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div class="card all-usage-part">
+          <div class="card-header">
+            Record Usage
+          </div>
+          <div class="card-body">
+            <div *ngIf="recordUsageInfo.length > 0" class="card all-usage-table">
+              <div class="card-header all-usage-table_header">
+                <div class="all-usage-table_header_field-part">
+                  <span>Type</span>
+                </div>
+                <div class="all-usage-table_header_value-part">
+                  <span>Count</span>
+                </div>
+              </div>
+              <div *ngIf="!showMobileUsageDashboard" class="card-body all-usage-table_content">
+                <div *ngFor="let allUsageField of allUsageFields">
+                  <div class="all-usage-table_content_field">
+                    <span>{{allUsageField.field}}</span>
+                  </div>
+                  <div class="all-usage-table_content_value">
+                    <span>{{allUsageField.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="emailUsageInfo.length === 0" class="empty-table d-flex justify-content-center align-items-center h-150">
+              <span>No Data Find</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div *ngIf="!showMobileUsageDashboard" class="card all-usage-part">
+          <div class="card-header">
+            Users Usage
+          </div>
+          <div class="card-body">
+            <div *ngIf="usersUsageInfo.length > 0" class="card all-usage-table">
+              <div class="card-header all-usage-table_header">
+                <div class="all-usage-table_header_field-part">
+                  <span>Type</span>
+                </div>
+                <div class="all-usage-table_header_value-part">
+                  <span>Count</span>
+                </div>
+              </div>
+              <div *ngIf="!showMobileUsageDashboard" class="card-body all-usage-table_content">
+                <div *ngFor="let allUsageField of allUsageFields">
+                  <div class="all-usage-table_content_field">
+                    <span>{{allUsageField.field}}</span>
+                  </div>
+                  <div class="all-usage-table_content_value">
+                    <span>{{allUsageField.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="emailUsageInfo.length === 0" class="empty-table d-flex justify-content-center align-items-center h-150">
+              <span>No Data Find</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6 col-md-12">
+        <div *ngIf="!showMobileUsageDashboard" class="card all-usage-part">
+          <div class="card-header">
+            Disk Space Usage
+          </div>
+          <div class="card-body">
+            <div *ngIf="diskSpaceUsageInfo.length > 0" class="card all-usage-table">
+              <div class="card-header all-usage-table_header">
+                <div class="all-usage-table_header_field-part">
+                  <span>Type</span>
+                </div>
+                <div class="all-usage-table_header_value-part">
+                  <span>Count</span>
+                </div>
+              </div>
+              <div *ngIf="!showMobileUsageDashboard" class="card-body all-usage-table_content">
+                <div *ngFor="let allUsageField of allUsageFields">
+                  <div class="all-usage-table_content_field">
+                    <span>{{allUsageField.field}}</span>
+                  </div>
+                  <div class="all-usage-table_content_value">
+                    <span>{{allUsageField.value}}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="emailUsageInfo.length === 0" class="empty-table d-flex justify-content-center align-items-center h-150">
+              <span>No Data Find</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

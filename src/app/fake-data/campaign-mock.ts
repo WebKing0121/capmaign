@@ -9,7 +9,7 @@ export const CampaignResponseMockData: Campaign[] = [
     updated: '2015-03-25T12:00:00-06:30',
     created: '2015-03-25T12:00:00-06:30',
     lastSent: '2015-03-25T12:00:00-06:30',
-    scheduled: '2015-03-25T12:00:00-06:30'
+    scheduled: '2020-09-25T12:00:00-06:30'
   },
   {
     id: '2',
@@ -19,7 +19,7 @@ export const CampaignResponseMockData: Campaign[] = [
     updated: '2015-05-25T12:00:00-06:30',
     created: '2015-05-25T12:00:00-06:30',
     lastSent: '2015-05-25T12:00:00-06:30',
-    scheduled: '2015-05-25T12:00:00-06:30'
+    scheduled: '2020-11-25T12:00:00-06:30'
   },
   {
     id: '3',
@@ -59,7 +59,7 @@ export const CampaignResponseMockData: Campaign[] = [
     updated: '2015-03-25T12:00:00-06:30',
     created: '2015-03-25T12:00:00-06:30',
     lastSent: '2015-03-25T12:00:00-06:30',
-    scheduled: '2015-03-25T12:00:00-06:30'
+    scheduled: '2020-07-25T12:00:00-06:30'
   },
   {
     id: '7',
@@ -69,7 +69,7 @@ export const CampaignResponseMockData: Campaign[] = [
     updated: '2015-05-25T12:00:00-06:30',
     created: '2015-05-25T12:00:00-06:30',
     lastSent: '2015-05-25T12:00:00-06:30',
-    scheduled: '2015-05-25T12:00:00-06:30'
+    scheduled: '2020-07-25T12:00:00-06:30'
   },
   {
     id: '8',

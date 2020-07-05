@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CampaignFromDisplayType } from '@app-core/enums/campaign-type.enum';
 import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
+import { MODAL_DATA, ModalRef } from '@app-components/modal/modal-ref';
+
+interface ComponentProps {
+  id: string;
+  mode: string;
+}
 
 @Component({
   selector: 'app-mobile-campaign',
@@ -17,16 +23,25 @@ export class MobileCampaignComponent implements OnInit {
   campaignMode: 'new' | 'edit';
 
   formGroup: FormGroup;
+  fullScreen: boolean;
+  modalClass: string;
 
   constructor(
     private fb: FormBuilder,
     private location: Location,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    @Inject(MODAL_DATA) private props: ComponentProps,
+    @Inject(ModalRef) private modalRef: ModalRef<MobileCampaignComponent>,
+  ) {
+    this.fullScreen = false;
+    this.modalClass = "campaign-modal";
+  }
 
   ngOnInit(): void {
-    const { id } = this.route.snapshot.params;
-    const { mode } = this.route.snapshot.data;
+    // const { id } = this.route.snapshot.params;
+    // const { mode } = this.route.snapshot.data;
+    const id = this.props.id;
+    const mode = this.props.mode;
 
     const data = CampaignResponseMockData.find(d => d.id === id);
     this.campaignMode = mode === 'new' ? 'new' : 'edit';
@@ -48,9 +63,17 @@ export class MobileCampaignComponent implements OnInit {
   }
 
   onSave() {
+    this.modalRef.cancel();
   }
 
   onCancel() {
-    this.location.back();
+    // this.location.back();
+    this.modalRef.cancel();
+  }
+
+  revertFullScreen () {
+    this.fullScreen = !this.fullScreen;
+    this.modalClass = 'campaign-modal' + (this.fullScreen ? ' full-screen' : '');
+    console.log(this.modalClass)
   }
 }

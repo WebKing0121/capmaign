@@ -84,16 +84,22 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true},
+      { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Description', prop: 'description', sortable: true },
-      { name: 'Is Default For New Record', prop: 'isDefaultForNewRecord',
-        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
-      { name: 'Is Default For Campaign', prop: 'isDefaultForCampaign',
-        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
-      { name: 'Is Lead Scoring For Website', prop: 'isLeadScoringForWebsite',
-        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
+      {
+        name: 'Is Default For New Record', prop: 'isDefaultForNewRecord',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate
+      },
+      {
+        name: 'Is Default For Campaign', prop: 'isDefaultForCampaign',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate
+      },
+      {
+        name: 'Is Lead Scoring For Website', prop: 'isLeadScoringForWebsite',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate
+      },
       { name: 'Is Active', prop: 'isActive', sortable: true, custom: true, template: this.tableColumnCheckTemplate },
-      { name: 'Is Static', prop: 'isStatic', sortable: true}
+      { name: 'Is Static', prop: 'isStatic', sortable: true }
     ];
     this.tableSource.setColumns(columns);
   }

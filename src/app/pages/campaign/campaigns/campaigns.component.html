@@ -1,12 +1,12 @@
-<div style="height: calc( 100vh - 120px)">
-<app-datatable
-  [title]="'Manage Campaigns'"
-  [dataSource]="tableSource"
-  [buttons]="tableButtons"
-  [selectable]="true"
-  [selectionType]="'checkbox'"
-  (activate)="onActive($event)">
-</app-datatable>
+<div style="height: calc( 100vh - 120px)" class="campaigns-page">
+  <app-datatable
+    [title]="'Manage Campaigns'"
+    [dataSource]="tableSource"
+    [buttons]="tableButtons"
+    [selectable]="true"
+    [selectionType]="'checkbox'"
+    (activate)="onActive($event)">
+  </app-datatable>
 </div>
 
 <ng-template #tableColumnSettings let-column="column">
