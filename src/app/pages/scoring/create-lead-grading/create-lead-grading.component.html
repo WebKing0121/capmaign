@@ -1,59 +1,68 @@
-<div class="card mt-4" style="height: calc( 100vh - 122px );">
-  <div class="card-header">
-    <span>{{createMode?'CREATE ':'EDIT '}}LEAD GRADING PROFILE</span>
-  </div>
+<div [class]="modalClass">
+  <div class="card">
+    <div class="card-header">
+      <span>{{createMode?'CREATE ':'EDIT '}}LEAD GRADING PROFILE</span>
+      <button type="button"  class="maximize m-l-auto" (click)="revertFullScreen()"><i class="fa" [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i></button>
+      <button type="button" class="m-l-auto close basic-close" data-dismiss="modal" aria-label="Close"
+        (click)="onCancelClick()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
 
-  <div class="card-body" style="overflow-y: auto;">
-    <form [formGroup]="formGroup">
-      <div class="col-lg-12 d-flex">
-        <div class="col-md-6">
-          <label class="mobile-show">Name<span class="text-danger">*</span></label>
-          <div class="input-group">
-            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Name</span></div>
-            <input type="text" formControlName="profileName" class="form-control ng-untouched ng-pristine ng-invalid">
-          </div>
-        </div>
-        <div class="col-md-6">
-          <label class="mobile-show">Description<span class="text-danger">*</span></label>
-          <div class="input-group">
-            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Description</span></div>
-            <input type="text" formControlName="profileDescription" class="form-control">
-          </div>
-        </div>
-      </div>
-      <div class="card" style="margin: 30px;">
-        <div class="main-header card-header">
-          <span>Profile Rules</span>
-        </div>
-        <div class="card-body">
-          <div class="col-lg-12 d-flex">
-            <div class="col-sm-4">
-              <span>Rule Description</span>
-            </div>
-            <div class="col-sm-4 d-flex">
-              <div class="col-sm-6">Greater Than/<br>Equal To</div>
-              <div class="col-sm-6">Less Than</div>
-            </div>
-            <div class="col-sm-4 d-flex">
-              <div class="col-sm-10">Grade</div>
-              <span class="m-l-10 d-flex" style="align-items: center;">
-                <i class="text-secondary fa fa-plus f-20" (click)="add()"></i>
-              </span>
+    <div class="card-body" style="overflow-y: auto;">
+      <form [formGroup]="formGroup">
+        <div class="row p-t-20">
+          <div class="col-md-6">
+            <label class="mobile-show">Name<span class="text-danger">*</span></label>
+            <div class="input-group">
+              <div class="input-group-prepend mobile-hide"><span class="input-group-text">Name</span></div>
+              <input type="text" formControlName="profileName" class="form-control ng-untouched ng-pristine ng-invalid">
             </div>
           </div>
-          <ng-template #ruleList></ng-template>
+          <div class="col-md-6">
+            <label class="mobile-show">Description<span class="text-danger">*</span></label>
+            <div class="input-group">
+              <div class="input-group-prepend mobile-hide"><span class="input-group-text">Description</span></div>
+              <input type="text" formControlName="profileDescription" class="form-control">
+            </div>
+          </div>
         </div>
-      </div>
-    </form>
-  </div>
-  <div class="card-footer">
-    <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
-      <div>
-        <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
-        <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i
-            class="fa fa-save m-r-10"></i>Save</span>
-        <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i
-            class="fa fa-save m-r-10"></i>Save</span>
+        <div class="card m-t-20 m-l-15 m-r-15">
+          <div class="main-header card-header">
+            <span>Profile Rules</span>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-sm-4 text-center sub-header">
+                <span>Rule Description</span>
+              </div>
+              <div class="col-sm-2 text-center sub-header">
+                <span>Greater Than/<br>Equal To</span>
+              </div>
+              <div class="col-sm-2 text-center sub-header">
+                <span>Less Than</span>
+              </div>
+              <div class="col-sm-3 text-center sub-header">
+                <span>Grade</span>
+              </div>
+              <div class="col-sm-1 text-center sub-header add-btn" (click)="add()">
+                <span><i class="fa fa-plus"></i></span>
+              </div>
+            </div>
+            <ng-template #ruleList></ng-template>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="card-footer">
+      <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
+        <div>
+          <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
+          <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i
+              class="fa fa-save m-r-10"></i>Save</span>
+          <span *ngIf="formGroup.valid" class="btn btn-success m-l-10" (click)="onSaveClick()"><i
+              class="fa fa-save m-r-10"></i>Save</span>
+        </div>
       </div>
     </div>
   </div>
