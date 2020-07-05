@@ -26,16 +26,21 @@
     }
   }
 
+  .card-body > form {
+    margin-top: 20px;
+  }
+
   .full-screen {
     padding: 0;
-    
-    .card {
-      height: 100vh;
-      top: -28px;
+  }
 
-      .card-body {
-        max-height: calc( 100vh - 120px);
-      }
+  .full-screen > .card {
+    width: 100vw;
+    height: 100vh;
+    margin-top: -28px;
+
+    .card-body {
+      max-height: calc( 100vh - 120px);
     }
   }
 
@@ -82,7 +87,7 @@
   }
 
   .sub-header {
-    border: 1px solid;
+    border: 2px solid whitesmoke;
   }
 
   .add-btn {
