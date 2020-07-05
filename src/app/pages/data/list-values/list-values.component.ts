@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { Tab, GridColumn } from '@app-core/models/common';
 import { Tabs } from '@app-core/enums/data-tabs.enum';
 import { Observable, Subject } from 'rxjs';
@@ -12,7 +12,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./list-values.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class DataListValuesComponent implements OnInit {
+export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('addToListModal', { static: false }) addToListModal;
   @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
@@ -92,6 +92,11 @@ export class DataListValuesComponent implements OnInit {
     this.tableSource.setColumns(columns);
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   setRecordType(tab: Tab) {
     this.recordType = tab.key === 'all' ? 'accounts' : tab.key;
   }
@@ -112,7 +117,7 @@ export class DataListValuesComponent implements OnInit {
         this.filteredRecords = this.records.filter(x => x.tableName === tab.label);
       }
       this._updateTable(this.filteredRecords);
-      
+
     }
   }
 

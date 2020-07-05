@@ -26,7 +26,7 @@ export class ShortcutsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-   
+
   }
 
   onClickShortcut(shortcut) {
