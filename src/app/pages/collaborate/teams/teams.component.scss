@@ -1,84 +1,70 @@
-ng-select {
-    width: calc(100% - 55px)!important;
-    height: 40px;
-    
-}
-ng-select > div {
-    height: 40px !important;
-}
-
 .campaigns {
-    height: calc(30vh + 45px);
+  height: calc(30vh + 45px);
 }
 .assigned_campaigns {
-    
-    ng-select {
-        width: calc(100% - 90px)!important;
-        height: 45px;
-    }
+  ng-select {
+    width: calc(100% - 90px) !important;
+    height: 45px;
+  }
 
-
-    ng-select > div {
-        height: 45px !important;
-    }
-    ng-select>div>div.single>div.placeholder, ng-select>div>div.single>div.value {
-        line-height: 45px;
-    }
+  ng-select > div {
+    height: 45px !important;
+  }
+  ng-select > div > div.single > div.placeholder,
+  ng-select > div > div.single > div.value {
+    line-height: 45px;
+  }
 }
-table.dataTable tbody > tr.selected, table.dataTable tbody > tr > .selected {
-    background: #bce8fb;
+table.dataTable tbody > tr.selected,
+table.dataTable tbody > tr > .selected {
+  background: #bce8fb;
 }
 .campaign-table-header {
-    th {
-        padding: 0.5rem 0.75rem;
-    }
+  th {
+    padding: 0.5rem 0.75rem;
+  }
 }
 .campaign-table-body {
-
-    td {
-        padding: 0.5rem 0.75rem;
-    }
-    .selected {
-        background: #bce8fb !important;
-    }
+  td {
+    padding: 0.5rem 0.75rem;
+  }
+  .selected {
+    background: #bce8fb !important;
+  }
 }
-
-
 
 .card-teams {
-    .card-body {
-        height: calc(100vh - 200px);
-    }
+  .card-body {
+    height: calc(100vh - 200px);
+  }
 }
 @media only screen and (max-width: 575px) {
-    .card-teams {
-        padding: 0px;
-        .card-body {
-            height: auto;
-        
-        }
+  .card-teams {
+    padding: 0px;
+    .card-body {
+      height: auto;
     }
+  }
 }
 
 .campaigns-section {
-    padding-left: 0px;
+  padding-left: 0px;
 }
 @media only screen and (max-width: 575px) {
-    .campaigns-section {
-        padding-right: 0px;
-    }
+  .campaigns-section {
+    padding-right: 0px;
+  }
 }
 
-.table th, .table td  {
-    vertical-align: middle;
+.table th,
+.table td {
+  vertical-align: middle;
 }
 
 .dual-list {
-    .btn-primary {
-        background-color: transparent;
-        color: #00acf0;
-        border-color: #00acf0;
-    }
+  .btn-primary {
+    background-color: transparent;
+    color: #00acf0;
+    border-color: #00acf0;
+  }
 }
-
-

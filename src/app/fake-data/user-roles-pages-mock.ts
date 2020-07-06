@@ -29,7 +29,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Roles',
         name: 'Pages.Administration.Roles.Create',
-        displayName: 'Creating new role',
+        displayName: 'Create new role',
         description: null,
         isGrantedByDefault: false
       },
@@ -37,7 +37,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Roles',
         name: 'Pages.Administration.Roles.Edit',
-        displayName: 'Editing role',
+        displayName: 'Edit role',
         description: null,
         isGrantedByDefault: false
       },
@@ -45,7 +45,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Roles',
         name: 'Pages.Administration.Roles.Delete',
-        displayName: 'Deleting role',
+        displayName: 'Delete role',
         description: null,
         isGrantedByDefault: false
       },
@@ -61,7 +61,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Users',
         name: 'Pages.Administration.Users.Create',
-        displayName: 'Creating new user',
+        displayName: 'Create new user',
         description: null,
         isGrantedByDefault: false
       },
@@ -69,7 +69,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Users',
         name: 'Pages.Administration.Users.Edit',
-        displayName: 'Editing user',
+        displayName: 'Edit user',
         description: null,
         isGrantedByDefault: false
       },
@@ -77,7 +77,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Users',
         name: 'Pages.Administration.Users.Delete',
-        displayName: 'Deleting user',
+        displayName: 'Delete user',
         description: null,
         isGrantedByDefault: false
       },
@@ -85,7 +85,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Users',
         name: 'Pages.Administration.Users.ChangePermissions',
-        displayName: 'Changing permissions',
+        displayName: 'Change permissions',
         description: null,
         isGrantedByDefault: false
       },
@@ -109,7 +109,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Languages',
         name: 'Pages.Administration.Languages.Create',
-        displayName: 'Creating new language',
+        displayName: 'Create new language',
         description: null,
         isGrantedByDefault: false
       },
@@ -117,7 +117,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Languages',
         name: 'Pages.Administration.Languages.Edit',
-        displayName: 'Editing language',
+        displayName: 'Edit language',
         description: null,
         isGrantedByDefault: false
       },
@@ -125,7 +125,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Languages',
         name: 'Pages.Administration.Languages.Delete',
-        displayName: 'Deleting language',
+        displayName: 'Delete language',
         description: null,
         isGrantedByDefault: false
       },
@@ -133,7 +133,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.Languages',
         name: 'Pages.Administration.Languages.ChangeTexts',
-        displayName: 'Changing texts',
+        displayName: 'Change texts',
         description: null,
         isGrantedByDefault: false
       },
@@ -157,7 +157,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.OrganizationUnits',
         name: 'Pages.Administration.OrganizationUnits.ManageOrganizationTree',
-        displayName: 'Managing organization tree',
+        displayName: 'Manage organization tree',
         description: null,
         isGrantedByDefault: false
       },
@@ -165,7 +165,7 @@ export const UserRolesPagesMock = {
         level: 3,
         parentName: 'Pages.Administration.OrganizationUnits',
         name: 'Pages.Administration.OrganizationUnits.ManageMembers',
-        displayName: 'Managing members',
+        displayName: 'Manage members',
         description: null,
         isGrantedByDefault: false
       },

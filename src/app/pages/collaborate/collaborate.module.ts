@@ -4,26 +4,31 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { CollaborateRoutingModule } from './collaborate-routing.module';
 import { SharedModule } from '../../theme/shared/shared.module';
-import { MyCalendarComponent } from './my-calendar/my-calendar.component';
-import { TeamsComponent } from './teams/teams.component';
 import { SelectModule } from 'ng-select';
 import {
   NgbProgressbarModule,
   NgbDatepickerModule, NgbButtonsModule,
   NgbDropdownModule, NgbTooltipModule
 } from '@ng-bootstrap/ng-bootstrap';
-
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
+
 import { CampaignsComponent } from './campaigns/campaigns.component';
 import { RecentActivityComponent } from './recent-activity/recent-activity.component';
-import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { MyCalendarComponent } from './my-calendar/my-calendar.component';
+
+import { CollaborateTeamsComponent } from './teams/teams.component';
+import { CollaborateTeamModalComponent } from './teams/modals/team-modal/team-modal.component';
+import { CollaborateAssignCampaignModalComponent } from './teams/modals/assign-campaign-modal/assign-campaign-modal.component';
 
 @NgModule({
   declarations: [
+    CollaborateTeamsComponent,
+    CollaborateTeamModalComponent,
+    CollaborateAssignCampaignModalComponent,
     MyCalendarComponent,
-    TeamsComponent,
     CampaignsComponent,
-    RecentActivityComponent
+    RecentActivityComponent,
   ],
   imports: [
     CommonModule,

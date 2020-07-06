@@ -1,0 +1,26 @@
+:host {
+  ::ng-deep {
+    .team-input-section {
+      margin-top: -15px;
+      .input-group {
+        .input-group-prepend {
+          .input-group-text {
+            width: 130px;
+          }
+        }
+      }
+      ng-select {
+        width: calc(100% - 128px);
+        height: 45px;
+      }
+      ng-select > div {
+        height: 45px;
+      }
+      @media only screen and (max-width: 575px) {
+        ng-select {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

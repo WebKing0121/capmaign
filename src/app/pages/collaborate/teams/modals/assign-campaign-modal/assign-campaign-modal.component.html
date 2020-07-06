@@ -1,0 +1,40 @@
+<app-ui-modal #assignCampaignModal dialogClass="modal-dialog-centered modal-lg">
+	<div class="app-modal-header">
+		<h5 class="modal-title">Assign Campaigns</h5>
+		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+			(click)="assignCampaignModal.hide()">
+			<span aria-hidden="true">&times;</span>
+		</button>
+	</div>
+
+	<div class="app-modal-body">
+
+		<div class="row">
+			<div class="col-md-12">
+        <label class="mobile-show">Team</label>
+				<div class="input-group assigned_campaigns">
+					<div class="input-group-prepend">
+						<span class="input-group-text">Team</span>
+					</div>
+					<ng-select [ngClass]="'ng-select'"
+						[options]="optionTeams"
+						(ngModelChange)="onChangeTeam($event)"
+						[(ngModel)]="selectedTeam"></ng-select>
+				</div>
+			</div>
+		</div>
+		<div class="row mt-4">
+			<div class="col-md-12">
+				<dual-list [sort]="true" [source]="sourceCampaigns" [key]="'id'" [display]="campaignLabel" [filter]="filter"
+					[(destination)]="assignedCampaigns" height="265px" [format]="format"></dual-list>
+			</div>
+		</div>
+
+	</div>
+
+	<div class="app-modal-footer">
+		<button type="button" class="btn btn-primary" (click)="assignCampaign()">Assign</button> &nbsp;
+		<button type="button" class="btn btn-secondary" data-dismiss="modal"
+			(click)="assignCampaignModal.hide()">Close</button>
+	</div>
+</app-ui-modal>

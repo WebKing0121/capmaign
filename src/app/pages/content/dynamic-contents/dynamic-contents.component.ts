@@ -92,9 +92,11 @@ export class DynamicContentsComponent implements OnInit, OnDestroy, AfterViewIni
   onActive(event) {
     if (event.type === 'click') {
       this.tableButtons[1].disabled = this.selected.length === 0;
-      this.content = event.row as DynamicContent;
-      this.modalType = ModalType.Edit;
-      setTimeout(() => this.dynamicContentModal.show());
+      if (event.cellIndex === 1) {
+        this.content = event.row as DynamicContent;
+        this.modalType = ModalType.Edit;
+        setTimeout(() => this.dynamicContentModal.show());
+      }
     }
   }
 

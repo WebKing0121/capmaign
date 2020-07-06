@@ -16,16 +16,17 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { UserService } from '@app-services/user.service';
 import { CollaborateService } from '@app-services/collaborate.service';
 import { ToastService } from '../../../theme/shared/components/toast/toast.service';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 
 
 @Component({
-  selector: 'app-teams',
+  selector: 'app-collaborate-teams',
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('teamModal', { static: false }) teamModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('progressTemplate') progressTemplate: TemplateRef<any>;
@@ -40,7 +41,7 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private unsubscribe$ = new Subject();
 
-  teamForm: FormGroup;
+
   loading = false;
   submitted = false;
 
@@ -74,22 +75,13 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedTask: CollaborateCampaignTask;
   selectedUser: any;
   // Team Modal related;
-  isNew: boolean;
+  modalType = ModalType.New;
+  ModalType = ModalType;
 
-  selectedTeamInModal: any;
+
   teamsInModal: any[];
 
-  // dual list box
-  sourceCampaigns: any[];
-  unassignedCampaigns: any[];
-  assignedCampaigns: any[];
 
-  keepSorted = true;
-  display: any;
-  filter = false;
-  key: string;
-  sourceLeft = true;
-  format: any = DualListComponent.DEFAULT_FORMAT;
 
   constructor(
     private fb: FormBuilder,
@@ -125,7 +117,6 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
       .subscribe(
         data => {
           this.campaigns = data;
-          this.sourceCampaigns = this.campaigns;
           this.loaded++;
         },
         error => {
@@ -145,18 +136,13 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       );
 
-    this.teamForm = this.fb.group({
-      id: 0,
-      team_name: ['', Validators.required],
-      team_desc: '',
-      members: []
-    });
+
     setTimeout(() => this.checkLoaded());
   }
 
   checkLoaded() {
     if (this.loaded === 3) {
-      this.getUnassignedCampaigns();
+      // this.getUnassignedCampaigns();
       // this.cardTeams.setCardRefresh(false);
       this._updateTeamTable(this.teams);
       this._updateCampaignTable([]);
@@ -196,21 +182,15 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onClickTeam(event): void {
     if (event.type === 'click') {
-      const team = event.row as CollaborateTeam;
-      this.selectedTeam = team;
+      this.selectedTeam = event.row as CollaborateTeam;
       this.tableButtons[1].hide = false;
       this._updateCampaignTable(this._campaignsOfSelectedTeam());
       this.campaignTasks.loadTasksFromCampaign(0);
       this.campaignSubTasks.loadSubTasks(0);
 
       if (event.cellIndex === 0 && event.column.frozenLeft) {
-        this.teamForm.setValue({
-          id: team.id,
-          team_name: team.name,
-          team_desc: team.desc,
-          members: team.members.map(x => `${x}`),
-        });
-        this.teamModal.show();
+        this.modalType = ModalType.Edit;
+        setTimeout(() => this.teamModal.show());
       }
     }
   }
@@ -219,28 +199,15 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.campaigns.filter((x: CollaborateCampaign) => this.selectedTeam.campaigns.indexOf(x.id) >= 0);
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.teamForm.controls; }
-
   /*******************************************************
    * Click event - Plus (+) button in Teams table header *
    * --------------------------------------------------- *
    *                                                     *
    *******************************************************/
   onClickCreateTeam() {
-    this.teamForm.reset();
-    this.teamModal.show();
+    this.modalType = ModalType.New;
+    setTimeout(() => this.teamModal.show());
   }
-
-  /*******************************************************
-   * Click event - Create button in New Team Modal       *
-   * --------------------------------------------------- *
-   *                                                     *
-   *******************************************************/
-  onCreateTeam() {
-    console.log(this.teamForm);
-  }
-
 
   onClickDelete() {
     this.confirmModal.show();
@@ -256,25 +223,11 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
   *                                                                 *
   *******************************************************************/
   onClickAssignCampaign() {
-
-    if (this.selectedTeam) {
-      this.selectedTeamInModal = this.teams.find(x => x.id === this.selectedTeam.id);
-      const { campaigns } = this.selectedTeamInModal;
-      this.assignedCampaigns = this.campaigns.filter(x => campaigns.indexOf(x.id) >= 0);
-      this.sourceCampaigns = [...this.unassignedCampaigns, ...this.assignedCampaigns];
-      this.selectedTeamInModal = '' + this.selectedTeam.id;
-    } else {
-      this.assignedCampaigns = [];
-      this.sourceCampaigns = [...this.unassignedCampaigns];
-    }
-
     this.assignCampaignModal.show();
   }
+
   onClickUnassignCampaign() {
     this.confirmModal.show();
-  }
-  assignCampaign() {
-    console.log(this.teamForm);
   }
 
   /******************************************************
@@ -295,33 +248,6 @@ export class TeamsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.selectedTask = task;
     this.selectedUser = this.allUsers.find(x => x.id === task.user_id);
     this.campaignSubTasks.loadSubTasks(task.id);
-  }
-
-
-  getUnassignedCampaigns() {
-    const allAssigned = [];
-    this.teams.map(x => {
-      allAssigned.push(...x.campaigns);
-    });
-    this.unassignedCampaigns = this.campaigns.filter(campaign => allAssigned.indexOf(campaign.id) < 0);
-  }
-
-  /***********************************************************
-  * Change event - Team control(ng-select) in campaign modal *
-  * -------------------------------------------------------- *
-  *                                                          *
-  ************************************************************/
-  onChangeTeam(event) {
-    this.selectedTeamInModal = this.teams.find(x => x.id === Number(event));
-    const { campaigns } = this.selectedTeamInModal;
-    this.assignedCampaigns = this.campaigns.filter(x => campaigns.indexOf(x.id) >= 0);
-
-    this.sourceCampaigns = [...this.unassignedCampaigns, ...this.assignedCampaigns];
-
-  }
-
-  campaignLabel(campaign: any) {
-    return campaign.name;
   }
 
   _updateTeamTable(teams: CollaborateTeam[]) {

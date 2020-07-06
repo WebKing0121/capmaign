@@ -41,98 +41,18 @@
 		</div>
 	</div>
 </div>
-<app-ui-modal #teamModal dialogClass="modal-dialog-centered modal-lg">
-	<div class="app-modal-header">
-		<h5 class="modal-title">{{isNew? 'Create a New Team' : 'Update Team'}}</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="teamModal.hide()">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
 
-	<div class="app-modal-body">
-		<form [formGroup]="teamForm" (ngSubmit)="onCreateTeam()">
-			<div class="row">
-				<div class="col-md-6">
-					<label for="team_name">Team Name</label>
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="feather icon-users"></i></span>
-						</div>
-						<input type="text" class="form-control" id="team_name" placeholder="Team name" formControlName="team_name"
-							[ngClass]="{ 'is-invalid': submitted && f.team_name.errors }">
-					</div>
-				</div>
-				<div class="col-md-6">
-					<label for="team_desc">Short Description</label>
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="feather icon-check-square"></i></span>
-						</div>
-						<input type="text" class="form-control" id="team_desc" placeholder="Short Description"
-							formControlName="team_desc" [ngClass]="{ 'is-invalid': submitted && f.team_desc.errors }">
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-12">
-					<label for="team_name">Team Members</label>
-					<div class="input-group">
-						<div class="input-group-prepend">
-							<span class="input-group-text"><i class="feather icon-user"></i></span>
-						</div>
-						<ng-select [ngClass]="'ng-select'" formControlName="members" [options]="allUsers" [multiple]="true">
-						</ng-select>
-					</div>
-				</div>
-			</div>
-		</form>
-	</div>
+<app-collaborate-team-modal #teamModal
+	[modalType]="modalType"
+	[team]="selectedTeam"
+	[users]="allUsers"
+></app-collaborate-team-modal>
 
-	<div class="app-modal-footer">
-		<button type="button" class="btn btn-primary" (click)="onCreateTeam()">Create</button> &nbsp;
-		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="teamModal.hide()">Close</button>
-	</div>
-</app-ui-modal>
-
-<app-ui-modal #assignCampaignModal dialogClass="modal-dialog-centered modal-lg">
-	<div class="app-modal-header">
-		<h5 class="modal-title">Assign Campaigns</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
-			(click)="assignCampaignModal.hide()">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-
-	<div class="app-modal-body">
-
-		<div class="row">
-			<div class="col-md-12">
-				<div class="input-group assigned_campaigns">
-					<div class="input-group-prepend">
-						<span class="input-group-text"><i class="feather icon-user"></i> Team</span>
-					</div>
-					<ng-select [ngClass]="'ng-select'"
-						[options]="teamsInModal"
-						(ngModelChange)="onChangeTeam($event)"
-						[(ngModel)]="selectedTeamInModal"></ng-select>
-				</div>
-			</div>
-		</div>
-		<div class="row mt-4">
-			<div class="col-md-12">
-				<dual-list [sort]="true" [source]="sourceCampaigns" [key]="'id'" [display]="campaignLabel" [filter]="filter"
-					[(destination)]="assignedCampaigns" height="265px" [format]="format"></dual-list>
-			</div>
-		</div>
-
-	</div>
-
-	<div class="app-modal-footer">
-		<button type="button" class="btn btn-primary" (click)="assignCampaign()">Assign</button> &nbsp;
-		<button type="button" class="btn btn-secondary" data-dismiss="modal"
-			(click)="assignCampaignModal.hide()">Close</button>
-	</div>
-</app-ui-modal>
+<app-collaborate-assign-campaign-modal #assignCampaignModal
+	[teams]="teams"
+	[campaigns]="campaigns"
+	[team]="selectedTeam"
+></app-collaborate-assign-campaign-modal>
 
 <app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
 	[buttons]="confirmButtons"></app-confirm-modal>
