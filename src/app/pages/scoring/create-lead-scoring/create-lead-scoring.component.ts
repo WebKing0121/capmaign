@@ -103,7 +103,7 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
     this.searchIdx = '';
     this.searchDB = '';
     this.fullScreen = false;
-    this.modalClass = "modal-wrapper";
+    this.modalClass = 'modal-wrapper';
   }
 
   ngOnDestroy(): void {
@@ -210,7 +210,7 @@ export class CreateLeadScoringComponent implements OnInit, OnDestroy {
 
   }
 
-  revertFullScreen () {
+  revertFullScreen() {
     this.fullScreen = !this.fullScreen;
     this.modalClass = 'modal-wrapper' + (this.fullScreen ? ' full-screen' : '');
   }
