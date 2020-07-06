@@ -352,7 +352,7 @@ export const RecentEvnetMockData: RecentEvnet[] = [
 export class EventDashCrm {
   public static EngagementDrivingChannelsData = {
     chart: {
-      height: 400,
+      height: 300,
       type: 'bar',
       toolbar: {
         show: true,
@@ -404,7 +404,7 @@ export class EventDashCrm {
   public static InvitedRegistrationsData = {
     chart: {
       stacked: true,
-      height: 400,
+      height: 300,
       type: 'bar',
       toolbar: {
         show: true,
@@ -471,7 +471,7 @@ export const RegistrationByCountryMockData: RegistrationByCountry[] = [
     id: '2',
     country: 'USA',
     sessions: 355,
-    pageviews: 400
+    pageviews: 300
   },
   {
     id: '3',
@@ -489,7 +489,7 @@ export const RegistrationByCountryMockData: RegistrationByCountry[] = [
     id: '5',
     country: 'USA',
     sessions: 355,
-    pageviews: 400
+    pageviews: 300
   },
   {
     id: '6',
@@ -503,7 +503,7 @@ export const RecentRegistrationMockData: RecentRegistration[] = [
   {
     id: '0',
     name: 'John Doe',
-    phone: '8806940077',
+    phone: '8806930077',
     email: 'ajay.kumar@campaigntocash.com',
     registered: 'C2CWebinar2020',
     registeredDate: '4/24/2020 10:18:59 AM',
@@ -521,7 +521,7 @@ export const RecentRegistrationMockData: RecentRegistration[] = [
   {
     id: '2',
     name: 'Prasad Undale',
-    phone: '8806940077',
+    phone: '8806930077',
     email: 'ajay.kumar@campaigntocash.com',
     registered: 'C2CWebinar2020',
     registeredDate: '4/24/2020 10:18:59 AM',
@@ -539,7 +539,7 @@ export const RecentRegistrationMockData: RecentRegistration[] = [
   {
     id: '4',
     name: 'Samir Sahu',
-    phone: '8806940077',
+    phone: '8806930077',
     email: 'ajay.kumar@campaigntocash.com',
     registered: 'C2CWebinar2020',
     registeredDate: '4/24/2020 10:18:59 AM',
@@ -557,7 +557,7 @@ export const RecentRegistrationMockData: RecentRegistration[] = [
   {
     id: '6',
     name: 'Urvashi Arora',
-    phone: '8806940077',
+    phone: '8806930077',
     email: 'uarora@campaigntocash.com',
     registered: 'C2CWebinar2020',
     registeredDate: '4/24/2020 10:18:59 AM',
@@ -575,7 +575,7 @@ export const RecentRegistrationMockData: RecentRegistration[] = [
   {
     id: '8',
     name: 'Prasad Undale',
-    phone: '8806940077',
+    phone: '8806930077',
     email: 'pundale@campaigntocash.com',
     registered: 'C2CWebinar2020',
     registeredDate: '4/24/2020 10:18:59 AM',
@@ -593,7 +593,7 @@ export const RecentRegistrationMockData: RecentRegistration[] = [
   {
     id: '10',
     name: 'John Doe',
-    phone: '8806940077',
+    phone: '8806930077',
     email: 'ajay.kumar@campaigntocash.com',
     registered: 'C2CWebinar2020',
     registeredDate: '4/24/2020 10:18:59 AM',
