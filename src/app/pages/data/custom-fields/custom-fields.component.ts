@@ -70,15 +70,15 @@ export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestr
   ngAfterViewInit(): void {
 
     const columns: DataTableColumn[] = [
-      { name: 'Name', prop: 'displayName', sortable: true, cellClass: ['cell-hyperlink'] },
-      { name: 'Default Value', prop: 'defaultValue', sortable: true },
-      { name: 'Data Type', prop: 'fieldDataType', sortable: true },
+      { name: 'Name', prop: 'displayName', sortable: true, cellClass: ['cell-hyperlink'], maxWidth: 300, width: 300 },
+      { name: 'Default Value', prop: 'defaultValue', sortable: true, maxWidth: 300, width: 300 },
+      { name: 'Data Type', prop: 'fieldDataType', sortable: true, maxWidth: 100, width: 100, },
       {
-        name: 'Modification Date', prop: 'lastModificationTime', sortable: true,
+        name: 'Modification Date', prop: 'lastModificationTime', sortable: true, maxWidth: 180, width: 180,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
       },
       {
-        name: 'Creation Date', prop: 'creationTime', sortable: true,
+        name: 'Creation Date', prop: 'creationTime', sortable: true, maxWidth: 180, width: 180,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
       },
     ];

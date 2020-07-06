@@ -21,8 +21,9 @@
           width: 100%;
           position: relative;
           font-size: 14px;
-          background-color: #fafafa;
-          // color: #ddd;
+          font-weight: 500;
+          font-size: 1rem;
+          color: #333;
         }
       }
     }
@@ -36,6 +37,10 @@
       align-items: center;
       padding: 0;
       .datatable-body-cell-label {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        color: #000;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -43,11 +48,14 @@
         position: relative;
         font-size: 13px;
       }
-    }
-    .datatable-body-cell.cell-hyperlink {
-      cursor: pointer;
-      text-decoration: underline;
-      color: deepskyblue !important;
+      &.cell-hyperlink {
+        cursor: pointer;
+        text-decoration: underline;
+        color: deepskyblue !important;
+        .datatable-body-cell-label {
+          color: deepskyblue !important;
+        }
+      }
     }
 
     .empty-row {

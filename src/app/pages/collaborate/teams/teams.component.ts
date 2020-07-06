@@ -1,21 +1,15 @@
 import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation, TemplateRef, AfterViewInit } from '@angular/core';
 
-import { DualListComponent } from 'angular-dual-listbox';
-
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
-import { User } from '@app-core/models/user';
 
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { UserService } from '@app-services/user.service';
 import { CollaborateService } from '@app-services/collaborate.service';
-import { ToastService } from '../../../theme/shared/components/toast/toast.service';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 
 
@@ -77,17 +71,11 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   // Team Modal related;
   modalType = ModalType.New;
   ModalType = ModalType;
-
-
   teamsInModal: any[];
 
-
-
   constructor(
-    private fb: FormBuilder,
     private collaborateService: CollaborateService,
     private userService: UserService,
-    private toastEvent: ToastService
 
   ) {
     this.teams = [];

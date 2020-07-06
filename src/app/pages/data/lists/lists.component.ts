@@ -108,16 +108,22 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Description', prop: 'description', sortable: true, hidden: true },
-      { name: 'Type', prop: 'type', sortable: true, maxWidth: 100 },
-      { name: 'Records', prop: 'records', sortable: true, maxWidth: 80 }
+      { name: 'Type', prop: 'type', sortable: true },
+      { name: 'Records', prop: 'records', sortable: true, maxWidth: 80, hidden: true }
     ];
     this.tableSource.setColumns(columns);
 
     this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
       if (data) {
-        const columnsRecords = data.map((x: GridColumn) => ({
+        const columnsRecords: DataTableColumn[] = data.map((x: GridColumn) => ({
           name: x.columnName, prop: this.capitalize(x.columnName), sortable: true
         }));
+        columnsRecords[0].width = 130;
+        columnsRecords[0].maxWidth = 130;
+        columnsRecords[1].width = 400;
+        columnsRecords[1].maxWidth = 400;
+        columnsRecords[2].width = 130;
+        columnsRecords[2].maxWidth = 130;
         this.tableSourceRecords.setColumns(columnsRecords);
       }
     });

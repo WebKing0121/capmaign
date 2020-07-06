@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -10,7 +10,8 @@ import { DataTableSource } from '@app-components/datatable/datatable-source';
   styleUrls: ['./datatable-pagination.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatatablePaginationComponent implements OnInit, OnDestroy {
+export class DatatablePaginationComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('pagination', { static: false }) pagination;
   @Input() tableSource: DataTableSource<any>;
   @Input() pagesMaxCount = 4;
   destroy$ = new Subject<boolean>();
@@ -20,9 +21,12 @@ export class DatatablePaginationComponent implements OnInit, OnDestroy {
 
   pages = [{ value: 1, label: '1' }];
 
+  smallScreen: boolean;
   constructor(
     private cdr: ChangeDetectorRef
-  ) { }
+  ) {
+    this.smallScreen = true;
+  }
 
   ngOnInit(): void {
     if (this.tableSource) {
@@ -49,6 +53,19 @@ export class DatatablePaginationComponent implements OnInit, OnDestroy {
           }
         });
     }
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.checkClientWidth());
+  }
+
+  checkClientWidth() {
+    if (this.pagination.nativeElement.clientWidth <= 575) {
+      this.smallScreen = true;
+    } else {
+      this.smallScreen = false;
+    }
+
   }
 
   ngOnDestroy(): void {

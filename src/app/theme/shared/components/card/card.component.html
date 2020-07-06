@@ -5,7 +5,7 @@
     <div *ngIf="cardButtons.length > 0" class="header-button">
       <div *ngFor="let button of getActiveButtons()" [title]="button.label">
         <button *ngIf="(!button.childs || button.childs.length === 0)" class="btn-header-1" [disabled]="button.disabled" (click)="button.click()">
-          <i [ngClass]="button.icon" [ngStyle]="{'color': button.color && !button.disabled ? button.color: button.disabled?'#ddd': '#5e7d8a'}"></i>
+          <i [ngClass]="button.icon" [ngStyle]="{'color': button.color && !button.disabled ? button.color: button.disabled?'#ddd': '#333'}"></i>
           <span class="button-text">{{button.label}}</span>
         </button>
         <div *ngIf="button.childs && button.childs.length > 0" ngbDropdown class="btn-group dropdown dropright">

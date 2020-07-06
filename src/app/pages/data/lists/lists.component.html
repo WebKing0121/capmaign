@@ -1,12 +1,25 @@
 <div class="row mt-3">
   <div class="col-md-4 card-lists">
-    <app-datatable [title]="'List'" [buttons]="tableButtons" [dataSource]="tableSource" [rowHeight]="35"
-      [headerHeight]="40" (activate)="onActive($event)"></app-datatable>
+    <app-datatable
+      [title]="'List'"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
   </div>
   <div class="col-md-8 card-records">
-    <app-datatable [title]="'Assigned Records'" [buttons]="recordsTableButtons" [dataSource]="tableSourceRecords"
-      [selectionType]="'checkbox'" [selectable]="true" [rowHeight]="35" [headerHeight]="40"
-      (activate)="onActiveRecords($event)"></app-datatable>
+    <app-datatable
+      [title]="'Assigned Records'"
+      [buttons]="recordsTableButtons"
+      [dataSource]="tableSourceRecords"
+      [selectionType]="'checkbox'"
+      [selectable]="true"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      (activate)="onActiveRecords($event)"
+    ></app-datatable>
   </div>
 </div>
 <!-- template of Display From-->
