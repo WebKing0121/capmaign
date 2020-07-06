@@ -26,6 +26,8 @@ export class CreateLeadGradingComponent implements OnInit {
   childUniqueKey: number;
   rulesReferences = Array<ComponentRef<RuleComponent>>();
   formGroup: FormGroup;
+  fullScreen: boolean;
+  modalClass: string;
 
   constructor(
     private fb: FormBuilder,
@@ -35,6 +37,8 @@ export class CreateLeadGradingComponent implements OnInit {
     @Inject(MODAL_DATA) private props: ComponentProps
     ) {
     this.childUniqueKey = 0;
+    this.fullScreen = false;
+    this.modalClass = 'modal-wrapper';
   }
 
   ngOnInit(): void {
@@ -90,5 +94,10 @@ export class CreateLeadGradingComponent implements OnInit {
     } else {
       this.modalRef.cancel();
     }
+  }
+
+  revertFullScreen() {
+    this.fullScreen = !this.fullScreen;
+    this.modalClass = 'modal-wrapper' + (this.fullScreen ? ' full-screen' : '');
   }
 }

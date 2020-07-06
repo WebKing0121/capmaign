@@ -103,7 +103,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   createLeadGrading() {
     // this.router.navigate(['create-new-grading'], { relativeTo: this.route });
     this.modalService.openModal(CreateLeadGradingComponent, {
-      width: '80%',
+      width: '100%',
       data: {
         mode: 'new'
       }
@@ -118,7 +118,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
       switch (event.cellIndex) {
         case 1:
           this.modalService.openModal(CreateLeadGradingComponent, {
-            width: '80%',
+            width: '100%',
             data: {
               grading: event.row,
               mode: 'edit'

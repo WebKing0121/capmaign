@@ -86,7 +86,7 @@
       padding: 0;
 
       .card {
-        min-height: 150px;
+        min-height: 110px;
       }
     }
   }
@@ -99,7 +99,7 @@
     padding: 0;
 
     div {
-      margin: 10px 0;
+      margin: 10px 5px;
     }
     .title {
       font-weight: 600;
@@ -109,10 +109,32 @@
 
   .dashboard_top_card {
     min-height: 130px;
-    margin-bottom: 30px;
     padding: 20px;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
     border: 1px solid #eaecec;
     border-radius: 5px;
+  }
+
+  .hiddenable {
+    padding: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .pro {
+    width: 62px;
+  }
+
+  .table-card {
+    padding: 20px;
+    margin: 5px;
+  }
+
+  .table-height {
+    height: 400px;
+
+    @media only screen and (max-width: 575px) {
+      height: 300px;
+    }
   }
 }

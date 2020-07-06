@@ -97,9 +97,8 @@ export class CampaignComponent implements OnInit {
     });
   }
 
-  revertFullScreen () {
+  revertFullScreen() {
     this.fullScreen = !this.fullScreen;
     this.modalClass = 'campaign-modal' + (this.fullScreen ? ' full-screen' : '');
-    console.log(this.modalClass)
   }
 }

@@ -34,7 +34,7 @@ export class MobileCampaignComponent implements OnInit {
     @Inject(ModalRef) private modalRef: ModalRef<MobileCampaignComponent>,
   ) {
     this.fullScreen = false;
-    this.modalClass = "campaign-modal";
+    this.modalClass = 'campaign-modal';
   }
 
   ngOnInit(): void {
@@ -71,9 +71,8 @@ export class MobileCampaignComponent implements OnInit {
     this.modalRef.cancel();
   }
 
-  revertFullScreen () {
+  revertFullScreen() {
     this.fullScreen = !this.fullScreen;
     this.modalClass = 'campaign-modal' + (this.fullScreen ? ' full-screen' : '');
-    console.log(this.modalClass)
   }
 }
