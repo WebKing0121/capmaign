@@ -95,6 +95,8 @@ export class InAppMessageComponent implements OnInit {
   scheduleOn: boolean;
   selectedDate: any;
   public model: any = {};
+  fullScreen: boolean;
+  modalClass: string;
 
   constructor(
     private fb: FormBuilder,
@@ -121,6 +123,8 @@ export class InAppMessageComponent implements OnInit {
     this.txtFontFamily = 'Arial';
     this.txtFontSize = '12px';
     this.scheduleOn = false;
+    this.fullScreen = false;
+    this.modalClass = 'modal-wrapper';
   }
 
   ngOnInit(): void {
@@ -335,7 +339,12 @@ export class InAppMessageComponent implements OnInit {
     this.modalRef.cancel();
   }
 
-  onCloseModal() {
+  onCancelClick() {
     this.modalRef.cancel();
+  }
+
+  revertFullScreen() {
+    this.fullScreen = !this.fullScreen;
+    this.modalClass = 'modal-wrapper' + (this.fullScreen ? ' full-screen' : '');
   }
 }

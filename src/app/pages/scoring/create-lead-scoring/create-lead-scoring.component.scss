@@ -1,4 +1,36 @@
 :host {
+
+  .modal-wrapper{
+    padding: 0 20%;
+
+    @media only screen and (max-width: 1024px) {
+      padding: 0 5%;
+    }
+
+    @media only screen and (max-width: 425px) {
+      padding: 0 10px;
+    }
+  }
+
+  .full-screen {
+    padding: 0;
+  }
+    
+  .full-screen > .card {
+    height: 100vh;
+    top: -52px;
+
+    .fields-list, .right-fields {
+      height: calc(100vh - 222px);
+    }
+  }
+
+  .campaign-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .mobile-show {
     display: none;
 
@@ -13,6 +45,10 @@
     @media only screen and (max-width: 575px) {
       display: none;
     }
+  }
+
+  .maximize {
+    margin-top: 2px;
   }
 
   .fields-list {
@@ -62,7 +98,7 @@
     border: 1px dashed;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
-    margin-top: 10px;
+    margin-top: 15px;
     padding-bottom: 20px;
     overflow-y: auto;
     height: calc(100vh - 350px);

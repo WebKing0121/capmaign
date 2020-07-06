@@ -89,7 +89,7 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
 
   onCreateClicked() {
     this.modalService.openModal(InAppMessageComponent, {
-      width: '80%',
+      width: '100%',
       data: {
         createMode: true
       }
@@ -100,7 +100,7 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
     if (event.type === 'click' && event.cellIndex === 1) {
       const inAppMessage = event.row as Campaign;
       this.modalService.openModal(InAppMessageComponent, {
-        width: '80%',
+        width: '100%',
         data: {
           createMode: false,
           inAppMessage,

@@ -2,6 +2,42 @@
   $iphone-width: 375px;
   $iphone-height: 672px;
 
+  .modal-wrapper {
+    padding: 0 20%;
+
+    @media only screen and (max-width: 1024px) {
+      padding: 0 5%;
+    }
+
+    @media only screen and (max-width: 425px) {
+      padding: 0 10px;
+    }
+  }
+
+  .card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .maximize {
+      margin-top: 3px;
+    }
+  }
+
+  .full-screen {
+    padding: 0;
+  }
+
+  .full-screen > .card {
+    width: 100vw;
+    height: 100vh;
+    margin-top: -28px;
+
+    .card-body {
+      max-height: calc( 100vh - 122px);
+    }
+  }
+
   .tab-group {
     display: flex;
 
@@ -105,11 +141,11 @@
     width: 358px;
   }
 
-  button {
-    width: 5ex;
-    text-align: center;
-    padding: 1px 3px;
-  }
+  // button {
+  //   width: 5ex;
+  //   text-align: center;
+  //   padding: 1px 3px;
+  // }
 
   .txtBold {
     font-weight: 600;

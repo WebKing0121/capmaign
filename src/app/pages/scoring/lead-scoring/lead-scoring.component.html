@@ -1,4 +1,4 @@
-<div style="height: calc( 100vh - 120px)">
+<div style="height: calc( 100vh - 122px)">
   <app-datatable [title]="'Lead Scoring'"
     [dataSource]="tableSource"
     [buttons]="tableButtons"
@@ -11,4 +11,7 @@
 <ng-template #tableColumnCheck let-value let-column="column">
   <input *ngIf="value" class="m-l-10" type="checkbox" checked (click)="onCheckClick($event)">
   <input *ngIf="!value" class="m-l-10" type="checkbox" (click)="onCheckClick($event)">
+</ng-template>
+
+<ng-template #isStaticColumn let-value let-column="column">
 </ng-template>

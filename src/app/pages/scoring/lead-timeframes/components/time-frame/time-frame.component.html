@@ -1,21 +1,21 @@
 <div class="row m-t-10">
   <div class="col-md-4">
-    <select type="text" class="form-control">
+    <select type="text" class="form-control field">
       <option *ngFor="let item of leadScoringTypeList" value="item.id">{{item.value}}</option>
     </select>
   </div>
   <div class="col-md-3">
-    <input type="text" class="form-control">
+    <input type="text" class="form-control field">
   </div>
-  <div class="col-md-3 d-flex" style="align-items: center;">
-    <label>Positive</label>
-    <input type="radio" class="m-l-5" [name]="uniqueKey">
-    <label class="m-l-10">Negative</label>
-    <input type="radio" class="m-l-5" [name]="uniqueKey">
+  <div class="col-md-4" style="align-items: center;">
+    <select type="text" class="form-control field">
+      <option value="positive">Positive</option>
+      <option value="negative">Negative</option>
+    </select>
   </div>
-  <div class="col-md-2 d-flex p-0">
-    <span class="m-l-10 d-flex" style="align-items: center;">
-      <i class="text-secondary fa fa-trash f-24" (click)="remove_me()"></i>
+  <div class="col-md-1 d-flex remove-btn" (click)="remove_me()">
+    <span>
+      <i class="fa fa-trash"></i>
     </span>
   </div>
 </div>
