@@ -1,7 +1,7 @@
 <div [class]="modalClass">
   <div class="card">
     <div class="card-header">
-      <span>{{ mode? 'Create ' : 'Edit ' }}LEAD CATEGORY PROFILE</span>
+      <span>{{ mode? 'Create ' : 'Edit ' }}Lead Category Profile</span>
       <button type="button"  class="maximize m-l-auto" (click)="revertFullScreen()"><i class="fa" [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i></button>
       <button type="button" class="m-l-auto close basic-close" data-dismiss="modal" aria-label="Close"
         (click)="onCancelClick()">
@@ -74,8 +74,8 @@
         </div>
       </form>
     </div>
-    <div class="card-footer">
-      <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
+    <div class="card-footer m-t-10">
+      <div class="col-lg-12 d-flex p-r-0" style="justify-content: flex-end;">
         <div>
           <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
           <span *ngIf="!formGroup.valid" class="btn btn-primary disabled m-l-10"><i
