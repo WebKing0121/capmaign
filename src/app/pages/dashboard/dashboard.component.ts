@@ -398,13 +398,13 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableSource.setColumns(columns);
 
     const topPerformingColumns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true, width: 50, maxWidth: 100 },
-      { name: 'DATE & TIME', prop: 'dateTime', sortable: true, width: 50, maxWidth: 100 },
-      { name: 'SENT', prop: 'sent', sortable: true, width: 50, maxWidth: 100 },
-      { name: 'OPEN', prop: 'open', sortable: true, width: 50, maxWidth: 100 },
-      { name: 'CLICKS', prop: 'clicks', sortable: true, width: 50, maxWidth: 100 },
-      { name: 'BOUNCES', prop: 'bounces', sortable: true, width: 50, maxWidth: 100 },
-      { name: 'UNSUBSCRIBE', prop: 'unsubscribe', sortable: true, width: 50, maxWidth: 100 },
+      { name: 'Name', prop: 'name', sortable: true, width: 60, maxWidth: 90 },
+      { name: 'DATE & TIME', prop: 'dateTime', sortable: true, width: 60, maxWidth: 170 },
+      { name: 'SENT', prop: 'sent', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'OPEN', prop: 'open', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'CLICKS', prop: 'clicks', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'BOUNCES', prop: 'bounces', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'UNSUBSCRIBE', prop: 'unsubscribe', sortable: true, width: 60, maxWidth: 100 },
     ];
     this.topPerformingTableSource.setColumns(topPerformingColumns);
 

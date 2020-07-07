@@ -1,6 +1,6 @@
 :host {
   margin-bottom: 20px;
-  
+
   .ngx-datatable {
     height: calc(100% - 42px);
     box-shadow: none;
@@ -38,6 +38,7 @@
       display: flex !important;
       align-items: center;
       padding: 0;
+      overflow: hidden;
       .datatable-body-cell-label {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
@@ -51,10 +52,11 @@
         font-size: 13px;
       }
       &.cell-hyperlink {
-        cursor: pointer;
         text-decoration: underline;
         color: deepskyblue !important;
         .datatable-body-cell-label {
+          width: auto;
+          cursor: pointer;
           color: deepskyblue !important;
         }
       }

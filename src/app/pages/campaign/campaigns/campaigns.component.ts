@@ -118,8 +118,10 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onActive(event) {
-    // TODO: Simplify later
-    if (event.type === 'click' && event.cellIndex === 1) {
+    if (
+      event.type === 'click' && event.cellIndex === 1
+      && event.event.target.classList.value === 'datatable-body-cell-label'
+    ) {
       const campaign = event.row as Campaign;
 
       switch (campaign.type) {

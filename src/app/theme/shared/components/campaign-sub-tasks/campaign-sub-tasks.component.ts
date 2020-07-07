@@ -149,7 +149,11 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
       const subTask = event.row as CollaborateCampaignSubtask;
       this.selectRow.emit(subTask);
       this.tableButtons[1].hide = false;
-      if (event.cellIndex === 0 && event.column.frozonLeft) {
+      // open edit modal;
+      if (
+        event.cellIndex === 0
+        && event.event.target.classList.value === 'datatable-body-cell-label'
+      ) {
 
         this.subTaskForm.setValue({
           id: subTask.id,

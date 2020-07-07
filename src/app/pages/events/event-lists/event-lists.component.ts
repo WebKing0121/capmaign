@@ -218,7 +218,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.tableSourceEvents.next(
           events.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-            events.length
+          events.length
         );
       });
     this.tableSourceEvents.selection$
@@ -252,7 +252,10 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         );
 
-      if (evt.cellIndex === 0 && evt.column.frozenLeft) {
+      if (
+        evt.cellIndex === 0 && evt.column.frozenLeft
+        && evt.event.target.classList.value === 'datatable-body-cell-label'
+      ) {
         this.isModalNew = false;
 
         this.eventListForm.setValue({

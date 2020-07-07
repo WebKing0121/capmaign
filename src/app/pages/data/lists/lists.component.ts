@@ -1,20 +1,15 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DataService } from '@app-services/data.service';
-import { EventService } from '@app-services/event.service';
-import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
-
-import { NgSelectData, GridColumn } from '@app-models/common';
+import { GridColumn } from '@app-models/common';
 import { List } from '@app-models/list';
 
 import { Store } from '@ngrx/store';
 import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
 import { ModalType } from '@app-core/enums/modal-type.enum';
-import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-data-lists',
@@ -122,8 +117,6 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
         columnsRecords[0].maxWidth = 130;
         columnsRecords[1].width = 400;
         columnsRecords[1].maxWidth = 400;
-        columnsRecords[2].width = 130;
-        columnsRecords[2].maxWidth = 130;
         this.tableSourceRecords.setColumns(columnsRecords);
       }
     });
@@ -176,7 +169,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
-  onActive(evt) {
+  onActive(evt: any) {
     if (evt.type === 'click') {
       this.selectedList = evt.row as List;
 
@@ -202,7 +195,10 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         );
 
-      if (evt.cellIndex === 0 && evt.column.frozenLeft) {
+      if (
+        evt.cellIndex === 0 && evt.column.frozenLeft
+        && evt.event.target.classList.value === 'datatable-body-cell-label'
+      ) {
         this.modalType = ModalType.Edit;
         setTimeout(() => this.listModal.show());
       }

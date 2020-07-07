@@ -86,7 +86,7 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event.type === 'click') {
 
       this.tableButtons[1].disabled = this.selected.length === 0;
-      if (event.cellIndex === 1) {
+      if (event.cellIndex === 1 && event.event.target.classList.value === 'datatable-body-cell-label') {
         this.landingPage = event.row as LandingPage;
         this.modalType = ModalType.Edit;
         setTimeout(() => this.landingPageModal.show());

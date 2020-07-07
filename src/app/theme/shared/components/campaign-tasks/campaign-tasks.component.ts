@@ -154,7 +154,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
       const task = event.row as CollaborateCampaignTask;
       this.selectRow.emit(task);
       this.tableButtons[1].hide = false;
-      if (event.cellIndex === 0 && event.column.frozenLeft) {
+      if (event.cellIndex === 0 && event.column.frozenLeft && event.event.target.classList.value === 'datatable-body-cell-label') {
         this.modalTeamName = this.getTeamName();
         this.modalCampaignName = this.getCampaignName();
         this.modalTeamMembers = this.getTeamMembers();

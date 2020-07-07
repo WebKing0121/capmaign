@@ -83,7 +83,7 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
   onActive(event) {
     if (event.type === 'click') {
       this.tableButtons[1].disabled = this.selected.length === 0;
-      if (event.cellIndex === 1) {
+      if (event.cellIndex === 1 && event.event.target.classList.value === 'datatable-body-cell-label') {
         this.category = event.row as ContentCategory;
         this.modalType = ModalType.Edit;
         setTimeout(() => this.categoryModal.show());

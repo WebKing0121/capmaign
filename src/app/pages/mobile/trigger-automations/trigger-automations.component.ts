@@ -112,8 +112,7 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   onActive(event) {
-    if (event.type === 'click' && event.cellIndex === 1) {
-      const triggerAutomation = event.row as Automation;
+    if (event.type === 'click' && event.cellIndex === 1 && event.event.target.classList.value === 'datatable-body-cell-label') {
       this.selectedAutomation = event.row as Automation;
       this.modalType = ModalType.Edit;
       setTimeout(() => this.automationModal.edit());

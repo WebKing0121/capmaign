@@ -112,10 +112,9 @@ export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => this.userRoleModal.show());
   }
 
-  onActive(evt) {
+  onActive(evt: any) {
     if (evt.type === 'click') {
-      // this.tableButtons[1]. = false;
-      if (evt.cellIndex === 0) {
+      if (evt.cellIndex === 0 && evt.event.target.classList.value === 'datatable-body-cell-label') {
         this.modalType = ModalType.Edit;
         this.selectedRole = evt.row as UserRole;
         setTimeout(() => this.userRoleModal.show());

@@ -56,6 +56,7 @@
 
 <app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected rows?"
 	[buttons]="confirmButtons"></app-confirm-modal>
+
 <ng-template #progressTemplate let-row="row" let-value let-i="index">
 	<span class="percent">{{value}}%</span>
 	<ngb-progressbar height="20px" [value]="value"></ngb-progressbar>

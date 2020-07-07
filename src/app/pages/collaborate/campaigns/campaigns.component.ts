@@ -186,7 +186,9 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.campaignTasks.loadTasksFromCampaign(campaign.id);
       this.campaignSubTasks.loadSubTasks(0);
 
-      if (event.cellIndex === 0 && !event.column.frozenLeft) {
+      if (event.cellIndex === 0 && !event.column.frozenLeft
+        && event.event.target.classList.value === 'datatable-body-cell-label'
+      ) {
         this.teamsForm.setValue({
           current_team: campaign.team_id === 0 ? '' : this.getTeamName(campaign.team_id),
           new_team: ''

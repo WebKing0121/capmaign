@@ -69,16 +69,16 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
 
     this.loading = true;
     this.socialService.getSocialEngagers()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(
-      data => {
-        this.engagers = data.result.items;
-        this._updateTable(this.engagers);
-      },
-      error => {
-        console.log('error', error);
-        this.loading = false;
-      });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.engagers = data.result.items;
+          this._updateTable(this.engagers);
+        },
+        error => {
+          console.log('error', error);
+          this.loading = false;
+        });
   }
 
   ngAfterViewInit() {
@@ -103,7 +103,7 @@ export class SocialEngagerComponent implements OnInit, OnDestroy, AfterViewInit 
     if (event.type === 'click') {
       const engager = event.row as any;
       this.tableButtons[1].hide = false;
-      if (event.cellIndex === 0 && event.column.frozenLeft) {
+      if (event.cellIndex === 0 && event.column.frozenLeft && event.event.target.classList.value === 'datatable-body-cell-label') {
         this.engagerForm.setValue({
           id: engager.id,
           firstName: engager.firstName,

@@ -144,17 +144,17 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
     const columns: DataTableColumn[] = [
       { name: 'Team Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Members', prop: 'members.length', sortable: true },
-      { name: 'Campaigns', prop: 'campaigns.length', sortable: true, maxWidth: 120 },
-      { name: 'Created', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
+      { name: 'Campaigns', prop: 'campaigns.length', sortable: true },
+      { name: 'Created', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' } },
     ];
 
     this.tableSource.setColumns(columns);
 
     const columnsCampaign: DataTableColumn[] = [
       { name: 'Campaign', prop: 'name', sortable: true, frozenLeft: true },
-      { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
+      { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' } },
+      { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' } },
+      { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate },
       { name: 'Type', prop: 'type', sortable: true, maxWidth: 80 },
       { name: 'Status', prop: 'status', sortable: true, maxWidth: 100 },
     ];
@@ -176,7 +176,10 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
       this.campaignTasks.loadTasksFromCampaign(0);
       this.campaignSubTasks.loadSubTasks(0);
 
-      if (event.cellIndex === 0 && event.column.frozenLeft) {
+      if (
+        event.cellIndex === 0 && event.column.frozenLeft
+        && event.event.target.classList.value === 'datatable-body-cell-label'
+      ) {
         this.modalType = ModalType.Edit;
         setTimeout(() => this.teamModal.show());
       }

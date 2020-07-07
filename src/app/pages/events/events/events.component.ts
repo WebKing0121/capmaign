@@ -175,9 +175,14 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(evt) {
     if (evt.type === 'click') {
+      // control buttons to disabled / enabled
       this.tableButtons[1].disabled = this.selected.length === 0;
       this.tableButtons[2].disabled = this.selected.length === 0;
-      if (evt.cellIndex === 1) {
+      // open edit modal
+      if (
+        evt.cellIndex === 1
+        && evt.event.target.classList.value === 'datatable-body-cell-label'
+      ) {
         const event: Event = evt.row as Event;
         this.isModalNew = false;
         const startYear = Number(moment(event.eventStartDate).format('YYYY'));
