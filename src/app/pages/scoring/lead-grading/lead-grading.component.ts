@@ -90,10 +90,14 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Description', prop: 'description', sortable: true },
-      { name: 'Is Default For New Record', prop: 'isDefaultForNewRecord',
-        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
-      { name: 'Is Default For Campaign', prop: 'isDefaultForCampaign',
-        sortable: false, custom: true, template: this.tableColumnCheckTemplate },
+      {
+        name: 'Is Default For New Record', prop: 'isDefaultForNewRecord',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate
+      },
+      {
+        name: 'Is Default For Campaign', prop: 'isDefaultForCampaign',
+        sortable: false, custom: true, template: this.tableColumnCheckTemplate
+      },
       { name: 'Is Active', prop: 'isActive', sortable: true, custom: true, template: this.tableColumnCheckTemplate },
       { name: 'Is Static', prop: 'isStatic', sortable: true }
     ];
@@ -114,7 +118,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
     let message = '';
     const grading = event.row as Grading;
     // TODO: Simplify later
-    if (event.type === 'click') {
+    if (event.type === 'click' && event.event.target.classList.value === 'datatable-body-cell-label') {
       switch (event.cellIndex) {
         case 1:
           this.modalService.openModal(CreateLeadGradingComponent, {

@@ -97,10 +97,9 @@ export class AdminSendersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  onActive(evt) {
+  onActive(evt: any) {
     if (evt.type === 'click') {
-      // this.tableButtons[1]. = false;
-      if (evt.cellIndex === 0) {
+      if (evt.cellIndex === 0 && evt.event.target.classList.value === 'datatable-body-cell-label') {
         this.modalType = ModalType.Edit;
         this.selectedSender = evt.row as Sender;
         setTimeout(() => this.senderModal.show());

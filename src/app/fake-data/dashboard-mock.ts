@@ -120,13 +120,13 @@ export class EmailDashCrm {
     },
     xaxis: {
       title: {
-        text: "Campaign"
+        text: 'Campaign'
       },
       categories: ['Lipstick', 'Samir Campaign'],
     },
     yaxis: {
       title: {
-        text: "Count"
+        text: 'Count'
       }
     },
     fill: {
@@ -300,7 +300,7 @@ export class MobileDashCrm {
     },
     xaxis: {
       title: {
-        text:'Campaign'
+        text: 'Campaign'
       },
       categories: [
         '11 April Event',
@@ -314,7 +314,7 @@ export class MobileDashCrm {
     },
     yaxis: {
       title: {
-        text:'Count'
+        text: 'Count'
       }
     },
     fill: {

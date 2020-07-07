@@ -125,10 +125,11 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (event.type === 'click') {
       this.tableButtons[1].disabled = this.selected.length === 0;
       this.tableButtons[2].disabled = !(this.selected.length === 1 && this.selected
-        .filter(x => x.status === 'Scheduled' || x.status === 'Active' ).length === 1);
+        .filter(x => x.status === 'Scheduled' || x.status === 'Active').length === 1);
       this.tableButtons[3].disabled = !(this.selected.length === 1 && this.selected
-        .filter(x => x.status === 'Scheduled' || x.status === 'Active' || x.status === 'Paused' ).length === 1);
-      if (event.cellIndex === 1 ) {
+        .filter(x => x.status === 'Scheduled' || x.status === 'Active' || x.status === 'Paused').length === 1);
+
+      if (event.cellIndex === 1 && event.event.target.classList.value === 'datatable-body-cell-label') {
 
         this.selectedAutomation = event.row as Automation;
         this.modalType = ModalType.Edit;

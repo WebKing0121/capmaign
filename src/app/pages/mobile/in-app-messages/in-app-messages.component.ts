@@ -97,7 +97,10 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onActive(event) {
-    if (event.type === 'click' && event.cellIndex === 1) {
+    if (
+      event.type === 'click' && event.cellIndex === 1 &&
+      event.event.target.classList.value === 'datatable-body-cell-label'
+    ) {
       const inAppMessage = event.row as Campaign;
       this.modalService.openModal(InAppMessageComponent, {
         width: '100%',

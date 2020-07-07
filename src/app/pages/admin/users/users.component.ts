@@ -69,19 +69,19 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
 
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, custom: true, template: this.userTemplate },
-      { name: 'User Name', prop: 'userName', sortable: true, maxWidth: 150, cellClass: ['cell-hyperlink'] },
-      { name: 'Phone', prop: 'phoneNumber', sortable: true, maxWidth: 150, },
+      { name: 'User Name', prop: 'userName', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Phone', prop: 'phoneNumber', sortable: true },
       {
         name: 'Last Login Date', prop: 'lastLoginTime', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 150,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' },
       },
       {
         name: 'Creation Date', prop: 'creationTime', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 150,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' },
       },
       {
         name: 'Status', prop: 'isActive', sortable: true, custom: true,
-        template: this.userStatusTemplate, width: 80
+        template: this.userStatusTemplate,
       },
     ];
     this.tableSource.setColumns(columns);
@@ -111,10 +111,10 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  onActive(evt) {
+  onActive(evt: any) {
     if (evt.type === 'click') {
       // this.tableButtons[1]. = false;
-      if (evt.cellIndex === 1) {
+      if (evt.cellIndex === 1 && evt.event.target.classList.value === 'datatable-body-cell-label') {
         this.modalType = ModalType.Edit;
         this.selectedUser = evt.row as User;
         setTimeout(() => this.userModal.show());

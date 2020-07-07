@@ -36,39 +36,39 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.scoringService.getLeadCategoryMockData()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(
-      data => {
-        this.leadCategoryData = data;
-      },
-      error => {
-        console.log('error', error);
-      }
-    );
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.leadCategoryData = data;
+        },
+        error => {
+          console.log('error', error);
+        }
+      );
 
     this.tableSource.changed$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(change => {
-      let mockData = [];
-      if (change.search) {
-        mockData = this.leadCategoryData.filter(item =>
-          item.name.includes(change.search) || item.criteria.includes(change.search));
-      } else {
-        mockData = this.leadCategoryData;
-      }
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(change => {
+        let mockData = [];
+        if (change.search) {
+          mockData = this.leadCategoryData.filter(item =>
+            item.name.includes(change.search) || item.criteria.includes(change.search));
+        } else {
+          mockData = this.leadCategoryData;
+        }
 
-      this.tableSource.next(
-        mockData.slice(
-          change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
+        this.tableSource.next(
+          mockData.slice(
+            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
           mockData.length
-      );
-    });
+        );
+      });
 
     this.tableSource.selection$
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(selected => {
-      this.selected = selected;
-    });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
   }
 
   ngOnDestroy(): void {
@@ -78,7 +78,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'ID', prop: 'id', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true},
+      { name: 'ID', prop: 'id', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Name', prop: 'name', sortable: true },
       { name: 'Criteria', prop: 'criteria', sortable: true }
     ];
@@ -104,7 +104,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onActive(event) {
-    if (event.type === 'click' && event.cellIndex === 1) {
+    if (event.type === 'click' && event.cellIndex === 1 && event.event.target.classList.value === 'datatable-body-cell-label') {
       const leadCategory = event.row as LeadCategory;
       this.modalService.openModal(LeadCategoryModalComponent, {
         width: '100%',

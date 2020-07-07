@@ -111,7 +111,7 @@ export class DataFiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   onActive(evt) {
     if (evt.type === 'click') {
       this.tableButtons[1].disabled = this.selected.length === 0;
-      if (evt.cellIndex === 1) {
+      if (evt.cellIndex === 1 && evt.event.target.classList.value === 'datatable-body-cell-label') {
         this.selectedFilter = evt.row as Filter;
         this.modalType = ModalType.Edit;
         setTimeout(() => this.filterModal.show());

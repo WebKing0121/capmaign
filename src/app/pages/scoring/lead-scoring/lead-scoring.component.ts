@@ -117,7 +117,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     let message = '';
     const scoring = event.row as Scoring;
     // TODO: Simplify later
-    if (event.type === 'click') {
+    if (event.type === 'click' && event.event.target.classList.value === 'datatable-body-cell-label') {
       switch (event.cellIndex) {
         case 1:
           this.modalService.openModal(CreateLeadScoringComponent, {

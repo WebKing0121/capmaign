@@ -54,15 +54,15 @@ export class ReportImportsComponent implements OnInit, AfterViewInit, OnDestroy 
   ngAfterViewInit(): void {
 
     const columns: DataTableColumn[] = [
-      { name: 'File Name', prop: 'fileName', sortable: true, cellClass: ['cell-hyperlink'], maxWidth: 700, width: 700, },
+      { name: 'File Name', prop: 'fileName', sortable: true, cellClass: ['cell-hyperlink'] },
       {
         name: 'Import Date', prop: 'creationTime', sortable: true, maxWidth: 200,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
       },
-      { name: 'New Records', prop: 'newRecordCount', sortable: true },
-      { name: 'Updated Records', prop: 'updatedRecordCount', sortable: true },
-      { name: 'Skipped Records', prop: 'skippedRecordCount', sortable: true },
-      { name: 'Failed Records', prop: 'failedRecordCount', sortable: true },
+      { name: 'New Records', prop: 'newRecordCount', sortable: true, maxWidth: 150 },
+      { name: 'Updated Records', prop: 'updatedRecordCount', sortable: true, maxWidth: 150 },
+      { name: 'Skipped Records', prop: 'skippedRecordCount', sortable: true, maxWidth: 150 },
+      { name: 'Failed Records', prop: 'failedRecordCount', sortable: true, maxWidth: 150 },
       { name: 'Status', prop: 'status', sortable: true, maxWidth: 150 },
 
     ];
@@ -76,6 +76,9 @@ export class ReportImportsComponent implements OnInit, AfterViewInit, OnDestroy 
 
   onActive(event) {
     if (event.type === 'click') {
+      if (event.cellIndex === 0 && event.event.target.classList.value === 'datatable-body-cell-label') {
+        console.log('Text');
+      }
     }
   }
 
