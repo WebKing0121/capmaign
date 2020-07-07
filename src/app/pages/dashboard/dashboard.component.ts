@@ -134,12 +134,14 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   ngOnInit(): void {
     this.showDateRangePickerFlag = false;
     const today = new Date();
+    console.log("-------today--------", today);
     const oneMonthBeforeDate = moment().subtract(1, 'month');
-    this.fromDate = { year: today.getFullYear(), month: today.getMonth(), day: today.getDate() };
-    this.toDate = { year: oneMonthBeforeDate.year(), month: oneMonthBeforeDate.month(), day: oneMonthBeforeDate.date() };
-    this.compareFromDate = this.toDate;
-    const compareToDateV = moment().subtract(2, 'month');
-    this.compareToDate = { year: compareToDateV.year(), month: compareToDateV.month(), day: compareToDateV.date() };
+    this.toDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+    this.fromDate = { year: oneMonthBeforeDate.year(), month: oneMonthBeforeDate.month() + 1, day: oneMonthBeforeDate.date() };
+    const compareToDate = oneMonthBeforeDate.subtract(1, 'day');
+    const compareFromDate = compareToDate.subtract(1, 'month');
+    this.compareFromDate = { year: compareFromDate.year(), month: compareFromDate.month() + 1, day: compareFromDate.date() }
+    this.compareToDate = { year: compareToDate.year(), month: compareToDate.month() + 1, day: compareToDate.date() };
 
     // Get BounceEmail Table Information
     this.dashboardService.getBounceEmailMockData()
@@ -396,13 +398,13 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableSource.setColumns(columns);
 
     const topPerformingColumns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true, width: 60, maxWidth: 90},
-      { name: 'DATE & TIME', prop: 'dateTime', sortable: true, width: 60, maxWidth: 170},
-      { name: 'SENT', prop: 'sent', sortable: true, width: 60, maxWidth: 60},
-      { name: 'OPEN', prop: 'open', sortable: true, width: 60, maxWidth: 60},
-      { name: 'CLICKS', prop: 'clicks', sortable: true, width: 60, maxWidth: 60},
-      { name: 'BOUNCES', prop: 'bounces', sortable: true, width: 60, maxWidth: 60},
-      { name: 'UNSUBSCRIBE', prop: 'unsubscribe', sortable: true, width: 60, maxWidth: 100},
+      { name: 'Name', prop: 'name', sortable: true, width: 50, maxWidth: 100 },
+      { name: 'DATE & TIME', prop: 'dateTime', sortable: true, width: 50, maxWidth: 100 },
+      { name: 'SENT', prop: 'sent', sortable: true, width: 50, maxWidth: 100 },
+      { name: 'OPEN', prop: 'open', sortable: true, width: 50, maxWidth: 100 },
+      { name: 'CLICKS', prop: 'clicks', sortable: true, width: 50, maxWidth: 100 },
+      { name: 'BOUNCES', prop: 'bounces', sortable: true, width: 50, maxWidth: 100 },
+      { name: 'UNSUBSCRIBE', prop: 'unsubscribe', sortable: true, width: 50, maxWidth: 100 },
     ];
     this.topPerformingTableSource.setColumns(topPerformingColumns);
 
@@ -508,18 +510,38 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.fromDate = date;
     } else if (this.fromDate && !this.toDate && after(date, this.fromDate)) {
       this.toDate = date;
+      this.setCompareDates();
     } else {
       this.toDate = null;
       this.fromDate = date;
     }
   }
 
+  setCompareDates() {
+    const a = moment([this.fromDate.year, this.fromDate.month-1, this.fromDate.day]);
+    a.subtract(1, 'days');
+    this.compareToDate = { year: a.year(), month: a.month() + 1, day: a.date() };
+    const b = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day]);
+    a.subtract(b.diff(a, 'day') - 1, 'days');
+    this.compareFromDate = { year: a.year(), month: a.month() + 1, day: a.date()};
+  }
+
+  // onCompareDateChange(date: NgbDateStruct) {
+  //   if (!this.compareFromDate && !this.compareToDate) {
+  //     this.compareFromDate = date;
+  //   } else if (this.compareFromDate && !this.compareToDate && after(date, this.compareFromDate)) {
+  //     this.compareToDate = date;
+  //   } else {
+  //     this.compareToDate = null;
+  //     this.compareFromDate = date;
+  //   }
+  // }
+
   showDateRangePicker() {
     this.showDateRangePickerFlag = !this.showDateRangePickerFlag;
   }
 
   onClickAdd() {
-    console.log("kdkdkdkkdkdkd")
     this.modalType = ModalType.New;
     setTimeout(() => this.mobileAppModal.show());
   }
