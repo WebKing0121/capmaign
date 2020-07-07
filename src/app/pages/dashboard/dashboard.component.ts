@@ -113,6 +113,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   public invitedRegistrationsData: any;
   modalType: ModalType.New;
   selectedApp: null;
+  showAndroid: boolean;
 
   constructor(
     private router: Router,
@@ -129,12 +130,12 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.engagementDrivingChannelsData = EventDashCrm.EngagementDrivingChannelsData;
     this.invitedRegistrationsData = EventDashCrm.InvitedRegistrationsData;
     this.showEmailAnalytics = true;
+    this.showAndroid = true;
   }
 
   ngOnInit(): void {
     this.showDateRangePickerFlag = false;
     const today = new Date();
-    console.log("-------today--------", today);
     const oneMonthBeforeDate = moment().subtract(1, 'month');
     this.toDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
     this.fromDate = { year: oneMonthBeforeDate.year(), month: oneMonthBeforeDate.month() + 1, day: oneMonthBeforeDate.date() };
@@ -518,12 +519,12 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   setCompareDates() {
-    const a = moment([this.fromDate.year, this.fromDate.month-1, this.fromDate.day]);
+    const a = moment([this.fromDate.year, this.fromDate.month - 1, this.fromDate.day]);
     a.subtract(1, 'days');
     this.compareToDate = { year: a.year(), month: a.month() + 1, day: a.date() };
     const b = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day]);
     a.subtract(b.diff(a, 'day') - 1, 'days');
-    this.compareFromDate = { year: a.year(), month: a.month() + 1, day: a.date()};
+    this.compareFromDate = { year: a.year(), month: a.month() + 1, day: a.date() };
   }
 
   // onCompareDateChange(date: NgbDateStruct) {
@@ -541,8 +542,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.showDateRangePickerFlag = !this.showDateRangePickerFlag;
   }
 
-  onClickAdd() {
-    this.modalType = ModalType.New;
-    setTimeout(() => this.mobileAppModal.show());
+  showAppstates(type) {
+    this.showAndroid = type === 1 ? true : false;
   }
 }

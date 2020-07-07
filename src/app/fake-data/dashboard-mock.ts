@@ -81,7 +81,7 @@ export class EmailDashCrm {
       height: 317,
       type: 'bar',
       toolbar: {
-        show: true,
+        show: false,
       },
     },
     plotOptions: {
@@ -102,6 +102,10 @@ export class EmailDashCrm {
       show: true,
       width: 1,
       colors: ['transparent']
+    },
+    title: {
+      text: "Top Performing Campaigns",
+      align: "left"
     },
     series: [{
       name: 'Sent',
@@ -131,7 +135,7 @@ export class EmailDashCrm {
     yaxis: {
       title: {
         text: 'Count'
-      }
+      },
     },
     fill: {
       opacity: 0.85
@@ -145,21 +149,6 @@ export class EmailDashCrm {
           return '' + val;
         }
       }
-    },
-
-    subtitle: {
-      text: 'Campaign',
-      align: 'left',
-      margin: 10,
-      offsetX: 0,
-      offsetY: 0,
-      floating: false,
-      style: {
-        fontSize: '12px',
-        fontWeight: 'normal',
-        fontFamily: undefined,
-        color: '#ffffff'
-      }
     }
   };
 
@@ -168,7 +157,7 @@ export class EmailDashCrm {
       height: 317,
       type: 'bar',
       toolbar: {
-        show: true,
+        show: false,
       },
     },
     plotOptions: {
@@ -186,6 +175,10 @@ export class EmailDashCrm {
       width: 1,
       colors: ['transparent']
     },
+    title: {
+      text: "Subscribers",
+      align: "left"
+    },
     series: [
       {
         data: [17, 2, 1, 1],
@@ -199,6 +192,11 @@ export class EmailDashCrm {
         text: 'Month'
       },
       categories: ['9-Jun', '17-Jun', '19-Jun', '22-Jun'],
+    },
+    yaxis: {
+      title: {
+        text: 'Count'
+      }
     },
     fill: {
       opacity: 0.85
@@ -220,7 +218,7 @@ export class EmailDashCrm {
       height: 317,
       type: 'bar',
       toolbar: {
-        show: true,
+        show: false,
       },
     },
     plotOptions: {
@@ -238,6 +236,10 @@ export class EmailDashCrm {
       width: 1,
       colors: ['transparent']
     },
+    title: {
+      text: "Unsubscribers",
+      align: "left"
+    },
     series: [
       {
         data: [1, 0, 0, 0],
@@ -251,6 +253,11 @@ export class EmailDashCrm {
         text: 'Month'
       },
       categories: ['9-Jun', '17-Jun', '19-Jun', '22-Jun'],
+    },
+    yaxis: {
+      title: {
+        text: 'Count'
+      }
     },
     fill: {
       opacity: 0.85
@@ -274,7 +281,12 @@ export class MobileDashCrm {
       height: 317,
       type: 'bar',
       toolbar: {
-        show: true,
+        show: false,
+      },
+      zoom: {
+        type: "x",
+        enabled: true,
+        autoScaleYaxis: true
       },
     },
     plotOptions: {
@@ -286,7 +298,15 @@ export class MobileDashCrm {
     dataLabels: {
       enabled: false
     },
+    legend: {
+      show: true,
+      position: 'top',
+    },
     colors: ['#64b5f6', '#1976d2'],
+    title: {
+      text: "Top Performing Campaigns",
+      align: "left"
+    },
     stroke: {
       show: true,
       width: 1,
@@ -396,7 +416,7 @@ export class EventDashCrm {
       height: 300,
       type: 'bar',
       toolbar: {
-        show: true,
+        show: false,
       },
     },
     plotOptions: {
@@ -407,6 +427,10 @@ export class EventDashCrm {
     },
     dataLabels: {
       enabled: false
+    },
+    legend: {
+      show: true,
+      position: 'top',
     },
     colors: ['rgb(0, 168, 232)', '#ff0000'],
     stroke: {
@@ -421,11 +445,20 @@ export class EventDashCrm {
       name: 'Attendees',
       data: [220, 350, 100, 90, 75, 125, 230],
     }],
+    title: {
+      text: "Engagement Driving Channels",
+      align: "left"
+    },
     grid: {
       borderColor: '#e2e5e829',
     },
     xaxis: {
       categories: [],
+    },
+    yaxis: {
+      title: {
+        text: 'Count'
+      }
     },
     fill: {
       opacity: 0.85
@@ -448,7 +481,7 @@ export class EventDashCrm {
       height: 300,
       type: 'bar',
       toolbar: {
-        show: true,
+        show: false,
       },
     },
     plotOptions: {
@@ -459,6 +492,14 @@ export class EventDashCrm {
     },
     dataLabels: {
       enabled: false
+    },
+    legend: {
+      show: true,
+      position: 'top',
+    },
+    title: {
+      text: 'Last 12 months - Invited vs Registrations',
+      align: 'left'
     },
     colors: ['#1976d2', '#64b5f6'],
     stroke: {

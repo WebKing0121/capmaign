@@ -60,7 +60,7 @@
     </div>
 
     <div *ngIf="showEmailAnalytics">
-      <div class="row m-0">
+      <div class="row table-card m-l-0 m-r-0 m-b-10">
         <div class="dashboard-top-card card">
           <div class="dashboard-top-card_header">
             <span class="dashboard-top-card_header_title">Click - through</span>
@@ -150,7 +150,7 @@
       <div class="row">
         <div class="col-lg-7 col-md-12 table-height p-r-5">
           <app-datatable [title]="'Top Performing Campaigns'" [dataSource]="topPerformingTableSource"
-            [buttons]="topPerformingTableButtons" class="topPerformingTable">
+            [buttons]="topPerformingTableButtons" class="soft-shadow">
           </app-datatable>
         </div>
         <div class="col-lg-5 col-md-12 table-height p-l-5">
@@ -167,12 +167,12 @@
       </div>
       <div class="row">
         <div class="col-lg-6 col-md-12 p-r-5 table-height">
-          <div class="card table-card p-0 m-0" cardTitle="Subscribers">
+          <div class="card table-card m-0" cardTitle="Subscribers">
             <app-apex-chart chartID="subscribe-crm" [chartConfig]="subscribersData"></app-apex-chart>
           </div>
         </div>
         <div class="col-lg-6 col-md-12 p-l-5 table-height">
-          <div class="card table-card p-0 m-0" cardTitle="Unsubscribers">
+          <div class="card table-card m-0" cardTitle="Unsubscribers">
             <app-apex-chart chartID="unsubscribers-crm" [chartConfig]="unsubscribers"></app-apex-chart>
           </div>
         </div>
@@ -266,13 +266,14 @@
               </div>
             </div>
             <div class="col-lg-2 col-md-4 col-xl-2 p-0">
-              <div class="dashboard-top-card card" (click)="onClickAdd()">
+              <div class="dashboard-top-card card android" (click)="showAppstates(1)">
                 <div class="dashboard-top-card_header">
                   <span class="dashboard-top-card_header_title"></span>
                   <span class="text-success dashboard-top-card_header_pro"></span>
                 </div>
-                <div class="dashboard-top-card_main-value text-center">
-                  <img src="../../../assets/images/dashboard/android.svg">
+                <div class="dashboard-top-card_main-value text-center android">
+                  <img *ngIf="showAndroid" src="../../../assets/images/mobile/Android_selected.png">
+                  <img *ngIf="!showAndroid" src="../../../assets/images/mobile/Android_deselected.png">
                 </div>
                 <div class="dashboard-top-card_footer justify-content-center">
                     <small class="dashboard-top-card_footer_txt">0(0)</small>
@@ -280,16 +281,17 @@
               </div>
             </div>
             <div class="col-lg-2 col-md-4 col-xl-2 p-0">
-              <div class="dashboard-top-card card">
+              <div class="dashboard-top-card card iphone" (click)="showAppstates(2)">
                 <div class="dashboard-top-card_header">
                   <span class="dashboard-top-card_header_title"></span>
                   <span class="text-success dashboard-top-card_header_pro"></span>
                 </div>
                 <div class="dashboard-top-card_main-value text-center">
-                  <img src="../../../assets/images/dashboard/App_store.svg">
+                  <img *ngIf="showAndroid" src="../../../assets/images/mobile/ios_deselected.png">
+                  <img *ngIf="!showAndroid" src="../../../assets/images/mobile/ios_selected.png">
                 </div>
-                <div class="dashboard-top-card_footer">
-                  <small class="dashboard-top-card_footer_txt">&nbsp;</small>
+                <div class="dashboard-top-card_footer justify-content-center">
+                  <small class="dashboard-top-card_footer_txt">0(0)</small>
                 </div>
               </div>
             </div>
@@ -417,7 +419,8 @@
                   <span class="text-success dashboard-top-card_header_pro"></span>
                 </div>
                 <div class="dashboard-top-card_main-value">
-                  <span>1,098</span>
+                  <span *ngIf="showAndroid">1,098</span>
+                  <span *ngIf="!showAndroid">358</span>
                 </div>
                 <div class="dashboard-top-card_footer">
                   <small class="dashboard-top-card_footer_txt">&nbsp;</small>
@@ -440,7 +443,8 @@
                   <span class="text-success dashboard-top-card_header_pro"></span>
                 </div>
                 <div class="dashboard-top-card_main-value">
-                  <span>208</span>
+                  <span *ngIf="showAndroid">208</span>
+                  <span *ngIf="!showAndroid">145</span>
                 </div>
                 <div class="dashboard-top-card_footer">
                   <small class="dashboard-top-card_footer_txt">&nbsp;</small>
@@ -466,7 +470,7 @@
           </app-datatable>
         </div>
         <div class="col-lg-5 col-md-12 p-l-5">
-          <div class="card table-card p-0 m-0" cardTitle="Top Performing Campaigns">
+          <div class="card table-card m-0" cardTitle="Top Performing Campaigns">
             <app-apex-chart chartID="top-performing-mobile-crm" [chartConfig]="topPerformingMobileData">
             </app-apex-chart>
           </div>
@@ -488,60 +492,84 @@
       <h1>Website Analytics Page</h1>
     </div>
     <div *ngIf="showEventAnalytics">
-      <div class="row card event-cards">
+      <div class="row card event-cards p-0">
         <div class="card-header">
           <span>Events</span>
         </div>
         <div class="card-body d-flex flex-wrap p-0">
-          <div class="col-lg-3 col-md-6 col-sm-12 event_card">
-            <div class="dashboard_top_card table-card">
-              <div class="title text-dark font-weight-500">
-                <span>Live Event</span>
+          <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+            <div class="dashboard-top-card card event-card">
+              <div class="dashboard-top-card_header">
+                <span class="dashboard-top-card_header_title">Live Event</span>
+                <span class="text-success dashboard-top-card_header_pro"></span>
+              </div>
+              <div class="dashboard-top-card_main-value">
+                <span>26</span>
+              </div>
+              <div class="dashboard-top-card_footer justify-content-between">
+                  <small class="dashboard-top-card_footer_txt"></small>
+                  <span class="text-success dashboard-top-card_footer_pro"></span>
+              </div>
+              <div class="dashboard-top-card_footer">
+                <small class="dashboard-top-card_footer_txt"></small>
+                <span class="text-success dashboard-top-card_footer_pro"></span>
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-12 event_card">
-            <div class="dashboard_top_card table-card">
-              <div class="title text-dark font-weight-500">
-                <span>Invitee</span>
+          <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+            <div class="dashboard-top-card card event-card">
+              <div class="dashboard-top-card_header">
+                <span class="dashboard-top-card_header_title">Invitee</span>
+                <span class="text-success dashboard-top-card_header_pro"></span>
               </div>
-              <div class="d-flex justify-content-between">
-                <span>Previous</span>
-                <span>12</span>
-              </div>
-              <div class="d-flex justify-content-between">
-                <span>Current</span>
+              <div class="dashboard-top-card_main-value">
                 <span>17</span>
               </div>
+              <div class="dashboard-top-card_footer justify-content-between">
+                  <small class="dashboard-top-card_footer_txt">Previous</small>
+                  <span class="text-success dashboard-top-card_footer_pro">12</span>
+              </div>
+              <div class="dashboard-top-card_footer">
+                <small class="dashboard-top-card_footer_txt">Current</small>
+                <span class="text-success dashboard-top-card_footer_pro">17</span>
+              </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-12 event_card">
-            <div class="dashboard_top_card table-card">
-              <div class="title text-dark font-weight-500">
-                <span>Registered</span>
+          <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+            <div class="dashboard-top-card card event-card">
+              <div class="dashboard-top-card_header">
+                <span class="dashboard-top-card_header_title">Registered</span>
+                <span class="text-success dashboard-top-card_header_pro"></span>
               </div>
-              <div class="d-flex justify-content-between">
-                <span>Previous</span>
-                <span>7</span>
-              </div>
-              <div class="d-flex justify-content-between">
-                <span>Current</span>
+              <div class="dashboard-top-card_main-value">
                 <span>2</span>
               </div>
+              <div class="dashboard-top-card_footer justify-content-between">
+                  <small class="dashboard-top-card_footer_txt">Previous</small>
+                  <span class="text-success dashboard-top-card_footer_pro">7</span>
+              </div>
+              <div class="dashboard-top-card_footer">
+                <small class="dashboard-top-card_footer_txt">Current</small>
+                <span class="text-success dashboard-top-card_footer_pro">2</span>
+              </div>
             </div>
           </div>
-          <div class="col-lg-3 col-md-6 col-sm-12 event_card">
-            <div class="dashboard_top_card table-card">
-              <div class="title text-dark font-weight-500">
-                <span>Attendees</span>
+          <div class="col-lg-3 col-md-6 col-sm-12 p-0">
+            <div class="dashboard-top-card card event-card">
+              <div class="dashboard-top-card_header">
+                <span class="dashboard-top-card_header_title">Attendees</span>
+                <span class="text-success dashboard-top-card_header_pro"></span>
               </div>
-              <div class="d-flex justify-content-between">
-                <span>Previous</span>
+              <div class="dashboard-top-card_main-value">
                 <span>7</span>
               </div>
-              <div class="d-flex justify-content-between">
-                <span>Current</span>
-                <span>7</span>
+              <div class="dashboard-top-card_footer justify-content-between">
+                  <small class="dashboard-top-card_footer_txt">Previous</small>
+                  <span class="text-success dashboard-top-card_footer_pro">7</span>
+              </div>
+              <div class="dashboard-top-card_footer">
+                <small class="dashboard-top-card_footer_txt">Current</small>
+                <span class="text-success dashboard-top-card_footer_pro">7</span>
               </div>
             </div>
           </div>
@@ -554,27 +582,27 @@
           </app-datatable>
         </div>
         <div class="col-lg-5 col-md-12 p-l-5 table-height">
-          <div class="card table-card m-0 p-0" cardTitle="Engagement Driving Channels">
+          <div class="card table-card m-0" cardTitle="Engagement Driving Channels">
             <app-apex-chart chartID="engagement-ddriving-channels" [chartConfig]="engagementDrivingChannelsData">
             </app-apex-chart>
           </div>
         </div>
       </div>
-      <div class="row m-0">
-        <div class="col-lg-6 col-md-12 table-height p-0">
-          <div class="card table-card p-r-5 m-0" cardTitle="Last 12 months - Invited vs Registrations">
+      <div class="row">
+        <div class="col-lg-4 col-md-12 p-r-5 table-height">
+          <div class="card table-card m-0" cardTitle="Last 12 months - Invited vs Registrations">
             <app-apex-chart chartID="invited-registrations" [chartConfig]="invitedRegistrationsData">
             </app-apex-chart>
           </div>
         </div>
-        <div class="col-lg-6 col-md-12 table-height p-1">
+        <div class="col-lg-4 col-md-12 p-l-5 p-r-5 table-height">
           <app-datatable [title]="'Registrations by Country'" [dataSource]="registrationByCountryTableSource"
             [buttons]="registrationByCountryTableButtons"></app-datatable>
         </div>
-        <!-- <div class="col-lg-4 col-md-12 table-height p-0">
-          <div class="card table-card m-0 p-l-5" cardTitle="Upcoming Events">
-          </div>
-        </div> -->
+        <div class="col-lg-4 col-md-12 p-l-5 table-height">
+          <app-datatable [title]="'Upcoming Events'" [dataSource]="registrationByCountryTableSource"
+            [buttons]="registrationByCountryTableButtons"></app-datatable>
+        </div>
       </div>
       <div class="row">
         <div class="col-lg-12 table-height">
@@ -587,7 +615,7 @@
       <h1>QRCodeAnalytics</h1>
     </div>
     <div *ngIf="showLeadAnalytics">
-      <div class="col-lg-12 table-height">
+      <div class="col-lg-12 table-height p-0">
         <app-datatable [title]="'Google Analytics Leads Data'" [dataSource]="googleLeadTableSource"
           [buttons]="googleLeadTableButtons"></app-datatable>
       </div>
