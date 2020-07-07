@@ -1,5 +1,7 @@
 :host {
   .dashboard {
+    padding: 0 !important;
+
     @media only screen and (max-width: 767px) {
       margin-left: -15px;
       margin-right: -15px;
@@ -42,8 +44,9 @@
     }
   }
 
-  .dashboard_top-card {
+  .dashboard-top-card {
     width: 20%;
+    min-height: 150px;
 
     @media only screen and (max-width: 767px) {
       width: 50%;
@@ -53,8 +56,43 @@
       width: 100%;
     }
 
+    &_header, &_footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &_title {
+        font-size: 9px;
+        font-weight: 500;
+      }
+
+      &_pro {
+        font-size: 11px;
+      }
+    }
+
     &_header {
       margin-bottom: 10px;
+      
+      &_title {
+        color: black;
+      }
+    }
+
+    &_footer {
+      margin-top: 10px;
+    }
+
+    &_main-value {
+      font-size: 36px;
+      margin-top: auto;
+      margin-bottom: auto;
+      color: black;
+      font-weight: 500;
+    }
+
+    &_pro-bar {
+
     }
   }
 
@@ -82,11 +120,21 @@
     width: 100%;
 
     .card-body {
-      display: flex;
       padding: 0;
 
-      .card {
-        min-height: 110px;
+      .dashboard-top-card {
+        display: flex;
+        width: 100%;
+        min-height: 161px;
+
+        &:hover {
+          box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14),
+            0 3px 14px 2px rgba(0, 0, 0, 0.12);
+        }
+
+        &:active {
+          box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+        }
       }
     }
   }
@@ -112,6 +160,13 @@
     padding: 20px;
     border: 1px solid #eaecec;
     border-radius: 5px;
+
+    .pro {
+      width: 43px;
+      text-align: right;
+      font-size: 11px;
+      font-weight: 500;
+    }  
   }
 
   .hiddenable {
@@ -121,20 +176,54 @@
     text-overflow: ellipsis;
   }
 
-  .pro {
-    width: 62px;
+  .card {
+    padding: 20px;
+    margin-bottom: 10px;
   }
 
-  .table-card {
-    padding: 20px;
-    margin: 5px;
+  .sms-cards,
+  .push-cards {
+    .card {
+      margin-bottom: 0;
+    }
   }
 
   .table-height {
+    width: 100%;
     height: 400px;
 
     @media only screen and (max-width: 575px) {
       height: 300px;
     }
+  }
+
+  small {
+    font-size: 12px;
+  }
+
+  .chart-left-caption {
+    position: absolute;
+    top: calc(50% - 8px);
+    left: 20px;
+    background: none;
+    transform-origin: 0 0;
+    transform: rotate(-90deg);
+    z-index: 10;
+  }
+
+  .name-field {
+    width: 20%;
+  }
+
+  .dateTime-field {
+    width: 30%;
+  }
+
+  .sent-field,
+  .open-field,
+  .clicks-field,
+  .bounces-field,
+  .unsubscribe-field {
+    width: 10%;
   }
 }

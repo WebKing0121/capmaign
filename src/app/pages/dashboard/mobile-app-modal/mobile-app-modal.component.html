@@ -1,0 +1,77 @@
+<app-ui-modal #mobileAppModal dialogClass="modal-dialog-centered modal-md mobile-app-modal">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.Edit ? 'Edit': 'Add'}} a Mobile App</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="mobileAppModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <div class="d-flex justify-content-center">
+      <img class="mobile-icon"
+        [src]="mobileType === 1 ? 'assets/images/mobile/Android_selected.png' : 'assets/images/mobile/Android_deselected.png'"
+        (click)="setMobileType(1)" />
+      <img class="mobile-icon ml-5"
+        [src]="mobileType === 1 ? 'assets/images/mobile/ios_deselected.png' : 'assets/images/mobile/ios_selected.png'"
+        (click)="setMobileType(2)" />
+    </div>
+    <hr class="w-100" />
+    <form [formGroup]="form">
+      <div class="mobile-app-input-section">
+        <div class="row">
+          <div class="col-12">
+            <label class="mobile-show">Name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Name</span>
+              </div>
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <label class="mobile-show">Description</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Description</span>
+              </div>
+              <input type="text" class="form-control" formControlName="description">
+            </div>
+          </div>
+          <div class="col-12 mt-3">
+            <label class="mobile-show">Application Id</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Application Id</span>
+              </div>
+              <input type="text" class="form-control" formControlName="appId">
+            </div>
+          </div>
+          <div class="col-12 mt-3" *ngIf="mobileType === 1">
+            <label class="mobile-show">Sender Id</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Sender Id</span>
+              </div>
+              <input type="text" class="form-control" formControlName="senderId">
+            </div>
+          </div>
+          <div class="col-12 mt-3" *ngIf="mobileType === 1">
+            <label class="mobile-show">Package Name</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Package Name</span>
+              </div>
+              <input type="text" class="form-control" formControlName="packageName">
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary">{{modalType === ModalType.Edit ? 'Save': 'Add'}}</button>
+    &nbsp;
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="mobileAppModal.hide()">Close</button>
+  </div>
+</app-ui-modal>
