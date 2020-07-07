@@ -6,10 +6,15 @@
 		</button>
 	</div>
 	<div class="app-modal-body">
-		<p>{{modalMessage}}</p>
+		<p><i class="fa fa-info-circle" [style.marginRight.px]="10" [style.color]="'#ffd86b'"></i>{{modalMessage}}</p>
 	</div>
 	<div class="app-modal-footer">
-		<button type="button" *ngFor="let button of buttons" class="btn" [ngClass]="button.class" (click)="onClickYes(button.action)">{{button.label}}</button> &nbsp;
-		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="confirmModal.hide()">{{btnNoText ? btnNoText: 'Cancel'}}</button>
+		<button type="button" *ngFor="let button of buttons" class="btn"
+			[ngClass]="button.class" (click)="onClickYes(button.action)">
+			<i class="fa fa-check"></i>{{button.label}}
+		</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="confirmModal.hide()">
+			<i class="fa fa-times"></i>{{btnNoText ? btnNoText: 'Cancel'}}
+		</button>
 	</div>
 </app-ui-modal>

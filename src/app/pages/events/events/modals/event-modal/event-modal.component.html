@@ -1,0 +1,108 @@
+<app-ui-modal #eventModal [containerClick]="false" dialogClass="modal-dialog-centered modal-event modal-xl">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'New' : 'Edit'}} Event</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="eventModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body">
+    <form [formGroup]="form" (ngSubmit)="onSaveEvent()">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="mobile-show">Event Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Event Name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="name" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+        <div class="col-md-6 mobile-mt">
+          <label class="mobile-show">Event Subject</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Event Subject</span>
+            </div>
+            <input type="text" class="form-control" formControlName="subject" placeholder="e.g: Webinar Event">
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+        <div class="col-md-6">
+          <label class="mobile-show">Display From</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Display From</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" formControlName="displayName" [options]="displayNameList"></ng-select>
+          </div>
+        </div>
+        <div class="col-md-6 mobile-mt">
+          <label class="mobile-show">Folder</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Folder</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" [options]="folderList"></ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-2">
+				<div class="col-md-6 col-sm-12">
+          <label class="mobile-show">Start Date</label>
+          <div class="input-group">
+            <input class="form-control" autocomplete="off" formControlName="startDate"
+              placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
+              #d_f="ngbDatepicker">
+            <div class="input-group-append">
+              <span class="input-group-text" (click)="d_f.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+            <input type="time" class="form-control" formControlName="startTime">
+          </div>
+				</div>
+				<div class="col-md-6 col-sm-12 input-group  mobile-mt">
+          <label class="mobile-show">End Date</label>
+          <div class="input-group">
+            <input class="form-control" autocomplete="off"  formControlName="endDate"
+              placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+              #d_t="ngbDatepicker">
+            <div class="input-group-append">
+              <span class="input-group-text" (click)="d_t.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+            <input type="time" class="form-control" formControlName="endTime">
+          </div>
+				</div>
+      </div>
+      <div class="row mt-5">
+        
+          <div class="col-12 preview-toolbar mb-1 d-flex align-items-center">
+            <app-personalization-selector class="d-block mr-2" [editor]="emailCampaignEditor"></app-personalization-selector>
+            <button class="btn btn-success" appEmailCampaignDynamics [editor]="emailCampaignEditor">Dynamics</button>
+            <button class="btn btn-success ml-auto mr-2" appEmailCampaignTemplates>Templates</button>
+            <button class="btn btn-success" appEmailCampaignPreview [editor]="emailCampaignEditor">Preview</button>
+          </div>
+    
+          <div class="col-12">
+            <app-email-campaign-editor #emailCampaignEditor formControlName="template"></app-email-campaign-editor>
+          </div>
+    
+      </div>
+    </form>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit"><i class="fa fa-trash"></i>Delete</button>
+    <button type="button" class="btn btn-primary">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="eventModal.hide()">
+      <i class="fa fa-times-circle"></i>Close</button>
+  </div>
+</app-ui-modal>

@@ -13,6 +13,7 @@ import { NgSelectData, GridColumn } from '@app-models/common';
 import { List } from '@app-models/list';
 import { Store } from '@ngrx/store';
 import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-data-event-lists',
@@ -54,8 +55,8 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   // add, edit list modal
-  isModalNew: boolean;
-  eventListForm: FormGroup;
+  modalType = ModalType.New;
+  selectedEventList: any;
 
   // confirm Modal
   confirmButtons = [
@@ -82,14 +83,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {
     this.totalCount = 0;
     this.lists = [];
-    this.isModalNew = true;
-    this.eventListForm = fb.group({
-      id: 0,
-      name: ['', Validators.required],
-      description: ['', Validators.required],
-      folderId: ['0', Validators.required],
-      type: ['', Validators.required],
-    });
+
     this.dataLoaded = 0;
     this.recordColumns$ = this.store.select(selectRecordColumns);
   }
@@ -160,8 +154,8 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Description', prop: 'description', sortable: true, hidden: true },
-      { name: 'Type', prop: 'type', sortable: true, maxWidth: 100 },
-      { name: 'Events', prop: 'events', sortable: true, maxWidth: 80 }
+      { name: 'Type', prop: 'type', sortable: true },
+      { name: 'Events', prop: 'events', sortable: true, hidden: true }
     ];
     this.tableSource.setColumns(columns);
 
@@ -256,38 +250,18 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
         evt.cellIndex === 0 && evt.column.frozenLeft
         && evt.event.target.classList.value === 'datatable-body-cell-label'
       ) {
-        this.isModalNew = false;
-
-        this.eventListForm.setValue({
-          id: list.listId,
-          name: list.name,
-          description: list.description,
-          folderId: `${list.folderId}`,
-          type: list.type,
-        });
-
-        this.listModal.show();
+        this.modalType = ModalType.Edit;
+        this.selectedEventList = list;
+        setTimeout(() => this.listModal.show());
       }
     }
   }
 
   onClickCreate() {
-    this.isModalNew = true;
-    this.eventListForm.setValue({
-      id: 0,
-      name: '',
-      description: '',
-      folderId: '0',
-      type: ''
-    });
-
-    this.listModal.show();
+    this.modalType = ModalType.New;
+    setTimeout(() => this.listModal.show());
   }
 
-  // event form submit
-  onSaveList() {
-    console.log(this.eventListForm.value);
-  }
 
   onClickDelete() {
     this.confirmModal.show();

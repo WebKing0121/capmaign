@@ -17,14 +17,15 @@ import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@
 import { User } from '@app-models/user';
 
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-campaigns',
+  selector: 'app-collaborate-campaigns',
   templateUrl: './campaigns.component.html',
   styleUrls: ['./campaigns.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
+export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('assignTeamModal', { static: false }) assignTeamModal;
   @ViewChild('cardTasks', { static: false }) cardTasks;
   @ViewChild('campaignTasks', { static: false }) campaignTasks;
@@ -41,6 +42,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   teamsInAssignModel: any[];
 
+  modalType = ModalType.New;
+
   selectedCampaign: CollaborateCampaign;
   selectedTask: CollaborateCampaignTask;
   selectedUser: any;
@@ -52,7 +55,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showSearchCampaigns: boolean;
 
-  teamsForm: FormGroup;
 
   // Colaborate Campaigns Table Type Filter;
   campaignFilter: any[] = [
@@ -86,7 +88,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedStatus: string;
 
   constructor(
-    private fb: FormBuilder,
+
     private collaborateService: CollaborateService,
     private userService: UserService
   ) {
@@ -116,11 +118,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-
-    this.teamsForm = this.fb.group({
-      current_team: [''],
-      new_team: ['', Validators.required],
-    });
 
     // load teams
     this.collaborateService.getCollaborateTeams()
@@ -187,28 +184,15 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.campaignSubTasks.loadSubTasks(0);
 
       if (event.cellIndex === 0 && !event.column.frozenLeft
-        && event.event.target.classList.value === 'datatable-body-cell-label'
+        && event.event.target.classList.value.indexOf('team-name') >= 0
       ) {
-        this.teamsForm.setValue({
-          current_team: campaign.team_id === 0 ? '' : this.getTeamName(campaign.team_id),
-          new_team: ''
-        });
-
-        this.teamsInAssignModel = campaign.team_id === 0 ? this.teams.map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })) :
-          this.teams.filter((x: CollaborateTeam) => x.id !== campaign.team_id)
-            .map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })),
-          this.assignTeamModal.show();
-
+        setTimeout(() => this.assignTeamModal.show());
       }
     }
   }
 
   // button click template
   clickTemplate() {
-
-  }
-
-  onAssignTeam() {
 
   }
 
@@ -221,8 +205,6 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     return '';
   }
-
-
 
   onClickFilter(opt: any, filter: any) {
     console.log(opt, filter);

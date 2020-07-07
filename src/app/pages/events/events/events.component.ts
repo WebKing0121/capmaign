@@ -1,6 +1,4 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild, ViewEncapsulation, TemplateRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Event } from '@app-models/event';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 
@@ -11,10 +9,10 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { NgSelectData } from '@app-models/common';
 import { DataListType } from '@app-core/enums/data-list-type.enum';
-import * as moment from 'moment';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-events',
+  selector: 'app-events-events',
   templateUrl: './events.component.html',
   styleUrls: ['./events.component.scss'],
   encapsulation: ViewEncapsulation.None
@@ -42,8 +40,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   // add, edit event modal
-  isModalNew: boolean;
-  eventForm: FormGroup;
+  modalType = ModalType.New;
+  selectedEvent: Event;
 
   // confirm Modal
   confirmButtons = [
@@ -52,49 +50,19 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayNameList: NgSelectData[];
   folderList: NgSelectData[];
+
   folders: any[]; // data from API;
   dataLoaded: number;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
     private eventService: EventService
   ) {
     this.totalCount = 0;
     this.events = [];
-    this.isModalNew = true;
-    const year = Number(moment().format('YYYY'));
-    const month = Number(moment().format('MM'));
-    const day = Number(moment().format('DD'));
-    this.eventForm = fb.group({
-      id: 0,
-      name: ['', Validators.required],
-      subject: ['', Validators.required],
-      startDate: { year, month, day },
-      startTime: ['', Validators.required],
-      endDate: [moment().format('YYYY-MM-DD'), Validators.required],
-      endTime: ['', Validators.required],
-      displayName: ['', Validators.required],
-      location: ['', Validators.required],
-      template: '',
-    });
     this.dataLoaded = 0;
   }
 
   ngOnInit(): void {
-    this.eventService.getFolders()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.folders = data.result;
-          this.folderList = data.result.map(x => ({ value: '' + x.folderId, label: x.folderName }));
-          this.dataLoaded++;
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
 
     this.eventService.getDisplayFrom()
       .pipe(takeUntil(this.unsubscribe$))
@@ -124,7 +92,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   checkLoaded() {
-    if (this.dataLoaded === 3) {
+    if (this.dataLoaded === 2) {
       this._updateTable(this.events);
     } else {
       setTimeout(() => this.checkLoaded);
@@ -183,50 +151,19 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
         evt.cellIndex === 1
         && evt.event.target.classList.value === 'datatable-body-cell-label'
       ) {
-        const event: Event = evt.row as Event;
-        this.isModalNew = false;
-        const startYear = Number(moment(event.eventStartDate).format('YYYY'));
-        const startMonth = Number(moment(event.eventStartDate).format('MM'));
-        const startDay = Number(moment(event.eventStartDate).format('DD'));
-        const endYear = Number(moment(event.eventEndDate).format('YYYY'));
-        const endMonth = Number(moment(event.eventEndDate).format('MM'));
-        const endDay = Number(moment(event.eventEndDate).format('DD'));
-
-        this.eventForm.setValue({
-          id: event.id,
-          name: event.eventName,
-          subject: event.eventSubject,
-          startDate: {
-            year: startYear,
-            month: startMonth,
-            day: startDay
-          },
-          startTime: moment(event.eventStartDate).format('HH:mm'),
-          endDate: {
-            year: endYear,
-            month: endMonth,
-            day: endDay
-          },
-          endTime: moment(event.eventEndDate).format('HH:mm'),
-          displayName: event.displayName,
-          location: event.location,
-          template: event.eventBody,
-        });
-        this.eventModal.show();
+        this.selectedEvent = evt.row as Event;
+        this.modalType = ModalType.Edit;
+        setTimeout(() => this.eventModal.show());
       }
     }
   }
 
   onCreateEvent() {
-    this.isModalNew = true;
-    this.eventForm.reset();
-    this.eventModal.show();
+    this.modalType = ModalType.New;
+    this.selectedEvent = null;
+    setTimeout(() => this.eventModal.show());
   }
 
-  // event form submit
-  onSaveEvent() {
-    console.log(this.eventForm.value);
-  }
 
   onDeleteEvent() {
     this.confirmModal.show();
@@ -243,10 +180,4 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   getDisplayFrom(value: string | null) {
     return value ? this.displayNameList.find(x => x.value === value).label : '';
   }
-
-  getFolder(value: string) {
-    return this.folderList.find(x => x.value === value).label;
-  }
-
-
 }

@@ -20,7 +20,7 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
   ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
-  userRoleForm: FormGroup;
+  form: FormGroup;
   roleData: any;
 
   treeData: any[];
@@ -35,7 +35,7 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.treeData = [];
     this.selectedTreeData = [];
-    this.userRoleForm = this.fb.group({
+    this.form = this.fb.group({
       id: 0,
       roleName: ['', Validators.required],
       isDefault: [false, Validators.required],
@@ -58,7 +58,7 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
 
   show() {
     if (this.modalType === ModalType.Edit) {
-      this.userRoleForm.setValue({
+      this.form.setValue({
         id: this.role.id,
         roleName: this.role.displayName,
         isDefault: this.role.isDefault,
@@ -77,7 +77,7 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
           }
         );
     } else {
-      this.userRoleForm.setValue({
+      this.form.setValue({
         id: 0,
         roleName: '',
         isDefault: false,

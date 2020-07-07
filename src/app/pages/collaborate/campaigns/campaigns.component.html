@@ -30,50 +30,15 @@
     </div>
   </div>
 </div>
-<app-ui-modal #assignTeamModal dialogClass="modal-dialog-centered modal-assign-team">
-  <div class="app-modal-header">
-    <h5 class="modal-title">{{selectedCampaign && selectedCampaign.team_id > 0 ? 'Replace Team': 'Assign Team'}}</h5>
-    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
-      (click)="assignTeamModal.hide()">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
 
-  <div class="app-modal-body">
-    <form [formGroup]="teamsForm" (ngSubmit)="onAssignTeam()">
-      <div class="row" *ngIf="selectedCampaign && selectedCampaign.team_id > 0">
-        <div class="col-md-12">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">Current Team</span>
-            </div>
-            <input type="text" class="form-control" id="team_name" placeholder="Team name"
-              formControlName="current_team" readonly>
-          </div>
-        </div>
-      </div>
-      <div class="row" [ngClass]="{'mt-4': selectedCampaign && selectedCampaign.team_id > 0}">
-        <div class="col-md-12">
-          <div class="input-group">
-            <div class="input-group-prepend">
-              <span class="input-group-text">New Team</span>
-            </div>
-            <ng-select formControlName="new_team" [ngClass]="'ng-select'" [options]="teamsInAssignModel"></ng-select>
-          </div>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary">Assign</button> &nbsp;
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="assignTeamModal.hide()">Close</button>
-  </div>
-</app-ui-modal>
+<app-collaborate-assign-team-modal #assignTeamModal
+  [campaign]="selectedCampaign"
+  [teams]="teams"
+></app-collaborate-assign-team-modal>
 
 <ng-template #teamTemplate let-row="row" let-value let-i="index">
-  <span *ngIf="value > 0">{{ getTeamName(value) }}</span>
-  <span class="" *ngIf="value === 0"><i class="fa fa-plus"></i> New</span>
+  <span class="team-name" *ngIf="value > 0">{{ getTeamName(value) }}</span>
+  <span class="team-name" *ngIf="value === 0"><i class="fa fa-plus"></i> New</span>
 </ng-template>
 
 <ng-template #progressTemplate let-row="row" let-value let-i="index">

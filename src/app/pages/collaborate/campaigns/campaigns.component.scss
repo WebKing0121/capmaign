@@ -1,58 +1,41 @@
-
 .campaign-filter {
-    width: 210px;
-    .btn-group {
-        width: 100%;
-        .dropdown-toggle {
-            text-align: left;
-        }
-        .dropdown-toggle:after {
-            float: right;
-            margin-top: 8px;
-        }
+  width: 210px;
+  .btn-group {
+    width: 100%;
+    .dropdown-toggle {
+      text-align: left;
     }
-}
-
-.modal-assign-team {
-    .input-group-text {
-        width: 130px;
+    .dropdown-toggle:after {
+      float: right;
+      margin-top: 8px;
     }
-    ng-select {
-        width: calc(100% - 128px)!important;
-        min-height: 45px;
-        
-    }
-    
-    ng-select > div {
-        min-height: 45px !important;
-    }
+  }
 }
 
 .tab-pane {
-    height: calc(100vh - 280px);
-    width: 100%;
-    overflow: auto;
+  height: calc(100vh - 280px);
+  width: 100%;
+  overflow: auto;
 }
 
 .card-tasks-section {
-    padding-left: 0;     
-}  
+  padding-left: 0;
+}
 .card-campaigns {
-    height: calc(100vh - 130px);
+  height: calc(100vh - 130px);
 }
 .card-tasks {
-    height: calc(50vh - 60px);
+  height: calc(50vh - 60px);
 }
 .card-sub-tasks {
-    height: calc(50vh - 70px);
+  height: calc(50vh - 70px);
 }
 
 @media only screen and (max-width: 1200px) {
-    .card-campaigns {
-        padding: 0px;
-    }
-    .card-tasks-section {
-        padding: 0px;
-    }
+  .card-campaigns {
+    padding: 0px;
+  }
+  .card-tasks-section {
+    padding: 0px;
+  }
 }
-

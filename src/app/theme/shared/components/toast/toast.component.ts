@@ -24,6 +24,7 @@ export class ToastComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.toastEvent.toggleToast.pipe(takeUntil(this.unsubscribe$)).subscribe((toast) => {
+      console.log(toast.id);
       document.querySelector('#' + toast.id).classList.add('show');
       setTimeout(() => {
         document.querySelector('#' + toast.id).classList.remove('show');

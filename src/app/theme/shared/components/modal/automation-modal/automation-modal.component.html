@@ -74,9 +74,13 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" *ngIf="modalType === 'edit'" >Delete</button>
+    <button type="button" class="btn btn-danger" *ngIf="modalType === 'edit'" ><i class="fa fa-trash"></i>Delete</button>
     
-    <button type="button" class="btn btn-primary" (click)="onSaveAutomation()">{{modalType === 'new' ? 'Create' : 'Save'}}</button>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="automationModal.hide()">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSaveAutomation()">
+      <i class="fa" [ngClass]="{'fa-save': modalType === 'edit', 'fa-plus': modalType === 'new'}"></i>{{modalType === 'new' ? 'Create' : 'Save'}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="automationModal.hide()">
+      <i class="fa fa-times-circle"></i>Close
+    </button>
   </div>
 </app-ui-modal>

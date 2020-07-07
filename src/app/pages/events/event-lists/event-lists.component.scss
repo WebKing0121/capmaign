@@ -7,52 +7,10 @@
   padding-left: 0px;
 }
 
-.modal-event-list {
-  .input-group-prepend {
-    .input-group-text {
-      width: 130px;
-    }
-  }
-
-  ng-select {
-    width: calc(100% - 128px);
-    min-height: 45px;
-    .single {
-      .value {
-        line-height: 43px;
-      }
-    }
-  }
-
-  ng-select > div {
-    min-height: 45px !important;
-  }
-
-  .data-events {
-    height: 400px !important;
-    margin-bottom: 0px;
-  }
-}
 @media only screen and (max-width: 575px) {
   .card-event-lists,
   .card-assigned-events {
     padding: 0px;
     height: 500px;
-  }
-
-  .modal-event-list {
-    ng-select {
-      width: 100%;
-      min-height: 45px;
-      .single {
-        .value {
-          line-height: 43px;
-        }
-      }
-    }
-
-    ng-select > div {
-      min-height: 45px !important;
-    }
   }
 }
