@@ -819,6 +819,9 @@ new-task {
 
 .app-modal-footer {
     .btn {
-        padding: 7px 20px;
+        padding: 7px 15px;
+        i {
+            margin-right: 7px;
+        }
     }
 }

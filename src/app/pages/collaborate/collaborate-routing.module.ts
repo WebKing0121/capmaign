@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { CampaignsComponent } from './campaigns/campaigns.component';
-import { CollaborateTeamsComponent, } from './teams/teams.component';
+import { CollaborateCampaignsComponent } from './campaigns/campaigns.component';
+import { CollaborateTeamsComponent } from './teams/teams.component';
 import { MyCalendarComponent } from './my-calendar/my-calendar.component';
 import { RecentActivityComponent } from './recent-activity/recent-activity.component';
 
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'campaigns',
-    component: CampaignsComponent
+    component: CollaborateCampaignsComponent
   },
   {
     path: 'recent-activity',

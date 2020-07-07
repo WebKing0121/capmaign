@@ -110,10 +110,17 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary float-left" (click)="onRun()">Run</button> &nbsp;
+    <button type="button" class="btn btn-primary float-left" (click)="onRun()"><i class="fa fa-filter"></i>Run</button>
     
-    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" (click)="filterModal.hide()">Close</button>
-    <button type="button" class="btn btn-primary float-right" (click)="onSave()">{{modalType === ModalType.New ? 'Create' : 'Save'}}</button>
-    <button type="button" class="btn btn-danger float-right" *ngIf="modalType === ModalType.Edit">Delete</button>
+    <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" (click)="filterModal.hide()">
+      <i class="fa fa-times-circle"></i>Close
+    </button>
+    <button type="button" class="btn btn-primary float-right" (click)="onSave()">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button type="button" class="btn btn-danger float-right" *ngIf="modalType === ModalType.Edit">
+      <i class="fa fa-trash"></i>Delete
+    </button>
   </div>
 </app-ui-modal>

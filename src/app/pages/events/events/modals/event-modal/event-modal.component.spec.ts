@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CollaborateCampaignsComponent } from './campaigns.component';
+import { EventModalComponent } from './event-modal.component';
 
-describe('CollaborateCampaignsComponent', () => {
-  let component: CollaborateCampaignsComponent;
-  let fixture: ComponentFixture<CollaborateCampaignsComponent>;
+describe('EventModalComponent', () => {
+  let component: EventModalComponent;
+  let fixture: ComponentFixture<EventModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ CollaborateCampaignsComponent ]
+      declarations: [ EventModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CollaborateCampaignsComponent);
+    fixture = TestBed.createComponent(EventModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

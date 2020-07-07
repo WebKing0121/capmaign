@@ -13,21 +13,23 @@ import {
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AngularDualListBoxModule } from 'angular-dual-listbox';
 
-import { CampaignsComponent } from './campaigns/campaigns.component';
 import { RecentActivityComponent } from './recent-activity/recent-activity.component';
 import { MyCalendarComponent } from './my-calendar/my-calendar.component';
 
 import { CollaborateTeamsComponent } from './teams/teams.component';
 import { CollaborateTeamModalComponent } from './teams/modals/team-modal/team-modal.component';
 import { CollaborateAssignCampaignModalComponent } from './teams/modals/assign-campaign-modal/assign-campaign-modal.component';
+import { CollaborateCampaignsComponent } from './campaigns/campaigns.component';
+import { CollaborateAssignTeamModalComponent } from './campaigns/modals/assign-team-modal/assign-team-modal.component';
 
 @NgModule({
   declarations: [
     CollaborateTeamsComponent,
     CollaborateTeamModalComponent,
     CollaborateAssignCampaignModalComponent,
+    CollaborateCampaignsComponent,
+    CollaborateAssignTeamModalComponent,
     MyCalendarComponent,
-    CampaignsComponent,
     RecentActivityComponent,
   ],
   imports: [

@@ -75,10 +75,15 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit">Delete</button>
-    <button type="button" class="btn btn-primary">
-      {{modalType === ModalType.New ? 'Create' : 'Save'}}
+    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit">
+      <i class="fa fa-trash"></i>Delete
     </button>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="templateModal.hide()">Close</button>
+    <button type="button" class="btn btn-primary">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="templateModal.hide()">
+      <i class="fa fa-times-circle"></i>Close
+    </button>
   </div>
 </app-ui-modal>

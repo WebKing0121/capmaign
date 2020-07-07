@@ -13,10 +13,14 @@ import {
 import { EmailCampaignEditorModule } from '@app-components/email-campaign-editor/email-campaign-editor.module';
 import { EventsComponent } from './events/events.component';
 import { EventListsComponent} from './event-lists/event-lists.component';
+import { EventModalComponent } from './events/modals/event-modal/event-modal.component';
+import { EventListModalComponent } from './event-lists/modals/event-list-modal/event-list-modal.component';
 @NgModule({
   declarations: [
     EventsComponent,
     EventListsComponent,
+    EventModalComponent,
+    EventListModalComponent,
   ],
   imports: [
     CommonModule,
