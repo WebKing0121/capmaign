@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
-import { Campaign } from '@app-core/models/campaign';
+import { Campaign } from '@app-models/campaign';
 import { Subject } from 'rxjs';
 import { CampaignService } from '@app-core/services/campaign.service';
 import { ModalService } from '@app-components/modal/modal.service';

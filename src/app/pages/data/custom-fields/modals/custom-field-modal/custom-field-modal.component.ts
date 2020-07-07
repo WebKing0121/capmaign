@@ -3,7 +3,7 @@ import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { NgSelectData } from '@app-core/models/common';
+import { NgSelectData } from '@app-models/common';
 import * as moment from 'moment';
 
 @Component({

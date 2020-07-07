@@ -6,7 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 // tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
-import { Automation } from '@app-core/models/automation';
+import { Automation } from '@app-models/automation';
 import { AutomationService } from '@app-core/services/automation.service';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 

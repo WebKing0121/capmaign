@@ -5,7 +5,7 @@ import { ContentService } from '@app-core/services/content.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
-import { DynamicContent } from '@app-core/models/dynamic-content';
+import { DynamicContent } from '@app-models/dynamic-content';
 
 @Component({
   selector: 'app-content-dynamic-contents',

@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, Component
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { CreateLeadScoringComponent } from '../../create-lead-scoring.component';
 import { RuleTemplateComponent } from '../rule-template/rule-template.component';
-import { LeadCard } from '@app-core/models/scoring';
+import { LeadCard } from '@app-models/scoring';
 import { MODAL_DATA } from '@app-components/modal/modal-ref';
 
 interface ComponentProps {

@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LeadCategory } from '@app-core/models/scoring';
+import { LeadCategory } from '@app-models/scoring';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { ScoringService } from '@app-core/services/scoring.service';
 import { ModalService } from '@app-components/modal/modal.service';

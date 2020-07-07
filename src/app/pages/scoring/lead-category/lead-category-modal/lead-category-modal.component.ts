@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, Inject } from '@angular/core';
-import { LeadCategory } from '@app-core/models/scoring';
+import { LeadCategory } from '@app-models/scoring';
 import { CategoryComponent } from '../components/category/category.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';

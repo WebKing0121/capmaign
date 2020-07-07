@@ -7,18 +7,18 @@ import {
   RegistrationByCountry,
   RecentRegistration,
   GoogleLead
-} from '@app-core/models/dashboard';
+} from '@app-models/dashboard';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { Subject } from 'rxjs';
 import { DashboardService } from '@app-core/services/dashboard.service';
 import { takeUntil } from 'rxjs/operators';
 import * as jsPDF from 'jspdf';
 import { EmailDashCrm, MobileDashCrm, EventDashCrm } from '@app-fake-db/dashboard-mock';
-import { Campaign } from '@app-core/models/campaign';
+import { Campaign } from '@app-models/campaign';
 import { CampaignService } from '@app-core/services/campaign.service';
 import * as moment from 'moment';
 import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
-import { Tab } from '@app-core/models/common';
+import { Tab } from '@app-models/common';
 import { DashboardTabs } from '@app-core/enums/dashboard-type.enum';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 

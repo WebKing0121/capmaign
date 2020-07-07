@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewInit } from '@angular/core';
-import { User, UserOrganization } from '@app-core/models/user';
+import { User, UserOrganization } from '@app-models/user';
 import { Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';

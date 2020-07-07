@@ -2,11 +2,11 @@ import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation } fro
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { NgSelectData } from '@app-core/models/common';
+import { NgSelectData } from '@app-models/common';
 import { ContentService } from '@app-core/services/content.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { DynamicContent } from '@app-core/models/dynamic-content';
+import { DynamicContent } from '@app-models/dynamic-content';
 
 @Component({
   selector: 'app-content-dynamic-content-modal',

@@ -5,7 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { UserService } from '@app-services/user.service';
 import { UserRolePage, UserRole, User } from '@app-models/user';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
-import { TreeViewData } from '@app-core/models/tree';
+import { TreeViewData } from '@app-models/tree';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 

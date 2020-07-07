@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { LandingPageTemplate } from '@app-core/models/landing-page';
+import { LandingPageTemplate } from '@app-models/landing-page';
 import { ContentService } from '@app-core/services/content.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ModalType } from '@app-core/enums/modal-type.enum';
-import { ContentCategory } from '@app-core/models/content-category';
+import { ContentCategory } from '@app-models/content-category';
 
 @Component({
   selector: 'app-landing-page-templates',

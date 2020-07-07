@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LandingPage } from '@app-core/models/landing-page';
-import { NgSelectData } from '@app-core/models/common';
+import { LandingPage } from '@app-models/landing-page';
+import { NgSelectData } from '@app-models/common';
 import { ContentService } from '@app-core/services/content.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';

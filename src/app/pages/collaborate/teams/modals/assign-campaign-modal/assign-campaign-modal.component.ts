@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
-import { CollaborateTeam } from '@app-core/models/collaborate';
+import { CollaborateTeam } from '@app-models/collaborate';
 import { DualListComponent } from 'angular-dual-listbox';
-import { NgSelectData } from '@app-core/models/common';
+import { NgSelectData } from '@app-models/common';
 
 @Component({
   selector: 'app-collaborate-assign-campaign-modal',

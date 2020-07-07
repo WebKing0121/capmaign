@@ -4,7 +4,7 @@ import { RuleComponent } from './rule/rule.component';
 import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
-import { Grading } from '@app-core/models/scoring';
+import { Grading } from '@app-models/scoring';
 
 interface ComponentProps {
   grading: Grading;
