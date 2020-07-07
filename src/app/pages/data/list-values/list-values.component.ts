@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
-import { Tab, GridColumn } from '@app-core/models/common';
+import { Tab, GridColumn } from '@app-models/common';
 import { Tabs } from '@app-core/enums/data-tabs.enum';
 import { Observable, Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';

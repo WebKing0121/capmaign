@@ -4,7 +4,7 @@ import { NgbDate } from '@ng-bootstrap/ng-bootstrap';
 import { ModalService } from '@app-components/modal/modal.service';
 import { FacebookAdsModalComponent } from './facebook-ads-modal/facebook-ads-modal.component';
 import { DataTableSource } from '@app-components/datatable/datatable-source';
-import { Campaign } from '@app-core/models/campaign';
+import { Campaign } from '@app-models/campaign';
 import { Location } from '@angular/common';
 
 export interface LocalDrive {

@@ -5,7 +5,7 @@ import { ContentService } from '@app-core/services/content.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
-import { LandingPage } from '@app-core/models/landing-page';
+import { LandingPage } from '@app-models/landing-page';
 
 @Component({
   selector: 'app-content-landing-pages',

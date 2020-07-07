@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Grading } from '@app-core/models/scoring';
+import { Grading } from '@app-models/scoring';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ScoringService } from '@app-core/services/scoring.service';

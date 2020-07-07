@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ModalType } from '@app-core/enums/modal-type.enum';
-import { CollaborateTeam } from '@app-core/models/collaborate';
+import { CollaborateTeam } from '@app-models/collaborate';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NgSelectData } from '@app-core/models/common';
+import { NgSelectData } from '@app-models/common';
 
 @Component({
   selector: 'app-collaborate-team-modal',

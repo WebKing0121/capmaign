@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, Input, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalType } from '@app-core/enums/modal-type.enum';
-import { NgSelectData } from '@app-core/models/common';
+import { NgSelectData } from '@app-models/common';
 
 @Component({
   selector: 'app-events-event-list-modal',

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
-import { NgSelectData } from '@app-core/models/common';
+import { NgSelectData } from '@app-models/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FilterColumn, Filter } from '@app-core/models/filter';
+import { FilterColumn, Filter } from '@app-models/filter';
 import { DataService } from '@app-core/services/data.service';
 import { takeUntil, filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';

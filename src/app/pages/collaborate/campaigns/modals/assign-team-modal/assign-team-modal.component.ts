@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CollaborateTeam, CollaborateCampaign } from '@app-core/models/collaborate';
-import { NgSelectData } from '@app-core/models/common';
+import { CollaborateTeam, CollaborateCampaign } from '@app-models/collaborate';
+import { NgSelectData } from '@app-models/common';
 
 @Component({
   selector: 'app-collaborate-assign-team-modal',

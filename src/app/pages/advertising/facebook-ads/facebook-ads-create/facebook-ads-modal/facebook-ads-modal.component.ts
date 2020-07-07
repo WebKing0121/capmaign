@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject, ViewChild, TemplateRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
-import { Campaign } from '@app-core/models/campaign';
+import { Campaign } from '@app-models/campaign';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { CampaignType } from '@app-core/enums/campaign-type.enum';
 import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';

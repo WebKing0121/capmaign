@@ -2,7 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
 import { CampaignSendModalComponent } from 'src/app/pages/campaign/components/campaign-send-modal/campaign-send-modal.component';
-import { Scoring } from '@app-core/models/scoring';
+import { Scoring } from '@app-models/scoring';
 
 interface ComponentProps {
   mode: string;

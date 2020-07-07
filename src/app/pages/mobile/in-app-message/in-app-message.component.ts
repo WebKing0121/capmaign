@@ -1,8 +1,8 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MODAL_DATA, ModalRef } from '@app-components/modal/modal-ref';
-import { Campaign } from '@app-core/models/campaign';
+import { Campaign } from '@app-models/campaign';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Tab } from '@app-core/models/common';
+import { Tab } from '@app-models/common';
 
 interface ComponentProps {
   createMode: boolean;

@@ -6,7 +6,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LeadCardComponent } from './components/lead-card/lead-card.component';
 import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
-import { Scoring, LeadCard } from '@app-core/models/scoring';
+import { Scoring, LeadCard } from '@app-models/scoring';
 import { ScoringService } from '@app-core/services/scoring.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';

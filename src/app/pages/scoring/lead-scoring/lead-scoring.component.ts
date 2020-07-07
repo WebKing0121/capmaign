@@ -3,7 +3,7 @@ import { DataTableSource, DataTableColumn } from '@app-components/datatable/data
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ScoringService } from '@app-core/services/scoring.service';
-import { Scoring } from '@app-core/models/scoring';
+import { Scoring } from '@app-models/scoring';
 import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';

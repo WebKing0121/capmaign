@@ -1,14 +1,15 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { Event } from '@app-models/event';
-import { NgSelectData } from '@app-core/models/common';
+import { NgSelectData } from '@app-models/common';
 
 @Component({
   selector: 'app-events-event-modal',
   templateUrl: './event-modal.component.html',
-  styleUrls: ['./event-modal.component.scss']
+  styleUrls: ['./event-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class EventModalComponent implements OnInit {
   @ViewChild('eventModal', { static: false }) eventModal;

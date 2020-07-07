@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
-import { EmailTemplate } from '@app-core/models/email-template';
+import { EmailTemplate } from '@app-models/email-template';
 import { Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { ContentService } from '@app-core/services/content.service';

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { UsageViewOpion } from '@app-core/models/usage-dashboard';
+import { UsageViewOpion } from '@app-models/usage-dashboard';
 import { UsageViewOptionType } from '@app-core/enums/usage-dashboard-type.enum';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
-import { OrganizationData } from '@app-core/models/usage-dashboard';
+import { OrganizationData } from '@app-models/usage-dashboard';
 import { ModalService } from '@app-components/modal/modal.service';
 import { UsageDashboardService } from '@app-core/services/usage-dashboard-service';
 import { takeUntil } from 'rxjs/operators';

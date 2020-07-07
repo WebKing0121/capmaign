@@ -1,7 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { ContentService } from '@app-core/services/content.service';
 import { Subject } from 'rxjs';
-import { Asset } from '@app-core/models/asset';
+import { Asset } from '@app-models/asset';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
