@@ -119,19 +119,42 @@ export class EmailDashCrm {
       borderColor: '#e2e5e829',
     },
     xaxis: {
+      title: {
+        text: "Campaign"
+      },
       categories: ['Lipstick', 'Samir Campaign'],
+    },
+    yaxis: {
+      title: {
+        text: "Count"
+      }
     },
     fill: {
       opacity: 0.85
     },
     tooltip: {
       marker: {
-        show: false
+        show: true
       },
       y: {
         formatter: (val) => {
           return '' + val;
         }
+      }
+    },
+
+    subtitle: {
+      text: 'Campaign',
+      align: 'left',
+      margin: 10,
+      offsetX: 0,
+      offsetY: 0,
+      floating: false,
+      style: {
+        fontSize: '12px',
+        fontWeight: 'normal',
+        fontFamily: undefined,
+        color: '#ffffff'
       }
     }
   };
@@ -168,6 +191,9 @@ export class EmailDashCrm {
       borderColor: '#e2e5e829',
     },
     xaxis: {
+      title: {
+        text: 'Month'
+      },
       categories: ['9-Jun', '17-Jun', '19-Jun', '22-Jun'],
     },
     fill: {
@@ -217,6 +243,9 @@ export class EmailDashCrm {
       borderColor: '#e2e5e829',
     },
     xaxis: {
+      title: {
+        text: 'Month'
+      },
       categories: ['9-Jun', '17-Jun', '19-Jun', '22-Jun'],
     },
     fill: {
@@ -270,6 +299,9 @@ export class MobileDashCrm {
       borderColor: '#e2e5e829',
     },
     xaxis: {
+      title: {
+        text:'Campaign'
+      },
       categories: [
         '11 April Event',
         '11 April Event',
@@ -279,6 +311,11 @@ export class MobileDashCrm {
         'test',
         'Website analysis campaign'
       ],
+    },
+    yaxis: {
+      title: {
+        text:'Count'
+      }
     },
     fill: {
       opacity: 0.85

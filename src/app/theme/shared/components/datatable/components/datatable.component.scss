@@ -1,5 +1,6 @@
 :host {
   margin-bottom: 20px;
+  
   .ngx-datatable {
     height: calc(100% - 42px);
     box-shadow: none;
@@ -11,6 +12,7 @@
       background-color: #f5f5f6;
       display: flex !important;
       align-items: center;
+      width: 100%;
 
       .datatable-header-cell-wrapper {
         // font-weight: bold;

@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstrap';
 import { Tab } from '@app-core/models/common';
 import { DashboardTabs } from '@app-core/enums/dashboard-type.enum';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
@@ -39,6 +40,7 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
 })
 export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('content') content: ElementRef;
+  @ViewChild('mobileAppModal', { static: false }) mobileAppModal;
 
   tabs: Tab[] = DashboardTabs;
   dashboardType: string;
@@ -109,6 +111,8 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   // event-dash/engagement driving channel chart info
   public engagementDrivingChannelsData: any;
   public invitedRegistrationsData: any;
+  modalType: ModalType.New;
+  selectedApp: null;
 
   constructor(
     private router: Router,
@@ -392,13 +396,13 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableSource.setColumns(columns);
 
     const topPerformingColumns: DataTableColumn[] = [
-      { name: '', prop: 'name', sortable: true },
-      { name: 'DATE & TIME', prop: 'dateTime', sortable: true },
-      { name: 'SENT', prop: 'sent', sortable: true },
-      { name: 'OPEN', prop: 'open', sortable: true },
-      { name: 'CLICKS', prop: 'clicks', sortable: true },
-      { name: 'BOUNCES', prop: 'bounces', sortable: true },
-      { name: 'UNSUBSCRIBE', prop: 'unsubscribe', sortable: true },
+      { name: 'Name', prop: 'name', sortable: true, width: 60, maxWidth: 90},
+      { name: 'DATE & TIME', prop: 'dateTime', sortable: true, width: 60, maxWidth: 170},
+      { name: 'SENT', prop: 'sent', sortable: true, width: 60, maxWidth: 60},
+      { name: 'OPEN', prop: 'open', sortable: true, width: 60, maxWidth: 60},
+      { name: 'CLICKS', prop: 'clicks', sortable: true, width: 60, maxWidth: 60},
+      { name: 'BOUNCES', prop: 'bounces', sortable: true, width: 60, maxWidth: 60},
+      { name: 'UNSUBSCRIBE', prop: 'unsubscribe', sortable: true, width: 60, maxWidth: 100},
     ];
     this.topPerformingTableSource.setColumns(topPerformingColumns);
 
@@ -411,7 +415,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.upComingCampTableSource.setColumns(upComingCampColumns);
 
     const recentEventColumns: DataTableColumn[] = [
-      { name: '', prop: 'name', sortable: true },
+      { name: 'Campaign Name', prop: 'name', sortable: true },
       { name: 'DATE & TIME', prop: 'dateTime', sortable: true },
       { name: 'INVITED', prop: 'invited', sortable: true },
       { name: 'REGISTERED', prop: 'registered', sortable: true },
@@ -512,5 +516,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showDateRangePicker() {
     this.showDateRangePickerFlag = !this.showDateRangePickerFlag;
+  }
+
+  onClickAdd() {
+    console.log("kdkdkdkkdkdkd")
+    this.modalType = ModalType.New;
+    setTimeout(() => this.mobileAppModal.show());
   }
 }

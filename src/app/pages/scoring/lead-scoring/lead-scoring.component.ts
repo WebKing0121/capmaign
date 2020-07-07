@@ -121,7 +121,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
       switch (event.cellIndex) {
         case 1:
           this.modalService.openModal(CreateLeadScoringComponent, {
-            width: '80%',
+            width: '100%',
             data: {
               scoring,
               mode: 'edit'
