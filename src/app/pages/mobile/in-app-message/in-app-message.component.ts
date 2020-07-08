@@ -7,6 +7,7 @@ import { Tab } from '@app-models/common';
 interface ComponentProps {
   createMode: boolean;
   inAppMessage: Campaign;
+  pushNotificationMode: boolean;
 }
 
 @Component({
@@ -17,6 +18,7 @@ interface ComponentProps {
 export class InAppMessageComponent implements OnInit {
 
   createMode: boolean;
+  pushNotificationMode: boolean;
   isAndroid: boolean;
   isIphone: boolean;
 
@@ -130,6 +132,7 @@ export class InAppMessageComponent implements OnInit {
   ngOnInit(): void {
     this.optionList = ['Tesh Header', 'UAT Header', 'UAT1010', 'Test In App', 'Test InApp'];
     this.createMode = this.props.createMode;
+    this.pushNotificationMode = this.props.pushNotificationMode;
     this.formGroup = this.fb.group({
       headerTxt: '',
       bodyTxt: '',
