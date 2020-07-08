@@ -2,6 +2,13 @@
   height: calc(100vh - 130px);
 }
 
+.qr-frame {
+  width: 100%;
+  height: calc(100vh - 230px);
+  &::-webkit-scrollbar{
+    width: 2px;
+  }
+}
 
 @media only screen and (max-width: 575px) {
   .card-qr-codes {

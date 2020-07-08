@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-qr-codes',
@@ -15,28 +16,39 @@ export class QrCodesComponent implements OnInit {
     { label: 'Import', icon: 'fa fa-upload', click: () => this.onClickImportQR() },
   ];
 
-  constructor() { }
+  iFramePath: string;
+  urlSafe: SafeResourceUrl;
+
+  constructor(
+    public sanitizer: DomSanitizer
+  ) { 
+    this.iFramePath = '';
+  }
 
   ngOnInit(): void {
   }
 
   onClickCreateQR() {
-
+    this.iFramePath = 'https://campaigntocash.qrd.by/user/new/';
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.iFramePath);
   }
 
   onClickBulkQR() {
-
+    this.iFramePath = 'https://campaigntocash.qrd.by/user/bulk/create/';
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.iFramePath);
   }
 
   onClickCreateLandingPage() {
-
+    this.iFramePath = 'https://campaigntocash.qrd.by/user/landingpage/new/';
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.iFramePath);
   }
 
   onClickExportQR() {
-
+    this.iFramePath = 'https://campaigntocash.qrd.by/user/export/details/';
+    this.urlSafe = this.sanitizer.bypassSecurityTrustResourceUrl(this.iFramePath);
   }
 
   onClickImportQR() {
-
+    this.iFramePath = 'https://campaigntocash.qrd.by/user/bulk/';
   }
 }
