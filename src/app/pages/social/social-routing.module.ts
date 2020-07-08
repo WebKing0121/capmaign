@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { SocialPostComponent } from './social-post/social-post.component';
 import { SocialMessageComponent } from './social-message/social-message.component';
 import { SocialUtmBuilderComponent } from './social-utm-builder/social-utm-builder.component';
-import { SocialEngagerComponent } from './social-engager/social-engager.component';
+import { SocialEngagersComponent } from './engagers/engagers.component';
 import { SocialPolicyComponent } from './social-policy/social-policy.component';
 import { SocialMonitorComponent } from './social-monitor/social-monitor.component';
 const routes: Routes = [
@@ -20,8 +20,8 @@ const routes: Routes = [
     component: SocialUtmBuilderComponent
   },
   {
-    path: 'engager',
-    component: SocialEngagerComponent
+    path: 'engagers',
+    component: SocialEngagersComponent
   },
   {
     path: 'policy',

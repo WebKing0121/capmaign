@@ -7,19 +7,21 @@ import { SocialRoutingModule } from './social-routing.module';
 import { SocialPostComponent } from './social-post/social-post.component';
 import { SharedModule } from '../../theme/shared/shared.module';
 import { SocialUtmBuilderComponent } from './social-utm-builder/social-utm-builder.component';
-import { SocialEngagerComponent } from './social-engager/social-engager.component';
+import { SocialEngagersComponent } from './engagers/engagers.component';
 import { SocialPolicyComponent } from './social-policy/social-policy.component';
 import { SocialMonitorComponent } from './social-monitor/social-monitor.component';
 import { SocialMessageComponent } from './social-message/social-message.component';
+import { SocialEngagerModalComponent } from './engagers/modals/engager-modal/engager-modal.component';
 
 @NgModule({
   declarations: [
     SocialPostComponent,
     SocialUtmBuilderComponent,
-    SocialEngagerComponent,
     SocialPolicyComponent,
     SocialMonitorComponent,
-    SocialMessageComponent
+    SocialMessageComponent,
+    SocialEngagersComponent,
+    SocialEngagerModalComponent
   ],
   imports: [
     CommonModule,

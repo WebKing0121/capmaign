@@ -500,9 +500,9 @@ const NavigationItems = [
           },
           {
             id: 'social-engager',
-            title: 'Social Engager',
+            title: 'Social Engagers',
             type: 'item',
-            url: '/social/engager',
+            url: '/social/engagers',
             external: false
           },
           {

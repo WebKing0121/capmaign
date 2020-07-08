@@ -1,0 +1,81 @@
+<app-ui-modal #engagerModal dialogClass="modal-dialog-centered engager-modal modal-lg">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'Create' : 'Edit'}} Engager</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="engagerModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body">
+    <form [formGroup]="form">
+      <div class="row modal-body-margin">
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">First name</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">First name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="firstName" />
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Last name</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Last name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="lastName" />
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Company</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Company</span>
+            </div>
+            <input type="text" class="form-control" formControlName="company" />
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Email address</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Email address</span>
+            </div>
+            <input type="text" class="form-control" formControlName="email" />
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Mobile number</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Mobile number</span>
+            </div>
+            <input [textMask]="{mask: maskMobileNo}" type="text" class="form-control"
+              placeholder="9999-999-999" formControlName="mobileNumber">
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Company Zip</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Company Zip</span>
+            </div>
+            <input type="text" class="form-control" formControlName="zip" />
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit"><i class="fa fa-trash"></i>Delete</button>
+    <button type="button" class="btn btn-primary">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="engagerModal.hide()">
+      <i class="fa fa-times-circle"></i>Close</button>
+  </div>
+</app-ui-modal>
