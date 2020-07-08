@@ -12,3 +12,8 @@
   <input *ngIf="value" class="m-l-10" type="checkbox" checked (click)="onCheckClick($event)">
   <input *ngIf="!value" class="m-l-10" type="checkbox" (click)="onCheckClick($event)">
 </ng-template>
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete selected list?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>

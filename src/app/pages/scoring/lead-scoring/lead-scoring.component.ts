@@ -21,12 +21,16 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
-
+  @ViewChild('confirmModal', { static: false }) confirmModal;
+ // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+  ];
 
   tableSource: DataTableSource<Scoring> = new DataTableSource<Scoring>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.createLeadScoring(), },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
     // { label: 'Run Profile', icon: 'far fa-gear', click: () => this.clickTemplate() },
   ];
 
@@ -152,17 +156,18 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (event.type === 'checkbox') {
-      this.tableButtons[1].hide = this.selected.length === 0;
+      this.tableButtons[1].disabled = this.selected.length === 0;
     }
   }
 
   openSetDefaultConfirmModal(message: string) {
-    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-      width: '400px',
-      data: {
-        message
-      }
-    });
+    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+    //   width: '400px',
+    //   data: {
+    //     message
+    //   }
+    // });
+    this.confirmModal.show();
   }
 
   onCheckClick(e) {
@@ -170,11 +175,12 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDeleteClicked() {
-    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-      width: '400px',
-      data: {
-        message: 'Are you sure you want to delete selected Lead Scoring/s?'
-      }
-    });
+    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+    //   width: '400px',
+    //   data: {
+    //     message: 'Are you sure you want to delete selected Lead Scoring/s?'
+    //   }
+    // });
+    this.confirmModal.show();
   }
 }
