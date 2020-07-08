@@ -1,4 +1,5 @@
-<div class="navbar-wrapper" [ngClass]="{'container': this.nextConfig.layout === 'horizontal' && this.nextConfig.subLayout === 'horizontal-2'}">
+<div class="navbar-wrapper"
+  [ngClass]="{'container': this.nextConfig.layout === 'horizontal' && this.nextConfig.subLayout === 'horizontal-2'}">
   <app-nav-content (navMobCollapse)="onNavMobCollapse()"></app-nav-content>
 </div>
 

@@ -1,0 +1,18 @@
+.new-post .modal-content {
+  overflow: hidden;
+}
+.html-editor {
+  height: auto;
+  margin-top: 1rem;
+}
+.modal-fullscreen {
+  .modal-body {
+    height: calc(100vh - 102px);
+    .html-editor {
+      height: calc(100vh - 235px);
+      .mce-edit-area {
+        height: calc(100vh - 335px);
+      }
+    }
+  }
+}

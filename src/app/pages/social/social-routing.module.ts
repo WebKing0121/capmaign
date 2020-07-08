@@ -1,27 +1,27 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SocialPostComponent } from './social-post/social-post.component';
-import { SocialMessageComponent } from './social-message/social-message.component';
-import { SocialUtmBuilderComponent } from './social-utm-builder/social-utm-builder.component';
-import { SocialEngagerComponent } from './social-engager/social-engager.component';
-import { SocialPolicyComponent } from './social-policy/social-policy.component';
-import { SocialMonitorComponent } from './social-monitor/social-monitor.component';
+import { SocialPostComponent } from './post/post.component';
+import { SocialMessagesComponent } from './messages/messages.component';
+import { SocialUtmBuilderComponent } from './utm-builder/utm-builder.component';
+import { SocialEngagersComponent } from './engagers/engagers.component';
+import { SocialPolicyComponent } from './policy/policy.component';
+import { SocialMonitorComponent } from './monitor/monitor.component';
 const routes: Routes = [
   {
     path: 'post',
     component: SocialPostComponent
   },
   {
-    path: 'message',
-    component: SocialMessageComponent
+    path: 'messages',
+    component: SocialMessagesComponent
   },
   {
     path: 'utm-builder',
     component: SocialUtmBuilderComponent
   },
   {
-    path: 'engager',
-    component: SocialEngagerComponent
+    path: 'engagers',
+    component: SocialEngagersComponent
   },
   {
     path: 'policy',

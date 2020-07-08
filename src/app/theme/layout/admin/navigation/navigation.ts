@@ -33,114 +33,6 @@ const NavigationItems = [
     icon: 'feather icon-align-left',
     children: [
       {
-        id: 'create',
-        title: 'New',
-        type: 'collapse',
-        icon: 'feather icon-plus',
-        children: [
-          {
-            id: 'create-email',
-            title: 'Email',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-subscriber',
-            title: 'Subscriber',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-leads',
-            title: 'Leads',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-contacts',
-            title: 'Contacts',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-prospects',
-            title: 'Prospects',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-accounts',
-            title: 'Accounts',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-transactional',
-            title: 'Transactional',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-automation',
-            title: 'Automation',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-list',
-            title: 'List',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-custom-fields',
-            title: 'Custom Fields',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-filter',
-            title: 'Filter',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-          {
-            id: 'create-landing-page-template',
-            title: 'Landing Page Template',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-
-          {
-            id: 'create-email-template',
-            title: 'Email Template',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-
-          {
-            id: 'create-landing-page-category',
-            title: 'Landing Page Category',
-            type: 'item',
-            url: 'javascript:',
-            external: true
-          },
-        ]
-      },
-      {
         id: 'dashboard',
         title: 'Dashboard',
         type: 'item',
@@ -481,7 +373,7 @@ const NavigationItems = [
             id: 'social-messages',
             title: 'Messages',
             type: 'item',
-            url: '/social/message',
+            url: '/social/messages',
             external: false
           },
           {
@@ -500,9 +392,9 @@ const NavigationItems = [
           },
           {
             id: 'social-engager',
-            title: 'Social Engager',
+            title: 'Social Engagers',
             type: 'item',
-            url: '/social/engager',
+            url: '/social/engagers',
             external: false
           },
           {

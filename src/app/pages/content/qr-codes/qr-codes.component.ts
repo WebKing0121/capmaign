@@ -21,7 +21,7 @@ export class QrCodesComponent implements OnInit {
 
   constructor(
     public sanitizer: DomSanitizer
-  ) { 
+  ) {
     this.iFramePath = '';
   }
 

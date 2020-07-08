@@ -1,11 +1,22 @@
-<app-navigation class="pcoded-navbar" [ngClass]="{'navbar-collapsed' : navCollapsed, 'theme-horizontal': this.nextConfig['layout'] === 'horizontal', 'mob-open' : navCollapsedMob}" (navMobCollapse)="navMobClick()"></app-navigation>
-<app-nav-bar class="navbar pcoded-header navbar-expand-lg navbar-light" (navCollapse)="this.navCollapsed = !this.navCollapsed;" (navHeaderMobCollapse)="navMobClick()"></app-nav-bar>
+<app-navigation
+  class="pcoded-navbar"
+  [ngClass]="{'navbar-collapsed' : navCollapsed, 'theme-horizontal': this.nextConfig['layout'] === 'horizontal', 'mob-open' : navCollapsedMob}"
+  (navMobCollapse)="navMobClick()"
+></app-navigation>
+
+<app-nav-bar
+  class="navbar pcoded-header navbar-expand-lg navbar-light"
+  (navCollapse)="this.navCollapsed = !this.navCollapsed;"
+  (navHeaderMobCollapse)="navMobClick()"
+></app-nav-bar>
+
 <div class="pcoded-main-container">
-    <div class="pcoded-content" [ngClass]="{'container': this.nextConfig.layout === 'horizontal' && this.nextConfig.subLayout === 'horizontal-2'}">
+    <div class="pcoded-content"
+      [ngClass]="{'container': this.nextConfig.layout === 'horizontal' && this.nextConfig.subLayout === 'horizontal-2'}">
       <div class="container-fluid mt3">
         <app-breadcrumb></app-breadcrumb>
         <router-outlet></router-outlet>
-        <app-footer></app-footer>
+        <!-- <app-footer></app-footer> -->
       </div>
     </div>
 </div>
