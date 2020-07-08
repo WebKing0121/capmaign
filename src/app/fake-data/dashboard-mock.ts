@@ -104,8 +104,8 @@ export class EmailDashCrm {
       colors: ['transparent']
     },
     title: {
-      text: "Top Performing Campaigns",
-      align: "left"
+      text: 'Top Performing Campaigns',
+      align: 'left'
     },
     series: [{
       name: 'Sent',
@@ -176,8 +176,8 @@ export class EmailDashCrm {
       colors: ['transparent']
     },
     title: {
-      text: "Subscribers",
-      align: "left"
+      text: 'Subscribers',
+      align: 'left'
     },
     series: [
       {
@@ -237,8 +237,8 @@ export class EmailDashCrm {
       colors: ['transparent']
     },
     title: {
-      text: "Unsubscribers",
-      align: "left"
+      text: 'Unsubscribers',
+      align: 'left'
     },
     series: [
       {
@@ -284,7 +284,7 @@ export class MobileDashCrm {
         show: false,
       },
       zoom: {
-        type: "x",
+        type: 'x',
         enabled: true,
         autoScaleYaxis: true
       },
@@ -304,8 +304,8 @@ export class MobileDashCrm {
     },
     colors: ['#64b5f6', '#1976d2'],
     title: {
-      text: "Top Performing Campaigns",
-      align: "left"
+      text: 'Top Performing Campaigns',
+      align: 'left'
     },
     stroke: {
       show: true,
@@ -446,13 +446,16 @@ export class EventDashCrm {
       data: [220, 350, 100, 90, 75, 125, 230],
     }],
     title: {
-      text: "Engagement Driving Channels",
-      align: "left"
+      text: 'Engagement Driving Channels',
+      align: 'left'
     },
     grid: {
       borderColor: '#e2e5e829',
     },
     xaxis: {
+      title: {
+        text: 'Events'
+      },
       categories: [],
     },
     yaxis: {
@@ -518,7 +521,15 @@ export class EventDashCrm {
       borderColor: '#e2e5e829',
     },
     xaxis: {
+      title: {
+        text: 'Events'
+      },
       categories: [],
+    },
+    yaxis: {
+      title: {
+        text: 'Count'
+      }
     },
     fill: {
       opacity: 0.85
