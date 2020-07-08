@@ -79,10 +79,13 @@
     </div>
 
     <div class="card-footer">
-      <div class="wrapper d-flex">
-        <button class="btn btn-secondary ml-auto mr-2" (click)="onCancel()">Cancel</button>
-        <button class="btn btn-primary" (click)="onSave()">Save</button>
-      </div>
+      <button type="button" class="btn btn-danger" *ngIf="campaignMode === 'edit'"><i class="fa fa-trash"></i>Delete</button>
+      <button class="btn btn-primary" (click)="onSave()">
+        <i class="fa"
+        [ngClass]="{'fa-save': campaignMode === 'edit', 'fa-plus': campaignMode !== 'edit'}"></i>{{campaignMode === 'edit' ? 'Save' : 'Create'}}
+      </button>
+      <button class="btn btn-secondary " (click)="onCancel()">
+        <i class="fa fa-times-circle"></i>Close</button>
     </div>
   </div>
 </div>
