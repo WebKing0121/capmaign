@@ -16,6 +16,10 @@ import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confi
 export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('confirmModal', { static: false }) confirmModal;
+  // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+  ];  
 
   destroy$ = new Subject();
   leadCategoryData: LeadCategory[];
@@ -24,7 +28,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   tableSource: DataTableSource<LeadCategory> = new DataTableSource<LeadCategory>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
   ];
 
   constructor(
@@ -95,12 +99,13 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDeleteClicked() {
-    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-      width: '400px',
-      data: {
-        message: 'Are you sure you want to delete selected Lead Category/s?'
-      }
-    });
+    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+    //   width: '400px',
+    //   data: {
+    //     message: 'Are you sure you want to delete selected Lead Category/s?'
+    //   }
+    // });
+    this.confirmModal.show();
   }
 
   onActive(event) {
@@ -116,7 +121,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     if (event.type === 'checkbox') {
-      this.tableButtons[1].hide = this.selected.length === 0;
+      this.tableButtons[1].disabled = this.selected.length === 0;
     }
   }
 }

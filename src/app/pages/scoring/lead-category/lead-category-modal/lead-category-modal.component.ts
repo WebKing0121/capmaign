@@ -102,7 +102,8 @@ export class LeadCategoryModalComponent implements OnInit {
       name: [this.props.leadCategory && this.props.leadCategory.name, Validators.required],
       leadCategory: '',
       fieldName: '',
-      criteria: this.props.leadCategory && this.props.leadCategory.criteria
+      criteria: this.props.leadCategory && this.props.leadCategory.criteria,
+      leadCategoryType: ''
     });
 
     this.mode = this.props.createMode;

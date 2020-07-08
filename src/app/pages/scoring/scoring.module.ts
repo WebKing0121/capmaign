@@ -17,6 +17,7 @@ import { RuleTemplateComponent } from './create-lead-scoring/components/rule-tem
 import { LeadCategoryModalComponent } from './lead-category/lead-category-modal/lead-category-modal.component';
 import { CategoryComponent } from './lead-category/components/category/category.component';
 import { TimeFrameComponent } from './lead-timeframes/components/time-frame/time-frame.component';
+import { SharedModule } from 'src/app/theme/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import { TimeFrameComponent } from './lead-timeframes/components/time-frame/time
     DatatableModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule
   ]
 })
 export class ScoringModule { }

@@ -12,14 +12,14 @@
     <div class="card-body">
       <form [formGroup]="formGroup">
         <div class="row">
-          <div class="col-md-6 input-item">
+          <div class="col-md-6 mt-3">
             <label class="mobile-show">Name</label>
             <div class="input-group">
               <div class="input-group-prepend mobile-hide"><span class="input-group-text">Name</span></div>
               <input type="text" formControlName="name" class="form-control ng-untouched ng-pristine ng-invalid">
             </div>
           </div>
-          <div class="col-md-6 input-item">
+          <div class="col-md-6 mt-3">
             <label class="mobile-show">Lead Category</label>
             <div class="input-group">
               <div class="input-group-prepend mobile-hide"><span class="input-group-text">Lead Category</span></div>
@@ -28,7 +28,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-6 input-item">
+          <div class="col-md-6 mt-3">
             <label class="mobile-show">Field Name</label>
             <div class="input-group">
               <div class="input-group-prepend mobile-hide"><span class="input-group-text">Field Name</span></div>
@@ -37,7 +37,7 @@
               </select>
             </div>
           </div>
-          <div class="col-md-6 input-item">
+          <div class="col-md-6 mt-3">
             <label class="mobile-show">Criteria</label>
             <div class="input-group">
               <div class="input-group-prepend mobile-hide"><span class="input-group-text">Criteria</span></div>
@@ -46,7 +46,7 @@
             </div>
           </div>
         </div>
-        <div class="card main-table">
+        <div class="card main-table mt-3">
           <div class="card-header main-header">
             <span>Category Fields</span>
           </div>
@@ -75,7 +75,7 @@
       </form>
     </div>
     <div class="card-footer m-t-10">
-      <div class="col-lg-12 d-flex p-r-0" style="justify-content: flex-end;">
+      <!-- <div class="col-lg-12 d-flex p-r-0" style="justify-content: flex-end;">
         <div>
           <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
           <span *ngIf="!formGroup.valid" class="btn btn-primary disabled m-l-10"><i
@@ -83,7 +83,14 @@
           <span *ngIf="formGroup.valid" class="btn btn-primary m-l-10" (click)="onSaveClick()"><i
               class="fa fa-save m-r-10"></i>Save</span>
         </div>
-      </div>
+      </div> -->
+      <button type="button" class="btn btn-danger" *ngIf="!mode"><i class="fa fa-trash"></i>Delete</button>
+      <button class="btn btn-primary" (click)="onSaveClick()">
+        <i class="fa"
+        [ngClass]="{'fa-save': !mode, 'fa-plus': mode}"></i>{{mode ? 'Create' : 'Save'}}
+      </button>
+      <button class="btn btn-secondary " (click)="onCancelClick()">
+        <i class="fa fa-times-circle"></i>Close</button>
     </div>
   </div>
 </div>
