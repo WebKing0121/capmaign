@@ -17,6 +17,7 @@ import { CampaignsComponent } from './campaigns/campaigns.component';
 import { CampaignComponent } from './campaign/campaign.component';
 import { CampaignSendModalComponent } from './components/campaign-send-modal/campaign-send-modal.component';
 import { ListModule } from '@app-components/list/list.module';
+import { SharedModule } from 'src/app/theme/shared/shared.module';
 
 @NgModule({
   declarations: [CampaignComponent, CampaignsComponent, CampaignSendModalComponent],
@@ -34,7 +35,8 @@ import { ListModule } from '@app-components/list/list.module';
     DatatableModule,
     EmailCampaignEditorModule,
     ArchwizardModule,
-    ListModule
+    ListModule,
+    SharedModule
   ],
   entryComponents: [CampaignSendModalComponent]
 })

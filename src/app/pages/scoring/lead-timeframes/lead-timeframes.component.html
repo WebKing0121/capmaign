@@ -42,9 +42,8 @@
     </form>
   </div>
   <div class="card-footer">
-    <div class="col-lg-12 d-flex p-r-30" style="justify-content: flex-end;">
+    <div class="col-lg-12 d-flex p-r-0" style="justify-content: flex-end;">
       <div>
-        <span class="btn btn-secondary m-l-10" (click)="onCancelClick()">Cancel</span>
         <span *ngIf="!formGroup.valid" class="btn btn-success disabled m-l-10"><i
             class="fa fa-save m-r-10"></i>Save</span>
         <span *ngIf="formGroup.valid" class="btn btn-primary m-l-10" (click)="onSaveClick()"><i

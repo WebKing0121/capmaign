@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { Campaign } from '@app-models/campaign';
 import { Subject } from 'rxjs';
@@ -17,10 +17,17 @@ import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/sc
 })
 export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  @ViewChild('confirmModal', { static: false }) confirmModal;
+ // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+  ];
+
+
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateClicked() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
   ];
 
   selected: Campaign[];
@@ -91,7 +98,8 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
     this.modalService.openModal(InAppMessageComponent, {
       width: '100%',
       data: {
-        createMode: true
+        createMode: true,
+        pushNotificationMode: true,
       }
     });
   }
@@ -103,23 +111,24 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
         width: '100%',
         data: {
           createMode: false,
-          inAppMessage,
+          pushNotificationMode: true,
         }
       });
     }
 
     if (event.type === 'checkbox') {
-      this.tableButtons[1].hide = this.selected.length === 0;
+      this.tableButtons[1].disabled = this.selected.length === 0;
     }
   }
 
   onDeleteClicked() {
-    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-      width: '400px',
-      data: {
-        message: 'Are you sure you want to delete selected SMS?'
-      }
-    });
+    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+    //   width: '400px',
+    //   data: {
+    //     message: 'Are you sure you want to delete selected SMS?'
+    //   }
+    // });
+    this.confirmModal.show();
   }
 
 }

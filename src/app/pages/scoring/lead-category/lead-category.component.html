@@ -8,3 +8,8 @@
     (activate)="onActive($event)">
   </app-datatable>
 </div>
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete selected list?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>

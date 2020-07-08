@@ -71,8 +71,11 @@ export class CampaignSendModalComponent implements OnInit {
   fullScreen: boolean;
   modalClass: string;
 
-  @ViewChild(WizardComponent)
-  wizard: WizardComponent;
+  @ViewChild(WizardComponent) wizard: WizardComponent;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
+
+  // confirm Modal
+  confirmButtons = [];
 
   constructor(
     private fb: FormBuilder,
@@ -137,13 +140,14 @@ export class CampaignSendModalComponent implements OnInit {
     const nextFlag = this.includeMailableList.find(item => item.checked === true) ||
       this.includeFiltersList.find(item => item.checked === true);
     if (!nextFlag) {
-      this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-        width: '400px',
-        data: {
-          mode: 'Warning',
-          message: 'Please select at least one list/filter to send/schedule email.'
-        }
-      });
+      // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+      //   width: '400px',
+      //   data: {
+      //     mode: 'Warning',
+      //     message: 'Please select at least one list/filter to send/schedule email.'
+      //   }
+      // });
+      this.confirmModal.show();
     } else {
       this.checkedIncludeMailableList = this.includeMailableList.filter(item => item.checked);
       this.checkedIncludeMailableList = this.checkedIncludeMailableList.map(item => ({ ...item, disabled: true }));

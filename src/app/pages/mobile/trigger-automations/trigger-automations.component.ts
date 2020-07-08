@@ -18,13 +18,18 @@ import { ModalType } from '@app-core/enums/modal-type.enum';
 export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('automationModal', { static: false }) automationModal;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
+ // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+  ];
 
   tableSource: DataTableSource<Automation> = new DataTableSource<Automation>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateClicked() },
-    { label: 'Pause', icon: 'fa fa-pause', click: () => this.onDeleteClicked(), hide: true },
-    { label: 'Live', icon: 'fa fa-play', click: () => this.onDeleteClicked(), hide: true },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true }
+    { label: 'Pause', icon: 'fa fa-pause', click: () => this.onPauseClicked(), disabled: true, hide: false },
+    { label: 'Live', icon: 'fa fa-play', click: () => this.onLiveClicked(), disabled: true, hide: false },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
   ];
 
   selected: Automation[];
@@ -119,28 +124,35 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
     }
 
     if (event.type === 'checkbox') {
-      this.tableButtons[3].hide = this.selected.length === 0;
+      this.tableButtons[3].disabled = this.selected.length === 0;
       if (this.selected.length === 1) {
-        this.tableButtons[1].hide = this.selected[0].status !== 'Active';
-        this.tableButtons[2].hide = this.selected[0].status === 'Active';
+        this.tableButtons[1].disabled = this.selected[0].status !== 'Active';
+        this.tableButtons[2].disabled = this.selected[0].status === 'Active';
 
         if (this.selected[0].status === 'Failed') {
-          this.tableButtons[1].hide = true;
-          this.tableButtons[2].hide = true;
+          this.tableButtons[1].disabled = true;
+          this.tableButtons[2].disabled = true;
         }
       } else {
-        this.tableButtons[1].hide = true;
-        this.tableButtons[2].hide = true;
+        this.tableButtons[1].disabled = true;
+        this.tableButtons[2].disabled = true;
       }
     }
   }
 
   onDeleteClicked() {
-    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-      width: '400px',
-      data: {
-        message: 'Are you sure you want to delete selected SMS?'
-      }
-    });
+    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+    //   width: '400px',
+    //   data: {
+    //     message: 'Are you sure you want to delete selected SMS?'
+    //   }
+    // });
+    this.confirmModal.show();
+  }
+
+  onPauseClicked() {
+  }
+
+  onLiveClicked() {
   }
 }

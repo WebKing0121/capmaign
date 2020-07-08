@@ -27,6 +27,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnType') tableColumnTypeTemplate: TemplateRef<any>;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [
@@ -48,6 +49,11 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   searchFormControl: FormControl;
 
   destroy$ = new Subject();
+
+  // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+  ];
 
   constructor(
     private router: Router,
@@ -193,12 +199,13 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDeleteClicked() {
-    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-      width: '400px',
-      data: {
-        message: 'Are you sure you want to delete campaign/s?'
-      }
-    });
+    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+    //   width: '400px',
+    //   data: {
+    //     message: 'Are you sure you want to delete campaign/s?'
+    //   }
+    // });
+      this.confirmModal.show();
   }
 
   onSendClicked() {

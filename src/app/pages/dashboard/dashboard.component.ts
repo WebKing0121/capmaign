@@ -113,6 +113,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   public invitedRegistrationsData: any;
   modalType: ModalType.New;
   selectedApp: null;
+  showAndroid: boolean;
 
   constructor(
     private router: Router,
@@ -129,17 +130,19 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.engagementDrivingChannelsData = EventDashCrm.EngagementDrivingChannelsData;
     this.invitedRegistrationsData = EventDashCrm.InvitedRegistrationsData;
     this.showEmailAnalytics = true;
+    this.showAndroid = true;
   }
 
   ngOnInit(): void {
     this.showDateRangePickerFlag = false;
     const today = new Date();
     const oneMonthBeforeDate = moment().subtract(1, 'month');
-    this.fromDate = { year: today.getFullYear(), month: today.getMonth(), day: today.getDate() };
-    this.toDate = { year: oneMonthBeforeDate.year(), month: oneMonthBeforeDate.month(), day: oneMonthBeforeDate.date() };
-    this.compareFromDate = this.toDate;
-    const compareToDateV = moment().subtract(2, 'month');
-    this.compareToDate = { year: compareToDateV.year(), month: compareToDateV.month(), day: compareToDateV.date() };
+    this.toDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+    this.fromDate = { year: oneMonthBeforeDate.year(), month: oneMonthBeforeDate.month() + 1, day: oneMonthBeforeDate.date() };
+    const compareToDate = oneMonthBeforeDate.subtract(1, 'day');
+    const compareFromDate = compareToDate.subtract(1, 'month');
+    this.compareFromDate = { year: compareFromDate.year(), month: compareFromDate.month() + 1, day: compareFromDate.date() };
+    this.compareToDate = { year: compareToDate.year(), month: compareToDate.month() + 1, day: compareToDate.date() };
 
     // Get BounceEmail Table Information
     this.dashboardService.getBounceEmailMockData()
@@ -508,18 +511,38 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.fromDate = date;
     } else if (this.fromDate && !this.toDate && after(date, this.fromDate)) {
       this.toDate = date;
+      this.setCompareDates();
     } else {
       this.toDate = null;
       this.fromDate = date;
     }
   }
 
+  setCompareDates() {
+    const a = moment([this.fromDate.year, this.fromDate.month - 1, this.fromDate.day]);
+    a.subtract(1, 'days');
+    this.compareToDate = { year: a.year(), month: a.month() + 1, day: a.date() };
+    const b = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day]);
+    a.subtract(b.diff(a, 'day') - 1, 'days');
+    this.compareFromDate = { year: a.year(), month: a.month() + 1, day: a.date() };
+  }
+
+  // onCompareDateChange(date: NgbDateStruct) {
+  //   if (!this.compareFromDate && !this.compareToDate) {
+  //     this.compareFromDate = date;
+  //   } else if (this.compareFromDate && !this.compareToDate && after(date, this.compareFromDate)) {
+  //     this.compareToDate = date;
+  //   } else {
+  //     this.compareToDate = null;
+  //     this.compareFromDate = date;
+  //   }
+  // }
+
   showDateRangePicker() {
     this.showDateRangePickerFlag = !this.showDateRangePickerFlag;
   }
 
-  onClickAdd() {
-    this.modalType = ModalType.New;
-    setTimeout(() => this.mobileAppModal.show());
+  showAppstates(type) {
+    this.showAndroid = type === 1 ? true : false;
   }
 }

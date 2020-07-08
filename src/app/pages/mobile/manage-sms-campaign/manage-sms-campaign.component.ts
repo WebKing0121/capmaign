@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { Campaign } from '@app-models/campaign';
 import { ModalService } from '@app-components/modal/modal.service';
@@ -18,10 +18,17 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewInit {
 
+  @ViewChild('confirmModal', { static: false }) confirmModal;
+ // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+  ];
+
+
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateClicked() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', hide: true }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
   ];
 
   selected: Campaign[];
@@ -121,16 +128,17 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
     }
 
     if (event.type === 'checkbox') {
-      this.tableButtons[1].hide = this.selected.length === 0;
+      this.tableButtons[1].disabled = this.selected.length === 0;
     }
   }
 
   onDeleteClicked() {
-    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-      width: '400px',
-      data: {
-        message: 'Are you sure you want to delete selected SMS?'
-      }
-    });
+    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
+    //   width: '400px',
+    //   data: {
+    //     message: 'Are you sure you want to delete selected SMS?'
+    //   }
+    // });
+    this.confirmModal.show();
   }
 }
