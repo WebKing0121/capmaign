@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SocialPolicyComponent } from './social-policy.component';
+import { SocialPostModalComponent } from './post-modal.component';
 
-describe('SocialPolicyComponent', () => {
-  let component: SocialPolicyComponent;
-  let fixture: ComponentFixture<SocialPolicyComponent>;
+describe('SocialPostModalComponent', () => {
+  let component: SocialPostModalComponent;
+  let fixture: ComponentFixture<SocialPostModalComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SocialPolicyComponent ]
+      declarations: [ SocialPostModalComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SocialPolicyComponent);
+    fixture = TestBed.createComponent(SocialPostModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

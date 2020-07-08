@@ -28,3 +28,15 @@
     margin-top: 0px;
   }
 }
+
+.connect-card-container {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: 1fr 1fr 1fr;
+  .social-connect-card {
+    .card-text {
+      margin: 10px 0;
+      font-weight: bold;
+    }
+  }
+}

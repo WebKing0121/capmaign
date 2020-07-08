@@ -4,12 +4,12 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-social-message',
-  templateUrl: './social-message.component.html',
-  styleUrls: ['./social-message.component.scss'],
+  selector: 'app-social-messages',
+  templateUrl: './messages.component.html',
+  styleUrls: ['./messages.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class SocialMessageComponent implements OnInit, OnDestroy {
+export class SocialMessagesComponent implements OnInit, OnDestroy {
 
   private unsubscribe$ = new Subject();
 

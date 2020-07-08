@@ -481,7 +481,7 @@ const NavigationItems = [
             id: 'social-messages',
             title: 'Messages',
             type: 'item',
-            url: '/social/message',
+            url: '/social/messages',
             external: false
           },
           {

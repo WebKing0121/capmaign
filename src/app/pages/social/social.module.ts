@@ -1,17 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { DatatableModule } from '@app-components/datatable/datatable.module';
-
-import { SocialRoutingModule } from './social-routing.module';
-import { SocialPostComponent } from './social-post/social-post.component';
 import { SharedModule } from '../../theme/shared/shared.module';
-import { SocialUtmBuilderComponent } from './social-utm-builder/social-utm-builder.component';
+import { DatatableModule } from '@app-components/datatable/datatable.module';
+import { SocialRoutingModule } from './social-routing.module';
+
+import { SocialPostComponent } from './post/post.component';
+import { SocialPostModalComponent } from './post/modals/post-modal/post-modal.component';
+
+import { SocialUtmBuilderComponent } from './utm-builder/utm-builder.component';
+
+import { SocialMonitorComponent } from './monitor/monitor.component';
+import { SocialMonitorTabModalComponent } from './monitor/modals/tab-modal/tab-modal.component';
+import { SocialMonitorStreamModalComponent } from './monitor/modals/stream-modal/stream-modal.component';
+
+import { SocialPolicyComponent } from './policy/policy.component';
+
+import { SocialMessagesComponent } from './messages/messages.component';
 import { SocialEngagersComponent } from './engagers/engagers.component';
-import { SocialPolicyComponent } from './social-policy/social-policy.component';
-import { SocialMonitorComponent } from './social-monitor/social-monitor.component';
-import { SocialMessageComponent } from './social-message/social-message.component';
 import { SocialEngagerModalComponent } from './engagers/modals/engager-modal/engager-modal.component';
+
+
 
 @NgModule({
   declarations: [
@@ -19,9 +27,12 @@ import { SocialEngagerModalComponent } from './engagers/modals/engager-modal/eng
     SocialUtmBuilderComponent,
     SocialPolicyComponent,
     SocialMonitorComponent,
-    SocialMessageComponent,
+    SocialMonitorTabModalComponent,
+    SocialMonitorStreamModalComponent,
+    SocialMessagesComponent,
     SocialEngagersComponent,
-    SocialEngagerModalComponent
+    SocialEngagerModalComponent,
+    SocialPostModalComponent,
   ],
   imports: [
     CommonModule,

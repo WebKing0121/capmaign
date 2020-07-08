@@ -1,0 +1,27 @@
+<app-ui-modal #socialPostModal [containerClick]="false" [dialogClass]="dialogClass">
+  <div class="app-modal-header">
+    <h5 class="modal-title">New Post</h5>
+    <button type="button" class="maximize" (click)="revertFullScreen()"><i class="fa"
+        [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i></button>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="socialPostModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <app-social-account-list (addConnection)="onAddConnection()" (selectedUsers)="onSelectedUsers($event)">
+    </app-social-account-list>
+    <div class="html-editor">
+      <app-tinymce [(ngModel)]='newPostContent' #tinymce='tinymce'></app-tinymce>
+    </div>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-primary" [ngClass]="{'disabled': !postEnabled}">
+      <i class="fa fa-upload"></i>Post
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="socialPostModal.hide()">
+      <i class="fa fa-times-circle"></i>Close
+    </button>
+  </div>
+</app-ui-modal>

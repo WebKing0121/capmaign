@@ -12,17 +12,16 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-social-post',
-  templateUrl: './social-post.component.html',
-  styleUrls: ['./social-post.component.scss'],
+  templateUrl: './post.component.html',
+  styleUrls: ['./post.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SocialPostComponent implements OnInit, OnDestroy {
-  @ViewChild('newPostModal', { static: false }) newPostModal;
+  @ViewChild('socialPostModal', { static: false }) socialPostModal;
   @ViewChild('addConnection', { static: false }) addConnection;
 
   private unsubscribe$ = new Subject();
 
-  postEnabled: boolean;
   cardActions = [
     { label: 'Add Connection', icon: 'icon-link-2', action: () => this.onAddConnection() }
   ];
@@ -31,19 +30,15 @@ export class SocialPostComponent implements OnInit, OnDestroy {
   ];
 
   socialAccounts$: Observable<any[]>;
-  selectedLinks: SocialLinkSelected[];
 
-  public newPostContent: string;
 
   constructor(
     private store: Store<AppState>
   ) {
-    this.postEnabled = false;
     this.socialAccounts$ = this.store.select(selectSocialAccounts);
   }
 
   ngOnInit(): void {
-    this.newPostContent = '<p>Hello...</p>';
 
     this.socialAccounts$.pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => res === null && this.store.dispatch({
@@ -61,12 +56,7 @@ export class SocialPostComponent implements OnInit, OnDestroy {
   }
 
   onNewPost(): void {
-    this.newPostModal.show();
+    this.socialPostModal.show();
   }
 
-  onSelectedUsers(users: SocialLinkSelected[]): void {
-    this.selectedLinks = users;
-
-    this.postEnabled = this.selectedLinks.filter(x => x.selected === 1).length > 0;
-  }
 }

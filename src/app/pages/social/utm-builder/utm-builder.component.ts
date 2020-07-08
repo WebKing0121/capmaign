@@ -2,8 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-social-utm-builder',
-  templateUrl: './social-utm-builder.component.html',
-  styleUrls: ['./social-utm-builder.component.scss']
+  templateUrl: './utm-builder.component.html',
+  styleUrls: ['./utm-builder.component.scss']
 })
 export class SocialUtmBuilderComponent implements OnInit {
   @ViewChild('inputTrackableURL', { static: false }) inputTrackableURL;

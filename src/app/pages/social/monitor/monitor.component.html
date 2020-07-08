@@ -1,0 +1,50 @@
+<div class="row">
+	<div class="col-12 mornitor-section">
+		<app-card cardTitle="Monitor Tags or Keywords" [options]="false">
+			<div class="card-buttons">
+				<button class="btn" (click)="addTabDialog()">
+					<i class="feather icon-plus"></i> Add Tab
+				</button>
+			</div>
+			<div *ngIf="tabs.length === 0" role="alert" class="alert alert-warning">
+				<i class="feather icon-alert-triangle"></i> Please add <a href='#'>Tab</a> first.
+			</div>
+			<div *ngIf="tabs.length > 0" class="tab-section">
+				<ngb-tabset>
+					<ngb-tab *ngFor="let tab of tabs" [title]="tab.label">
+						<ng-template ngbTabContent>
+							<div *ngIf="tab.streams.length === 0" role="alert" class="alert alert-warning mt-3">
+								Please add stream to monitor social tag or keywords.
+							</div>
+							<div *ngIf="tab.streams.length > 0" class="mt-3">
+								<app-card *ngFor="let stream of tab.streams" [cardTitle]="stream.label"></app-card>
+							</div>
+							<button type="button" class="btn btn-outline-success btn-close-tab" (click)="onAddStream(tab.id)"><i
+									class="feather icon-plus"></i> {{tab.streams.length > 0 ? 'Update' : 'Add'}} Stream </button>
+							<button type="button" class="btn btn-outline-primary float-right btn-close-tab"
+								(click)="onCloseTabConfirm(tab.id)">Close</button>
+						</ng-template>
+					</ngb-tab>
+				</ngb-tabset>
+			</div>
+		</app-card>
+	</div>
+</div>
+
+<app-social-monitor-tab-modal #tabModal
+	(addTab)="onAddTab($event)"
+></app-social-monitor-tab-modal>
+
+<app-social-monitor-stream-modal #newStreamModal
+	[modalType]="modalType"
+	(addConnection)="onAddConnection()"
+	(selectUser)="onSelectedUsers($event)"
+></app-social-monitor-stream-modal>
+
+<app-confirm-modal #confirmModal
+	modalTitle="Confirm"
+	modalMessage="Do you want to close tab?"
+	[buttons]="confirmButtons"
+></app-confirm-modal>
+
+<app-social-add-connection #addConnection></app-social-add-connection>

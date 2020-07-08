@@ -2,15 +2,16 @@ import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { SocialLinkSelected } from '@app-models/social';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-social-monitor',
-  templateUrl: './social-monitor.component.html',
-  styleUrls: ['./social-monitor.component.scss'],
+  templateUrl: './monitor.component.html',
+  styleUrls: ['./monitor.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class SocialMonitorComponent implements OnInit {
-  @ViewChild('newTabModal', { static: false }) newTabModal;
+  @ViewChild('tabModal', { static: false }) tabModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('newStreamModal', { static: false }) newStreamModal;
   @ViewChild('addConnection', { static: false }) addConnection;
@@ -19,7 +20,7 @@ export class SocialMonitorComponent implements OnInit {
     { label: 'Yes', action: this.closeTab.bind(this), class: 'btn-primary' }
   ];
 
-  tabForm: FormGroup;
+
   loading = false;
   submitted = false;
 
@@ -28,7 +29,7 @@ export class SocialMonitorComponent implements OnInit {
     { id: 1, label: 'Campaign', streams: [] }
   ];
   selectedTabId: number;
-
+  modalType = ModalType.New;
   selectedLinks: SocialLinkSelected[];
   modalStreamTitle: string;
 
@@ -42,38 +43,24 @@ export class SocialMonitorComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.tabForm = this.formBuilder.group({
-      tabname: ['', Validators.required]
-    });
+
   }
 
   addTabDialog() {
-    this.newTabModal.show();
+    this.tabModal.show();
   }
 
-  // convenience getter for easy access to form fields
-  get f() { return this.tabForm.controls; }
 
-  onAddTab() {
-    this.submitted = true;
-    // stop here if form is invalid
-    if (this.tabForm.invalid) {
-      return;
-    }
-
+  onAddTab(tabName: string) {
     this.tabId++;
     this.tabs.push({
-      id: this.tabId, label: this.f.tabname.value, streams: []
+      id: this.tabId, label: tabName, streams: []
     });
-    this.tabForm.reset();
-    this.submitted = false;
-    this.newTabModal.hide();
   }
 
   onCloseTabConfirm(tabId: number) {
     this.selectedTabId = tabId;
     this.confirmModal.show();
-
   }
 
   getStreamModalTitle(): string {
@@ -92,7 +79,7 @@ export class SocialMonitorComponent implements OnInit {
 
   onAddStream(tabId: number) {
     this.selectedTabId = tabId;
-    this.modalStreamTitle = this.getStreamModalTitle();
+    this.modalType = ModalType.New;
     this.newStreamModal.show();
   }
 

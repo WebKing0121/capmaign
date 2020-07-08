@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SocialMessageComponent } from './social-message.component';
+import { SocialUtmBuilderComponent } from './utm-builder.component';
 
-describe('SocialMessageComponent', () => {
-  let component: SocialMessageComponent;
-  let fixture: ComponentFixture<SocialMessageComponent>;
+describe('SocialUtmBuilderComponent', () => {
+  let component: SocialUtmBuilderComponent;
+  let fixture: ComponentFixture<SocialUtmBuilderComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SocialMessageComponent ]
+      declarations: [ SocialUtmBuilderComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SocialMessageComponent);
+    fixture = TestBed.createComponent(SocialUtmBuilderComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

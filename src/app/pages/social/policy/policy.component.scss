@@ -1,0 +1,35 @@
+.social-policy {
+  p {
+    margin: 20px 0;
+    font-family: "helvetica", "Roboto", sans-serif;
+    color: #333333;
+    font-size: 14px;
+    line-height: 1.42857;
+    b {
+      font-weight: bold;
+    }
+  }
+
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+    li {
+      color: #333333;
+      font-size: 14px;
+      display: list-item;
+      line-height: 1.42857;
+      text-align: -webkit-match-parent;
+    }
+  }
+}
+
+@media only screen and (max-width: 575px) {
+  .social-policy {
+    padding: 0;
+  }
+}
