@@ -19,7 +19,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
-  ];  
+  ];
 
   destroy$ = new Subject();
   leadCategoryData: LeadCategory[];

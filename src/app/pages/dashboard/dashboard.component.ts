@@ -141,7 +141,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.fromDate = { year: oneMonthBeforeDate.year(), month: oneMonthBeforeDate.month() + 1, day: oneMonthBeforeDate.date() };
     const compareToDate = oneMonthBeforeDate.subtract(1, 'day');
     const compareFromDate = compareToDate.subtract(1, 'month');
-    this.compareFromDate = { year: compareFromDate.year(), month: compareFromDate.month() + 1, day: compareFromDate.date() }
+    this.compareFromDate = { year: compareFromDate.year(), month: compareFromDate.month() + 1, day: compareFromDate.date() };
     this.compareToDate = { year: compareToDate.year(), month: compareToDate.month() + 1, day: compareToDate.date() };
 
     // Get BounceEmail Table Information
