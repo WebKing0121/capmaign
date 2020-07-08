@@ -1,82 +1,84 @@
 <div class="row">
 	<div class="col-12 utm-builder">
-		<app-card cardTitle="Campaign - UTM Builder" [options]="false">
-			<div class="input-group mobile-input-view">
-				<label>Website URL <span class="text-danger">*</span></label>
-			</div>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend mobile-input-group">
-					<span class="input-group-text">Website URL <span class="text-danger">*</span></span>
+		<app-card cardTitle="Campaign - UTM Builder" cardClass="table-card" [options]="false">
+			<div class="row p-3">
+				<div class="col-12">
+					<label class="mobile-show">Website URL <span class="text-danger">*</span></label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Website URL <span class="text-danger">*</span></span>
+						</div>
+						<input type="text" name='website_url' class="form-control" (keyup)="onKeyUpEvent($event)"
+							placeholder="The full website url(e.g. https://www.example.com)">
+					</div>
 				</div>
-				<input type="text" name='website_url' class="form-control" (keyup)="onKeyUpEvent($event)"
-					placeholder="The full website url(e.g. https://www.example.com)">
-			</div>
-			<div class="input-group mobile-input-view">
-				<label>Campaign Source <span class="text-danger">*</span></label>
-			</div>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend mobile-input-group">
-					<span class="input-group-text">Campaign Source <span class="text-danger">*</span></span>
+				<div class="col-12 mt-3">
+					<label class="mobile-show">Campaign Source <span class="text-danger">*</span></label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Campaign Source <span class="text-danger">*</span></span>
+						</div>
+						<input type="text" name='campaign_source' class="form-control" (keyup)="onKeyUpEvent($event)"
+							placeholder="The referrer(e.g. google, newsletter)">
+					</div>
 				</div>
-				<input type="text" name='campaign_source' class="form-control" (keyup)="onKeyUpEvent($event)"
-					placeholder="The referrer(e.g. google, newsletter)">
-			</div>
-			<div class="input-group mobile-input-view">
-				<label>Campaign Medium</label>
-			</div>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend mobile-input-group">
-					<span class="input-group-text">Campaign Medium</span>
+				<div class="col-12 mt-3">
+					<label class="mobile-show">Campaign Medium</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Campaign Medium</span>
+						</div>
+						<input type="text" name='campaign_medium' class="form-control" (keyup)="onKeyUpEvent($event)"
+							placeholder="Marketing medium(e.g. cpc, banner, email)">
+					</div>
 				</div>
-				<input type="text" name='campaign_medium' class="form-control" (keyup)="onKeyUpEvent($event)"
-					placeholder="Marketing medium(e.g. cpc, banner, email)">
-			</div>
-
-			<div class="input-group mobile-input-view">
-				<label>Campaign Name</label>
-			</div>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend mobile-input-group">
-					<span class="input-group-text">Campaign Name</span>
+				<div class="col-12 mt-3">
+					<label class="mobile-show">Campaign Name</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Campaign Name</span>
+						</div>
+						<input type="text" name='campaign_name' class="form-control" (keyup)="onKeyUpEvent($event)"
+							placeholder="Product, promo code, or slogan(e.g. spring_sale)">
+					</div>
 				</div>
-				<input type="text" name='campaign_name' class="form-control" (keyup)="onKeyUpEvent($event)"
-					placeholder="Product, promo code, or slogan(e.g. spring_sale)">
-			</div>
-
-			<div class="input-group mobile-input-view">
-				<label>Campaign Term</label>
-			</div>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend mobile-input-group">
-					<span class="input-group-text">Campaign Term</span>
+				<div class="col-12 mt-3">
+					<label class="mobile-show">Campaign Term</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Campaign Term</span>
+						</div>
+						<input type="text" name='campaign_term' class="form-control" (keyup)="onKeyUpEvent($event)"
+							placeholder="Identify the paid keywords">
+					</div>
 				</div>
-				<input type="text" name='campaign_term' class="form-control" (keyup)="onKeyUpEvent($event)"
-					placeholder="Identify the paid keywords">
-			</div>
-			<div class="input-group mobile-input-view">
-				<label>Campaign Content</label>
-			</div>
-			<div class="input-group mb-3">
-				<div class="input-group-prepend mobile-input-group">
-					<span class="input-group-text">Campaign Content</span>
+				<div class="col-12 mt-3">
+					<label class="mobile-show">Campaign Content</label>
+					<div class="input-group">
+						<div class="input-group-prepend mobile-input-group">
+							<span class="input-group-text">Campaign Content</span>
+						</div>
+						<input type="text" name='campaign_content' class="form-control" (keyup)="onKeyUpEvent($event)"
+							placeholder="Use to differentiate ads">
+					</div>
 				</div>
-				<input type="text" name='campaign_content' class="form-control" (keyup)="onKeyUpEvent($event)"
-					placeholder="Use to differentiate ads">
-			</div>
-			<div class="input-group mobile-input-view">
-				<label>Trackable URL</label>
-			</div>
-			<div class="input-group mb-10">
-				<div class="input-group-prepend mobile-input-group">
-					<span class="input-group-text">Trackable URL</span>
+				<div class="col-12 mt-3">
+					<label class="mobile-show">Trackable URL</label>
+					<div class="input-group">
+						<div class="input-group-prepend">
+							<span class="input-group-text">Trackable URL</span>
+						</div>
+						<textarea class="form-control readonly-textarea" #inputTrackableURL readonly [(ngModel)]="trackableURL"
+							aria-label="With textarea"></textarea>
+					</div>
 				</div>
-				<textarea class="form-control readonly-textarea" #inputTrackableURL readonly [(ngModel)]="trackableURL"
-					aria-label="With textarea"></textarea>
+				<div class="col-12 mt-3">
+					<button class="btn btn-success btn-copy-url" (click)="copyText(inputTrackableURL)">
+						<i class="feather icon-edit"></i>
+						Copy URL
+					</button>
+				</div>
 			</div>
-			<button class="btn btn-success btn-copy-url" (click)="copyText(inputTrackableURL)">
-				<i class="feather icon-edit"></i>
-				Copy URL
-			</button>
 		</app-card>
 	</div>
 </div>
