@@ -60,7 +60,7 @@
     </div>
 
     <div *ngIf="showEmailAnalytics">
-      <div class="row table-card m-l-0 m-r-0 m-b-10">
+      <div class="row table-card m-l-0 m-r-0 mb-3">
         <div class="dashboard-top-card card">
           <div class="dashboard-top-card_header">
             <span class="dashboard-top-card_header_title">Click - through</span>
@@ -148,7 +148,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-7 col-md-12 table-height p-r-5">
+        <div class="col-lg-7 col-md-12 p-r-5 table-height">
           <app-datatable [title]="'Top Performing Campaigns'" [dataSource]="topPerformingTableSource"
             [buttons]="topPerformingTableButtons" class="soft-shadow">
           </app-datatable>
@@ -184,7 +184,7 @@
     </div>
     <div *ngIf="showMobileAnalytics">
       <div class="row m-0">
-        <div class="sms-cards card m-b-10 p-0">
+        <div class="sms-cards card mb-3 p-0">
           <div class="card-header">
             <span>SMS Campaign</span>
           </div>
@@ -299,7 +299,7 @@
         </div>
       </div>
       <div class="row m-0">
-        <div class="push-cards card m-b-10 p-0">
+        <div class="push-cards card mb-3 p-0">
           <div class="card-header">
             <span>Push Campaign</span>
           </div>

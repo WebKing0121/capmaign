@@ -14,6 +14,7 @@ import { InAppMessageComponent } from './in-app-message/in-app-message.component
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 import { PushNotificationsComponent } from './push-notifications/push-notifications.component';
 import { TriggerAutomationsComponent } from './trigger-automations/trigger-automations.component';
+import { ArchwizardModule } from 'angular-archwizard';
 
 @NgModule({
   declarations: [MobileCampaignComponent,
@@ -35,6 +36,7 @@ import { TriggerAutomationsComponent } from './trigger-automations/trigger-autom
     SharedModule,
     NgbTabsetModule,
     NgbDatepickerModule,
+    ArchwizardModule,
     SharedModule
   ]
 })

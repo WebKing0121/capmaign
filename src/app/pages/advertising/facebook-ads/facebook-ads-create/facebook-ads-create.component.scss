@@ -1,7 +1,6 @@
 :host {
   .main-bg-color {
     background-color: whitesmoke;
-    border: 1px solid;
   }
 
   .remove_me {
@@ -87,7 +86,7 @@
   }
 
   .radio-group-multitoggle {
-    border: solid 3px;
+    border: solid 3px #2196f3;
     width: 230px;
     margin: 20px;
     border-radius: 4px;
@@ -124,7 +123,7 @@
     }
 
     label + input[type="radio"].multitoggle + label {
-      border-left: solid 3px #6c757d;
+      border-left: solid 3px #2196f3;
     }
   }
 
