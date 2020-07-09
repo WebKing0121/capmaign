@@ -3,7 +3,12 @@
   $iphone-height: 672px;
 
   .modal-wrapper {
-    padding: 0 20%;
+    padding: 0 10%;
+    height: calc( 100vh - 50px );
+
+    .card {
+      height: 100%;
+    }
 
     @media only screen and (max-width: 1024px) {
       padding: 0 5%;
@@ -35,6 +40,43 @@
 
     .card-body {
       max-height: calc( 100vh - 122px);
+    }
+  }
+
+  .wizard-body {
+    height: calc(100vh - 290px);
+    overflow-y: hidden;
+  }
+
+  .wizard-footer {
+
+  }
+
+  .device-mode {
+    padding-top: 10px;
+
+    img {
+      width: 30px;
+      height: 30px;
+    }
+  }
+
+  .editor-wrapper {
+    height: calc( 100vh - 300px );
+    overflow: hidden;
+
+    &_preview, &_tool-text, &_tool-style {
+      overflow-y: auto;
+    }
+
+    &_tool-text {
+      padding-right: 5px;
+      height: calc(100% - 280px);
+    }
+
+    &_tool-style {
+      padding-right: 20px;
+      height: calc(100% - 360px);
     }
   }
 

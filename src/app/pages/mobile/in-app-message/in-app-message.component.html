@@ -9,494 +9,490 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div class="card-body" style="max-height: calc(100vh - 100px); overflow-y: auto;">
+    <div class="card-body modal-body-margin">
 
       <div class="d-block">
         <div class="d-block flex-wrap col-sm-12">
-          <!-- Tabs -->
-          <app-data-record-tabs [tabs]="tabs" (selectTab)="onSelectTab($event)"></app-data-record-tabs>
-          <!-- Tab content -->
-          <div *ngIf="step[0]" class="col-lg-12 p-0 card tabcontent">
-            <div class="card-body p-0">
-              <div style="padding: 10px;">
-                <span>Target user by choosing multiple audience to include further refine</span>
-              </div>
-              <div style="border-top:1px solid #F0F0F0; padding: 10px;">
-                <div class="col-lg-12 d-flex p-1"
-                  style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
-                  <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
-                  <span class="col-md-1 col-sm-1"><i class="fas fa-users"></i></span>
-                  <span class="col-md-2">Select Filter</span>
-                  <select class="form-control">
-                    <option value="?" selected="selected"></option>
-                    <option label="Groceries / C" value="number:123">Groceries / C</option>
-                    <option label="Groceries / Sample SMS List" value="number:119">Groceries / Sample SMS List
-                    </option>
-                    <option label="Unsorted / Go Air SMS" value="number:86">Unsorted / Go Air SMS</option>
-                    <option label="Unsorted / SMS Demo" value="number:60">Unsorted / SMS Demo</option>
-                  </select>
-                </div>
-              </div>
-              <div style="border-top:1px solid #F0F0F0; padding: 10px;">
-                <div class="col-lg-12 d-flex p-1"
-                  style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
-                  <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
-                  <span class="col-md-1 col-sm-1"><i class="fa fa-mobile-alt"></i></span>
-                  <span class="col-md-2">Select Mobile App</span>
-                  <select class="form-control">
-                    <option selected="selected"></option>
-                    <option value="number:123">C2C</option>
-                    <option value="number:119">C2CNotify</option>
-                    <option value="number:86">Normal</option>
-                    <option value="number:60">Normal3</option>
-                  </select>
-                </div>
-              </div>
-              <div style="border-top:1px solid #F0F0F0; padding: 10px;">
-                <div class="col-lg-12 d-flex p-1"
-                  style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
-                  <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
-                  <span class="col-md-1 col-sm-1"><i class="far fa-clock"></i></span>
-                  <span class="col-md-2">Select Trigger</span>
-                  <select class="form-control">
-                    <option value="?" selected="selected">Has Mobile App</option>
-                    <option value="number:123">Has Mobile App Session</option>
-                    <option value="number:119">Push Notification was not send</option>
-                    <option value="number:86">Push Notification was not tapped</option>
-                    <option value="number:60">Mobile App was opened</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="step[1]" class="col-lg-12 p-0 card tabcontent">
-            <div class="col-lg-12 card-body p-0">
-              <div style="padding: 10px;">
-                <span>Target user by choosing multiple audience to include further refine</span>
-              </div>
-              <div style="border-top:1px solid #F0F0F0; padding: 10px;">
-                <div class="col-lg-12 d-flex p-1"
-                  style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
-                  <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
-                  <span class="col-md-1 col-sm-1"><i class="fas fa-users"></i></span>
-                  <span class="col-md-2">Add In-App Messages</span>
-                  <select class="form-control">
-                    <option value="?" selected="selected"></option>
-                    <option *ngFor="let option of optionList">{{option}}</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="row p-15">
-              <!-- Preview panel -->
-              <div class="col-md-6 col-sm-12 p-0">
-                <div class="d-flex bg-secondary text-white" style="height: 40px; padding: 0 20px; align-items: center;">
-                  <span>Preview</span>
-                </div>
-                <div class="d-flex flex-wrap justify-content-center">
-                  <div class="col-lg-12 d-flex justify-content-center">
-                    <div class="p-10">
-                      <span *ngIf="!isAndroid" (click)="onDeviceModeClicked('android')"><img
-                          src="../../../../assets/images/mobile/Android_deselected.png"></span>
-                      <span *ngIf="isAndroid" (click)="onDeviceModeClicked('android')"><img *ngIf="isAndroid"
-                          src="../../../../assets/images/mobile/Android_selected.png"></span>
-                    </div>
-                    <div class="p-10 m-l-100">
-                      <span *ngIf="!isIphone" (click)="onDeviceModeClicked('iphone')"><img *ngIf="!isIphone"
-                          src="../../../../assets/images/mobile/ios_deselected.png"></span>
-                      <span *ngIf="isIphone" (click)="onDeviceModeClicked('iphone')"><img *ngIf="isIphone"
-                          src="../../../../assets/images/mobile/ios_selected.png"></span>
+          <aw-wizard #wizard class="arc-wizard import-wizard" navBarLayout="large-filled-symbols">
+            <aw-wizard-step stepTitle="Audience"
+              [navigationSymbol]="{ symbol: '&#xf1c3;', fontFamily: 'Font Awesome 5 Free' }">
+              <div class="row" style="margin-top: 1px;">
+                <div *ngIf="step[0]" class="col-lg-12 p-0 wizard-body modal-body-margin">
+                  <div style="padding: 10px;">
+                    <span>Target user by choosing multiple audience to include further refine</span>
+                  </div>
+                  <hr class="m-0">
+                  <div class="p-10">
+                    <div class="col-lg-12 d-flex p-1"
+                      style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+                      <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
+                      <span class="col-md-1 col-sm-1"><i class="fas fa-users"></i></span>
+                      <span class="col-md-2">Select Filter</span>
+                      <select class="form-control">
+                        <option value="?" selected="selected"></option>
+                        <option label="Groceries / C" value="number:123">Groceries / C</option>
+                        <option label="Groceries / Sample SMS List" value="number:119">Groceries / Sample SMS List
+                        </option>
+                        <option label="Unsorted / Go Air SMS" value="number:86">Unsorted / Go Air SMS</option>
+                        <option label="Unsorted / SMS Demo" value="number:60">Unsorted / SMS Demo</option>
+                      </select>
                     </div>
                   </div>
-                  <div class="">
-                    <div class="display-within-iphone" #mobileCampaign>
-                      <div class="iphone-iframe">
-                        <div class="iphone-editor-area d-flex flex-column">
-                          <div class="iphone-user-avatar p-10"></div>
-                          <img [src]="imagePath" class="p-10" style="width: 100px; height: 100px" />
-                          <h3 class="in-app-msg-txt p-10" [style.font-weight]="txtWeight" [style.font-style]="txtStyle"
-                            [style.text-decoration]="txtUnderline" [style.text-align]="txtAlign"
-                            [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize"
-                            [style.color]="txtColor">
-                            {{headerTxt}}</h3>
-                          <p class="in-app-msg-txt p-10" [style.font-weight]="txtWeight" [style.font-style]="txtStyle"
-                            [style.text-decoration]="txtUnderline" [style.text-align]="txtAlign"
-                            [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize"
-                            [style.color]="txtColor">
-                            {{bodyTxt}}</p>
-                          <div class="p-10">
-                            <a *ngIf="btnTxt1" [href]="btnTxt1" class="btn btn-secondary m-b-10"
-                              style="padding: 5px 10px;" (click)="onClickBtn(1, $event)" [style.font-weight]="btnWeight"
-                              [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline"
-                              [style.font-family]="btnFontFamily" [style.font-size]="btnFontSize"
-                              [style.background-color]="btnColor">{{btnTxt1}}</a>
-                            <a *ngIf="btnTxt2" [href]="btnTxt2" class="btn btn-secondary m-b-10 m-l-10"
-                              style="padding: 5px 10px;" (click)="onClickBtn(2, $event)" [style.font-weight]="btnWeight"
-                              [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline"
-                              [style.font-family]="btnFontFamily" [style.font-size]="btnFontSize"
-                              [style.background-color]="btnColor">{{btnTxt2}}</a>
+                  <hr class="m-0">
+                  <div class="p-10">
+                    <div class="col-lg-12 d-flex p-1"
+                      style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+                      <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
+                      <span class="col-md-1 col-sm-1"><i class="fa fa-mobile-alt"></i></span>
+                      <span class="col-md-2">Select Mobile App</span>
+                      <select class="form-control">
+                        <option selected="selected"></option>
+                        <option value="number:123">C2C</option>
+                        <option value="number:119">C2CNotify</option>
+                        <option value="number:86">Normal</option>
+                        <option value="number:60">Normal3</option>
+                      </select>
+                    </div>
+                  </div>
+                  <hr  class="m-0">
+                  <div class="p-10">
+                    <div class="col-lg-12 d-flex p-1"
+                      style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+                      <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
+                      <span class="col-md-1 col-sm-1"><i class="far fa-clock"></i></span>
+                      <span class="col-md-2">Select Trigger</span>
+                      <select class="form-control">
+                        <option value="?" selected="selected">Has Mobile App</option>
+                        <option value="number:123">Has Mobile App Session</option>
+                        <option value="number:119">Push Notification was not send</option>
+                        <option value="number:86">Push Notification was not tapped</option>
+                        <option value="number:60">Mobile App was opened</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <button type="button" class="btn btn-primary btn-md float-right" awNextStep>Continue</button>
+                </div>
+              </div>
+            </aw-wizard-step>
+            <aw-wizard-step stepTitle="Data Mapping" [navigationSymbol]="{ symbol: '&#xe88c;', fontFamily: 'Feather' }">
+              <div class="row modal-body-margin wizard-body">
+                <div class="col-lg-12 card-body p-0 ">
+                  <div class="p-10">
+                    <span>Target user by choosing multiple audience to include further refine</span>
+                  </div>
+                  <div style="border-top:1px solid #F0F0F0; padding: 10px;">
+                    <div class="col-lg-12 d-flex p-1"
+                      style="background-color:#F0F0F0; align-items: center; justify-content: space-between;">
+                      <span class="col-md-1 col-sm-1"><i class="fa fa-plus"></i></span>
+                      <span class="col-md-1 col-sm-1"><i class="fas fa-users"></i></span>
+                      <span class="col-md-2">Add In-App Messages</span>
+                      <select class="form-control">
+                        <option value="?" selected="selected"></option>
+                        <option *ngFor="let option of optionList">{{option}}</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div class="row col-12 m-l-0 editor-wrapper">
+                  <!-- Preview panel -->
+                  <div class="col-md-6 col-sm-12 p-0">
+                    <div class="d-flex bg-secondary text-white" style="height: 40px; padding: 0 20px; align-items: center;">
+                      <span>Preview</span>
+                    </div>
+                    <div class="d-flex flex-wrap justify-content-center editor-wrapper_preview">
+                      <div class="col-12 d-flex justify-content-center device-mode">
+                        <div class="col-6 d-flex justify-content-end">
+                          <img *ngIf="!isAndroid" (click)="onDeviceModeClicked('android')"
+                              src="../../../../assets/images/mobile/Android_deselected.png">
+                          <img *ngIf="isAndroid" (click)="onDeviceModeClicked('android')"
+                              src="../../../../assets/images/mobile/Android_selected.png">
+                        </div>
+                        <div class="col-6 d-flex justify-content-start">
+                          <img *ngIf="!isIphone" (click)="onDeviceModeClicked('iphone')"
+                              src="../../../../assets/images/mobile/ios_deselected.png">
+                          <img *ngIf="isIphone" (click)="onDeviceModeClicked('iphone')"
+                              src="../../../../assets/images/mobile/ios_selected.png">
+                        </div>
+                      </div>
+                      <div class="">
+                        <div class="display-within-iphone" #mobileCampaign>
+                          <div class="iphone-iframe">
+                            <div class="iphone-editor-area d-flex flex-column">
+                              <div class="iphone-user-avatar p-10"></div>
+                              <img [src]="imagePath" class="p-10" style="width: 100px; height: 100px" />
+                              <h3 class="in-app-msg-txt p-10" [style.font-weight]="txtWeight" [style.font-style]="txtStyle"
+                                [style.text-decoration]="txtUnderline" [style.text-align]="txtAlign"
+                                [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize"
+                                [style.color]="txtColor">
+                                {{headerTxt}}</h3>
+                              <p class="in-app-msg-txt p-10" [style.font-weight]="txtWeight" [style.font-style]="txtStyle"
+                                [style.text-decoration]="txtUnderline" [style.text-align]="txtAlign"
+                                [style.font-family]="txtFontFamily" [style.font-size]="txtFontSize"
+                                [style.color]="txtColor">
+                                {{bodyTxt}}</p>
+                              <div class="p-10">
+                                <a *ngIf="btnTxt1" [href]="btnTxt1" class="btn btn-secondary m-b-10"
+                                  style="padding: 5px 10px;" (click)="onClickBtn(1, $event)" [style.font-weight]="btnWeight"
+                                  [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline"
+                                  [style.font-family]="btnFontFamily" [style.font-size]="btnFontSize"
+                                  [style.background-color]="btnColor">{{btnTxt1}}</a>
+                                <a *ngIf="btnTxt2" [href]="btnTxt2" class="btn btn-secondary m-b-10 m-l-10"
+                                  style="padding: 5px 10px;" (click)="onClickBtn(2, $event)" [style.font-weight]="btnWeight"
+                                  [style.font-style]="btnStyle" [style.text-decoration]="btnUnderline"
+                                  [style.font-family]="btnFontFamily" [style.font-size]="btnFontSize"
+                                  [style.background-color]="btnColor">{{btnTxt2}}</a>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                  <!-- Edit panel -->
+                  <div class="col-md-6 col-sm-12 p-0">
+                    <div class="col-lg-12 d-flex justify-content-between bg-secondary"
+                      style="height: 40px; padding: 0 20px; align-items: center;">
+                      <div>
+                        <span class="text-white">Compose data</span>
+                      </div>
+                      <!-- Tabs -->
+                      <div>
+                        <span class="btn btn-secondary" style="padding: 5px 0;" (click)="onTextTabClicked()">
+                          <i class="p-l-10 p-r-10 fas fa-pencil-alt"></i>
+                        </span>
+                        <span class="btn btn-secondary" style="padding: 5px 0;" (click)="onStyleTabClicked()">
+                          <i class="p-l-10 p-r-10 fas fa-paint-brush"></i>
+                        </span>
+                        <span class="btn btn-secondary" style="padding: 5px 0;" (click)="onViewTabClicked()">
+                          <i class="p-l-10 p-r-10 fas fa-eye"></i>
+                        </span>
+                      </div>
+                    </div>
+                    <!-- TextValue Editor -->
+                    <div *ngIf="isTextEditPadShow" class="row editor-wrapper_tool-text">
+                      <form [formGroup]="formGroup" class="col-lg-12">
+                        <div class="col-md-12 p-0" style="margin: 5px 0;">
+                          <label class="mobile-show">Header</label>
+                          <div class="input-group m-t-10">
+                            <div class="input-group-prepend mobile-hide">
+                              <span class="input-group-text" style="width: 110px;">Header</span>
+                            </div>
+                            <input type="text" class="form-control" [(ngModel)]="headerTxt" formControlName="headerTxt"
+                              autocomplete="off" name="exclude">
+                          </div>
+                        </div>
+                        <div class="col-md-12 p-0" style="margin: 5px 0;">
+                          <label class="mobile-show">Body</label>
+                          <div class="input-group m-t-10">
+                            <div class="input-group-prepend mobile-hide">
+                              <span class="input-group-text" style="width: 110px;">Body</span>
+                            </div>
+                            <input type="text" class="form-control" [(ngModel)]="bodyTxt" formControlName="bodyTxt"
+                              autocomplete="off" name="exclude">
+                          </div>
+                        </div>
+                        <div class="col-md-12 p-0" style="margin: 5px 0;">
+                          <label class="mobile-show">Button 1 Text</label>
+                          <div class="input-group m-t-10">
+                            <div class="input-group-prepend mobile-hide">
+                              <span class="input-group-text" style="width: 110px;">Button 1</span>
+                            </div>
+                            <input type="text" class="form-control" [(ngModel)]="btnTxt1" formControlName="btnTxt1"
+                              autocomplete="off" name="exclude">
+                          </div>
+                        </div>
+                        <div class="col-md-12 p-0" style="margin: 5px 0;">
+                          <label class="mobile-show">Button 2 Text</label>
+                          <div class="input-group m-t-10">
+                            <div class="input-group-prepend mobile-hide">
+                              <span class="input-group-text" style="width: 110px;">Button 2</span>
+                            </div>
+                            <input type="text" class="form-control" [(ngModel)]="btnTxt2" formControlName="btnTxt2"
+                              autocomplete="off" name="exclude">
+                          </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 p-0">
+                          <label class="f-20 p-t-20 p-b-10">On Click Behavior</label>
+                        </div>
+                        <div class="col-md-12 p-0" style="margin: 5px 0;">
+                          <label class="mobile-show">Button 1</label>
+                          <div class="input-group m-t-10">
+                            <div class="input-group-prepend mobile-hide">
+                              <span class="input-group-text" style="width: 110px;">Button 1</span>
+                            </div>
+                            <select class="form-control" [(ngModel)]="selectedOption1" formControlName="selectedOption1"
+                              (change)=(onBtnOption(1))>
+                              <option>Display news feed</option>
+                              <option>Redirected Web Url</option>
+                              <option>None</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-12 p-0" style="margin: 5px 0;">
+                          <label class="mobile-show">Button 2</label>
+                          <div class="input-group m-t-10">
+                            <div class="input-group-prepend mobile-hide">
+                              <span class="input-group-text" style="width: 110px;">Button 2</span>
+                            </div>
+                            <select class="form-control" [(ngModel)]="selectedOption2" formControlName="selectedOption2"
+                              (change)=(onBtnOption(2))>
+                              <option>Select Option</option>
+                              <option>Display news feed</option>
+                              <option>Redirected Web Url</option>
+                              <option>None</option>
+                            </select>
+                          </div>
+                        </div>
+                        <div class="col-md-12 p-0" style="margin: 5px 0;">
+                          <label class="mobile-show">Header</label>
+                          <div class="input-group m-t-10">
+                            <div class="input-group-prepend mobile-hide">
+                              <span class="input-group-text" style="width: 110px;">Header</span>
+                            </div>
+                            <select class="form-control">
+                              <option>Select Option</option>
+                              <option>Dismiss Automatically</option>
+                              <option>Wait for user to hit close button</option>
+                            </select>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                    <!-- style editor -->
+                    <div *ngIf="isStyleEditPadShow" class="row editor-wrapper_tool-style">
+                      <label class="btn btn-outline-secondary m-t-10" style="width:100%;">
+                        Import image
+                        <input #file type="file" accept='image/*' class="uploadFile img" value="Upload Media"
+                          style="width: 0px;height: 0px;overflow: hidden;" (change)="uploadImage(file.files)">
+                      </label>
+                      <hr>
+                      <div class="mt-2">
+                        <span>Text</span>
+                      </div>
+                      <hr>
+                      <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                          <span>Style</span>
+                        </div>
+                        <div class="col-sm-12">
+                          <span *ngIf="isTxtBold" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                            (click)="onTxtBoldClicked()">B</span>
+                          <span *ngIf="!isTxtBold" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                            (click)="onTxtBoldClicked()">B</span>
+                          <span *ngIf="isTxtItalic" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                            (click)="onTxtItalicClicked()"><i>I</i></span>
+                          <span *ngIf="!isTxtItalic" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                            (click)="onTxtItalicClicked()"><i>I</i></span>
+                          <span *ngIf="isTxtUnderline" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                            (click)="onTxtUnderlineClicked()" style="text-decoration: underline;">U</span>
+                          <span *ngIf="!isTxtUnderline" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                            (click)="onTxtUnderlineClicked()" style="text-decoration: underline;">U</span>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 d-flex flex-wrap p-t-10" style="align-items: center;">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                          <span>Alignment</span>
+                        </div>
+                        <div class="col-sm-12">
+                          <span *ngIf="txtAlignState[0]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                            (click)="onTxtAlignBtnClicked(0, 'center')"><i class="fas fa-align-center"></i></span>
+                          <span *ngIf="!txtAlignState[0]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                            (click)="onTxtAlignBtnClicked(0, 'center')"><i class="fas fa-align-center"></i></span>
+                          <span *ngIf="txtAlignState[1]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                            (click)="onTxtAlignBtnClicked(1, 'left')"><i class="fas fa-align-left"></i></span>
+                          <span *ngIf="!txtAlignState[1]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                            (click)="onTxtAlignBtnClicked(1, 'left')"><i class="fas fa-align-left"></i></span>
+                          <span *ngIf="txtAlignState[2]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                            (click)="onTxtAlignBtnClicked(2, 'right')"><i class="fas fa-align-right"></i></span>
+                          <span *ngIf="!txtAlignState[2]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                            (click)="onTxtAlignBtnClicked(2, 'right')"><i class="fas fa-align-right"></i></span>
+                          <span *ngIf="txtAlignState[3]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
+                            (click)="onTxtAlignBtnClicked(3, 'justify')"><i class="fas fa-align-justify"></i></span>
+                          <span *ngIf="!txtAlignState[3]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
+                            (click)="onTxtAlignBtnClicked(3, 'justify')"><i class="fas fa-align-justify"></i></span>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                        <div class="col-lg-3 col-md-12">
+                          <span>Font Family</span>
+                        </div>
+                        <div class="col-lg-9 col-md-12">
+                          <select [ngModel]="txtFontFamily" class="form-control" (change)="onTxtFontFamilySelected($event)">
+                            <option *ngFor="let font of fontList">{{font}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                        <div class="col-lg-3 col-md-12">
+                          <span>Font Size</span>
+                        </div>
+                        <div class="col-lg-9 col-md-12">
+                          <select [ngModel]="txtFontFamily" class="form-control" (change)="onTxtFontSizeSelected($event)">
+                            <option *ngFor="let size of fontSizeList">{{size}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 d-flex flex-wrap m-t-10" style="align-items: center;">
+                        <div class="col-lg-3 col-md-12">
+                          <span>Color</span>
+                        </div>
+                        <div class="col-lg-9 col-md-12">
+                          <input type="color" [ngModel]="txtColor" (change)="onTxtColorChanged($event)">
+                        </div>
+                      </div>
+                      <div class="col-lg-12 m-t-10">
+                        <label>
+                          <input type="checkbox" class="">
+                          Tap Text Action
+                        </label>
+                      </div>
+                      <hr>
+                      <div>
+                        <span>Button</span>
+                      </div>
+                      <hr>
+                      <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                        <div class="col-lg-3 col-md-6 col-sm-12">
+                          <span>Style</span>
+                        </div>
+                        <div class="col-lg-9 col-md-6 col-sm-12">
+                          <span *ngIf="isBtnBold" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
+                            (click)="onBtnBoldClicked()">B</span>
+                          <span *ngIf="!isBtnBold" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
+                            (click)="onBtnBoldClicked()">B</span>
+                          <span *ngIf="isBtnItalic" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
+                            (click)="onBtnItalicClicked()"><i>I</i></span>
+                          <span *ngIf="!isBtnItalic" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
+                            (click)="onBtnItalicClicked()"><i>I</i></span>
+                          <span *ngIf="isBtnUnderline" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
+                            (click)="onBtnUnderlineClicked()" style="text-decoration: underline;">U</span>
+                          <span *ngIf="!isBtnUnderline" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
+                            (click)="onBtnUnderlineClicked()" style="text-decoration: underline;">U</span>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                        <div class="col-lg-3 col-md-12">
+                          <span>Font Family</span>
+                        </div>
+                        <div class="col-lg-9 col-md-12">
+                          <select [ngModel]="btnFontFamily" class="form-control" (change)="onBtnFontFamilySelected($event)">
+                            <option *ngFor="let font of fontList">{{font}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
+                        <div class="col-lg-3 col-md-12">
+                          <span>Font Size</span>
+                        </div>
+                        <div class="col-lg-9 col-md-12">
+                          <select [ngModel]="btnFontFamily" class="form-control" (change)="onBtnFontSizeSelected($event)">
+                            <option *ngFor="let size of fontSizeList">{{size}}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-lg-12 d-flex flex-wrap m-t-10">
+                        <div class="col-lg-3 col-md-12">
+                          <span>Button Fill Color</span>
+                        </div>
+                        <div class="col-lg-9 col-md-12">
+                          <!-- <label>
+                            <input type="radio" name="fillType" (click)="onFillTypeClicked(1)">
+                            Fill
+                          </label>
+                          <label class="m-l-10">
+                            <input type="radio" name="fillType" (click)="onFillTypeClicked(2)">
+                            Gradient
+                          </label> -->
+                          <input type="color" class="m-l-10" [ngModel]="btnColor" (change)="onBtnColorChanged($event)">
+                          <!-- <input *ngIf="!btnFill" type="color" class="m-l-10" [ngModel]="btnColor1" (change)="onBtnColorChanged1($event)"> -->
+                        </div>
+                      </div>
+                      <div class="col-lg-12 m-t-10">
+                        <label>
+                          <input type="checkbox" class="">
+                          Tap Button Action
+                        </label>
+                      </div>
+                    </div>
+                    <!-- viewmode editor -->
+                    <div *ngIf="isViewModeEditPadShow" class="row editor-wrapper_tool-part">
+                      <div class="col-lg-12 p-t-10 d-block">
+                        <div class="m-t-10">
+                          <label>
+                            <input type="radio" name="viewType"> Full screen InApp Message
+                          </label>
+                        </div>
+                        <div class="m-t-10">
+                          <label>
+                            <input type="radio" name="viewType"> Modal InApp Message
+                          </label>
+                        </div>
+                        <div class="m-t-10">
+                          <label>
+                            <input type="radio" name="viewType"> Traditional Slideup
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <!-- Edit panel -->
-              <div class="col-md-6 col-sm-12 p-0">
-                <div class="col-lg-12 d-flex justify-content-between bg-secondary"
-                  style="height: 40px; padding: 0 20px; align-items: center;">
-                  <div>
-                    <span class="text-white">Compose data</span>
-                  </div>
-                  <!-- Tabs -->
-                  <div>
-                    <span class="btn btn-secondary" style="padding: 5px 0;" (click)="onTextTabClicked()">
-                      <i class="p-l-10 p-r-10 fas fa-pencil-alt"></i>
-                    </span>
-                    <span class="btn btn-secondary" style="padding: 5px 0;" (click)="onStyleTabClicked()">
-                      <i class="p-l-10 p-r-10 fas fa-paint-brush"></i>
-                    </span>
-                    <span class="btn btn-secondary" style="padding: 5px 0;" (click)="onViewTabClicked()">
-                      <i class="p-l-10 p-r-10 fas fa-eye"></i>
-                    </span>
-                  </div>
+              <div class="row">
+                <div class="col-12 d-flex justify-content-between">
+                  <button type="button" class="btn btn-secondary btn-md" awPreviousStep>Back</button>
+                  <button type="button" class="btn btn-primary btn-md" awNextStep>Continue</button>
                 </div>
-                <!-- TextValue Editor -->
-                <div *ngIf="isTextEditPadShow" class="row">
-                  <form [formGroup]="formGroup" class="col-lg-12">
-                    <div class="col-md-12 p-0" style="margin: 5px 0;">
-                      <label class="mobile-show">Header</label>
-                      <div class="input-group m-t-10">
-                        <div class="input-group-prepend mobile-hide">
-                          <span class="input-group-text" style="width: 110px;">Header</span>
-                        </div>
-                        <input type="text" class="form-control" [(ngModel)]="headerTxt" formControlName="headerTxt"
-                          autocomplete="off" name="exclude">
-                      </div>
-                    </div>
-                    <div class="col-md-12 p-0" style="margin: 5px 0;">
-                      <label class="mobile-show">Body</label>
-                      <div class="input-group m-t-10">
-                        <div class="input-group-prepend mobile-hide">
-                          <span class="input-group-text" style="width: 110px;">Body</span>
-                        </div>
-                        <input type="text" class="form-control" [(ngModel)]="bodyTxt" formControlName="bodyTxt"
-                          autocomplete="off" name="exclude">
-                      </div>
-                    </div>
-                    <div class="col-md-12 p-0" style="margin: 5px 0;">
-                      <label class="mobile-show">Button 1 Text</label>
-                      <div class="input-group m-t-10">
-                        <div class="input-group-prepend mobile-hide">
-                          <span class="input-group-text" style="width: 110px;">Button 1</span>
-                        </div>
-                        <input type="text" class="form-control" [(ngModel)]="btnTxt1" formControlName="btnTxt1"
-                          autocomplete="off" name="exclude">
-                      </div>
-                    </div>
-                    <div class="col-md-12 p-0" style="margin: 5px 0;">
-                      <label class="mobile-show">Button 2 Text</label>
-                      <div class="input-group m-t-10">
-                        <div class="input-group-prepend mobile-hide">
-                          <span class="input-group-text" style="width: 110px;">Button 2</span>
-                        </div>
-                        <input type="text" class="form-control" [(ngModel)]="btnTxt2" formControlName="btnTxt2"
-                          autocomplete="off" name="exclude">
-                      </div>
-                    </div>
-                    <div class="col-lg-6 col-md-12 p-0">
-                      <label class="f-20 p-t-20 p-b-10">On Click Behavior</label>
-                    </div>
-                    <div class="col-md-12 p-0" style="margin: 5px 0;">
-                      <label class="mobile-show">Button 1</label>
-                      <div class="input-group m-t-10">
-                        <div class="input-group-prepend mobile-hide">
-                          <span class="input-group-text" style="width: 110px;">Button 1</span>
-                        </div>
-                        <select class="form-control" [(ngModel)]="selectedOption1" formControlName="selectedOption1"
-                          (change)=(onBtnOption(1))>
-                          <option>Display news feed</option>
-                          <option>Redirected Web Url</option>
-                          <option>None</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-12 p-0" style="margin: 5px 0;">
-                      <label class="mobile-show">Button 2</label>
-                      <div class="input-group m-t-10">
-                        <div class="input-group-prepend mobile-hide">
-                          <span class="input-group-text" style="width: 110px;">Button 2</span>
-                        </div>
-                        <select class="form-control" [(ngModel)]="selectedOption2" formControlName="selectedOption2"
-                          (change)=(onBtnOption(2))>
-                          <option>Select Option</option>
-                          <option>Display news feed</option>
-                          <option>Redirected Web Url</option>
-                          <option>None</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-md-12 p-0" style="margin: 5px 0;">
-                      <label class="mobile-show">Header</label>
-                      <div class="input-group m-t-10">
-                        <div class="input-group-prepend mobile-hide">
-                          <span class="input-group-text" style="width: 110px;">Header</span>
-                        </div>
-                        <select class="form-control">
-                          <option>Select Option</option>
-                          <option>Dismiss Automatically</option>
-                          <option>Wait for user to hit close button</option>
-                        </select>
-                      </div>
-                    </div>
-                  </form>
-                </div>
-                <!-- style editor -->
-                <div *ngIf="isStyleEditPadShow">
-                  <label class="btn btn-outline-secondary m-t-10" style="width:100%;">
-                    Import image
-                    <input #file type="file" accept='image/*' class="uploadFile img" value="Upload Media"
-                      style="width: 0px;height: 0px;overflow: hidden;" (change)="uploadImage(file.files)">
+              </div>
+            </aw-wizard-step>
+            <aw-wizard-step stepTitle="Approve" [navigationSymbol]="{ symbol: '&#xe840;', fontFamily: 'Feather' }">
+              <div class="row wizard-body modal-body-margin">
+                <div class="col-12 p-10">
+                  <span>Application Name</span>
+                  <div class="row">
+                    <div class="col-md-6">Device ID</div>
+                    <div class="col-md-6">Status</div>
+                  </div>
+                  <hr>
+                  <label>
+                    <input type="radio" name="sendType" (click)="onScheduleOnBtnClicked(false)">
+                    Schedule Now
                   </label>
+                  <label class="m-l-10">
+                    <input type="radio" name="sendType" (click)="onScheduleOnBtnClicked(true)">
+                    Schedule On
+                  </label>
+                  <div *ngIf="scheduleOn" class="mt-3">
+                    <div class="input-group">
+                      <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_to" ngbDatepicker
+                        [(ngModel)]="model" #datePicker="ngbDatepicker" (dateSelect)="onDateSelect($event)">
+                      <div class="input-group-append">
+                        <span class="input-group-text" (click)="datePicker.toggle()">
+                          <i class="fa fa-calendar"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                   <hr>
-                  <div>
-                    <span>Text</span>
-                  </div>
-                  <hr>
-                  <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                      <span>Style</span>
-                    </div>
-                    <div class="col-sm-12">
-                      <span *ngIf="isTxtBold" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
-                        (click)="onTxtBoldClicked()">B</span>
-                      <span *ngIf="!isTxtBold" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
-                        (click)="onTxtBoldClicked()">B</span>
-                      <span *ngIf="isTxtItalic" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
-                        (click)="onTxtItalicClicked()"><i>I</i></span>
-                      <span *ngIf="!isTxtItalic" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
-                        (click)="onTxtItalicClicked()"><i>I</i></span>
-                      <span *ngIf="isTxtUnderline" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
-                        (click)="onTxtUnderlineClicked()" style="text-decoration: underline;">U</span>
-                      <span *ngIf="!isTxtUnderline" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
-                        (click)="onTxtUnderlineClicked()" style="text-decoration: underline;">U</span>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 d-flex flex-wrap p-t-10" style="align-items: center;">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                      <span>Alignment</span>
-                    </div>
-                    <div class="col-sm-12">
-                      <span *ngIf="txtAlignState[0]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
-                        (click)="onTxtAlignBtnClicked(0, 'center')"><i class="fas fa-align-center"></i></span>
-                      <span *ngIf="!txtAlignState[0]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
-                        (click)="onTxtAlignBtnClicked(0, 'center')"><i class="fas fa-align-center"></i></span>
-                      <span *ngIf="txtAlignState[1]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
-                        (click)="onTxtAlignBtnClicked(1, 'left')"><i class="fas fa-align-left"></i></span>
-                      <span *ngIf="!txtAlignState[1]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
-                        (click)="onTxtAlignBtnClicked(1, 'left')"><i class="fas fa-align-left"></i></span>
-                      <span *ngIf="txtAlignState[2]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
-                        (click)="onTxtAlignBtnClicked(2, 'right')"><i class="fas fa-align-right"></i></span>
-                      <span *ngIf="!txtAlignState[2]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
-                        (click)="onTxtAlignBtnClicked(2, 'right')"><i class="fas fa-align-right"></i></span>
-                      <span *ngIf="txtAlignState[3]" class="btn btn-secondary text-white p-t-5 p-b-5 m-1"
-                        (click)="onTxtAlignBtnClicked(3, 'justify')"><i class="fas fa-align-justify"></i></span>
-                      <span *ngIf="!txtAlignState[3]" class="btn border-secondary text-secondary p-t-5 p-b-5 m-1"
-                        (click)="onTxtAlignBtnClicked(3, 'justify')"><i class="fas fa-align-justify"></i></span>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
-                    <div class="col-lg-3 col-md-12">
-                      <span>Font Family</span>
-                    </div>
-                    <div class="col-lg-9 col-md-12">
-                      <select [ngModel]="txtFontFamily" class="form-control" (change)="onTxtFontFamilySelected($event)">
-                        <option *ngFor="let font of fontList">{{font}}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
-                    <div class="col-lg-3 col-md-12">
-                      <span>Font Size</span>
-                    </div>
-                    <div class="col-lg-9 col-md-12">
-                      <select [ngModel]="txtFontFamily" class="form-control" (change)="onTxtFontSizeSelected($event)">
-                        <option *ngFor="let size of fontSizeList">{{size}}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 d-flex flex-wrap m-t-10" style="align-items: center;">
-                    <div class="col-lg-3 col-md-12">
-                      <span>Color</span>
-                    </div>
-                    <div class="col-lg-9 col-md-12">
-                      <input type="color" [ngModel]="txtColor" (change)="onTxtColorChanged($event)">
-                    </div>
-                  </div>
-                  <div class="col-lg-12 m-t-10">
+                  <div class="d-flex" style="align-items: center;">
                     <label>
-                      <input type="checkbox" class="">
-                      Tap Text Action
-                    </label>
-                  </div>
-                  <hr>
-                  <div>
-                    <span>Button</span>
-                  </div>
-                  <hr>
-                  <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
-                    <div class="col-lg-3 col-md-6 col-sm-12">
-                      <span>Style</span>
-                    </div>
-                    <div class="col-lg-9 col-md-6 col-sm-12">
-                      <span *ngIf="isBtnBold" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
-                        (click)="onBtnBoldClicked()">B</span>
-                      <span *ngIf="!isBtnBold" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
-                        (click)="onBtnBoldClicked()">B</span>
-                      <span *ngIf="isBtnItalic" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
-                        (click)="onBtnItalicClicked()"><i>I</i></span>
-                      <span *ngIf="!isBtnItalic" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
-                        (click)="onBtnItalicClicked()"><i>I</i></span>
-                      <span *ngIf="isBtnUnderline" class="p-t-5 p-b-5 m-1 btn btn-secondary text-white"
-                        (click)="onBtnUnderlineClicked()" style="text-decoration: underline;">U</span>
-                      <span *ngIf="!isBtnUnderline" class="p-t-5 p-b-5 m-1 btn border-secondary text-secondary"
-                        (click)="onBtnUnderlineClicked()" style="text-decoration: underline;">U</span>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
-                    <div class="col-lg-3 col-md-12">
-                      <span>Font Family</span>
-                    </div>
-                    <div class="col-lg-9 col-md-12">
-                      <select [ngModel]="btnFontFamily" class="form-control" (change)="onBtnFontFamilySelected($event)">
-                        <option *ngFor="let font of fontList">{{font}}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 d-flex flex-wrap" style="align-items: center;">
-                    <div class="col-lg-3 col-md-12">
-                      <span>Font Size</span>
-                    </div>
-                    <div class="col-lg-9 col-md-12">
-                      <select [ngModel]="btnFontFamily" class="form-control" (change)="onBtnFontSizeSelected($event)">
-                        <option *ngFor="let size of fontSizeList">{{size}}</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="col-lg-12 d-flex flex-wrap m-t-10">
-                    <div class="col-lg-3 col-md-12">
-                      <span>Button Fill Color</span>
-                    </div>
-                    <div class="col-lg-9 col-md-12">
-                      <!-- <label>
-                        <input type="radio" name="fillType" (click)="onFillTypeClicked(1)">
-                        Fill
-                      </label>
-                      <label class="m-l-10">
-                        <input type="radio" name="fillType" (click)="onFillTypeClicked(2)">
-                        Gradient
-                      </label> -->
-                      <input type="color" class="m-l-10" [ngModel]="btnColor" (change)="onBtnColorChanged($event)">
-                      <!-- <input *ngIf="!btnFill" type="color" class="m-l-10" [ngModel]="btnColor1" (change)="onBtnColorChanged1($event)"> -->
-                    </div>
-                  </div>
-                  <div class="col-lg-12 m-t-10">
-                    <label>
-                      <input type="checkbox" class="">
-                      Tap Button Action
+                      <input type="checkbox">
+                      <i class="fa fa-edit m-l-30"></i>
+                      Save as Draft
                     </label>
                   </div>
                 </div>
-                <!-- viewmode editor -->
-                <div *ngIf="isViewModeEditPadShow">
-                  <div class="col-lg-12 p-t-10 d-block">
-                    <div class="m-t-10">
-                      <label>
-                        <input type="radio" name="viewType"> Full screen InApp Message
-                      </label>
-                    </div>
-                    <div class="m-t-10">
-                      <label>
-                        <input type="radio" name="viewType"> Modal InApp Message
-                      </label>
-                    </div>
-                    <div class="m-t-10">
-                      <label>
-                        <input type="radio" name="viewType"> Traditional Slideup
-                      </label>
-                    </div>
-                  </div>
+              </div>
+              <div class="row">
+                <div class="col-12 d-flex justify-content-between">
+                  <button type="button" class="btn btn-secondary btn-md" awPreviousStep>Back</button>
+                  <button type="button" class="btn btn-primary btn-md">
+                    {{!pushNotificationMode ? 'Send InApp Message' : 'Send PushNotification'}} </button>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div *ngIf="step[2]" class="col-lg-12 p-0 card tabcontent">
-            <div class="col-lg-12 card-body p-0">
-              <div style="padding: 10px;">
-                <span>Target user by choosing multiple audience to include further refine</span>
-              </div>
-              <hr>
-              <div class="col-lg-12 p-10">
-                <span>Application Name</span>
-              </div>
-              <div class="col-lg-12 d-flex m-b-50 m-t-20">
-                <div class="col-md-6">Device ID</div>
-                <div class="col-md-6">Status</div>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="step[3]" class="col-lg-12 p-0 card tabcontent">
-            <div class="col-lg-12 card-body p-0">
-              <div class="p-10">
-                <span>Target user by choosing multiple audience to include further refine</span>
-              </div>
-              <div class="col-lg-12 p-20">
-                <label>
-                  <input type="radio" name="sendType" (click)="onScheduleOnBtnClicked(false)">
-                  Schedule Now
-                </label>
-                <label class="m-l-10">
-                  <input type="radio" name="sendType" (click)="onScheduleOnBtnClicked(true)">
-                  Schedule On
-                </label>
-              </div>
-              <div *ngIf="scheduleOn">
-                <div class="input-group">
-                  <input class="form-control" autocomplete="off" placeholder="YYYY-MM-DD" name="dp_to" ngbDatepicker
-                    [(ngModel)]="model" #datePicker="ngbDatepicker" (dateSelect)="onDateSelect($event)">
-                  <div class="input-group-append">
-                    <span class="input-group-text" (click)="datePicker.toggle()">
-                      <i class="fa fa-calendar"></i>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="step[4]" class="col-lg-12 p-0 card tabcontent">
-            <div class="col-lg-12 card-body">
-              <div class="col-lg-12 d-flex" style="align-items: center;">
-                <input type="checkbox">
-                <i class="fa fa-edit m-l-30">
-                  Save as Draft
-                </i>
-              </div>
-            </div>
-          </div>
-
-          <div *ngIf="step[5]" class="col-lg-12 p-0 card tabcontent">
-            <div class="col-lg-12 card-body d-flex justify-content-end">
-              <div class="btn btn-outline-secondary bg-white m-l-auto" (click)="sendInAppMessage()">
-                <span *ngIf="!pushNotificationMode">Send InApp Message</span>
-                <span *ngIf="pushNotificationMode">Send PushNotification</span>
-              </div>
-            </div>
-          </div>
+            </aw-wizard-step>
+          </aw-wizard>
         </div>
       </div>
     </div>

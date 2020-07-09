@@ -336,14 +336,14 @@ const NavigationItems = [
             id: 'advertising-facebook-ads',
             title: 'Facebook Ads',
             type: 'item',
-            url: '/advertising/facebook-ads/new-ads',
+            url: '/advertising/facebook-ads',
             external: false
           },
           {
             id: 'advertising-google-ads',
             title: 'Google Ads',
             type: 'item',
-            url: '/advertising/google-ads/new-ads',
+            url: '/advertising/google-ads',
             external: false
           },
           {

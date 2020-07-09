@@ -919,7 +919,7 @@ aw-wizard-navigation-bar {
       }
     }
   }
-  &.horizontal {
+  &.horizontal, &.vertical {
     &.large-filled-symbols {
       ul.steps-indicator {
         li.done {
