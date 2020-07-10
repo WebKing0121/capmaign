@@ -9,12 +9,12 @@
 		<p><i class="fa fa-info-circle" [style.marginRight.px]="10" [style.color]="'#ffd86b'"></i>{{modalMessage}}</p>
 	</div>
 	<div class="app-modal-footer">
-		<button type="button" *ngFor="let button of buttons" class="btn"
+		<button type="button" *ngFor="let button of buttons" class="btn" [disabled]="button.disabled"
 			[ngClass]="button.class" (click)="onClickYes(button.action)">
 			<i class="fa fa-check"></i>{{button.label}}
 		</button>
 		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="confirmModal.hide()">
-			<i class="fa fa-times"></i>{{btnNoText ? btnNoText: 'Cancel'}}
+			<i class="fa fa-times"></i>{{btnNoText ? btnNoText: 'No'}}
 		</button>
 	</div>
 </app-ui-modal>

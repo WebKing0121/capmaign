@@ -15,7 +15,9 @@ import { UserMobileAppsMock } from '@app-fake-db/user-mobile-apps-mock';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+
+  }
 
   getAll() {
     // return this.http.get<User[]>(`${environment.apiUrl}/users`);
@@ -136,6 +138,15 @@ export class UserService {
   }
 
   getMobileApps(): Observable<any> {
-    return of(UserMobileAppsMock);
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/sms/GetAllAppInfo?appId=0`);
+  }
+
+  deleteMobileApp(mobileAppId: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/sms/DeleteAppInfo?input=${mobileAppId}`);
+  }
+
+  createMobileApp(appInfo: any): Observable<any> {
+    // https://c2cstaging.azurewebsites.net/api/services/app/sms/CreateAppInfo
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/CreateAppInfo`, appInfo);
   }
 }

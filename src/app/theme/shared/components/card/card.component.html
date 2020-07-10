@@ -56,5 +56,7 @@
   <div *ngIf="isCardFooter" class="card-footer" [ngClass]="footerClass">
     <ng-content select=".app-card-footer"></ng-content>
   </div>
-  <div class="card-loader" *ngIf="loadCard"><i class="pct-loader1 anim-rotate"></i></div>
+  <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
 </div>

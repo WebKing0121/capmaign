@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -12,10 +12,11 @@ export class AdminMobileAppModalComponent implements OnInit {
   @Input() modalType = ModalType.New;
   @Input() mobileApp: any;
   @ViewChild('mobileAppModal', { static: false }) mobileAppModal;
-
+  @Output() save: EventEmitter<any> = new EventEmitter();
   ModalType = ModalType;
   mobileType: number;
   form: FormGroup;
+
   constructor(
     private fb: FormBuilder
   ) {
@@ -36,6 +37,7 @@ export class AdminMobileAppModalComponent implements OnInit {
   setMobileType(mobileType: number) {
     this.mobileType = mobileType;
   }
+
   show() {
     if (this.modalType === ModalType.New) {
       this.form.setValue({
@@ -65,5 +67,24 @@ export class AdminMobileAppModalComponent implements OnInit {
 
   hide() {
     this.mobileAppModal.hide();
+  }
+
+  onSave() {
+    if (this.form.valid) {
+
+      const { name, description, id, appId, senderId, packageName } = this.form.value;
+      const appInfo = {
+        ApplicationId: appId ? appId : '',
+        Description: description ? description : '',
+        Name: name ? name : '',
+        OrganizationUnitId: 0,
+        OsType: this.mobileType,
+        PackageName: packageName ? packageName : '',
+        SenderId: senderId ? senderId : 0,
+      };
+      this.save.emit(appInfo);
+      this.hide();
+    }
+
   }
 }

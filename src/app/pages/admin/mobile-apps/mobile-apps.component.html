@@ -1,6 +1,11 @@
 <div class="row mt-3">
   <div class="col-12 card-mobile-apps">
-    <app-card cardTitle="Mobile Apps" [cardButtons]="tableButtons" cardClass="table-card" [options]="false">
+    <app-card #mobileApps cardTitle="Mobile Apps"
+      [cardButtons]="tableButtons"
+      [loading]="loading"
+      cardClass="table-card"
+      [options]="false"
+    >
       <div class="p-3 d-flex flex-wrap justify-content-center">
         <div *ngFor="let mobile of apps" class="mobile-app" (click)="onSelectApp(mobile)"
           (dblclick)="onEditApp(mobile)"
@@ -19,8 +24,10 @@
   </div>
 </div>
 
-<app-admin-mobile-app-modal #mobileAppModal [modalType]="modalType"
+<app-admin-mobile-app-modal #mobileAppModal
+  [modalType]="modalType"
   [mobileApp]="selectedApp"
+  (save)="onSave($event)"
 ></app-admin-mobile-app-modal>
 
 <app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to remove the mobile app?"

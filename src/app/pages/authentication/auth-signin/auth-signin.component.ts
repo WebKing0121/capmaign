@@ -67,12 +67,6 @@ export class AuthSigninComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           if (data.success) {
-            // this.store.dispatch({
-            //   type: AppTypes.GetSocialAccounts
-            // });
-            // this.store.dispatch({
-            //   type: AppTypes.GetSocialSites
-            // });
             this.loading = false;
             this.router.navigate([this.returnUrl]);
           } else {

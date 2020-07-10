@@ -53,6 +53,7 @@ export class CardComponent implements OnInit {
   @Input() footerClass: string;
   @Input() cardActions: [];
   @Input() cardButtons = [];
+  @Input() loading = false;
 
   public animation: string;
   public fullIcon: string;
@@ -62,9 +63,6 @@ export class CardComponent implements OnInit {
 
   public collapsedCard: string;
   public collapsedIcon: string;
-
-  public loadCard: boolean;
-
   public cardRemove: string;
 
   constructor(/*animationService: AnimationService,*/ config: NgbDropdownConfig) {
@@ -84,9 +82,6 @@ export class CardComponent implements OnInit {
 
     this.collapsedCard = 'expanded';
     this.collapsedIcon = 'icon-minus';
-
-    this.loadCard = false;
-
     this.cardRemove = 'open';
   }
 
@@ -142,21 +137,12 @@ export class CardComponent implements OnInit {
   }
 
   cardRefresh() {
-    this.loadCard = true;
+    this.loading = true;
     this.cardClass = 'card-load';
     setTimeout(() => {
-      this.loadCard = false;
+      this.loading = false;
       this.cardClass = 'expanded';
     }, 3000);
-  }
-
-  setCardRefresh(flag: boolean) {
-    this.loadCard = flag;
-    if (flag) {
-      this.cardClass = 'card-load';
-    } else {
-      this.cardClass = 'expanded';
-    }
   }
 
   cardRemoveAction() {
