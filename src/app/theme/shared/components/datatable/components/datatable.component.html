@@ -1,4 +1,4 @@
-<app-card #datatableCard [cardTitle]="title" [cardButtons]="buttons" [cardClass]="'table-card'" [options]="false">
+<app-card #datatableCard [cardTitle]="title" [loading]="loading" [cardButtons]="buttons" [cardClass]="'table-card'" [options]="false">
   <div class="table-toolbar">
     <div class="d-flex position-relative">
       <div *ngIf="filter.length > 0" class="btn-group dropdown" ngbDropdown>

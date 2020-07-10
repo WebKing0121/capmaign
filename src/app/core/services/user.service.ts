@@ -19,9 +19,14 @@ export class UserService {
 
   }
 
-  getAll() {
-    // return this.http.get<User[]>(`${environment.apiUrl}/users`);
+  getAll(): Observable<any> {
     return of(UsersMockData);
+  }
+
+  getUsers(filter: any): Observable<any> {
+    // https://c2cstaging.azurewebsites.net/api/services/app/user/GetUsers
+    return this.http.post<User[]>(`${environment.apiUrl}/api/services/app/user/GetUsers`, filter);
+
   }
 
   getRolePages() {
@@ -65,19 +70,26 @@ export class UserService {
     }
   }
 
-  getOrganizations() {
-    return of(UserOrganizationsMock);
+  getOrganizations(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/organizationUnit/GetOrganizationUnits`);
   }
 
   getOrganizationMembers(organizationId: number): Observable<any> {
-    return of({
-      result: UserOrganizationMemberMocks[organizationId],
-      targetUrl: null,
-      success: true,
-      error: null,
-      unAuthorizedRequest: false,
-      __abp: true
+    // https://c2cstaging.azurewebsites.net/api/services/app/organizationUnit/GetOrganizationUnitUsers
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/organizationUnit/GetOrganizationUnitUsers`, {
+      id: organizationId,
+      maxResultCount: 50,
+      skipCount: 0,
+      sorting: null
     });
+    // return of({
+    //   result: UserOrganizationMemberMocks[organizationId],
+    //   targetUrl: null,
+    //   success: true,
+    //   error: null,
+    //   unAuthorizedRequest: false,
+    //   __abp: true
+    // });
   }
 
   getSenders(): Observable<any> {
@@ -146,7 +158,6 @@ export class UserService {
   }
 
   createMobileApp(appInfo: any): Observable<any> {
-    // https://c2cstaging.azurewebsites.net/api/services/app/sms/CreateAppInfo
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/CreateAppInfo`, appInfo);
   }
 }

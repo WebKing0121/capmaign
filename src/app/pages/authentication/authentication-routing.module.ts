@@ -14,11 +14,11 @@ const routes: Routes = [
         loadChildren: () => import('./auth-signup-v2/auth-signup-v2.module').then(module => module.AuthSignupV2Module)
       },
       {
-        path: 'signin',
+        path: 'signin-old',
         loadChildren: () => import('./auth-signin/auth-signin.module').then(module => module.AuthSigninModule)
       },
       {
-        path: 'signin-v2',
+        path: 'signin',
         loadChildren: () => import('./auth-signin-v2/auth-signin-v2.module').then(module => module.AuthSigninV2Module)
       },
       {
@@ -38,7 +38,13 @@ const routes: Routes = [
         path: 'change-password-v2',
         loadChildren: () => import('./auth-change-password-v2/auth-change-password-v2.module')
           .then(module => module.AuthChangePasswordV2Module)
-      }
+      },
+      {
+        path: 'lock-screen',
+        loadChildren: () => import('./lock-screen/lock-screen.module')
+          .then(module => module.LockScreenModule)
+      },
+
     ]
   }
 ];

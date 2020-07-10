@@ -1,0 +1,30 @@
+<div class="full-screen">
+  <div class="lock-container">
+    <div class="time-container text-white">
+      <div class="current-time">
+        {{hh}}
+        <span [ngClass]="{'text-white': secondIndicator, 'text-secondary': !secondIndicator}">:</span>
+        {{mm}}
+      </div>
+      <div class="current-date">{{date}}</div>
+    </div>
+    <div class="unlock-container">
+      <div class="user-avatar">
+        <img [src]="'/assets/images/campaign/user-avatar.png'" class="user-image" />
+      </div>
+      <div class="user-name">{{currentUser.userName}}</div>
+      <div *ngIf="error" class="alert alert-danger mt-3 error-text">{{error}}</div>
+      <form [formGroup]="form" (ngSubmit)="onUnlockScreen()" >
+        <div class="input-group mt-3">
+          <input type="password" formControlName="password" [disabled]="submitted" placeholder="Type password to unlock screen" class="form-control">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-success" [disabled]="submitted">
+              <span *ngIf="submitted" class="spinner-border spinner-border-sm"></span>
+              <i class="fa fa-unlock" *ngIf="!submitted"></i>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

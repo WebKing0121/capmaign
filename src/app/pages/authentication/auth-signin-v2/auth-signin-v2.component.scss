@@ -1,31 +1,40 @@
 .btn-login {
-    background-color:rgb(1, 204, 113);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.18);
-    color: white;
-    text-transform: uppercase;
-    outline: none;
-    padding: 10px 20px;
+  background-color: rgb(1, 204, 113);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.18);
+  color: white;
+  text-transform: uppercase;
+  outline: none;
+  padding: 10px 20px;
 }
 
 .btn-login:hover {
-    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1), 0 3px 3px rgba(0, 0, 0, 0.18);
 }
 
 .font-14 {
-    font-size: 14px;
-}
-
-.form-control {
-    border: 1px solid #dde3ec;
+	font-size: 14px;
+	padding-top: 3px;
+	padding-left: 5px;
 }
 
 .form-control:focus {
-    border: 2px solid #00acf0;
+  border: 2px solid #00acf0;
 }
 
 .copyright {
-    color: #7a8ca5;
-    font-size: 13px;
-    text-align: center;
-    width: 400px;
+  color: #7a8ca5;
+  font-size: 13px;
+  text-align: center;
+  width: 400px;
+}
+
+
+@media only screen and (max-width: 575px) {
+  .mobile-hide {
+    display: none;
+  }
+  .mobile-logo-image {
+    margin-top: -20px;
+    width: 100%;
+  }
 }

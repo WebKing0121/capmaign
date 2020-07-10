@@ -40,8 +40,10 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   @Input() filter = [];
   @Input() dataSource: DataTableSource<any>;
   @Input() tableView = true;
+  @Input() loading = false;
   @Input() tableViewButtons = [];
   @Output() activate: EventEmitter<any> = new EventEmitter<any>();
+
 
   innerColumns: DataTableColumn[] = [];
   tableHeight = this.headerHeight;
@@ -92,6 +94,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
   }
 
   ngAfterViewInit() {

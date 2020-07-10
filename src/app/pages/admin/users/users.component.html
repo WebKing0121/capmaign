@@ -7,6 +7,7 @@
       [selectable]="false"
       [selectionType]="'single'"
       [headerHeight]="40"
+      [loading]="loading"
       (activate)="onActive($event)"
     ></app-datatable>
   </div>
@@ -14,7 +15,7 @@
 
 <ng-template #userTemplate let-row="row" let-value let-i="index">
   <div class="user-container">
-    <img class="user-avatar" [src]="row.profileImg ? row.profileImg : ''" />
+    <img class="user-avatar" [src]="row.profileImg ? row.profileImg : '/assets/images/campaign/user-avatar.png'" />
     <div class="user-name-section">
       <div class="user-name">
         {{row.name}} {{row.surname}}

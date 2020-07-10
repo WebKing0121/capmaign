@@ -28,7 +28,7 @@ export class AdminOrganizationModalComponent implements OnInit {
   show() {
     if (this.modalType === ModalType.Edit) {
       this.form.setValue({
-        name: this.organization.displayName
+        name: this.organization.originDisplayName
       });
     } else {
       this.form.setValue({

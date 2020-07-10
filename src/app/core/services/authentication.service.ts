@@ -38,6 +38,7 @@ export class AuthenticationService {
           user.surname = '';
           user.name = '';
           user.profileImg = '';
+          user.tenancyName = tenancyname;
           localStorage.setItem('currentUser', JSON.stringify(user));
           this.currentUserSubject.next(user);
           return {

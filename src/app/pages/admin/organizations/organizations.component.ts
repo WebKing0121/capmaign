@@ -39,13 +39,23 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
     { label: 'Yes', action: this.onDeleteConfirmOrganization.bind(this), class: 'btn-primary' }
   ];
 
+  loadingTree: boolean;
+  loadingUsers: boolean;
+
   constructor(private userService: UserService) {
     this.totalCount = 0;
     this.members = [];
     this.treeData = [];
+    this.loadingTree = false;
+    this.loadingUsers = false;
   }
 
   ngOnInit(): void {
+    this.loadOrganizationUnits();
+  }
+
+  loadOrganizationUnits() {
+    this.loadingTree = true;
     this.userService.getOrganizations()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -60,10 +70,34 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
             this.treeData = this._listToTree(temporaryData);
             this.totalCount = 0;
           }
+          this.loadingTree = false;
+        },
+        error => {
+          this.loadingTree = false;
+          console.log('error', error.response);
+        }
+      );
+  }
 
+  loadUsersOfOrganization(organizationId: number) {
+    this.loadingUsers = true;
+    this.userService.getOrganizationMembers(organizationId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.members = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.members = [];
+            this.totalCount = 0;
+          }
+          this._updateTable(this.members);
+          this.loadingUsers = false;
         },
         error => {
           console.log('error', error.response);
+          this.loadingUsers = false;
         }
       );
   }
@@ -86,21 +120,7 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   _updateTable(members: User[]) {
-    this.tableSource.next(members.slice(0, 50), members.length);
-    this.tableSource.changed$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
-        this.tableSource.next(
-          members.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          members.length
-        );
-      });
-    this.tableSource.selection$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
+    this.tableSource.next(members, members.length);
   }
 
   onActive(evt) {
@@ -109,24 +129,9 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
 
   onSelectNode(node: any) {
     this.selectedNode = node;
-    this.userService.getOrganizationMembers(this.selectedNode.id)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.members = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.members = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.members);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.loadUsersOfOrganization(node.id);
   }
+
   onClickCreate() {
 
   }
@@ -170,6 +175,9 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   _addExpandedToTree(list: any[]) {
-    return list.map(x => ({ ...x, displayName: `${x.displayName} (${x.memberCount})`, expanded: true }));
+    return list.map(x => ({ ...x,
+      displayName: `${x.displayName} (${x.memberCount})`,
+      originDisplayName: x.displayName,
+      expanded: true }));
   }
 }

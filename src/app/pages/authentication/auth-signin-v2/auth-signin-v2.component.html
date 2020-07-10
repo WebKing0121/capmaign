@@ -7,37 +7,41 @@
         <h6 class="text-white font-weight-normal">The passage experienced a surge in popularity during the 1960s when Letraset used it on their dry-transfer sheets, and again during the 90s as desktop publishers bundled the text with their software.</h6>
       </div>
     </div>
-    <div class="auth-side-form">
+    <div class="auth-side-form mt-5">
       <div class=" auth-content">
-        <div class="card">
-          <div class="card-body" align="center">
-            <a [routerLink]="['/']"><img src="assets/images/logo.png" alt="" class="img-fluid" width="270px" /></a>
-          </div>
-        </div>
-        <div class="card">
+        <div class="card bg-white table-card">
           <div class="row align-items-center text-center">
             <div class="col-md-12">
-              <div class="card-body p-4">
+              <div class="card-body p-3">
                 
-                <form action="javascript:">
-                  <h1 class="display-5 mb-4 text-success">Login</h1>
+                <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                  <img src="assets/images/logo.png" alt="" class="img-fluid mobile-show mobile-logo-image" width="170px" />
+                  <h1 class="display-5 mb-4 text-success mobile-hide">Login</h1>
                   <div class="form-group">
-                    <input class="form-control" placeholder="Tenancy name" type="text">
+                    <input class="form-control" placeholder="Tenancy name" type="text" formControlName="tenancyname"  [ngClass]="{ 'is-invalid': submitted && f.tenancyname.errors }" />
+                    
                   </div>
                   <div class="form-group">
-                    <input class="form-control" placeholder="User name or email" type="email">
+                    <input class="form-control" placeholder="User name or email" type="email" formControlName="username"  [ngClass]="{ 'is-invalid': submitted && f.username.errors }" />
+                    
                   </div>
                   <div class="form-group">
-                    <input class="form-control" placeholder="Password" type="password">
+                    <input type="password" placeholder="Password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
                   </div>
-                  <div class="text-left">
-                    <button class="btn btn-login " type="submit">Login</button>&nbsp;&nbsp;
-                    <a [routerLink]="['/auth/reset-password']">Forgot password?</a> &nbsp;
+                  <div class="d-flex justify-content-between">
+                    <div class="custom-control text-left custom-checkbox mt-2">
+                      <input class="custom-control-input" id="remember_me" type="checkbox" checked="">
+                      <label class="custom-control-label padding-2px font-14" for="remember_me">Remember me</label>
+                    </div>
+                    <button [disabled]="loading" type="submit" class="btn btn-login">
+                      <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+                      Login
+                    </button>
+                  </div>
+                  <div *ngIf="error" class="alert alert-danger mt-2 mb-0">{{error}}</div>
+                  <div class="mt-3 d-flex justify-content-between">
+                    <a [routerLink]="['/auth/reset-password']">Forgot password?</a>
                     <a href="https://campaigntocash.com/">Go To Website</a>
-                  </div>
-                  <div class="custom-control text-left custom-checkbox mt-4">
-                    <input class="custom-control-input" id="remember_me" type="checkbox" checked="">
-                    <label class="custom-control-label font-14" for="remember_me">Remember me</label>
                   </div>
                 </form>
               </div>

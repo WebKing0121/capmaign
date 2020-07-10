@@ -91,7 +91,7 @@
         z-index: 5;
 
         &:not(.container) {
-            width: 420px;
+            width: 330px;
 
             .card-body {
                 padding: 0px;
@@ -117,11 +117,14 @@
     .auth-side-form {
         position: relative;
         min-height: 100%;
-        background: $body-bg;
         display: inline-flex;
         align-items: center;
         left: auto;
+        margin-right: 15%;
         float: right;
+        @media only screen and (max-width: 575px) {
+            margin-right: 0;
+        }
 
         > * {
             position: relative;

@@ -13,6 +13,7 @@ export class User {
   creationTime: string;
   id: number;
   token?: string;
+  tenancyName?: string;
 }
 
 export class UserRolePage {

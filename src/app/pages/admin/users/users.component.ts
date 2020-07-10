@@ -26,9 +26,10 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
   modalType = ModalType.New;
   private unsubscribe$ = new Subject();
 
+  limit = 50;
   users: User[];
   selectedUser: User;
-  tableSource: DataTableSource<User> = new DataTableSource<User>(50);
+  tableSource: DataTableSource<User> = new DataTableSource<User>(this.limit);
   totalCount: number;
   selected: User[] = [];
   tableButtons = [
@@ -36,17 +37,44 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
     { label: 'Export', icon: 'fa fa-download', click: () => this.onClickExport() },
   ];
 
+  loading = false;
+
   constructor(
     private userService: UserService
   ) {
     this.totalCount = 0;
     this.users = [];
-
   }
 
   ngOnInit(): void {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(change => {
+        console.log(change);
+        if (change.pagination !== 'totalCount') {
+          this._loadTableData(this.tableSource.currentPage, Number(this.tableSource.pageSize));
+        }
 
-    this.userService.getAll()
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
+
+  _loadTableData(currentPage: number, pageSize: number) {
+    this.loading = true;
+    const filter = {
+      SortDirection: 'Ascending',
+      filter: '',
+      maxResultCount: pageSize,
+      permission: '',
+      role: '',
+      skipCount: (currentPage - 1) * pageSize,
+      sorting: '',
+    };
+    this.userService.getUsers(filter)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
@@ -57,14 +85,15 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
             this.users = [];
             this.totalCount = 0;
           }
-          this._updateTable(this.users);
+          this.tableSource.next(this.users, this.totalCount);
+          this.loading = false;
         },
         error => {
           console.log('error', error.response);
+          this.loading = false;
         }
       );
   }
-
   ngAfterViewInit(): void {
 
     const columns: DataTableColumn[] = [
@@ -91,25 +120,6 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
-  _updateTable(users: User[]) {
-    this.tableSource.next(users.slice(0, 50), users.length);
-    this.tableSource.changed$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
-        this.tableSource.next(
-          users.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          users.length
-        );
-      });
-    this.tableSource.selection$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
-  }
-
 
   onActive(evt: any) {
     if (evt.type === 'click') {

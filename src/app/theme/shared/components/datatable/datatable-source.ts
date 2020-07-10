@@ -139,7 +139,12 @@ export class DataTableSource<T> {
 
   next(data: T[], total?: number, preserve?: boolean) {
     this.dataSubject.next(data || []);
-    this.totalCountSubject.next(total || data.length);
+    if (total && total !== this.totalCount) {
+      this.totalCountSubject.next(total || data.length);
+      this.emitTotalCountChange();
+    } else {
+      this.totalCountSubject.next(total || data.length);
+    }
   }
 
   search(key: string) {
@@ -208,6 +213,14 @@ export class DataTableSource<T> {
   emitChange() {
     const changes = {
       pagination: this.pagination,
+      search: this.searchSubject.getValue()
+    };
+    this.changed$.emit(changes);
+  }
+
+  emitTotalCountChange() {
+    const changes = {
+      pagination: 'totalCount',
       search: this.searchSubject.getValue()
     };
     this.changed$.emit(changes);

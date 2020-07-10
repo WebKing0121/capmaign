@@ -1,6 +1,6 @@
 <div class="row mt-3">
   <div class="col-md-4 card-organizations">
-    <app-card cardTitle="Organizations" cardClass="table-card" [options]="false">
+    <app-card cardTitle="Organizations" [loading]="loadingTree" cardClass="table-card" [options]="false">
       <div class="p-3 organization-tree">
         <app-treeview
           [checkable]="false"
@@ -14,10 +14,11 @@
       <div class="toolbar" *ngIf="selectedNode">
         <button class="btn btn-tree" (click)="onEditOrganization()"><i class="fa fa-edit"></i> Edit</button>
         <button class="btn btn-tree" (click)="onCreateSubUnit()"><i class="fa fa-plus"></i> Add sub unit</button>
-        <button class="btn btn-tree" (click)="onDeleteOrganization()"><i class="fa fa-trash"></i> Delete</button>
+        <button class="btn btn-tree" (click)="onDeleteOrganization()" *ngIf="selectedNode.parentId"><i class="fa fa-trash"></i> Delete</button>
       </div>
     </app-card>
   </div>
+
   <div class="col-md-8 card-members">
     <app-datatable [title]="'Members'"
       [buttons]="tableButtons"
@@ -27,12 +28,14 @@
       [selectionType]="'single'"
       [headerHeight]="40"
       (activate)="onActive($event)"
+      [loading]="loadingUsers"
     ></app-datatable>
   </div>
 </div>
+
 <ng-template #userTemplate let-row="row" let-value let-i="index">
   <div class="user-container">
-    <img class="user-avatar" [src]="row.profileImg ? row.profileImg : ''" />
+    <img class="user-avatar" [src]="row.profileImg ? row.profileImg : '/assets/images/campaign/user-avatar.png'" />
     <div class="user-name-section">
       <div class="user-name">
         {{row.name}} {{row.surname}}
@@ -43,13 +46,18 @@
     </div>
   </div>
 </ng-template>
+
 <ng-template #userStatusTemplate let-row="row" let-value let-i="index">
   <span *ngIf="value" class="user-active">Active</span>
   <span *ngIf="!value" class="user-disabled">Disabled</span>
 </ng-template>
 
-<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete the selected organization?"
-	[buttons]="confirmButtons"></app-confirm-modal>
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete the selected organization?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>
+
 <app-admin-organization-modal #organizationModal
   [modalType]="modalType"
   [organization]="selectedNode"
