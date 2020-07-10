@@ -33,6 +33,7 @@ export class AdminSendersComponent implements OnInit, AfterViewInit, OnDestroy {
     { label: 'Export', icon: 'fa fa-download', click: () => this.onClickExport() },
   ];
 
+  loading = false;
   constructor(
     private userService: UserService
   ) {
@@ -42,25 +43,7 @@ export class AdminSendersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    this.userService.getSenders()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.senders = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.senders = [];
-            this.totalCount = 0;
-          }
-
-          this._updateTable(this.senders);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -78,22 +61,49 @@ export class AdminSendersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  _updateTable(senders: Sender[]) {
-    this.tableSource.next(senders.slice(0, 50), senders.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSource.next(
-          senders.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          senders.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData(this.tableSource.currentPage, Number(this.tableSource.pageSize));
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData(currentPage: number, pageSize: number) {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: pageSize,
+      skipCount: (currentPage - 1) * pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.userService.getSenders(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.senders = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.senders = [];
+            this.totalCount = 0;
+          }
+
+          this.tableSource.next(this.senders, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 
 

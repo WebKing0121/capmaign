@@ -24,17 +24,15 @@ export class UserService {
   }
 
   getUsers(filter: any): Observable<any> {
-    // https://c2cstaging.azurewebsites.net/api/services/app/user/GetUsers
-    return this.http.post<User[]>(`${environment.apiUrl}/api/services/app/user/GetUsers`, filter);
-
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/user/GetUsers`, filter);
   }
 
-  getRolePages() {
-    return of(UserRolesPagesMock);
+  getRolePages(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/permission/GetAllPermissions`);
   }
 
-  getRoleUserRoles() {
-    return of(UserRolesMock);
+  getRoleUserRoles(params: any): Observable<any>  {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/role/GetRoles`, params);
   }
 
   getRole(roleId: number | null): Observable<any> {
@@ -92,8 +90,9 @@ export class UserService {
     // });
   }
 
-  getSenders(): Observable<any> {
-    return of(UserSendersMock);
+  getSenders(params: any): Observable<any> {
+    // https://c2cstaging.azurewebsites.net/api/services/app/sender/GetSenderInOuIncludingChildren
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sender/GetSenderInOuIncludingChildren`, params);
   }
 
   getSender(senderId: number): Observable<any> {

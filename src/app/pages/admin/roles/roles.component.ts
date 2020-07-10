@@ -36,43 +36,19 @@ export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   filteredPages: UserRolePage[];
   selectedPage: any;
 
+  loadRolePages = false;
+  loadRoles = false;
+  permissions = '';
+
   constructor(
     private userService: UserService,
   ) { }
 
   ngOnInit(): void {
-    this.userService.getRolePages()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.pages = data.result.items;
-            this.filteredPages = this.pages;
-          } else {
-            this.pages = [];
-            this.filteredPages = this.pages;
-          }
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-    this.userService.getRoleUserRoles()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.roles = data.result.items;
-          } else {
-            this.roles = [];
-          }
-          this._updateTable(this.roles);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.initTable();
+    this.initRolePages();
   }
+
   ngAfterViewInit(): void {
 
     const columns: DataTableColumn[] = [
@@ -104,6 +80,7 @@ export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   onClickPage(page: any) {
     this.selectedPage = page;
+    this.loadTableData(page.name);
   }
 
   createUserRole() {
@@ -122,21 +99,68 @@ export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  _updateTable(roles: UserRole[]) {
-    this.tableSource.next(roles.slice(0, 50), roles.length);
+  /************************
+   *    Init Functions    *
+   *----------------------*
+   *   initRolePages      *
+   *   initTable          *
+   ************************/
+  initRolePages() {
+    this.loadRolePages = true;
+    this.userService.getRolePages()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.pages = data.result.items;
+            this.filteredPages = this.pages;
+          } else {
+            this.pages = [];
+            this.filteredPages = this.pages;
+          }
+          this.loadRolePages = false;
+        },
+        error => {
+          this.loadRolePages = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSource.next(
-          roles.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          roles.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData(this.permissions);
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData(permission: string) {
+    const params = { permission };
+    this.loadRoles = true;
+    this.userService.getRoleUserRoles(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.roles = data.result.items;
+          } else {
+            this.roles = [];
+          }
+          this.tableSource.next(this.roles, this.roles.length);
+          this.loadRoles = false;
+        },
+        error => {
+          this.loadRoles = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

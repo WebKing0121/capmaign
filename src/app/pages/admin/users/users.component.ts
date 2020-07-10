@@ -50,11 +50,9 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        console.log(change);
         if (change.pagination !== 'totalCount') {
           this._loadTableData(this.tableSource.currentPage, Number(this.tableSource.pageSize));
         }
-
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))

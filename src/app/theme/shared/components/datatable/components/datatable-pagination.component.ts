@@ -34,11 +34,11 @@ export class DatatablePaginationComponent implements OnInit, OnDestroy, AfterVie
       this.tableSource.changed$
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
-          console.log(' changed table source ');
-          console.log('currentPage', this.currentPage, this.tableSource.currentPage);
-          console.log('pageCount', this.pageCount, this.tableSource.pageCount);
-          console.log('totalCount', this.totalCount, this.tableSource.totalCount);
-          console.log('----------------------------');
+          // console.log(' changed table source ');
+          // console.log('currentPage', this.currentPage, this.tableSource.currentPage);
+          // console.log('pageCount', this.pageCount, this.tableSource.pageCount);
+          // console.log('totalCount', this.totalCount, this.tableSource.totalCount);
+          // console.log('----------------------------');
           if (this.currentPage !== this.tableSource.currentPage || this.pageCount !== this.tableSource.pageCount
             || this.totalCount !== this.tableSource.totalCount
           ) {

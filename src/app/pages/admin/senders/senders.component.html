@@ -1,6 +1,7 @@
 <div class="row mt-3">
   <div class="col-12 card-senders">
     <app-datatable [title]="'Senders'"
+      [loading]="loading"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"

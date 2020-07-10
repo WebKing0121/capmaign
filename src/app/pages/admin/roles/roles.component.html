@@ -1,6 +1,6 @@
 <div class="row mt-3">
   <div class="col-md-4 card-pages">
-    <app-card cardTitle="Pages" cardClass="table-card" [options]="false">
+    <app-card cardTitle="Pages" [loading]="loadRolePages" cardClass="table-card" [options]="false">
       <div class="w-100 search-div">
         <input [(ngModel)]="searchQuery" (ngModelChange)="onChangeQuery($event)" />
       </div>
@@ -15,7 +15,9 @@
     </app-card>
   </div>
   <div class="col-md-8 card-roles">
-    <app-datatable [title]="'Roles'"
+    <app-datatable
+      [title]="'Roles'"
+      [loading]="loadRoles"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"
