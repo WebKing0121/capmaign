@@ -5,8 +5,8 @@
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"
-      [selectable]="false"
-      [selectionType]="'single'"
+      [selectable]="true"
+      [selectionType]="'checkbox'"
       [headerHeight]="40"
       (activate)="onActive($event)"
     ></app-datatable>
@@ -16,4 +16,11 @@
 <app-admin-sender-modal #senderModal
   [modalType]="modalType"
   [sender]="selectedSender"
+  (save)="onSave()"
 ></app-admin-sender-modal>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete the selected sender?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>

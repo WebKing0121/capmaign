@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '../../../environments/environment';
 import { User } from '@app-models/user';
@@ -90,61 +90,31 @@ export class UserService {
   }
 
   getSenders(params: any): Observable<any> {
-    // https://c2cstaging.azurewebsites.net/api/services/app/sender/GetSenderInOuIncludingChildren
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/sender/GetSenderInOuIncludingChildren`, params);
   }
 
+  getCountries(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/sender/GetCountries`);
+  }
+
+  saveSender(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/sender/UpdateSenders`, params);
+  }
+
   getSender(senderId: number): Observable<any> {
-    if (senderId === 33) {
-      return of({
-        result: {
-          id: 33,
-          senderName: 'Palskem',
-          senderFromAddress: 'anything@success.palskem.com',
-          senderReplyAddress: 'reply@success.palskem.com',
-          senderBounceAddress: 'bounce@success.palskem.com',
-          mailingDomain: 'success.palskem.com',
-          ipAddress: null,
-          streetNumber: null,
-          streetName1: null,
-          streetName2: null,
-          city: null,
-          state: null,
-          country: null,
-          mobilePhoneNumber: null,
-          officePhoneNumber: null
-        },
-        targetUrl: null,
-        success: true,
-        error: null,
-        unAuthorizedRequest: false,
-        __abp: true
-      });
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sender/GetSenderForEdit`, {id: `${senderId}`});
+  }
+
+  deleteSenders(params: any): Observable<any> {
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      }),
+      body: {
+        ...params
+      }
     }
-    return of({
-      result: {
-        id: 4,
-        senderName: 'CampaignToCash',
-        senderFromAddress: 'anything@success.campaigntocash.com',
-        senderReplyAddress: 'reply@success.campaigntocash.com',
-        senderBounceAddress: 'Bounce@success.campaigntocash.com',
-        mailingDomain: 'success.campaigntocash.com',
-        ipAddress: null,
-        streetNumber: null,
-        streetName1: null,
-        streetName2: null,
-        city: null,
-        state: null,
-        country: null,
-        mobilePhoneNumber: null,
-        officePhoneNumber: null
-      },
-      targetUrl: null,
-      success: true,
-      error: null,
-      unAuthorizedRequest: false,
-      __abp: true
-    });
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/sender/DeleteSender`, options);
   }
 
   getMobileApps(): Observable<any> {

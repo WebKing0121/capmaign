@@ -1,22 +1,28 @@
+.sender-address-section {
+  ng-select {
+    width: calc(100% - 128px);
+    height: 45px;
+    & > div {
+      height: 45px !important;
+      .single {
+        .placeholder,
+        .value {
+          line-height: 45px;
+        }
+      }
+    }
+  }
+}
 .input-group-prepend {
   .input-group-text {
     width: 130px;
   }
 }
 
-.user-role-section {
-  height: 266px;
-  .user-roles {
-    margin-top: 60px;
-  }
-}
-
-
 @media only screen and (max-width: 575px) {
-  .user-role-section {
-    height: auto;
-    .user-roles {
-      margin-top: 1rem;
+  .sender-address-section {
+    ng-select {
+      width: 100%;
     }
   }
 }
