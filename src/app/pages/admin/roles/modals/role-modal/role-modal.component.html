@@ -6,7 +6,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="app-modal-body">
+  <div class="app-modal-body position-relative">
     <form [formGroup]="form">
       <div class="row">
         <div class="col-12">
@@ -20,7 +20,7 @@
         </div>
         <div class="col-12 mt-3 d-flex align-items-center justify-content-between">
           <div class="my-check datatable-checkbox">
-            <input type="checkbox" id="check2">
+            <input type="checkbox"  formControlName="isDefault" id="check2">
             <label class="line-height-25" for="check2"> Default </label>
           </div>
           <p class="small text-secondary-50">Assign to new users as default.</p>
@@ -30,15 +30,22 @@
     <div class="permission-tree">
       <app-treeview [checkable]="true" [list]="treeData" [primaryKey]="'name'" [selectedNode]="selectedNode"
         (selectItem)="onSelectNode($event)"></app-treeview>
+      
+    </div>
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit && !role.isStatic"><i
-        class="fa fa-trash"></i>Delete</button>
-    <button type="button" class="btn btn-primary" (click)="onSave()">
-      <i class="fa" [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create': 'Save'}}
+    <button type="button" class="btn btn-danger" (click)="onDelete()" *ngIf="modalType === ModalType.Edit && !role.isStatic">
+      <i class="fa fa-trash"></i>Delete
     </button>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="userRoleModal.hide()"><i class="fa fa-times-circle"></i>Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSave()">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create': 'Save'}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="userRoleModal.hide()"><i
+        class="fa fa-times-circle"></i>Close</button>
   </div>
 </app-ui-modal>

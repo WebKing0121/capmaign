@@ -31,41 +31,20 @@ export class UserService {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/permission/GetAllPermissions`);
   }
 
-  getRoleUserRoles(params: any): Observable<any>  {
+  getRoleUserRoles(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/role/GetRoles`, params);
   }
 
   getRole(roleId: number | null): Observable<any> {
-    if (roleId) {
-      const userRole = UserRolePermissionsMock.find(x => x.role.id === roleId);
-      const key = 'permissions';
-      userRole[key] = UserPermissionsMock;
-      return of({
-        result: userRole,
-        targetUrl: null,
-        success: true,
-        error: null,
-        unAuthorizedRequest: false,
-        __abp: true
-      });
-    } else {
-      return of({
-        result: {
-          role: {
-            id: null,
-            displayName: null,
-            isDefault: false
-          },
-          permissions: UserPermissionsMock,
-          grantedPermissionNames: [],
-        },
-        targetUrl: null,
-        success: true,
-        error: null,
-        unAuthorizedRequest: false,
-        __abp: true
-      });
-    }
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/role/GetRoleForEdit`, { id: roleId });
+  }
+
+  updateOrCreateRole(role: any) {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/role/CreateOrUpdateRole`, role);
+  }
+
+  deleteRole(roleId: number) {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/role/DeleteRole?input=${roleId}`);
   }
 
   getOrganizations(): Observable<any> {

@@ -14,6 +14,7 @@ export class AdminUserModalComponent implements OnInit {
   @Input() user: User;
   ModalType = ModalType;
 
+  profileImg = '';
   userForm: FormGroup;
   constructor(
     private fb: FormBuilder
@@ -25,7 +26,6 @@ export class AdminUserModalComponent implements OnInit {
       name: ['', Validators.required],
       surname: ['', Validators.required],
       userName: ['', Validators.required],
-      profileImg: ['', Validators.required],
       emailAddress: ['', Validators.required],
       officeNumber: ['', Validators.required],
       phoneNumber: ['', Validators.required],
@@ -44,7 +44,6 @@ export class AdminUserModalComponent implements OnInit {
         surname: this.user.surname,
         userName: this.user.userName,
         emailAddress: this.user.emailAddress,
-        profileImg: this.user.profileImg,
         officeNumber: this.user.phoneNumber,
         phoneNumber: this.user.phoneNumber,
         randomPassword: true,

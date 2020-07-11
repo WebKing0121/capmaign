@@ -3,9 +3,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { UserService } from '@app-services/user.service';
-import { UserRolePage, UserRole, User } from '@app-models/user';
+import { UserRolePage, UserRole } from '@app-models/user';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
-import { TreeViewData } from '@app-models/tree';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 
@@ -16,6 +15,7 @@ import { ModalType } from '@app-core/enums/modal-type.enum';
 })
 export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('userRoleModal', { static: false }) userRoleModal;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('defaultTemplate', { static: false }) defaultTemplate;
   @ViewChild('staticTemplate', { static: false }) staticTemplate;
   modalType = ModalType.New;
@@ -30,6 +30,11 @@ export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.createUserRole() },
+  ];
+
+  // confirm Modal
+  confirmButtons = [
+    { label: 'Yes', action: this.onDeleteConfirm.bind(this), class: 'btn-danger', disabled: false }
   ];
 
   searchQuery: string;
@@ -69,7 +74,6 @@ export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onChangeQuery(query: string) {
-    // console.log(query, query.toLowerCase());
     if (query) {
       this.filteredPages = this.pages
         .filter(x => x.displayName.toLowerCase().indexOf(this.searchQuery.toLowerCase()) >= 0);
@@ -87,6 +91,37 @@ export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.modalType = ModalType.New;
     this.selectedRole = null;
     setTimeout(() => this.userRoleModal.show());
+  }
+
+  onSave() {
+    this.refreshRoles();
+  }
+
+  refreshRoles() {
+    if (this.selectedPage) {
+      this.loadTableData(this.selectedPage.name);
+    } else {
+      this.loadTableData('');
+    }
+  }
+  onDelete() {
+    this.confirmModal.show();
+  }
+
+  onDeleteConfirm() {
+    if (this.selectedRole) {
+      this.userService.deleteRole(this.selectedRole.id)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            this.userRoleModal.hide();
+            this.refreshRoles();
+          },
+          error => {
+            console.log('error', error.response);
+          }
+        );
+    }
   }
 
   onActive(evt: any) {

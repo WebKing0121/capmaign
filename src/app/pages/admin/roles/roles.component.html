@@ -40,4 +40,12 @@
 <app-admin-role-modal #userRoleModal
   [modalType]="modalType"
   [role]="selectedRole"
+  (save)="onSave()"
+  (delete)="onDelete()"
 ></app-admin-role-modal>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to remove selected role?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>

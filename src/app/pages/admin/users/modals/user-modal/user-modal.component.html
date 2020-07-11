@@ -6,174 +6,171 @@
     </button>
   </div>
   <div class="app-modal-body">
-    <aw-wizard #wizard class="arc-wizard user-wizard" navBarLayout="large-filled-symbols">
-      <aw-wizard-step stepTitle="User Information"
-        [navigationSymbol]="{ symbol: '&#xf1c3;', fontFamily: 'Font Awesome 5 Free' }">
-        <div class="row">
-          <div class="col-12">
-            <h5><span class="fa-icon">&#xf279;</span> User Informations <span class="step-caption">Step 1 of 2</span>
-            </h5>
-            <hr>
-            <form [formGroup]="userForm">
-              <div class="row">
-                <div class="col-md-6">
-                  <label class="mobile-show">First name</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">First name</span>
-                    </div>
-                    <input type="text" class="form-control" formControlName="name">
-                  </div>
-                </div>
-                <div class="col-md-6 mobile-mt">
-                  <label class="mobile-show">Last name</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Last name</span>
-                    </div>
-                    <input type="text" class="form-control" formControlName="surname">
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-6">
-                  <label class="mobile-show">Last name</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Last name</span>
-                    </div>
-                    <input type="text" class="form-control" formControlName="surname">
-                  </div>
-                </div>
-                <div class="col-md-6 mobile-mt">
-                  <label class="mobile-show">Email Address</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Email</span>
-                    </div>
-                    <input type="text" class="form-control" formControlName="emailAddress">
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-6">
-                  <label class="mobile-show">Office Number</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Office Number</span>
-                    </div>
-                    <input type="text" class="form-control" formControlName="officeNumber">
-                  </div>
-                </div>
-                <div class="col-md-6 mobile-mt">
-                  <label class="mobile-show">Mobile</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text">Mobile</span>
-                    </div>
-                    <input type="text" class="form-control" formControlName="phoneNumber">
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-6">
-                  <div class="my-check datatable-checkbox">
-                    <input type="checkbox" id="check1">
-                    <label class="line-height-25" for="check1"> Set random password. </label>
-                  </div>
-                </div>
-                <div class="col-md-6 mobile-mt">
-                  <div class="my-check datatable-checkbox">
-                    <input type="checkbox" id="check2">
-                    <label class="line-height-25" for="check2"> Change password on next login. </label>
-                  </div>
-                </div>
-              </div>
-              <div class="row mt-3">
-                <div class="col-md-6">
-                  <div class="my-check datatable-checkbox">
-                    <input type="checkbox" id="check3">
-                    <label class="line-height-25" for="check3"> Send activation email. </label>
-                  </div>
-                </div>
-                <div class="col-md-6 mobile-mt">
-                  <div class="my-check datatable-checkbox">
-                    <input type="checkbox" id="check4">
-                    <label class="line-height-25" for="check4"> Active </label>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </div>
-         
-          <div class="col-12">
-            <button type="button" class="btn btn-primary btn-md float-right" awNextStep>Continue</button>
-          </div>
-        </div>
-      </aw-wizard-step>
-      <aw-wizard-step stepTitle="User Role" [navigationSymbol]="{ symbol: '&#xe88c;', fontFamily: 'Feather' }">
-        <div class="row">
-          <div class="col-12 user-role-section">
-            <h5><span class="fa-icon">&#xf279;</span> User Role <span class="step-caption">Step 2 of 3</span></h5>
-            <hr>
-            <div class="row user-roles">
-              <div class="col-md-6">
-                <div class="my-check datatable-checkbox">
-                  <input type="checkbox" id="check1">
-                  <label class="line-height-25" for="check1"> Admin </label>
-                </div>
-              </div>
-              <div class="col-md-6 mobile-mt">
-                <div class="my-check datatable-checkbox">
-                  <input type="checkbox" id="check2">
-                  <label class="line-height-25" for="check2"> Author </label>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="my-check datatable-checkbox">
-                  <input type="checkbox" id="check3">
-                  <label class="line-height-25" for="check3"> C2C Admin </label>
-                </div>
-              </div>
-              <div class="col-md-6 mobile-mt">
-                <div class="my-check datatable-checkbox">
-                  <input type="checkbox" id="check4">
-                  <label class="line-height-25" for="check4"> Manager </label>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="my-check datatable-checkbox">
-                  <input type="checkbox" id="check5">
-                  <label class="line-height-25" for="check5"> Owner </label>
-                </div>
-              </div>
-              <div class="col-md-6 mobile-mt">
-                <div class="my-check datatable-checkbox">
-                  <input type="checkbox" id="check6">
-                  <label class="line-height-25" for="check6"> User </label>
-                </div>
-              </div>
-            </div>
-            <div class="row mt-3">
-              <div class="col-md-6">
-                <div class="my-check datatable-checkbox">
-                  <input type="checkbox" id="check7">
-                  <label class="line-height-25" for="check7"> Viewer </label>
-                </div>
-              </div>
-            </div>
+    <form [formGroup]="userForm">
+      <div class="row modal-body-margin">
+        <div class="col-md-3 mt-3 avatar-container">
+          <div class="avatar-image">
+            <img [src]="'/assets/images/campaign/user-avatar.png'" width="100%" />
+            <button class="btn-replace bg-secondary" *ngIf="profileImg"><i class="fa fa-edit"></i></button>
+            <button class="btn-remove bg-danger" *ngIf="profileImg"><i class="fa fa-trash"></i></button>
+            <button class="btn-upload bg-success" *ngIf="!profileImg"><i class="fa fa-upload"></i></button>
           </div>
           
-          <div class="col-12 mt-3">
-            <button type="button" class="btn btn-secondary btn-md float-left" awPreviousStep>Back</button>
-            <button type="button" class="btn btn-primary btn-md float-right" awNextStep>Continue</button>
+            
+          
+        </div>
+        <div class="col-md-9">
+          <div class="row">
+            <div class="col-md-6 mt-3 padding-left-5">
+              <label class="mobile-show">Email Address</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                </div>
+                <input type="text" placeholder="Email address" class="form-control" formControlName="emailAddress">
+              </div>
+            </div>
+            <div class="col-md-6 mt-3 padding-left-5">
+              <label class="mobile-show">User name</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-user"></i></span>
+                </div>
+                <input type="text" placeholder="User name" class="form-control" formControlName="surname">
+              </div>
+            </div>
+            <div class="col-md-6 mt-3 padding-left-5">
+              <label class="mobile-show">First name</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-code"></i></span>
+                </div>
+                <input type="text" placeholder="First name" class="form-control" formControlName="name">
+              </div>
+            </div>
+            <div class="col-md-6 mt-3 padding-left-5">
+              <label class="mobile-show">Last name</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-code"></i></span>
+                </div>
+                <input type="text" placeholder="Last name" class="form-control" formControlName="surname">
+              </div>
+            </div>
+            <div class="col-md-6 mt-3 padding-left-5">
+              <label class="mobile-show">Office Number</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                </div>
+                <input type="text" placeholder="Office number" class="form-control" formControlName="officeNumber">
+              </div>
+            </div>
+            <div class="col-md-6 mt-3 padding-left-5">
+              <label class="mobile-show">Mobile Number</label>
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fa fa-mobile"></i></span>
+                </div>
+                <input type="text" placeholder="Mobile Number" class="form-control" formControlName="phoneNumber">
+              </div>
+            </div>
           </div>
         </div>
-      </aw-wizard-step>
-    </aw-wizard>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check1">
+            <label class="line-height-25" for="check1"> Set random password. </label>
+          </div>
+        </div>
+        <div class="col-md-6 mobile-mt">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check2">
+            <label class="line-height-25" for="check2"> Change password on next login. </label>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-md-6">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check3">
+            <label class="line-height-25" for="check3"> Send activation email. </label>
+          </div>
+        </div>
+        <div class="col-md-6 mobile-mt">
+          <div class="my-check datatable-checkbox">
+            <input type="checkbox" id="check4">
+            <label class="line-height-25" for="check4"> Active </label>
+          </div>
+        </div>
+      </div>
+    </form>
+    <hr class="w-100" />
+    <div class="row user-roles">
+      <div class="col-md-6">
+        <div class="my-check datatable-checkbox">
+          <input type="checkbox" id="check1">
+          <label class="line-height-25" for="check1"> Admin </label>
+        </div>
+      </div>
+      <div class="col-md-6 mobile-mt">
+        <div class="my-check datatable-checkbox">
+          <input type="checkbox" id="check2">
+          <label class="line-height-25" for="check2"> Author </label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="my-check datatable-checkbox">
+          <input type="checkbox" id="check3">
+          <label class="line-height-25" for="check3"> C2C Admin </label>
+        </div>
+      </div>
+      <div class="col-md-6 mobile-mt">
+        <div class="my-check datatable-checkbox">
+          <input type="checkbox" id="check4">
+          <label class="line-height-25" for="check4"> Manager </label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="my-check datatable-checkbox">
+          <input type="checkbox" id="check5">
+          <label class="line-height-25" for="check5"> Owner </label>
+        </div>
+      </div>
+      <div class="col-md-6 mobile-mt">
+        <div class="my-check datatable-checkbox">
+          <input type="checkbox" id="check6">
+          <label class="line-height-25" for="check6"> User </label>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col-md-6">
+        <div class="my-check datatable-checkbox">
+          <input type="checkbox" id="check7">
+          <label class="line-height-25" for="check7"> Viewer </label>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit">
+      <i class="fa fa-trash"></i>Delete
+    </button>
+    <button type="button" class="btn btn-primary">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.Edit ? 'Save': 'Add'}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="userModal.hide()">
+      <i class="fa fa-times-circle"></i>Close
+    </button>
   </div>
 </app-ui-modal>

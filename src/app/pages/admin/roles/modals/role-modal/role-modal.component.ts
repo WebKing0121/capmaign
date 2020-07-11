@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnDestroy, Output, EventEmitter } from '@angular/core';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
@@ -17,6 +17,8 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
   @ViewChild('userRoleModal', { static: false }) userRoleModal;
   @Input() modalType = ModalType.New;
   @Input() role: UserRole;
+  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
   ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
@@ -25,7 +27,10 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
 
   treeData: any[];
   selectedTreeData: any[];
+  checkedPermissions: any[];
   selectedNode: any;
+
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -53,9 +58,37 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
+    const grantedPermissionNames = this.checkedPermissions.filter(x => x.checked).map(x => x.name);
+    const role = {
+      role: {
+        id: this.form.value.id === 0 ? null : this.form.value.id,
+        displayName: this.form.value.roleName,
+        isDefault: this.form.value.isDefault
+      },
+      grantedPermissionNames
+    };
+    this.loading = true;
+    this.userService.updateOrCreateRole(role)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.loading = false;
+          this.save.emit();
+          this.hide();
 
+        },
+        error => {
+          this.loading = false;
+          this.save.emit();
+          this.hide();
+          console.log('error', error.response);
+        }
+      );
   }
 
+  onDelete() {
+    this.delete.emit();
+  }
   show() {
     if (this.modalType === ModalType.Edit) {
       this.form.setValue({
@@ -63,16 +96,18 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
         roleName: this.role.displayName,
         isDefault: this.role.isDefault,
       });
+      this.loading = true;
       this.userService.getRole(this.role.id)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           data => {
             this.roleData = data.result;
-            const checkedPermissions = this.addCheckToPermissions(this.roleData.permissions, this.roleData.grantedPermissionNames);
-            this.treeData = this.listToTree(checkedPermissions);
-
+            this.checkedPermissions = this.addCheckToPermissions(this.roleData.permissions, this.roleData.grantedPermissionNames);
+            this.treeData = this.listToTree(this.checkedPermissions);
+            this.loading = false;
           },
           error => {
+            this.loading = false;
             console.log('error', error.response);
           }
         );
@@ -82,17 +117,19 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
         roleName: '',
         isDefault: false,
       });
+      this.loading = true;
       this.userService.getRole(null)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           data => {
             this.roleData = data.result;
-            const checkedPermissions = this.addCheckToPermissions(this.roleData.permissions, this.roleData.grantedPermissionNames);
-            this.treeData = this.listToTree(checkedPermissions);
-            // this.selectedTreeData = this.roleData.grantedPermissionNames;
+            this.checkedPermissions = this.addCheckToPermissions(this.roleData.permissions, this.roleData.grantedPermissionNames);
+            this.treeData = this.listToTree(this.checkedPermissions);
+            this.loading = false;
           },
           error => {
             console.log('error', error.response);
+            this.loading = false;
           }
         );
     }

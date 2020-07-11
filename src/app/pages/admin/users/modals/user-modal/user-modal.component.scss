@@ -1,6 +1,7 @@
 .input-group-prepend {
   .input-group-text {
-    width: 130px;
+    width: 40px;
+    padding: 12px;
   }
 }
 
@@ -11,12 +12,61 @@
   }
 }
 
+.avatar-container{
+  text-align: center;
+  .avatar-image {
+    width: 167px;
+    height: 167px;
+    border: 1px dashed #ddd;
+    display: inline-block;
+    position: relative;
+    .btn-replace {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      width: 30px;
+      height:30px;
+      border-radius: 15px;
+      border: none;
+      color: white;
+    }
 
+    .btn-remove {
+      border: none;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      color: white;
+    }
+
+    .btn-upload {
+      position: absolute;
+      left: 69px;
+      bottom: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 15px;
+      border: none;
+      color: white;
+    }
+  }
+}
+
+.padding-left-5{
+  padding-left: 5px;
+}
 @media only screen and (max-width: 575px) {
   .user-role-section {
     height: auto;
     .user-roles {
       margin-top: 1rem;
     }
+  }
+
+  .padding-left-5{
+    padding-left: 15px;
   }
 }
