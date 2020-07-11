@@ -38,10 +38,10 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" (click)="onDelete()" *ngIf="modalType === ModalType.Edit && !role.isStatic">
+    <button type="button" class="btn btn-danger" [disabled]="loading" (click)="onDelete()" *ngIf="modalType === ModalType.Edit && !role.isStatic">
       <i class="fa fa-trash"></i>Delete
     </button>
-    <button type="button" class="btn btn-primary" (click)="onSave()">
+    <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onSave()">
       <i class="fa"
         [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create': 'Save'}}
     </button>

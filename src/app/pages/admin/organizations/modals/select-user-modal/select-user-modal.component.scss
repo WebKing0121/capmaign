@@ -1,0 +1,32 @@
+.search-group {
+  position: relative;
+  display: flex;
+  margin-bottom: 20px;
+  .search-list {
+    flex-grow: 1;
+    height: 40px;
+    border: 1px solid #ddd;
+    padding-left: 40px;
+    border-top-left-radius: 20px;
+    padding-right: 20px;
+    border-bottom-left-radius: 20px;
+  }
+  .btn-search {
+    width: 80px;
+    height: 40px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+  .search-icon {
+    z-index: 100;
+    position: absolute;
+    left: 20px;
+    top: 12px;
+  }
+}
+
+.user-tables {
+  height: calc(100vh - 350px);
+}

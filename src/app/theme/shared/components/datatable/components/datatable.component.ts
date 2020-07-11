@@ -23,6 +23,8 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
 
   @ViewChild(NgxDataTableComponent, { static: false }) handle: NgxDataTableComponent;
   @ViewChild('datatableCard', { static: false }) datatableCard;
+  @Input() showHeader = true;
+  @Input() dropShadow = true;
   @Input() title = '';
   @Input() classes = ['app-datatable-common'];
   @Input() buttons = [];
@@ -53,10 +55,15 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
   sorts: SortPropDir[] = [];
 
   destroy$ = new Subject<boolean>();
-
+  cardClass = 'table-card';
   constructor() { }
 
   ngOnInit() {
+    if (this.dropShadow) {
+      this.cardClass = 'table-card';
+    } else {
+      this.cardClass = 'table-card no-shadow';
+    }
     if (this.dataSource) {
       this.innerColumns = this.dataSource.columns;
 

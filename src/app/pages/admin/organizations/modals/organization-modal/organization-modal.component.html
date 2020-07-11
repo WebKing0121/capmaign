@@ -5,7 +5,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="app-modal-body">
+  <div class="app-modal-body position-relative">
     <form [formGroup]="form">
       <div class="row">
         <div class="col-12">
@@ -14,7 +14,7 @@
             <div class="input-group-prepend">
               <span class="input-group-text">Name</span>
             </div>
-            <input type="text" class="form-control" formControlName="name">
+            <input type="text" class="form-control" formControlName="displayName" />
           </div>
         </div>
 
@@ -23,37 +23,37 @@
         </div>
         <div class="col-12 mt-3 ml-3">
           <div class="my-check datatable-checkbox">
-            <input type="checkbox" id="check1">
+            <input type="checkbox" formControlName="emailCampaignPermission" id="check1">
             <label class="line-height-25" for="check1"> Email Campaign </label>
           </div>
         </div>
         <div class="col-12 mt-3 ml-3">
           <div class="my-check datatable-checkbox">
-            <input type="checkbox" id="check2">
+            <input type="checkbox" formControlName="smsCampaignPermission" id="check2">
             <label class="line-height-25" for="check2"> SMS Campaign </label>
           </div>
         </div>
         <div class="col-12 mt-3 ml-3">
           <div class="my-check datatable-checkbox">
-            <input type="checkbox" id="check3">
+            <input type="checkbox" formControlName="eventCampaignPermission" id="check3">
             <label class="line-height-25" for="check3"> Event Campaign </label>
           </div>
         </div>
         <div class="col-12 mt-3 ml-3">
           <div class="my-check datatable-checkbox">
-            <input type="checkbox" id="check4">
+            <input type="checkbox" formControlName="socialCampaignPermission" id="check4">
             <label class="line-height-25" for="check4"> Social Campaign </label>
           </div>
         </div>
         <div class="col-12 mt-3 ml-3">
           <div class="my-check datatable-checkbox">
-            <input type="checkbox" id="check5">
+            <input type="checkbox" formControlName="facebookAdsCampaignPermission" id="check5">
             <label class="line-height-25" for="check5"> Facebook Ads </label>
           </div>
         </div>
         <div class="col-12 mt-3 ml-3">
           <div class="my-check datatable-checkbox">
-            <input type="checkbox" id="check6">
+            <input type="checkbox" formControlName="googleAdsCampaignPermission" id="check6">
             <label class="line-height-25" for="check6"> Google Ads </label>
           </div>
         </div>
@@ -63,21 +63,25 @@
         <div class="col-12 ml-3">
           
           <div class="my-check datatable-checkbox">
-            <input type="checkbox" id="check7">
+            <input type="checkbox" formControlName="activetenant" id="check7">
             <label class="line-height-25" for="check7"> Active Tenant? </label>
           </div>
         </div>
       </div>
     </form>
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" *ngIf="organization && organization.parentId">
+    <button type="button" class="btn btn-danger" [disabled]="loading" (click)="onDelete()"
+      *ngIf="organization && organization.parentId && modalType === ModalType.Edit">
       <i class="fa fa-trash"></i>Delete
     </button>
-    <button type="button" class="btn btn-primary">
+    <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onCreateorUpdate()">
       <i class="fa"
-        [ngClass]="{'fa-plus': modalType === ModalType.New, 'fa-save': modalType === ModalType.Edit }"></i>{{modalType === ModalType.Edit ? 'Save': 'Create'}}
+        [ngClass]="{'fa-plus': modalType === ModalType.AddSubItem, 'fa-save': modalType === ModalType.Edit }"></i>{{modalType === ModalType.Edit ? 'Save': 'Add'}}
     </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="organizationModal.hide()">
       <i class="fa fa-times-circle"></i>Close

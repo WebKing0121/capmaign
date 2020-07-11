@@ -17,6 +17,7 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
   @ViewChild('userStatusTemplate', { static: false }) userStatusTemplate;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('organizationModal', { static: false }) organizationModal;
+  @ViewChild('userSelectModal', { static: false }) userSelectModal;
 
   modalType = ModalType.Edit;
   private unsubscribe$ = new Subject();
@@ -30,13 +31,15 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
   tableSource: DataTableSource<User> = new DataTableSource<User>(50);
   totalCount: number;
   selected: User[] = [];
+  selectedUser: User;
   tableButtons = [
-    { label: 'Add Member', icon: 'fa fa-plus', click: () => this.onClickCreate() },
+    { label: 'Add Member', icon: 'fa fa-plus', click: () => this.onClickAddMember(), disabled: true },
+    { label: 'Remove Member', icon: 'fa fa-trash', click: () => this.onClickRemoveMember(), color: 'red', disabled: true },
   ];
 
   // confirm Modal
   confirmButtons = [
-    { label: 'Yes', action: this.onDeleteConfirmOrganization.bind(this), class: 'btn-primary' }
+    { label: 'Yes', action: this.onDeleteConfirmOrganization.bind(this), class: 'btn-danger' }
   ];
 
   loadingTree: boolean;
@@ -105,7 +108,7 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
 
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, custom: true, template: this.userTemplate },
-      { name: 'User Name', prop: 'userName', sortable: true, maxWidth: 150, cellClass: ['cell-hyperlink'] },
+      { name: 'User Name', prop: 'userName', sortable: true, maxWidth: 150 },
       {
         name: 'Creation Date', prop: 'addedTime', sortable: true,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 150,
@@ -124,16 +127,20 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   onActive(evt) {
-
+    if (evt.type === 'click') {
+      this.selectedUser = evt.row as User;
+      this.tableButtons[1].disabled = false;
+    }
   }
 
   onSelectNode(node: any) {
     this.selectedNode = node;
+    this.tableButtons[0].disabled = false;
     this.loadUsersOfOrganization(node.id);
   }
 
-  onClickCreate() {
-
+  onSelectUser() {
+    this.loadUsersOfOrganization(this.selectedNode.id);
   }
 
   onEditOrganization() {
@@ -146,12 +153,43 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
     setTimeout(() => this.organizationModal.show());
   }
 
+  onClickAddMember() {
+    this.userSelectModal.show();
+  }
+
+  onClickRemoveMember() {
+    this.userService.removeUserFromOganization(+this.selectedUser.id, +this.selectedNode.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.loadUsersOfOrganization(this.selectedNode.id);
+          this.tableButtons[1].disabled = true;
+        },
+        error => {
+          console.log('error', error.response);
+          this.loadingTree = false;
+        }
+      );
+  }
+
   onDeleteOrganization() {
     this.confirmModal.show();
   }
 
   onDeleteConfirmOrganization() {
-    // delete organization
+    this.loadingTree = true;
+    this.userService.deleteOrganization(this.selectedNode.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.loadOrganizationUnits();
+          this.tableButtons[0].disabled = true;
+        },
+        error => {
+          console.log('error', error.response);
+          this.loadingTree = false;
+        }
+      );
   }
 
   _listToTree(list: any[]) {
@@ -175,9 +213,11 @@ export class AdminOrganizationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   _addExpandedToTree(list: any[]) {
-    return list.map(x => ({ ...x,
+    return list.map(x => ({
+      ...x,
       displayName: `${x.displayName} (${x.memberCount})`,
       originDisplayName: x.displayName,
-      expanded: true }));
+      expanded: true
+    }));
   }
 }

@@ -61,4 +61,11 @@
 <app-admin-organization-modal #organizationModal
   [modalType]="modalType"
   [organization]="selectedNode"
+  (save)="loadOrganizationUnits()"
+  (delete)="onDeleteOrganization()"
 ></app-admin-organization-modal>
+
+<app-admin-organization-select-user-modal #userSelectModal
+  [organization]="selectedNode"
+  (selectUser)="onSelectUser()"
+></app-admin-organization-select-user-modal>

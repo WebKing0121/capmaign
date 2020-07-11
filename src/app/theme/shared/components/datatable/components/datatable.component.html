@@ -1,5 +1,5 @@
-<app-card #datatableCard [cardTitle]="title" [loading]="loading" [cardButtons]="buttons" [cardClass]="'table-card'" [options]="false">
-  <div class="table-toolbar">
+<app-card #datatableCard [cardTitle]="title" [loading]="loading" [cardButtons]="buttons" [cardClass]="cardClass" [options]="false">
+  <div class="table-toolbar" *ngIf="showHeader">
     <div class="d-flex position-relative">
       <div *ngIf="filter.length > 0" class="btn-group dropdown" ngbDropdown>
         <button class="filter-dropdown" ngbDropdownToggle type="button">

@@ -12,6 +12,7 @@ import { AdminRolesComponent } from './roles/roles.component';
 import { AdminRoleModalComponent } from './roles/modals/role-modal/role-modal.component';
 import { AdminOrganizationsComponent } from './organizations/organizations.component';
 import { AdminOrganizationModalComponent } from './organizations/modals/organization-modal/organization-modal.component';
+import { AdminOrganizationSelectUserModalComponent } from './organizations/modals/select-user-modal/select-user-modal.component';
 import { AdminSendersComponent } from './senders/senders.component';
 import { AdminSenderModalComponent } from './senders/modals/sender-modal/sender-modal.component';
 import { AdminMobileAppsComponent } from './mobile-apps/mobile-apps.component';
@@ -31,7 +32,8 @@ import { AdminMobileAppModalComponent } from './mobile-apps/modals/mobile-app-mo
     AdminSendersComponent,
     AdminSenderModalComponent,
     AdminMobileAppsComponent,
-    AdminMobileAppModalComponent
+    AdminMobileAppModalComponent,
+    AdminOrganizationSelectUserModalComponent
   ],
   imports: [
     CommonModule,

@@ -45,3 +45,8 @@ export class UserOrganization {
   creatorUserId: number;
   id: number;
 }
+
+export class UserForSelect {
+  name: string;
+  value: string;
+}

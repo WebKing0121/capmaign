@@ -51,22 +51,42 @@ export class UserService {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/organizationUnit/GetOrganizationUnits`);
   }
 
+  getOrganization(organizationId: number): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/organizationUnit/GetOrganizationUnitsInOu?organizationUnitId=${organizationId}`);
+  }
   getOrganizationMembers(organizationId: number): Observable<any> {
-    // https://c2cstaging.azurewebsites.net/api/services/app/organizationUnit/GetOrganizationUnitUsers
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/organizationUnit/GetOrganizationUnitUsers`, {
       id: organizationId,
       maxResultCount: 50,
       skipCount: 0,
       sorting: null
     });
-    // return of({
-    //   result: UserOrganizationMemberMocks[organizationId],
-    //   targetUrl: null,
-    //   success: true,
-    //   error: null,
-    //   unAuthorizedRequest: false,
-    //   __abp: true
-    // });
+  }
+
+  getUsersForUnassigned(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/commonLookup/FindUsersNotInAnyOu`, params);
+  }
+
+  addUserToOganization(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/organizationUnit/AddUserToOrganizationUnit`, params);
+  }
+
+  removeUserFromOganization(userId: number, organizationId: number): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/organizationUnit/RemoveUserFromOrganizationUnitNew?userId=${userId}&organizationId=${organizationId}`);
+  }
+
+  updateOrganization(organization: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/organizationUnit/UpdateOrganizationUnit`, organization);
+  }
+
+  createOrganization(organization: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/organizationUnit/CreateOrganizationUnit`, organization);
+  }
+
+  deleteOrganization(organizationId: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/organizationUnit/DeleteOrganizationUnit?input=${organizationId}`);
   }
 
   getSenders(params: any): Observable<any> {
