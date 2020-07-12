@@ -162,10 +162,10 @@
 
   </div>
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit">
+    <button type="button" class="btn btn-danger" [disabled]="loading" *ngIf="modalType === ModalType.Edit">
       <i class="fa fa-trash"></i>Delete
     </button>
-    <button type="button" class="btn btn-primary">
+    <button type="button" class="btn btn-primary" [disabled]="loading || userForm.invalid">
       <i class="fa"
         [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.Edit ? 'Save': 'Add'}}
     </button>

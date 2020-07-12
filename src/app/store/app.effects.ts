@@ -46,7 +46,7 @@ import { DataService } from '@app-services/data.service';
     map((res) => ({
       type: AppTypes.UpdateState,
       payload: {
-        [AppFields.RecordColumns]: res
+        [AppFields.RecordColumns]: res.result
       }
     }))
   );

@@ -16,6 +16,7 @@ export class AdminUserModalComponent implements OnInit {
 
   profileImg = '';
   userForm: FormGroup;
+  loading = false;
   constructor(
     private fb: FormBuilder
   ) { }

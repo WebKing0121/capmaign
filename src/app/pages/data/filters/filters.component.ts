@@ -40,6 +40,7 @@ export class DataFiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
+  loading = false;
   constructor(
     private dataService: DataService
   ) {
@@ -48,23 +49,7 @@ export class DataFiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dataService.getFilters()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.filters = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.filters = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.filters);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.initTable();
 
   }
 
@@ -89,16 +74,13 @@ export class DataFiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  _updateTable(filters: Filter[]) {
-    this.tableSource.next(filters.slice(0, 50), filters.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSource.next(
-          filters.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          filters.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
@@ -107,6 +89,34 @@ export class DataFiltersComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
+  loadTableData() {
+    this.loading = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+    this.dataService.getFilters(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.filters = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.filters = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.filters, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
+  }
 
   onActive(evt) {
     if (evt.type === 'click') {

@@ -15,7 +15,7 @@
 		</div>
 		<div class="columns-container">
 			<div class="columns">
-				<label *ngFor="let column of filteredColumns" class="datatable-checkbox column">
+				<label *ngFor="let column of filteredColumns" class="datatable-checkbox column" [title]="column.name" >
 					<input type="checkbox" [(ngModel)]="column.selected"
 						[ngModelOptions]="{standalong: true}"
 					/>

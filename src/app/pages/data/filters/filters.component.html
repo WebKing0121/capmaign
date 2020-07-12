@@ -1,6 +1,7 @@
 <div class="row mt-3">
   <div class="col-12 card-filters">
     <app-datatable [title]="'Filters'"
+      [loading]="loading"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"

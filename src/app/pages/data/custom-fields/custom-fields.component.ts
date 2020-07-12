@@ -39,6 +39,7 @@ export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestr
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
+  loading = false;
   constructor(
     private dataService: DataService
   ) {
@@ -47,24 +48,7 @@ export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit(): void {
-
-    this.dataService.getCustomFields()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.customFields = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.customFields = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.customFields);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -90,16 +74,13 @@ export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestr
     this.unsubscribe$.complete();
   }
 
-  _updateTable(customFields: CustomField[]) {
-    this.tableSource.next(customFields.slice(0, 50), customFields.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSource.next(
-          customFields.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          customFields.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
@@ -108,10 +89,39 @@ export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestr
       });
   }
 
+  loadTableData() {
+    this.loading = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+    this.dataService.getCustomFields(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.customFields = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.customFields = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.customFields, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
   onActive(evt) {
     if (evt.type === 'click') {
       this.tableButtons[1].disabled = this.selected.length === 0;
-      if (evt.cellIndex === 1 && evt.event.target.classList.value === 'datatable-body-cell-label') {
+      if (evt.cellIndex === 0 && evt.event.target.classList.value === 'datatable-body-cell-label') {
         this.selectedCustomField = evt.row as CustomField;
         this.modalType = ModalType.Edit;
         setTimeout(() => this.customFieldModal.show());
@@ -125,8 +135,8 @@ export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestr
     setTimeout(() => this.customFieldModal.show());
   }
 
-  onSaveCustomField() {
-    // console.log(this.customFieldsForm.value);
+  onSave() {
+    this.loadTableData();
   }
 
   onClickDelete() {
@@ -134,6 +144,19 @@ export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   onConfirmDelete() {
-    this.confirmModal.hide();
+    this.customFieldModal.hide();
+    this.loading = true;
+
+    this.dataService.deleteCustomField(this.selectedCustomField.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.loadTableData();
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

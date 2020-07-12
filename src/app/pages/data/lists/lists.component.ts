@@ -63,6 +63,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   tableRecordsButtons = [];
 
+  loadingList = false;
   constructor(
     private dataService: DataService,
     private store: Store<AppState>
@@ -73,23 +74,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dataService.getLists()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.lists = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.lists = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.lists);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.initListTable();
 
     this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => res === null && this.store.dispatch({
@@ -133,22 +118,70 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  _updateTable(lists: List[]) {
-    this.tableSource.next(lists.slice(0, 50), lists.length);
+  initListTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSource.next(
-          lists.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          lists.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadLists();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+
+  initRecordTable() {
+    this.tableSourceRecords.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(change => {
+        if (change.pagination !== 'totalCount') {
+          this.loadRecords();
+        }
+      });
+    this.tableSourceRecords.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selectedRecords = selected;
+      });
+  }
+
+  loadLists() {
+    this.loadingList = true;
+
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+
+    this.dataService.getListsOfRecords(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.lists = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.lists = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.lists, this.totalCount);
+          this.loadingList = false;
+        },
+        error => {
+          this.loadingList = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  loadRecords() {
+
   }
 
   _updateRecordsTable(records: any[]) {

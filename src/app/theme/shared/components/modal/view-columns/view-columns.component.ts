@@ -49,7 +49,13 @@ export class ViewColumnsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.dataService.getCustomFields()
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 500,
+      skipCount: 0,
+      sorting: ''
+    };
+    this.dataService.getCustomFields(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {

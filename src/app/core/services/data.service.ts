@@ -26,37 +26,24 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getColumns() {
-    return of(AllRecordGridColumnsMock);
+  getColumns(): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/userPreference/AccessDBColumnsForAllRecords`, {});
   }
 
-  getRecords(page: string): Observable<any> {
-
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/events`);
-    switch (page) {
-      case 'all':
-        return of(AllRecordsMock);
-      case 'subscribers':
-        return of(SubscribersMock);
-      case 'leads':
-        return of(LeadsMock);
-      case 'prospects':
-        return of(ProspectsMock);
-      case 'transactional':
-        return of(TransactionalsMock);
-      default:
-        return of({
-          result: null,
-          targetUrl: null,
-          success: true,
-          error: null,
-          unAuthorizedRequest: false,
-          __abp: true
-        });
-    }
+  getRecords(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/record/GetRecordsInOuIncludingChild`, params);
   }
 
-  getLists(): Observable<any> {
+  getListsOfRecords(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=false`, params);
+  }
+
+  addList() {
+    // https://c2cstaging.azurewebsites.net/api/services/app/list/AddList
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=false`, {});
+  }
+
+  getLists() {
     return of(ListsMockData);
   }
 
@@ -72,8 +59,20 @@ export class DataService {
     ]);
   }
 
-  getCustomFields(): Observable<any> {
-    return of(CustomFieldsMock);
+  getCustomFields(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/custom/GetCustomFieldsInOuIncludingChildren`, params);
+  }
+
+  createCustomField(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/custom/CreateField`, params);
+  }
+
+  updateCustomField(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/custom/UpdateField`, params);
+  }
+
+  deleteCustomField(customFieldId: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/custom/DeleteSelectedFields?input=${customFieldId}`);
   }
 
   getRecordsByListId(listId: number): Observable<any> {
@@ -121,10 +120,9 @@ export class DataService {
     return of(EventsMockData);
   }
 
-  getFilters(): Observable<any> {
-    return of(DataFiltersMock);
+  getFilters(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/filter/GetFiltersInOuIncludingChildren`, params);
   }
-
   getFilterColumns(): Observable<any> {
     return of(filterColumnsMock);
   }

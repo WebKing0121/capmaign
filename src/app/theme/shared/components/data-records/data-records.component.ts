@@ -32,6 +32,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   totalCount: number;
   selected: any[] = [];
 
+  loading = false;
   constructor(
     private dataService: DataService,
     private store: Store<AppState>
@@ -41,8 +42,8 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.initTable();
     this.selectTab(this.tabs[0]);
-
     this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => res === null && this.store.dispatch({
         type: AppTypes.GetRecordColumns
@@ -61,25 +62,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
 
       this.selectedTab.emit(tab);
       tab.selected = true;
-      this.dataService.getRecords(tab.key)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(
-          data => {
-            if (data.result) {
-              this.records = data.result.items;
-              this.totalCount = data.result.totalCount;
-              this._updateTable(this.records);
-            } else {
-              this.records = [];
-              this.totalCount = 0;
-              this._updateTable(this.records);
-            }
-
-          },
-          error => {
-            console.log('error', error);
-          }
-        );
+      this.loadTableData();
     }
   }
 
@@ -104,6 +87,53 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
     return str.charAt(0).toLowerCase() + str.slice(1);
   }
 
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(change => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
+
+  loadTableData() {
+    this.loading = true;
+    const params = {
+      RecordType: 'All',
+      SortDirection: 'Descending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+
+    this.dataService.getRecords(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.records = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.records = [];
+            this.totalCount = 0;
+
+          }
+          this._updateTable(this.records);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error);
+        }
+      );
+  }
+
   onSelectTab(tab: Tab) {
     this.selectTab(tab);
   }
@@ -124,19 +154,5 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   _updateTable(records: any[]) {
     this.tableSource.next(records.slice(0, 50), records.length);
-    this.tableSource.changed$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
-        this.tableSource.next(
-          records.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          records.length
-        );
-      });
-    this.tableSource.selection$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
   }
 }

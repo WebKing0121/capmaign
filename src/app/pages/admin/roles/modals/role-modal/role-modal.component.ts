@@ -43,7 +43,7 @@ export class AdminRoleModalComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       id: 0,
       roleName: ['', Validators.required],
-      isDefault: [false, Validators.required],
+      isDefault: false,
     });
   }
 

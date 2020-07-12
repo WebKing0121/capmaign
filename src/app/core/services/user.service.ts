@@ -113,7 +113,7 @@ export class UserService {
       body: {
         ...params
       }
-    }
+    };
     return this.http.delete<any>(`${environment.apiUrl}/api/services/app/sender/DeleteSender`, options);
   }
 
