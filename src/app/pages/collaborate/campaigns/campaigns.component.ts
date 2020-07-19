@@ -18,6 +18,7 @@ import { User } from '@app-models/user';
 
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-collaborate-campaigns',
@@ -259,7 +260,7 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     this.tableSource.next(filteredCampaigns.slice(0, 50), filteredCampaigns.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           filteredCampaigns.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

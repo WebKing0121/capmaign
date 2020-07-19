@@ -10,6 +10,7 @@ import { MobileCampaignComponent } from '../mobile-campaign/mobile-campaign.comp
 // tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-manage-sms-campaign',
@@ -62,7 +63,7 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.smsCampaignData.filter(item => item.name.includes(change.search));

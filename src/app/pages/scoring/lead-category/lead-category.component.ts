@@ -7,6 +7,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { LeadCategoryModalComponent } from './lead-category-modal/lead-category-modal.component';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-lead-category',
@@ -52,7 +53,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.leadCategoryData.filter(item =>

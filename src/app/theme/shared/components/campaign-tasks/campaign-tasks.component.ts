@@ -16,6 +16,7 @@ import { DateFormatPipe } from '../../pipes/date-format.pipe';
 
 import { CollaborateService } from '@app-services/collaborate.service';
 import { ToastService } from '../toast/toast.service';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-campaign-tasks',
@@ -88,7 +89,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
     this.tableSource.next(tasks.slice(0, 50), tasks.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           tasks.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

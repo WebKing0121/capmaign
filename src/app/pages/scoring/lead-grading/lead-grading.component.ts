@@ -8,6 +8,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadGradingComponent } from '../create-lead-grading/create-lead-grading.component';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-lead-grading',
@@ -64,7 +65,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         console.log('Campaign Table Changes: ', change);
 
         let mockData = [];

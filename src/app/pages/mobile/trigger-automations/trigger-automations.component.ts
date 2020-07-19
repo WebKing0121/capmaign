@@ -9,6 +9,7 @@ import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/sc
 import { Automation } from '@app-models/automation';
 import { AutomationService } from '@app-core/services/automation.service';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-trigger-automations',
@@ -123,7 +124,7 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData();
         }

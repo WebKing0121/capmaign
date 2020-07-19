@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { UserService } from '@app-core/services/user.service';
 import { takeUntil } from 'rxjs/operators';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-admin-organization-select-user-modal',
@@ -51,7 +52,7 @@ export class AdminOrganizationSelectUserModalComponent implements OnInit, OnDest
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadUsersForUnassigned();
         }

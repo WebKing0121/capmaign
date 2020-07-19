@@ -8,6 +8,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { CustomField } from '@app-models/custom-field';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-data-customfields',
@@ -77,7 +78,7 @@ export class DataCustomFieldsComponent implements OnInit, AfterViewInit, OnDestr
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData();
         }

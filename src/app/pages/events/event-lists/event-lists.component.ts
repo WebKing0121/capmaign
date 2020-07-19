@@ -14,6 +14,7 @@ import { List } from '@app-models/list';
 import { Store } from '@ngrx/store';
 import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-data-event-lists',
@@ -190,7 +191,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tableSource.next(lists.slice(0, 50), lists.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           lists.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
@@ -208,7 +209,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tableSourceEvents.next(events.slice(0, 50), events.length);
     this.tableSourceEvents.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSourceEvents.next(
           events.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

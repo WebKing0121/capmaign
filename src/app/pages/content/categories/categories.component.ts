@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { ContentCategory } from '@app-models/content-category';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-content-categories',
@@ -103,7 +104,7 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
     this.tableSource.next(categories.slice(0, 50), categories.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           categories.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

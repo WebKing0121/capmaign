@@ -5,13 +5,12 @@ import { takeUntil } from 'rxjs/operators';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
-
+import { DataSourceChange } from '@app-models/data-source';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
 import { UserService } from '@app-services/user.service';
 import { CollaborateService } from '@app-services/collaborate.service';
 import { ModalType } from '@app-core/enums/modal-type.enum';
-
 
 
 @Component({
@@ -35,7 +34,6 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
 
   private unsubscribe$ = new Subject();
 
-
   loading = false;
   submitted = false;
 
@@ -53,6 +51,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   tableSource: DataTableSource<CollaborateTeam> = new DataTableSource<CollaborateTeam>(50);
   selected: CollaborateTeam[] = [];
   selectedTeam: CollaborateTeam;
+  teamsTotalCount = 0;
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreateTeam() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
@@ -60,6 +59,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
 
   tableSourceCampaigns: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
   selectedCampaigns: CollaborateCampaign[] = [];
+  campaignsTotalCount = 0;
   selectedCampaign: CollaborateCampaign;
   tableButtonsCampaigns = [
     { label: 'Assign', icon: 'fa fa-link', click: () => this.onClickAssignCampaign() },
@@ -73,6 +73,9 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   ModalType = ModalType;
   teamsInModal: any[];
 
+  loadingTeams = false;
+  loadingCampaigns = false;
+
   constructor(
     private collaborateService: CollaborateService,
     private userService: UserService,
@@ -85,33 +88,8 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngOnInit(): void {
-
-    // this.cardTeams.setCardRefresh(true);
-    this.collaborateService.getCollaborateTeams()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.teams = data;
-          this.teamsInModal = this.teams.map(x => ({ value: '' + x.id, label: x.name }));
-          this.loaded++;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-
-    this.collaborateService.getCollaborateCampaigns()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.campaigns = data;
-          this.loaded++;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-
+    this.initTeamsTable();
+    // this.initCampaignsTable();
     this.userService.getAll()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
@@ -123,29 +101,27 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
           console.log('error', error);
         }
       );
-
-
-    setTimeout(() => this.checkLoaded());
+    // setTimeout(() => this.checkLoaded());
   }
 
-  checkLoaded() {
-    if (this.loaded === 3) {
-      // this.getUnassignedCampaigns();
-      // this.cardTeams.setCardRefresh(false);
-      this._updateTeamTable(this.teams);
-      this._updateCampaignTable([]);
-    } else {
-      setTimeout(() => this.checkLoaded());
-    }
-  }
+  // checkLoaded() {
+  //   if (this.loaded === 3) {
+  //     // this.getUnassignedCampaigns();
+  //     // this.cardTeams.setCardRefresh(false);
+  //     this._updateTeamTable(this.teams);
+  //     this._updateCampaignTable([]);
+  //   } else {
+  //     setTimeout(() => this.checkLoaded());
+  //   }
+  // }
 
   ngAfterViewInit() {
 
     const columns: DataTableColumn[] = [
-      { name: 'Team Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
-      { name: 'Members', prop: 'members.length', sortable: true },
-      { name: 'Campaigns', prop: 'campaigns.length', sortable: true },
-      { name: 'Created', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' } },
+      { name: 'Team Name', prop: 'collaborationTeamName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
+      { name: 'Members', prop: 'userCount', sortable: true },
+      { name: 'Campaigns', prop: 'userCount', sortable: true },
+      { name: 'Created', prop: 'creationDate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, hidden: true },
     ];
 
     this.tableSource.setColumns(columns);
@@ -241,16 +217,13 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
     this.campaignSubTasks.loadSubTasks(task.id);
   }
 
-  _updateTeamTable(teams: CollaborateTeam[]) {
-    this.tableSource.next(teams.slice(0, 50), teams.length);
+  initTeamsTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
-        this.tableSource.next(
-          teams.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          teams.length
-        );
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTeams();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
@@ -259,21 +232,60 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
       });
   }
 
-  _updateCampaignTable(campaigns: CollaborateCampaign[]) {
-    this.tableSourceCampaigns.next(campaigns.slice(0, 50), campaigns.length);
+  initCampaignsTable() {
     this.tableSourceCampaigns.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
-        this.tableSourceCampaigns.next(
-          campaigns.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          campaigns.length
-        );
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadCampaigns();
+        }
       });
     this.tableSourceCampaigns.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selectedCampaigns = selected;
       });
+  }
+
+  loadTeams() {
+    this.loadingTeams = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+
+    this.collaborateService.getCollaborateTeams(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.teams = data.result.items;
+          this.teamsTotalCount = data.result.totalCount;
+          this.teamsInModal = this.teams.map(x => ({ value: '' + x.id, label: x.collaborationTeamName }));
+          this.tableSource.next(this.teams, this.teamsTotalCount);
+          this.loadingTeams = false;
+        },
+        error => {
+          this.loadingTeams = false;
+          console.log('error', error);
+        }
+      );
+  }
+
+  loadCampaigns() {
+    this.loadingCampaigns = true;
+    this.collaborateService.getCollaborateCampaigns()
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.campaigns = data;
+          this.loadingCampaigns = false;
+        },
+        error => {
+          this.loadingCampaigns = false;
+          console.log('error', error);
+        }
+      );
   }
 }

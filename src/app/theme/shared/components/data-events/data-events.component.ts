@@ -4,6 +4,7 @@ import { DataTableSource } from '@app-components/datatable/datatable-source';
 import { DataService } from '@app-services/data.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-data-events',
@@ -82,7 +83,7 @@ export class DataEventsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tableSource.next(events.slice(0, 50), events.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           events.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

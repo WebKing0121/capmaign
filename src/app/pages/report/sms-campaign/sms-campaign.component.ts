@@ -5,6 +5,7 @@ import { DataTableSource, DataTableColumn } from '@app-components/datatable/data
 import { takeUntil } from 'rxjs/operators';
 import { ReportService } from '@app-core/services/report.service';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-report-sms-campaign',
@@ -81,7 +82,7 @@ export class ReportSmsCampaignComponent implements OnInit, AfterViewInit, OnDest
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData();
         }

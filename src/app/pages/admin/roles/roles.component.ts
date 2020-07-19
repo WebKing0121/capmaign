@@ -4,6 +4,8 @@ import { takeUntil } from 'rxjs/operators';
 
 import { UserService } from '@app-services/user.service';
 import { UserRolePage, UserRole } from '@app-models/user';
+import { DataSourceChange } from '@app-models/data-source';
+
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
@@ -165,7 +167,7 @@ export class AdminRolesComponent implements OnInit, OnDestroy, AfterViewInit {
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData(this.permissions);
         }

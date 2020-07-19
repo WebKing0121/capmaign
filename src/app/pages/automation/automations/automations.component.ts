@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { AutomationService } from '@app-core/services/automation.service';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-automations',
@@ -162,7 +163,7 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData();
         }

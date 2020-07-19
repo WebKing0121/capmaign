@@ -10,6 +10,7 @@ import { List } from '@app-models/list';
 import { Store } from '@ngrx/store';
 import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-data-lists',
@@ -121,7 +122,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   initListTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadLists();
         }
@@ -137,7 +138,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   initRecordTable() {
     this.tableSourceRecords.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadRecords();
         }

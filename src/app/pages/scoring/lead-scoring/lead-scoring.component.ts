@@ -7,6 +7,7 @@ import { Scoring } from '@app-models/scoring';
 import { ModalService } from '@app-components/modal/modal.service';
 import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-lead-scoring',
@@ -58,7 +59,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.leadScoringData.filter(item =>

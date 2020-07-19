@@ -10,6 +10,7 @@ import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { NgSelectData } from '@app-models/common';
 import { DataListType } from '@app-core/enums/data-list-type.enum';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-events-events',
@@ -126,7 +127,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.tableSource.next(events.slice(0, 50), events.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           events.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

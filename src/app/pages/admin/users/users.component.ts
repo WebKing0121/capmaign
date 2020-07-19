@@ -11,6 +11,7 @@ import { ModalType } from '@app-core/enums/modal-type.enum';
 
 // modals
 import { AdminUserModalComponent } from './modals/user-modal/user-modal.component';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-admin-users',
@@ -49,7 +50,7 @@ export class AdminUsersComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this._loadTableData(this.tableSource.currentPage, Number(this.tableSource.pageSize));
         }

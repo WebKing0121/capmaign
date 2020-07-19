@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ReportService } from '@app-core/services/report.service';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ExportData } from '@app-models/exports';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-report-exports',
@@ -69,7 +70,7 @@ export class ReportExportsComponent implements OnInit, AfterViewInit, OnDestroy 
   initTable() {
     this.tableSource.changed$
     .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(change => {
+    .subscribe((change: DataSourceChange) => {
       if (change.pagination !== 'totalCount') {
         this.loadTableData();
       }

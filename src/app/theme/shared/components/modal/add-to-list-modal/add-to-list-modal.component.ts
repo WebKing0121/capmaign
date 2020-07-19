@@ -12,6 +12,7 @@ import { AppState, AppTypes, selectRecordColumns } from '@app-store/app.models';
 import { Store } from '@ngrx/store';
 import { DataListType } from '@app-core/enums/data-list-type.enum';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
+import { DataSourceChange } from '@app-models/data-source';
 @Component({
   selector: 'app-add-to-list-modal',
   templateUrl: './add-to-list-modal.component.html',
@@ -227,7 +228,7 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
     this.tableSource.next(records.slice(0, 50), records.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           records.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

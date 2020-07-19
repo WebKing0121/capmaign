@@ -15,6 +15,7 @@ import { CollaborateCampaignsSubtasksMockData } from '@app-fake-db/collaborate-c
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { CollaborateService } from '@app-services/collaborate.service';
 import { ToastService } from '../toast/toast.service';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-campaign-sub-tasks',
@@ -94,7 +95,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
     this.tableSource.next(tasks.slice(0, 50), tasks.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           tasks.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

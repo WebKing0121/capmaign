@@ -16,6 +16,7 @@ import { CampaignSendModalComponent } from '../components/campaign-send-modal/ca
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CampaignComponent } from '../campaign/campaign.component';
 import { MobileCampaignComponent } from '../../mobile/mobile-campaign/mobile-campaign.component';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-campaigns',
@@ -71,7 +72,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         console.log('Campaign Table Changes: ', change);
 
         setTimeout(() => {

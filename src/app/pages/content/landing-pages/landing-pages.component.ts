@@ -6,6 +6,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { LandingPage } from '@app-models/landing-page';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-content-landing-pages',
@@ -106,7 +107,7 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableSource.next(landingPages.slice(0, 50), landingPages.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           landingPages.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

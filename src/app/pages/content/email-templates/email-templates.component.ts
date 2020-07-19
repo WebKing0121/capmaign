@@ -6,6 +6,7 @@ import { ContentService } from '@app-core/services/content.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-content-email-templates',
@@ -105,7 +106,7 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
     this.tableSource.next(templates.slice(0, 50), templates.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           templates.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

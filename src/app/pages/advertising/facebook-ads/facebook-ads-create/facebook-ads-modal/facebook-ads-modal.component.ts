@@ -8,6 +8,7 @@ import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
+import { DataSourceChange } from '@app-models/data-source';
 
 interface ComponentProps {
   campaign: Campaign;
@@ -41,7 +42,7 @@ export class FacebookAdsModalComponent implements OnInit, OnDestroy, AfterViewIn
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         setTimeout(() => {
           let mockData = [];
           if (change.search) {

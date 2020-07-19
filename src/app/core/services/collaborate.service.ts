@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import * as moment from 'moment';
 
 import { CollaborateTeamsMockData } from '@app-fake-db/collaborate-teams-mock';
@@ -19,9 +19,8 @@ export class CollaborateService {
 
   constructor(private http: HttpClient) { }
 
-  getCollaborateTeams() {
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/teams`);
-    return of(CollaborateTeamsMockData);
+  getCollaborateTeams(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetallCollaborationTeamView`, params);
   }
 
   getCollaborateCampaigns() {

@@ -39,7 +39,6 @@ export class DataService {
   }
 
   addList(params: any): Observable<any>  {
-    // https://c2cstaging.azurewebsites.net/api/services/app/list/AddList
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/AddList`, params);
   }
 

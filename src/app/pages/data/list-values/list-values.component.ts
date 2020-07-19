@@ -5,6 +5,7 @@ import { Observable, Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { DataService } from '@app-core/services/data.service';
 import { takeUntil } from 'rxjs/operators';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-data-list-values',
@@ -121,7 +122,7 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData();
         }

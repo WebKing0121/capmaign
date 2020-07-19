@@ -5,6 +5,7 @@ import { Asset } from '@app-models/asset';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-content-assets',
@@ -140,7 +141,7 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
     this.tableSource.next(assets.slice(0, 50), assets.length);
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           assets.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

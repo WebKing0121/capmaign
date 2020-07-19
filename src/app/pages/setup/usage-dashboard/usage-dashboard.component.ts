@@ -7,6 +7,7 @@ import { ModalService } from '@app-components/modal/modal.service';
 import { UsageDashboardService } from '@app-core/services/usage-dashboard-service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { DataSourceChange } from '@app-models/data-source';
 
 class AllUsageField {
   field: string;
@@ -80,7 +81,7 @@ export class UsageDashboardComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.allOrganizationData.filter(item => item.name.includes(change.search));

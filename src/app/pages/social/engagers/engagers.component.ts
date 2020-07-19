@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { SocialService } from '@app-core/services/social.service';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 
 @Component({
@@ -119,7 +120,7 @@ export class SocialEngagersComponent implements OnInit, OnDestroy, AfterViewInit
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         this.tableSource.next(
           engagers.slice(
             change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),

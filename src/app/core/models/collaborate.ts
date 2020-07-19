@@ -42,12 +42,20 @@ export class CollaborateCampaign {
 }
 
 export class CollaborateTeam {
+  collaborationTeamName: string;
+  creationDate: string;
+  creationTime: string;
+  creatorUserId: number | null;
+  deleterUserId: number | null;
+  deletionTime: string | null;
   id: number;
-  name: string;
-  desc: string;
-  created: string;
-  members: number[] | null;
-  campaigns: number[] | null;
+  isDeleted: boolean;
+  lastModificationTime: string | null;
+  lastModifierUserId: number | null;
+  membername: string | null;
+  userCount: number;
+  members?: number[];
+  campaigns?: number[];
 }
 
 export class CollaborateChatRoom {

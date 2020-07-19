@@ -76,7 +76,7 @@ export class ReportImportsComponent implements OnInit, AfterViewInit, OnDestroy 
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData();
         }

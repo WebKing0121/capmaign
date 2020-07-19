@@ -9,6 +9,7 @@ import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { InAppMessageComponent } from '../in-app-message/in-app-message.component';
 // tslint:disable-next-line
 import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-push-notifications',
@@ -57,7 +58,7 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.inAppMessageData.filter(item => item.name.includes(change.search));

@@ -7,6 +7,7 @@ import { DataService } from '@app-services/data.service';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState, selectRecordColumns, AppTypes } from '@app-store/app.models';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-data-records',
@@ -88,7 +89,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData();
         }

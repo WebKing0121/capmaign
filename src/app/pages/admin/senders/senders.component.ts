@@ -10,6 +10,7 @@ import { ModalType } from '@app-core/enums/modal-type.enum';
 
 // modals
 import { Sender } from '@app-models/sender';
+import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
   selector: 'app-admin-senders',
@@ -71,7 +72,7 @@ export class AdminSendersComponent implements OnInit, AfterViewInit, OnDestroy {
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
           this.loadTableData(this.tableSource.currentPage, Number(this.tableSource.pageSize));
         }

@@ -21,6 +21,7 @@ import { NgbDateStruct, NgbDateParserFormatter } from '@ng-bootstrap/ng-bootstra
 import { Tab } from '@app-models/common';
 import { DashboardTabs } from '@app-core/enums/dashboard-type.enum';
 import { ModalType } from '@app-core/enums/modal-type.enum';
+import { DataSourceChange } from '@app-models/data-source';
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
@@ -160,7 +161,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.allBounceEmail.filter(item => item.emailAddress.includes(change.search));
@@ -192,7 +193,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.topPerformingTableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.alltopPerformingCampaign.filter(item => item.name.includes(change.search));
@@ -229,7 +230,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.upComingCampTableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.allUpcommingCamp.filter(item => item.name.includes(change.search));
@@ -261,7 +262,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.recentEventTableSource.changed$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
+      .subscribe((change: DataSourceChange) => {
         let mockData = [];
         if (change.search) {
           mockData = this.allRecentEvents.filter(item => item.name.includes(change.search));
