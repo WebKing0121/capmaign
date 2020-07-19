@@ -2,6 +2,7 @@
   <div class="col-12 card-automation">
     <app-datatable
       [title]="'Automations'"
+      [loading]="loading"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"
@@ -22,5 +23,9 @@
   [modalType]="modalType"
   [automation]="selectedAutomation"
 ></app-automation-modal>
-<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete the selected automation?"
-	[buttons]="confirmButtons"></app-confirm-modal>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete the selected automation?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>

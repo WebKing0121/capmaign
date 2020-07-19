@@ -13,13 +13,15 @@
   </div>
 </div>
 
+<app-data-filter-modal #filterModal
+  [modalType]="modalType"
+  [filter]="selectedFilter"
+  (save)="onSave()"
+  (delete)="onClickDelete()"
+></app-data-filter-modal>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
   modalMessage="Do you want to delete selected filters?"
   [buttons]="confirmButtons"
 ></app-confirm-modal>
-
-<app-data-filter-modal #filterModal
-  [modalType]="modalType"
-  [filter]="selectedFilter"
-></app-data-filter-modal>

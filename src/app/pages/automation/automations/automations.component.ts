@@ -20,7 +20,6 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('templateType') templateType: TemplateRef<any>;
 
-
   private unsubscribe$ = new Subject();
 
   automations: Automation[];
@@ -38,45 +37,24 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   modalType: string;
   selectedAutomation: Automation;
 
-
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
-  searchString: string;
-  displayLimit: number;
-  sortField: string;
-  sortDirection: number;
+  loading = false;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private automationService: AutomationService
   ) {
-
-    this.searchString = '';
-    this.displayLimit = 50;
-    this.sortField = '';
-    this.sortDirection = 0;
     this.automations = [];
     this.totalCount = 0;
   }
 
   ngOnInit(): void {
-    this.automationService.getAutomations(this.searchString, this.displayLimit, this.sortField, this.sortDirection, 0)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.automations = data.result.items;
-          this.totalCount = data.result.totalCount;
-          this._updateTable(this.automations);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -101,25 +79,6 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
-  _updateTable(automations: Automation[]) {
-    this.tableSource.next(automations.slice(0, 50), automations.length);
-    this.tableSource.changed$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
-        this.tableSource.next(
-          automations.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          automations.length
-        );
-      });
-    this.tableSource.selection$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
-  }
-
 
   onActive(event) {
     if (event.type === 'click') {
@@ -200,5 +159,43 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     return 'unknown';
   }
 
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(change => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
+
+  loadTableData() {
+    this.loading = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+    this.automationService.getAutomations(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.automations = data.result.items;
+          this.totalCount = data.result.totalCount;
+          this.tableSource.next(this.automations, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
+  }
 
 }

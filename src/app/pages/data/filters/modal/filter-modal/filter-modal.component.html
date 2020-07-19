@@ -1,6 +1,9 @@
-<app-ui-modal #filterModal [containerClick]="false" dialogClass="modal-dialog-centered modal-filter modal-xl">
+<app-ui-modal #filterModal [containerClick]="false" [dialogClass]="dialogClass">
   <div class="app-modal-header">
     <h5 class="modal-title">{{modalType === ModalType.New ? 'New' : 'Edit'}} Filter</h5>
+    <button type="button"  class="maximize" (click)="revertFullScreen()">
+      <i class="fa" [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i>
+    </button>
     <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
       (click)="filterModal.hide()">
       <span aria-hidden="true">&times;</span>
@@ -53,17 +56,26 @@
             <div *ngFor="let item of filterConditions">
               <div *ngIf="item.type==='Item'" class="filter-item">
                 <div class="filter-parent-op">
-                  <ng-select *ngIf="item.parentOp !== 'None'" [(ngModel)]="item.parentOp" [ngClass]="'ng-select'" [options]="conditionOperators"></ng-select>
+                  <select *ngIf="item.parentOp !== 'None'" (ngModelChange)="onConditionChanged($event)"
+                    [(ngModel)]="item.parentOp" [ngClass]="'select-op'"
+                  >
+                    <option *ngFor="let conditionOp of conditionOperators" [value]="conditionOp.value">{{conditionOp.label}}</option>
+                  </select>
                 </div>
                 <div class="filter-name">
-                  <ng-select [ngClass]="'ng-select'" [(ngModel)]="item.fieldName" [options]="filterFields"></ng-select>
+                  <ng-select [ngClass]="'ng-select'" (ngModelChange)="onConditionChanged($event)" [(ngModel)]="item.fieldName"
+                    [options]="filterFields"
+                  ></ng-select>
                 </div>
                 <div class="filter-op">
-                  <ng-select [ngClass]="'ng-select'" [(ngModel)]="item.conditionOp" [options]="filterOperators"></ng-select>
+                  <select (ngModelChange)="onConditionChanged($event)" [(ngModel)]="item.conditionOp" [ngClass]="'select-op'">
+                    <option *ngFor="let filterOp of getActiveFilter(item.fieldName)" [value]="filterOp.value">{{filterOp.label}}</option>
+                  </select>
                 </div>
                 
                 <div class="filter-value">
-                  <input type="text" *ngIf="item.conditionOp !== 'null' && item.conditionOp !== 'not_null'"
+                  <input type="text" (ngModelChange)="onConditionChanged($event)"
+                    *ngIf="item.conditionOp !== 'is_null' && item.conditionOp !== 'is_not_null'"
                     placeholder="Condition Value..."
                     [(ngModel)]="item.value" />
                 </div>
@@ -73,26 +85,30 @@
               </div>  
               <div *ngIf="item.type==='Group'" class="filter-item">
                 <div class="filter-parent-op">
-                  <ng-select *ngIf="item.parentOp !== 'None'" [ngClass]="'ng-select'" 
-                    [(ngModel)]="item.parentOp"
-                    [options]="conditionOperators"
-                  ></ng-select>
+                  <select *ngIf="item.parentOp !== 'None'" (ngModelChange)="onConditionChanged($event)" [(ngModel)]="item.parentOp" [ngClass]="'select-op'">
+                    <option *ngFor="let conditionOp of conditionOperators" [value]="conditionOp.value">{{conditionOp.label}}</option>
+                  </select>
                 </div>
                 <div class="filter-group">
                   <button class="add-condition" (click)="onClickAddConditionInGroup(item)"><i class="fa fa-plus"></i></button>
                   <button class="group-remove" (click)="onClickRemoveGroup(item)"><i class="fa fa-times"></i></button>
                   <div *ngFor="let subItem of item.children" class="filter-item">
                     <div class="filter-parent-op">
-                      <ng-select *ngIf="subItem.parentOp !== 'None'" [(ngModel)]="subItem.parentOp" [ngClass]="'ng-select'" [options]="conditionOperators"></ng-select>
+                      <select (ngModelChange)="onConditionChanged($event)" *ngIf="subItem.parentOp !== 'None'" [(ngModel)]="subItem.parentOp" [ngClass]="'select-op'">
+                        <option *ngFor="let conditionOp of conditionOperators" [value]="conditionOp.value">{{conditionOp.label}}</option>
+                      </select>
                     </div>
                     <div class="filter-name">
-                      <ng-select [ngClass]="'ng-select'" [(ngModel)]="subItem.fieldName" [options]="filterFields"></ng-select>
+                      <ng-select (ngModelChange)="onConditionChanged($event)" [ngClass]="'ng-select'" [(ngModel)]="subItem.fieldName" [options]="filterFields"></ng-select>
                     </div>
                     <div class="filter-op">
-                      <ng-select [ngClass]="'ng-select'" [(ngModel)]="subItem.conditionOp" [options]="filterOperators"></ng-select>
+                      <select (ngModelChange)="onConditionChanged($event)" [(ngModel)]="subItem.conditionOp" [ngClass]="'select-op'">
+                        <option *ngFor="let filterOp of getActiveFilter(subItem.fieldName)" [value]="filterOp.value">{{filterOp.label}}</option>
+                      </select>
                     </div>
                     <div class="filter-value">
-                      <input type="text" *ngIf="subItem.conditionOp !== 'null' && subItem.conditionOp !== 'not_null'"
+                      <input (ngModelChange)="onConditionChanged($event)" type="text"
+                        *ngIf="subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null'"
                         placeholder="Condition Value..."
                         [(ngModel)]="subItem.value" />
                     </div>

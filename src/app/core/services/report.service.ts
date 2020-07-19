@@ -16,14 +16,16 @@ export class ReportService {
 
   constructor(private http: HttpClient) { }
 
-  getEmailReports() {
-    return of(ReportEmailCampaignsMock);
+  getEmailReports(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/email/GetSentEmailInOuIncludingChildren`, params);
   }
-  getSmsReports() {
-    return of(ReportSmsCampaignsMock);
+
+  getSmsReports(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetSentSmsInOuIncludingChildren`, params);
   }
-  getExports() {
-    return of(ReportExportsEmailMock);
+
+  getExports(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/export/GetExportLogsInOuIncludingChildren`, params);
   }
 
   getEmailCampaigns() {
@@ -31,10 +33,10 @@ export class ReportService {
   }
 
   getSmsCampaigns() {
-    return of (ReportSmsCampaignsMock);
+    return of(ReportSmsCampaignsMock);
   }
 
-  getImports() {
-    return of(ReportImportsMock);
+  getImports(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/import/GetImportLogsInOuIncludingChildren`, params);
   }
 }

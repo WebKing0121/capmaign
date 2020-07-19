@@ -129,6 +129,10 @@ export class DataFiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  onSave() {
+    this.loadTableData();
+  }
+
   onClickCreate() {
     this.modalType = ModalType.New;
     this.selectedFilter = null;

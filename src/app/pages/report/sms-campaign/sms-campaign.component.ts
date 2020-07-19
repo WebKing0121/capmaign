@@ -27,34 +27,18 @@ export class ReportSmsCampaignComponent implements OnInit, AfterViewInit, OnDest
   ];
   selected: SmsCampaign[] = [];
 
-
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
+
+  loading = false;
   constructor(
     private reportService: ReportService
   ) { }
 
   ngOnInit(): void {
-    this.reportService.getSmsReports()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.smsCampaigns = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.smsCampaigns = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.smsCampaigns);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -81,9 +65,9 @@ export class ReportSmsCampaignComponent implements OnInit, AfterViewInit, OnDest
       this.tableButtons[2].disabled = this.selected.length === 0;
       this.tableButtons[1].disabled = !(this.selected.length === 1 && this.selected.filter(x => x.status === 'Sent').length === 1);
       this.tableButtons[3].disabled = !(this.selected.length === 1 && this.selected
-        .filter(x => x.status === 'Scheduled' || x.status === 'Active' ).length === 1);
+        .filter(x => x.status === 'Scheduled' || x.status === 'Active').length === 1);
       this.tableButtons[4].disabled = !(this.selected.length === 1 && this.selected
-        .filter(x => x.status === 'Scheduled' || x.status === 'Active' || x.status === 'Paused' ).length === 1);
+        .filter(x => x.status === 'Scheduled' || x.status === 'Active' || x.status === 'Paused').length === 1);
     }
   }
 
@@ -94,21 +78,48 @@ export class ReportSmsCampaignComponent implements OnInit, AfterViewInit, OnDest
 
   }
 
-  _updateTable(customFields: SmsCampaign[]) {
-    this.tableSource.next(customFields.slice(0, 50), customFields.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSource.next(
-          customFields.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          customFields.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    this.loading = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+
+    this.reportService.getSmsReports(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.smsCampaigns = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.smsCampaigns = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.smsCampaigns, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

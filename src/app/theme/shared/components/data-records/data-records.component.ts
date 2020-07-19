@@ -31,7 +31,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
   tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   totalCount: number;
   selected: any[] = [];
-
+  currentRecordType = 'all';
   loading = false;
   constructor(
     private dataService: DataService,
@@ -43,7 +43,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.initTable();
-    this.selectTab(this.tabs[0]);
+    // this.selectTab(this.tabs[0]);
     this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => res === null && this.store.dispatch({
         type: AppTypes.GetRecordColumns
@@ -57,9 +57,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     if (tab) {
-
       this.setRecordType(tab);
-
       this.selectedTab.emit(tab);
       tab.selected = true;
       this.loadTableData();
@@ -102,10 +100,33 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
       });
   }
 
+  getRecordType() {
+    switch (this.currentRecordType) {
+      case 'all':
+        return 'All';
+      case 'subscribers':
+        return 'Subscriber';
+      case 'unsubscribers':
+        return 'Unsubscriber';
+      case 'leads':
+        return 'Lead';
+      case 'contacts':
+        return 'Contact';
+      case 'prospects':
+        return 'Prospect';
+      case 'accounts':
+        return 'Account';
+      case 'transactional':
+        return 'Transactional';
+    }
+  }
+
   loadTableData() {
+
     this.loading = true;
+
     const params = {
-      RecordType: 'All',
+      RecordType: this.getRecordType(),
       SortDirection: 'Descending',
       maxResultCount: this.tableSource.pageSize,
       skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
@@ -151,6 +172,7 @@ export class DataRecordsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   setRecordType(tab: Tab) {
     this.recordType = tab.key === 'all' ? 'accounts' : tab.key;
+    this.currentRecordType = tab.key;
   }
   _updateTable(records: any[]) {
     this.tableSource.next(records.slice(0, 50), records.length);

@@ -76,10 +76,10 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.initListTable();
 
-    this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
-      .subscribe((res) => res === null && this.store.dispatch({
-        type: AppTypes.GetRecordColumns
-      }));
+    // this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
+    //   .subscribe((res) => res === null && this.store.dispatch({
+    //     type: AppTypes.GetRecordColumns
+    //   }));
 
   }
 
@@ -184,24 +184,6 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  _updateRecordsTable(records: any[]) {
-    this.tableSourceRecords.next(records.slice(0, 50), records.length);
-    this.tableSourceRecords.changed$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(change => {
-        this.tableSourceRecords.next(
-          records.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          records.length
-        );
-      });
-    this.tableSourceRecords.selection$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(selected => {
-        this.selectedRecords = selected;
-      });
-  }
-
   onActive(evt: any) {
     if (evt.type === 'click') {
       this.selectedList = evt.row as List;
@@ -221,7 +203,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
               this.records = [];
               this.totalRecordsCount = 0;
             }
-            this._updateRecordsTable(this.records);
+            // this._updateRecordsTable(this.records);
           },
           error => {
             console.log('error', error.response);
@@ -236,6 +218,10 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
         setTimeout(() => this.listModal.show());
       }
     }
+  }
+
+  onSaveList() {
+    this.loadLists();
   }
 
   onClickCreate() {

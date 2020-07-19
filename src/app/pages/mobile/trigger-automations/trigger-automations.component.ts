@@ -35,12 +35,12 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
   selected: Automation[];
   automations: Automation[];
   destroy$ = new Subject();
-
+  totalCount = 0;
   // add, edit event modal
   modalType: string;
   selectedAutomation: Automation;
 
-
+  loading = false;
   constructor(
     private modalService: ModalService,
     private automationService: AutomationService
@@ -49,44 +49,8 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   ngOnInit(): void {
-    this.automationService.getAutomations('', 50, '', 0, 0)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        data => {
-          this.automations = data.result.items;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-
-    this.automations = this.automations.filter(item => item.automationType === 1);
-
-    this.tableSource.next(this.automations.slice(0, 50), this.automations.length);
-
-    this.tableSource.changed$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(change => {
-        let mockData = [];
-        if (change.search) {
-          mockData = this.automations.filter(item => item.name.includes(change.search));
-        } else {
-          mockData = this.automations;
-        }
-
-        this.tableSource.next(
-          mockData.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1),
-            change.pagination.pageSize * (change.pagination.pageNumber)),
-          mockData.length
-        );
-      });
-
-    this.tableSource.selection$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
+    this.initTable();
+    // this.automations = this.automations.filter(item => item.automationType === 1);
   }
 
   ngOnDestroy(): void {
@@ -154,5 +118,44 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   onLiveClicked() {
+  }
+
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(change => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
+
+  loadTableData() {
+    this.loading = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+    this.automationService.getAutomations(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.automations = data.result.items;
+          this.totalCount = data.result.totalCount;
+          this.tableSource.next(this.automations, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

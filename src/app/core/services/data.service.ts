@@ -38,9 +38,9 @@ export class DataService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=false`, params);
   }
 
-  addList() {
+  addList(params: any): Observable<any>  {
     // https://c2cstaging.azurewebsites.net/api/services/app/list/AddList
-    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=false`, {});
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/AddList`, params);
   }
 
   getLists() {
@@ -50,7 +50,6 @@ export class DataService {
   getEventLists(): Observable<any> {
     return of(EventListsMockData);
   }
-
 
   getTypeList(): Observable<any> {
     return of([
@@ -124,21 +123,18 @@ export class DataService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/filter/GetFiltersInOuIncludingChildren`, params);
   }
   getFilterColumns(): Observable<any> {
-    return of(filterColumnsMock);
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/record/GetRecordColumnsForQueries`);
   }
 
-  getListValues(): Observable<any> {
-    return of(ListValuesMock);
+  createFilter(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/filter/CreateFilter`, params);
+  }
+
+  getListValues(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/listOfValues/GetAllValuesInOuIncludingChildren`, params);
   }
 
   splitArray(query: string) {
-    const obj = {
-      brakets: null,
-      parentOps: null,
-      conditionOps: null,
-      variables: null,
-    };
-
     query = query.replace(')', ')\n');
     const brakets = query.match(/[\(].+[\)]/g);
 
@@ -235,5 +231,52 @@ export class DataService {
       }
     });
     return query.substr(1);
+  }
+
+  buildQueryAsLinq(filterConditions: any[], filterColumns: any[]) {
+    // booleanQueryAsLinq: "Amount == 100 AND string.Compare(AccountName,  "user account", true) == 0 AND AccountOptOut == true AND DOB == Convert.ToDateTime("07/01/2020")"
+
+    let query = '';
+    let subQuery = '';
+    filterConditions.forEach((filterItem: any) => {
+      console.log(filterItem);
+      // if (filterItem.parentOp !== 'None') {
+      //   query += ` ${filterItem.parentOp}`;
+      // }
+      // if (filterItem.type === 'Item') {
+      //   if (filterItem.conditionOp !== 'is_null' && filterItem.conditionOp !== 'is_not_null') {
+      //     query += ` ${filterItem.fieldName} ${filterItem.conditionOp} "${filterItem.value}"`;
+      //   } else {
+      //     query += ` ${filterItem.fieldName} ${filterItem.conditionOp}`;
+      //   }
+      // } else {
+
+      //   subQuery = '';
+      //   filterItem.children.forEach((subItem: any) => {
+      //     if (subItem.parentOp !== 'None') {
+      //       subQuery += ` ${filterItem.parentOp}`;
+      //     }
+      //     if (subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null') {
+      //       subQuery += ` ${subItem.fieldName} ${subItem.conditionOp} "${subItem.value}"`;
+      //     } else {
+      //       subQuery += ` ${subItem.fieldName} ${subItem.conditionOp}`;
+      //     }
+      //   });
+      //   query += ' (' + subQuery.substr(1) + ')';
+      // }
+    });
+    return query.substr(1);
+
+  }
+  buildQueryAsReadable(filterConditions: any[], filterColumns: any[]) {
+    // booleanQueryAsReadable: "Amount = "100" AND AccountName = "user account" AND AccountOptOut = "yes" AND DOB = "07/01/2020""
+
+
+
+  }
+  buildQueryAsString(filterConditions: any[], filterColumns: any[]) {
+    // booleanQueryAsString: "(Amount=="100"&&AccountName=="user account"&&AccountOptOut=="yes"&&DOB=="07/01/2020")"
+
+
   }
 }

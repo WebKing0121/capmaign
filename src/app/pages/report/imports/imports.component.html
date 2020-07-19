@@ -2,6 +2,7 @@
   <div class="col-12 card-report-imports">
     <app-datatable [title]="'Imports'"
       [buttons]="tableButtons"
+      [loading]="loading"
       [dataSource]="tableSource"
       [rowHeight]="35"
       [selectable]="false"

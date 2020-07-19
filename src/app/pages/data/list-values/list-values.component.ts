@@ -44,6 +44,7 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
     { label: 'Yes', action: this.onClickConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
+  loading = false;
   constructor(
     private dataService: DataService
   ) {
@@ -51,34 +52,7 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   ngOnInit(): void {
-    this.dataService.getListValues()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.records = data.result.items;
-            this.filteredRecords = this.records;
-            this.totalCount = data.result.totalCount;
-
-            const tmp = this.records.map(x => ({ label: x.tableName, key: x.tableName, selected: false }));
-
-            tmp.forEach(x => {
-              if (!this.tabs.find(y => y.key === x.key)) {
-                this.tabs.push({ ...x });
-              }
-            });
-          } else {
-            this.records = [];
-            this.filteredRecords = this.records;
-            this.totalCount = 0;
-          }
-          this._updateTable(this.filteredRecords);
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -116,8 +90,7 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
       } else {
         this.filteredRecords = this.records.filter(x => x.tableName === tab.label);
       }
-      this._updateTable(this.filteredRecords);
-
+      this.tableSource.next(this.filteredRecords, this.filteredRecords.length);
     }
   }
 
@@ -145,22 +118,58 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
 
-  _updateTable(listvalues: any[]) {
-    this.tableSource.next(listvalues.slice(0, 50), listvalues.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSource.next(
-          listvalues.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          listvalues.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+    this.loading = true;
+    this.dataService.getListValues(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.records = data.result.items;
+            this.filteredRecords = this.records;
+            this.totalCount = data.result.totalCount;
+
+            const tmp = this.records.map(x => ({ label: x.tableName, key: x.tableName, selected: false }));
+
+            tmp.forEach(x => {
+              if (!this.tabs.find(y => y.key === x.key)) {
+                this.tabs.push({ ...x });
+              }
+            });
+          } else {
+            this.records = [];
+            this.filteredRecords = this.records;
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.filteredRecords, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error);
+        }
+      );
   }
 
 }

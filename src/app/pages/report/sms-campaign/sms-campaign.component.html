@@ -2,6 +2,7 @@
   <div class="col-12 card-report-sms-campaigns">
     <app-datatable [title]="'Active SMS Sends'"
       [buttons]="tableButtons"
+      [loading]="loading"
       [dataSource]="tableSource"
       [rowHeight]="35"
       [selectable]="true"

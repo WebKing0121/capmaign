@@ -21,34 +21,18 @@ export class ReportImportsComponent implements OnInit, AfterViewInit, OnDestroy 
   tableButtons = [];
   selected: ImportData[] = [];
 
-
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
+
+  loading = false;
   constructor(
     private reportService: ReportService
   ) { }
 
   ngOnInit(): void {
-    this.reportService.getImports()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.imports = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.imports = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.imports);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -89,21 +73,47 @@ export class ReportImportsComponent implements OnInit, AfterViewInit, OnDestroy 
 
   }
 
-  _updateTable(exports: ImportData[]) {
-    this.tableSource.next(exports.slice(0, 50), exports.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(change => {
-        this.tableSource.next(
-          exports.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          exports.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    this.loading = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+    this.reportService.getImports(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.imports = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.imports = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.imports, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

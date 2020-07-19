@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { List } from '@app-models/list';
 import { Subject } from 'rxjs';
@@ -17,12 +17,15 @@ export class DataListModalComponent implements OnInit, OnDestroy {
   @ViewChild('listModal', { static: false }) listModal;
   @Input() modalType = ModalType.New;
   @Input() list: List;
-
+  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
   ModalType = ModalType;
   private unsubscribe$ = new Subject();
 
   form: FormGroup;
   typeList: NgSelectData[];
+
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -48,7 +51,6 @@ export class DataListModalComponent implements OnInit, OnDestroy {
           console.log('error', error.response);
         }
       );
-
   }
 
   ngOnDestroy(): void {
@@ -72,9 +74,33 @@ export class DataListModalComponent implements OnInit, OnDestroy {
     setTimeout(() => this.listModal.show());
   }
 
-  // event form submit
   onSave() {
-    console.log(this.form.value);
+    const params = {
+      name: this.form.value.name,
+      description: this.form.value.description,
+      type: this.form.value.type,
+      folderId: 0,
+      organizationUnitId: 0,
+      countrecords: '',
+      recordrange: '-',
+      skiprecords: '',
+      source: 'All Records',
+    };
+
+    this.loading = true;
+    this.dataService.addList(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.save.emit();
+          this.hide();
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 
   hide() {
