@@ -30,6 +30,7 @@ export class CollaborateAssignCampaignModalComponent implements OnInit {
   selectedTeam: any;
   optionTeams: NgSelectData[];
 
+  loading = false;
   constructor() { }
 
   ngOnInit(): void {

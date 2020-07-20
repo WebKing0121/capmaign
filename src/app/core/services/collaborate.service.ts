@@ -52,39 +52,37 @@ export class CollaborateService {
   }
 
   getRecentActivities(date: string, campaignId: number) {
-    // return this.http.post<any>(`${environment.apiUrl}/${this.url}/activity`, {
-    //   date,
-    //   campaignId
-    // });
+    // https://c2cstaging.azurewebsites.net/api/services/app/collaborationTeam/GetAllActivityRecent
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetAllActivityRecent`);
 
-    const activities = [];
-    let lastActivityTime = moment(date).format('YYYY-MM-DD HH:mm:ss');
+    // const activities = [];
+    // let lastActivityTime = moment(date).format('YYYY-MM-DD HH:mm:ss');
 
-    let RecordsPerRequest = 20;
-    let userId = 0;
-    let newCampaignId = 0;
-    let campaign;
-    let user;
-    let userIdIndex = 0;
-    const userIdArray = UsersMockData.result.items.map(x => x.id);
+    // let RecordsPerRequest = 20;
+    // let userId = 0;
+    // let newCampaignId = 0;
+    // let campaign;
+    // let user;
+    // let userIdIndex = 0;
+    // const userIdArray = UsersMockData.result.items.map(x => x.id);
 
-    while (RecordsPerRequest > 0) {
-      lastActivityTime = moment(lastActivityTime).subtract(1, 'm').format('YYYY-MM-DD HH:mm:ss');
-      userIdIndex = Math.ceil(Math.random() * (userIdArray.length - 1));
-      userId = userIdArray[userIdIndex];
-      user = UsersMockData.result.items.find(x => x.id === userId);
-      newCampaignId = campaignId > 0 ? campaignId : Math.ceil(Math.random() * 6);
-      campaign = CollaborateCampaignsMockData.find(x => x.id === newCampaignId);
-      activities.push({
-        time: lastActivityTime,
-        user: user.surname + ' ' + user.name,
-        module_id: 1,
-        campaign: campaign.name,
-        message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
-      });
-      RecordsPerRequest--;
-    }
-    return of(activities);
+    // while (RecordsPerRequest > 0) {
+    //   lastActivityTime = moment(lastActivityTime).subtract(1, 'm').format('YYYY-MM-DD HH:mm:ss');
+    //   userIdIndex = Math.ceil(Math.random() * (userIdArray.length - 1));
+    //   userId = userIdArray[userIdIndex];
+    //   user = UsersMockData.result.items.find(x => x.id === userId);
+    //   newCampaignId = campaignId > 0 ? campaignId : Math.ceil(Math.random() * 6);
+    //   campaign = CollaborateCampaignsMockData.find(x => x.id === newCampaignId);
+    //   activities.push({
+    //     time: lastActivityTime,
+    //     user: user.surname + ' ' + user.name,
+    //     module_id: 1,
+    //     campaign: campaign.name,
+    //     message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    //   });
+    //   RecordsPerRequest--;
+    // }
+    // return of(activities);
 
   }
 

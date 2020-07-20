@@ -18,46 +18,20 @@
 					<ng-select [ngClass]="'ng-select'" [(ngModel)]="selectedCampaignId" [options]="campaigns"></ng-select>
 				</div>
 			</div>
-			<div class="table-responsive">
-				<table class="table table-striped table-bordered table-hover mb-0">
-					<colgroup>
-						<col width="11%">
-						<col width="12%">
-						<col width="15%">
-						<col width="20%">
-						<col>
-					</colgroup>
-					<thead>
-						<tr>
-							<th>Activity time</th>
-							<th>User</th>
-							<th>Module</th>
-							<th>Campaign</th>
-							<th>Notification</th>
-						</tr>
-					</thead>
-				</table>
-				<div (scroll)="onScrollTable($event)" class="activity-data-list" infiniteScroll [infiniteScrollDistance]="0"
-					[infiniteScrollThrottle]="10" (scrolled)="onReloadActivities()" [scrollWindow]="false" #activityDataList>
-					<table class="table table-striped table-hover">
-						<colgroup>
-							<col width="11%">
-							<col width="12%">
-							<col width="15%">
-							<col width="20%">
-							<col>
-						</colgroup>
-						<tbody>
-							<tr *ngFor="let activity of activities">
-								<td>{{ activity.time }}</td>
-								<td>{{ activity.user }}</td>
-								<td>{{ activity.module_id }}</td>
-								<td>{{ activity.campaign }}</td>
-								<td>{{ activity.message }}</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+			<div class="activities">
+				<app-datatable
+					[title]="'Recent Activities'"
+					[showHeader]="false"
+					[dropShadow]="false"
+					[loading]="loading"
+					[dataSource]="tableSource"
+					[buttons]="tableButtons"
+					[rowHeight]="35"
+					[headerHeight]="40"
+					[selectionType]="'single'"
+					[selectable]="false"
+					(activate)="onActive($event)"
+				></app-datatable>
 			</div>
 		</app-card>
 	</div>

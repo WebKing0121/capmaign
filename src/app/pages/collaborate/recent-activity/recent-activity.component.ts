@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewEncapsulation, HostListener, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewEncapsulation, HostListener, ViewChild, AfterViewInit } from '@angular/core';
 
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 
@@ -6,6 +6,8 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import * as moment from 'moment';
 import { CollaborateService } from '@app-services/collaborate.service';
+import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
+import { DataSourceChange } from '@app-core/models/data-source';
 
 @Component({
   selector: 'app-recent-activity',
@@ -13,7 +15,7 @@ import { CollaborateService } from '@app-services/collaborate.service';
   styleUrls: ['./recent-activity.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class RecentActivityComponent implements OnInit, OnDestroy {
+export class RecentActivityComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('activityDataList', { static: false }) activityDataList;
   @ViewChild('activityList', { static: false }) activityList;
 
@@ -27,6 +29,13 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
   lastActivityTime: string; // should be removed once it was connected to backend
 
   loadingCampaigns = false;
+  loading = false;
+
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
+  selected: any[] = [];
+  totalCount = 0;
+  tableButtons = [];
+
   constructor(
     private collaborateService: CollaborateService
   ) {
@@ -58,24 +67,21 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
           console.log('error', error);
         }
       );
-
-    const { year, month, day } = this.filterDate;
-    const date = year + '-' + month + '-' + day;
-
-    this.collaborateService.getRecentActivities(date, Number(this.selectedCampaignId))
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.activities = [...this.activities, ...data];
-          // this.dtTrigger.next();
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-
+    this.initTable();
   }
 
+  ngAfterViewInit() {
+    const columns: DataTableColumn[] = [
+      { name: 'Activity time', prop: 'creationTime' },
+      { name: 'Campaign', prop: 'campaignName' },
+      { name: 'Type', prop: 'campaignType' },
+      { name: 'Team', prop: 'teamName' },
+      { name: 'Task', prop: 'task' },
+    ];
+
+    this.tableSource.setColumns(columns);
+
+  }
   ngOnDestroy(): void {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
@@ -85,21 +91,44 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
     return moment(time).fromNow();
   }
 
+  onActive(event) {
+
+  }
 
   onReloadActivities() {
     const { year, month, day } = this.filterDate;
     const date = year + '-' + month + '-' + day;
+    this.loading = true;
     this.collaborateService.getRecentActivities(date, Number(this.selectedCampaignId))
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-
-          this.activities = [...this.activities, ...data];
+          this.activities = data.result;
+          if (this.activities) {
+            this.tableSource.next(this.activities, this.activities.length);
+          }
+          this.loading = false;
         },
         error => {
+          this.loading = false;
           console.log('error', error);
         }
       );
+  }
+
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.onReloadActivities();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
   }
 
   @HostListener('scroll', ['$event'])

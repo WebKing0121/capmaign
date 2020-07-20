@@ -17,6 +17,8 @@ export class CollaborateAssignTeamModalComponent implements OnInit {
 
   teamsForSelect: NgSelectData[];
 
+  loading = false;
+
   constructor(
     private fb: FormBuilder,
   ) {
@@ -38,8 +40,8 @@ export class CollaborateAssignTeamModalComponent implements OnInit {
     });
 
     this.teamsForSelect = teamName ? this.teams.filter(x => x.teamName !== teamName)
-        .map(x => ({ value: `${x.teamid}`, label: `${x.teamName}` })) :
-        this.teams.map(x => ({ value: `${x.teamid}`, label: `${x.teamName}` }));
+      .map(x => ({ value: `${x.teamid}`, label: `${x.teamName}` })) :
+      this.teams.map(x => ({ value: `${x.teamid}`, label: `${x.teamName}` }));
     setTimeout(() => this.assignTeamModal.show());
   }
 
