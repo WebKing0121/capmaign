@@ -26,7 +26,7 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
 
   lastActivityTime: string; // should be removed once it was connected to backend
 
-
+  loadingCampaigns = false;
   constructor(
     private collaborateService: CollaborateService
   ) {
@@ -40,11 +40,18 @@ export class RecentActivityComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.collaborateService.getCollaborateCampaigns()
+    this.loadingCampaigns = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+    this.collaborateService.getCollaborateCampaigns(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.campaigns = data.map(x => ({ value: '' + x.id, label: x.name }));
+          this.campaigns = data.result.items.map(x => ({ value: `${x.campaignId}`, label: x.campaignName }));
           this.campaigns.unshift({ value: '0', label: 'All' });
         },
         error => {
