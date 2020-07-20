@@ -2,7 +2,6 @@ import {
   Component, OnInit, ViewChild, AfterViewInit,
   ViewEncapsulation, OnDestroy, TemplateRef
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -39,55 +38,56 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
   campaigns: any[];
   teams: any[];
   allUsers: any[];
-  loaded: number;
-
   teamsInAssignModel: any[];
 
   modalType = ModalType.New;
 
-  selectedCampaign: CollaborateCampaign;
+  selectedCampaign: any;
   selectedTask: CollaborateCampaignTask;
   selectedUser: any;
+  totalCount = 0;
 
   // Colaborate Campaigns Table;
-  tableSource: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
-  selected: CollaborateCampaign[] = [];
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
+  selected: any[] = [];
   tableButtons = [];
 
   showSearchCampaigns: boolean;
 
 
   // Colaborate Campaigns Table Type Filter;
-  campaignFilter: any[] = [
-    {
-      name: 'All Campaigns',
-      value: 'All',
-      key: CampaignFilterType.Type,
-      onClick: (opt, filter) => this.onClickFilter(opt, filter),
-      filter: [
-        { value: 'All', label: 'All Campaigns' },
-        { value: 'Email', label: 'Email Campaigns' },
-        { value: 'SMS', label: 'Mobile Campaigns' },
-        { value: 'Social', label: 'Social Campaigns' },
-        { value: 'Google Ads', label: 'Google Ads Campaigns' },
-        { value: 'Facebook', label: 'Facebook Campaigns' },
-      ]
-    },
-    {
-      name: 'In Progress',
-      value: 'in-progress',
-      key: CampaignFilterType.Status,
-      onClick: (opt, filter) => this.onClickFilter(opt, filter),
-      filter: [
-        { value: 'in-progress', label: 'In Progress' },
-        { value: 'archived', label: 'Archived' },
-      ]
-    }
-  ];
+  campaignFilter = [];
+  // campaignFilter: any[] = [
+  //   {
+  //     name: 'All Campaigns',
+  //     value: 'All',
+  //     key: CampaignFilterType.Type,
+  //     onClick: (opt, filter) => this.onClickFilter(opt, filter),
+  //     filter: [
+  //       { value: 'All', label: 'All Campaigns' },
+  //       { value: 'Email', label: 'Email Campaigns' },
+  //       { value: 'SMS', label: 'Mobile Campaigns' },
+  //       { value: 'Social', label: 'Social Campaigns' },
+  //       { value: 'Google Ads', label: 'Google Ads Campaigns' },
+  //       { value: 'Facebook', label: 'Facebook Campaigns' },
+  //     ]
+  //   },
+  //   {
+  //     name: 'In Progress',
+  //     value: 'in-progress',
+  //     key: CampaignFilterType.Status,
+  //     onClick: (opt, filter) => this.onClickFilter(opt, filter),
+  //     filter: [
+  //       { value: 'in-progress', label: 'In Progress' },
+  //       { value: 'archived', label: 'Archived' },
+  //     ]
+  //   }
+  // ];
 
   selectedFilter: string;
   selectedStatus: string;
-
+  loadingTeams = false;
+  loadingCampaigns = false;
   constructor(
 
     private collaborateService: CollaborateService,
@@ -96,7 +96,6 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     this.campaigns = [];
     this.teams = [];
     this.allUsers = [];
-    this.loaded = 0;
 
     this.teamsInAssignModel = [];
 
@@ -106,12 +105,12 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
 
   ngAfterViewInit() {
     const columns = [
-      { name: 'Campaign', prop: 'name', sortable: true, frozenLeft: true },
-      { name: 'Assigned Team', prop: 'team_id', sortable: true, custom: true, template: this.teamTemplate, cellClass: ['cell-hyperlink'] },
-      { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
-      { name: 'Type', prop: 'type', sortable: true, maxWidth: 80, fronzenRight: true },
+      { name: 'Campaign', prop: 'campaignName', sortable: true, frozenLeft: true },
+      { name: 'Assigned Team', prop: 'teamName', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Start', prop: 'startDate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
+      { name: 'End', prop: 'endDate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
+      { name: 'Progress', prop: 'persentageComplete', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
+      { name: 'Type', prop: 'campaintype', sortable: true, maxWidth: 80, fronzenRight: true },
       { name: 'Status', prop: 'status', sortable: true, maxWidth: 100 },
     ];
 
@@ -119,55 +118,29 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
   }
 
   ngOnInit(): void {
+    this.loadTeams();
+    this.initCampaignsTable();
 
-    // load teams
-    const params = {
-
-    };
-    this.collaborateService.getCollaborateTeams(params)
+    this.userService.getAllUsersForCollaborateTeam()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.teams = data;
-          this.loaded++;
+          this.allUsers = data.result.map(x => ({ value: `${x.id}`, label: x.surname + ' ' + x.name }));
         },
         error => {
           console.log('error', error);
         }
       );
-    // load Campaigns
-    this.collaborateService.getCollaborateCampaigns()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.campaigns = data;
-          this.loaded++;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-    this.userService.getAll()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.allUsers = data.result.items.map(x => ({ id: x.id, label: x.surname + ' ' + x.name }));
-          this.loaded++;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-    setTimeout(() => this.checkLoaded());
+    // setTimeout(() => this.checkLoaded());
   }
 
-  checkLoaded() {
-    if (this.loaded === 3) {
-      this._updateTable(this._filterCampaigns());
-    } else {
-      setTimeout(() => this.checkLoaded);
-    }
-  }
+  // checkLoaded() {
+  //   if (this.loaded === 3) {
+  //     this._updateTable(this._filterCampaigns());
+  //   } else {
+  //     setTimeout(() => this.checkLoaded);
+  //   }
+  // }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -182,13 +155,13 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     // TODO: Simplify later
     if (event.type === 'click') {
 
-      const campaign = event.row as CollaborateCampaign;
+      const campaign = event.row;
       this.selectedCampaign = campaign;
       this.campaignTasks.loadTasksFromCampaign(campaign.id);
       this.campaignSubTasks.loadSubTasks(0);
 
       if (event.cellIndex === 0 && !event.column.frozenLeft
-        && event.event.target.classList.value.indexOf('team-name') >= 0
+        && event.event.target.classList.value === 'datatable-body-cell-label'
       ) {
         setTimeout(() => this.assignTeamModal.show());
       }
@@ -221,7 +194,7 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     } else if (opt.key === CampaignFilterType.Status) {
       this.selectedStatus = filter.value;
     }
-    this._updateTable(this._filterCampaigns());
+    // this._updateTable(this._filterCampaigns());
   }
 
   onSelectTask(task: CollaborateCampaignTask) {
@@ -259,21 +232,66 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     }
   }
 
-  _updateTable(filteredCampaigns: CollaborateCampaign[]) {
-    this.tableSource.next(filteredCampaigns.slice(0, 50), filteredCampaigns.length);
+  initCampaignsTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          filteredCampaigns.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          filteredCampaigns.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadCampaigns();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTeams() {
+    this.loadingTeams = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+
+    this.collaborateService.getCollaborateTeams(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.teams = data.result.items;
+          this.loadingTeams = false;
+        },
+        error => {
+          this.loadingTeams = false;
+          console.log('error', error);
+        }
+      );
+  }
+
+  loadCampaigns() {
+    this.loadingCampaigns = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.collaborateService.getCollaborateCampaigns(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.campaigns = data.result.items;
+          this.totalCount = data.result.totalCount;
+          this.tableSource.next(this.campaigns, this.totalCount);
+
+          this.loadingCampaigns = false;
+        },
+        error => {
+          this.loadingCampaigns = false;
+          console.log('error', error);
+        }
+      );
   }
 }

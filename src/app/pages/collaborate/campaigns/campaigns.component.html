@@ -2,6 +2,7 @@
   <div class="col-xl-6 col-lg-12 card-campaigns">
     <app-datatable 
       [title]="'Campaigns'"
+      [loading]="loadingCampaigns"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"

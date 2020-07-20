@@ -37,9 +37,8 @@ export class CollaborateService {
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/UpdateCollaborationTeam`, params);
   }
   
-  getCollaborateCampaigns() {
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/campaigns`);
-    return of(CollaborateCampaignsMockData);
+  getCollaborateCampaigns(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetAllCampaignsforPaging`, params);
   }
 
   getCampaignTasks(campaignId: number) {

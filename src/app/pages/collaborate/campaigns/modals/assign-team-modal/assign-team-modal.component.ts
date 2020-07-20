@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CollaborateTeam, CollaborateCampaign } from '@app-models/collaborate';
 import { NgSelectData } from '@app-models/common';
@@ -6,12 +6,13 @@ import { NgSelectData } from '@app-models/common';
 @Component({
   selector: 'app-collaborate-assign-team-modal',
   templateUrl: './assign-team-modal.component.html',
-  styleUrls: ['./assign-team-modal.component.scss']
+  styleUrls: ['./assign-team-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class CollaborateAssignTeamModalComponent implements OnInit {
   @ViewChild('assignTeamModal', { static: false }) assignTeamModal;
-  @Input() campaign: CollaborateCampaign;
-  @Input() teams: CollaborateTeam[];
+  @Input() campaign: any;
+  @Input() teams: any[];
   form: FormGroup;
 
   teamsForSelect: NgSelectData[];
@@ -30,18 +31,16 @@ export class CollaborateAssignTeamModalComponent implements OnInit {
   }
 
   show() {
-    // if (this.modalType === ModalType.Edit) {
-    const { team_id } = this.campaign;
+    const { teamName } = this.campaign;
     this.form.setValue({
-      current_team: team_id === 0 ? '' : this.getTeamName(team_id),
+      current_team: teamName,
       new_team: ''
     });
 
-    this.teamsForSelect = team_id === 0 ? this.teams.map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.collaborationTeamName })) :
-      this.teams.filter((x: CollaborateTeam) => x.id !== team_id)
-        .map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.collaborationTeamName }));
+    this.teamsForSelect = teamName ? this.teams.filter(x => x.teamName !== teamName)
+        .map(x => ({ value: `${x.teamid}`, label: `${x.teamName}` })) :
+        this.teams.map(x => ({ value: `${x.teamid}`, label: `${x.teamName}` }));
     setTimeout(() => this.assignTeamModal.show());
-    // }
   }
 
   getTeamName(teamId: number) {

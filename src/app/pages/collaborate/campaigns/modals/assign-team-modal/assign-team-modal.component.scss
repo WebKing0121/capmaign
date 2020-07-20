@@ -4,11 +4,14 @@
   }
   ng-select {
     width: calc(100% - 128px);
-    min-height: 45px;
-  }
-
-  ng-select > div {
-    min-height: 45px;
+    & > div {
+      min-height: 45px;
+      & > div.single {
+        & > div.value {
+          line-height: 43px;
+        }
+      }
+    }
   }
 }
 

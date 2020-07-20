@@ -274,18 +274,18 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   loadCampaigns() {
-    this.loadingCampaigns = true;
-    this.collaborateService.getCollaborateCampaigns()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.campaigns = data;
-          this.loadingCampaigns = false;
-        },
-        error => {
-          this.loadingCampaigns = false;
-          console.log('error', error);
-        }
-      );
+  //   this.loadingCampaigns = true;
+  //   this.collaborateService.getCollaborateCampaigns()
+  //     .pipe(takeUntil(this.unsubscribe$))
+  //     .subscribe(
+  //       data => {
+  //         this.campaigns = data;
+  //         this.loadingCampaigns = false;
+  //       },
+  //       error => {
+  //         this.loadingCampaigns = false;
+  //         console.log('error', error);
+  //       }
+  //     );
   }
 }
