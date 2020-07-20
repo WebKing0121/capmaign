@@ -18,7 +18,7 @@ export class CollaborateService {
   constructor(private http: HttpClient) { }
 
   getCollaborateTeams(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetallCollaborationTeamView`, params);
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetTeamViewforPaging`, params);
   }
 
   getCollaborateTeam(id: number): Observable<any> {

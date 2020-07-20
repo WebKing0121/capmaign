@@ -12,7 +12,7 @@
       ng-select {
         width: calc(100% - 128px);
         & > div {
-          height: 45px;
+          min-height: 45px;
           & > div.multiple {
             & > div.option {
               line-height: 30px;

@@ -37,7 +37,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   loading = false;
   submitted = false;
 
-  teams: CollaborateTeam[];
+  teams: any[];
   campaigns: CollaborateCampaign[];
   allUsers: any[];
   loaded: number;
@@ -48,9 +48,9 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   ];
 
   // Table Related Variables;
-  tableSource: DataTableSource<CollaborateTeam> = new DataTableSource<CollaborateTeam>(50);
-  selected: CollaborateTeam[] = [];
-  selectedTeam: CollaborateTeam;
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
+  selected: any[] = [];
+  selectedTeam: any;
   teamsTotalCount = 0;
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreateTeam() },
@@ -71,7 +71,6 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   // Team Modal related;
   modalType = ModalType.New;
   ModalType = ModalType;
-  teamsInModal: any[];
 
   loadingTeams = false;
   loadingCampaigns = false;
@@ -116,9 +115,9 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   ngAfterViewInit() {
 
     const columns: DataTableColumn[] = [
-      { name: 'Team Name', prop: 'collaborationTeamName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
-      { name: 'Members', prop: 'userCount', sortable: true },
-      // { name: 'Campaigns', prop: 'userCount', sortable: true },
+      { name: 'Team Name', prop: 'teamName', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Members', prop: 'memberCount', sortable: true },
+      { name: 'Campaigns', prop: 'campaignCount', sortable: true },
       { name: 'Created', prop: 'creationDate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, hidden: true },
     ];
 
@@ -144,14 +143,14 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
 
   onClickTeam(event): void {
     if (event.type === 'click') {
-      this.selectedTeam = event.row as CollaborateTeam;
+      this.selectedTeam = event.row;
       this.tableButtons[1].hide = false;
       // this._updateCampaignTable(this._campaignsOfSelectedTeam());
       this.campaignTasks.loadTasksFromCampaign(0);
       this.campaignSubTasks.loadSubTasks(0);
 
       if (
-        event.cellIndex === 0 && event.column.frozenLeft
+        event.cellIndex === 0
         && event.event.target.classList.value === 'datatable-body-cell-label'
       ) {
         this.modalType = ModalType.Edit;
@@ -179,7 +178,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onConfirmDelete() {
-    
+
   }
 
   onSaveTeam() {
@@ -264,7 +263,6 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
         data => {
           this.teams = data.result.items;
           this.teamsTotalCount = data.result.totalCount;
-          this.teamsInModal = this.teams.map(x => ({ value: '' + x.id, label: x.collaborationTeamName }));
           this.tableSource.next(this.teams, this.teamsTotalCount);
           this.loadingTeams = false;
         },

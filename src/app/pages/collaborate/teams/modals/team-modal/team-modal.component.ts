@@ -15,7 +15,7 @@ import { Subject } from 'rxjs';
 export class CollaborateTeamModalComponent implements OnInit, OnDestroy {
   @ViewChild('teamModal', { static: false }) teamModal;
   @Input() modalType = ModalType.New;
-  @Input() team: CollaborateTeam;
+  @Input() team: any;
   @Input() users: NgSelectData[];
   @Output() save: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
@@ -66,7 +66,7 @@ export class CollaborateTeamModalComponent implements OnInit, OnDestroy {
 
   loadTeamDetails() {
     this.loading = true;
-    this.collaborateService.getCollaborateTeam(this.team.id)
+    this.collaborateService.getCollaborateTeam(this.team.teamid)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
@@ -90,8 +90,8 @@ export class CollaborateTeamModalComponent implements OnInit, OnDestroy {
   loadTeamMembers() {
     this.loading = true;
     const params = {
-      teamid: this.team.id,
-      teamname: this.team.collaborationTeamName
+      teamid: this.team.teamid,
+      teamname: this.team.teamName
     };
     this.collaborateService.getCollaborateTeamMembers(params)
       .pipe(takeUntil(this.unsubscribe$))
