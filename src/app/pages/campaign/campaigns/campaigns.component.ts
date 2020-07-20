@@ -67,7 +67,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-
+/*
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);
 
     this.tableSource.changed$
@@ -103,7 +103,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       .pipe(takeUntil(this.destroy$))
       .subscribe(searchKey => {
         this.tableSource.search(searchKey);
-      });
+      }); */
   }
 
   ngOnDestroy(): void {

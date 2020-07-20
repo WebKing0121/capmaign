@@ -56,6 +56,7 @@ export class CollaborateTeam {
   userCount: number;
   members?: number[];
   campaigns?: number[];
+  comments?: string | null;
 }
 
 export class CollaborateChatRoom {

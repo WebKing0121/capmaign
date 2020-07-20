@@ -3,6 +3,7 @@
 		<div class="col-md-5 col-sm-12 card-teams">
 			<app-datatable #cardTeams
 				[title] = "'Collaboration Teams'"
+				[loading]="loadingTeams"
 				[dataSource]="tableSource"
 				[buttons]="tableButtons"
 				[rowHeight]="35"
@@ -23,21 +24,21 @@
 					[selectable]="false"
 					(activate)="onClickCampaign($event)"></app-datatable>
 			</div>
-				<div class="card-tasks">
-					<app-campaign-tasks #campaignTasks
-						[campaign]="selectedCampaign"
-						[teams]="teams"
-						[campaigns]="campaigns"
-						[users]="allUsers"
-						(selectRow)="onSelectTask($event)">
-					</app-campaign-tasks>
-				</div>
-				<div class="card-sub-tasks">
-					<app-campaign-sub-tasks #campaignSubTasks
-						[task]="selectedTask"
-						[user]="selectedUser"
-					></app-campaign-sub-tasks>
-				</div>
+			<div class="card-tasks">
+				<app-campaign-tasks #campaignTasks
+					[campaign]="selectedCampaign"
+					[teams]="teams"
+					[campaigns]="campaigns"
+					[users]="allUsers"
+					(selectRow)="onSelectTask($event)">
+				</app-campaign-tasks>
+			</div>
+			<div class="card-sub-tasks">
+				<app-campaign-sub-tasks #campaignSubTasks
+					[task]="selectedTask"
+					[user]="selectedUser"
+				></app-campaign-sub-tasks>
+			</div>
 		</div>
 	</div>
 </div>
@@ -46,6 +47,8 @@
 	[modalType]="modalType"
 	[team]="selectedTeam"
 	[users]="allUsers"
+	(save)="onSaveTeam()"
+	(delete)="onClickDelete()"
 ></app-collaborate-team-modal>
 
 <app-collaborate-assign-campaign-modal #assignCampaignModal

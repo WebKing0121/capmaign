@@ -3,8 +3,6 @@ import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import * as moment from 'moment';
-
-import { CollaborateTeamsMockData } from '@app-fake-db/collaborate-teams-mock';
 import { CollaborateCampaignsMockData } from '@app-fake-db/collaborate-campaigns-mock';
 import { CollaborateCampaignsTasksMockData } from '@app-fake-db/collaborate-campaign-tasks-mock';
 import { CollaborateCampaignsSubtasksMockData } from '@app-fake-db/collaborate-campaign-subtasks-mock';
@@ -23,6 +21,22 @@ export class CollaborateService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetallCollaborationTeamView`, params);
   }
 
+  getCollaborateTeam(id: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationTeamForEdit`, { id });
+  }
+
+  getCollaborateTeamMembers(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetDetailMember`, params);
+  }
+
+  createCollaborateTeam(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/createCollaborationTeam`, params);
+  }
+  
+  updateCollaborateTeam(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/UpdateCollaborationTeam`, params);
+  }
+  
   getCollaborateCampaigns() {
     // return this.http.get<any>(`${environment.apiUrl}/${this.url}/campaigns`);
     return of(CollaborateCampaignsMockData);

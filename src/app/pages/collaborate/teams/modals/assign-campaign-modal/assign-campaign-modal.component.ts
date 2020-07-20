@@ -63,7 +63,7 @@ export class CollaborateAssignCampaignModalComponent implements OnInit {
   }
 
   show() {
-    this.optionTeams = this.teams.map(x => ({ value: `${x.id}`, label: x.name }));
+    this.optionTeams = this.teams.map(x => ({ value: `${x.id}`, label: x.collaborationTeamName }));
     this.getUnassignedCampaigns();
     if (this.team) {
       const { campaigns } = this.teams.find(x => x.id === this.team.id);

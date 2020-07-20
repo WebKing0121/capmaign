@@ -37,9 +37,9 @@ export class CollaborateAssignTeamModalComponent implements OnInit {
       new_team: ''
     });
 
-    this.teamsForSelect = team_id === 0 ? this.teams.map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name })) :
+    this.teamsForSelect = team_id === 0 ? this.teams.map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.collaborationTeamName })) :
       this.teams.filter((x: CollaborateTeam) => x.id !== team_id)
-        .map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.name }));
+        .map((x: CollaborateTeam) => ({ value: '' + x.id, label: x.collaborationTeamName }));
     setTimeout(() => this.assignTeamModal.show());
     // }
   }
@@ -47,7 +47,7 @@ export class CollaborateAssignTeamModalComponent implements OnInit {
   getTeamName(teamId: number) {
     const team = this.teams.find(x => x.id === teamId);
     if (team) {
-      return team.name;
+      return team.collaborationTeamName;
     }
     return '';
   }

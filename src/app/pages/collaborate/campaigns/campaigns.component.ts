@@ -121,7 +121,10 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
   ngOnInit(): void {
 
     // load teams
-    this.collaborateService.getCollaborateTeams()
+    const params = {
+
+    };
+    this.collaborateService.getCollaborateTeams(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {

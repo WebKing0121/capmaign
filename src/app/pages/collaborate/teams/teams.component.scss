@@ -1,49 +1,14 @@
-.campaigns {
-  height: calc(30vh + 45px);
-}
-.assigned_campaigns {
-  ng-select {
-    width: calc(100% - 90px) !important;
-    height: 45px;
-  }
-
-  ng-select > div {
-    height: 45px !important;
-  }
-  ng-select > div > div.single > div.placeholder,
-  ng-select > div > div.single > div.value {
-    line-height: 45px;
-  }
-}
-table.dataTable tbody > tr.selected,
-table.dataTable tbody > tr > .selected {
-  background: #bce8fb;
-}
-.campaign-table-header {
-  th {
-    padding: 0.5rem 0.75rem;
-  }
-}
-.campaign-table-body {
-  td {
-    padding: 0.5rem 0.75rem;
-  }
-  .selected {
-    background: #bce8fb !important;
-  }
-}
-
 .card-teams {
-  .card-body {
-    height: calc(100vh - 200px);
-  }
+  height: calc(100vh - 130px);
 }
+
+.campaigns {
+  height: calc(100vh - 575px);
+}
+
 @media only screen and (max-width: 575px) {
   .card-teams {
-    padding: 0px;
-    .card-body {
-      height: auto;
-    }
+    height: 500px;
   }
 }
 

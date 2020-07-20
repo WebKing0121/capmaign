@@ -90,18 +90,16 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   ngOnInit(): void {
     this.initTeamsTable();
     // this.initCampaignsTable();
-    this.userService.getAll()
+    this.userService.getAllUsersForCollaborateTeam()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.allUsers = data.result.items.map(x => ({ id: x.id, label: x.surname + ' ' + x.name }));
-          this.loaded++;
+          this.allUsers = data.result.map(x => ({ value: `${x.id}`, label: x.surname + ' ' + x.name }));
         },
         error => {
           console.log('error', error);
         }
       );
-    // setTimeout(() => this.checkLoaded());
   }
 
   // checkLoaded() {
@@ -120,7 +118,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
     const columns: DataTableColumn[] = [
       { name: 'Team Name', prop: 'collaborationTeamName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
       { name: 'Members', prop: 'userCount', sortable: true },
-      { name: 'Campaigns', prop: 'userCount', sortable: true },
+      // { name: 'Campaigns', prop: 'userCount', sortable: true },
       { name: 'Created', prop: 'creationDate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, hidden: true },
     ];
 
@@ -148,7 +146,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
     if (event.type === 'click') {
       this.selectedTeam = event.row as CollaborateTeam;
       this.tableButtons[1].hide = false;
-      this._updateCampaignTable(this._campaignsOfSelectedTeam());
+      // this._updateCampaignTable(this._campaignsOfSelectedTeam());
       this.campaignTasks.loadTasksFromCampaign(0);
       this.campaignSubTasks.loadSubTasks(0);
 
@@ -181,7 +179,11 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onConfirmDelete() {
+    
+  }
 
+  onSaveTeam() {
+    this.loadTeams();
   }
 
   /******************************************************************
