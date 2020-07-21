@@ -18,7 +18,7 @@ export class ContentService {
 
   constructor(private http: HttpClient) { }
 
-  getCategories(): Observable<any> {
+  getCategories(params: any): Observable<any> {
     return of(LandingPageCategoryMock);
   }
 
@@ -26,8 +26,8 @@ export class ContentService {
     return of(LandingPageTemplatesMock);
   }
 
-  getAssets(): Observable<any> {
-    return of(AssetsMock);
+  getAssets(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/asset/GetAssetInOuIncludingChildren`, params);
   }
 
   getEmailTemplates(): Observable<any> {

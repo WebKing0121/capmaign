@@ -69,7 +69,7 @@ export class DatatableComponent implements OnInit, OnDestroy, OnChanges, AfterVi
 
       this.dataSource.columnsChanged$.pipe(
         takeUntil(this.destroy$)
-      ).subscribe(columns => {
+      ).subscribe((columns: any[]) => {
         this.innerColumns = columns;
       });
 

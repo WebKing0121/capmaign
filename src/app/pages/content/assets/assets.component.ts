@@ -46,6 +46,7 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
+  loading = false;
   constructor(
     private contentService: ContentService
   ) {
@@ -54,32 +55,21 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnInit(): void {
     this.tableView = true;
-    this.contentService.getAssets()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.assets = data.result.items;
-          this.totalCount = data.result.totalCount;
-          this._updateTable(this.assets);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.initAssetsTable();
   }
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'File Name', prop: 'fileName', sortable: true, cellClass: ['cell-hyperlink'] },
-      { name: 'Path', prop: 'imgPhysicalPath', sortable: true, maxWidth: 600, width: 600, cellClass: ['cell-hyperlink'] },
-      { name: 'Size', prop: 'fileSize', sortable: true, custom: true, template: this.fileSizeTemplate },
+      { name: 'File Name', prop: 'fileName', sortable: true, maxWidth: 200, width: 200, cellClass: ['cell-hyperlink'] },
+      { name: 'Path', prop: 'imgPhysicalPath', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Size', prop: 'fileSize', sortable: true, custom: true, template: this.fileSizeTemplate, maxWidth: 200, width: 200, },
       {
         name: 'Modification Date', prop: 'lastModificationTime', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }, maxWidth: 200, width: 200,
       },
       {
         name: 'Creation Date', prop: 'creationTime', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }, maxWidth: 200, width: 200,
       },
     ];
     this.tableSource.setColumns(columns);
@@ -137,22 +127,43 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
     this.tableButtons[3].disabled = !(this.selectedAssets.length > 0);
   }
 
-  _updateTable(assets: Asset[]) {
-    this.tableSource.next(assets.slice(0, 50), assets.length);
+  initAssetsTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          assets.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          assets.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadAssets();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadAssets() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.contentService.getAssets(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.assets = data.result.items;
+          this.totalCount = data.result.totalCount;
+          this.tableSource.next(this.assets, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 
   formatBytes(bytes: number, decimals = 2) {
@@ -172,9 +183,13 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
     if (event.type === 'click') {
       this.tableButtons[1].disabled = this.selected.length === 0;
       this.tableButtons[2].disabled = this.selected.length === 0;
-      if (event.cellIndex === 1  && event.event.target.classList.value === 'datatable-body-cell-label') {
+      if (event.cellIndex === 1 && event.event.target.classList.value === 'datatable-body-cell-label') {
         this.selectedAsset = event.row as Asset;
         setTimeout(() => this.renameModal.show());
+      }
+      if (event.cellIndex === 2 && event.event.target.classList.value === 'datatable-body-cell-label') {
+        const asset = event.row as Asset;
+        window.open(asset.imgPhysicalPath, '_blank');
       }
     }
   }

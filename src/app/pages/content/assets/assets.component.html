@@ -2,6 +2,7 @@
   <div class="col-12 card-assets">
     <app-datatable
       [title]="'Assets'"
+      [loading]="loading"
       [buttons]="tableButtons"
       [dataSource]="tableSource"
       [rowHeight]="35"
@@ -31,14 +32,15 @@
   <span>{{ formatBytes(value) }}</span>
 </ng-template>
 
-<app-confirm-modal #confirmModal
-  modalTitle="Confirm" modalMessage="Do you want to delete the selected assets?"
-  [buttons]="confirmButtons"
-></app-confirm-modal>
-
 <app-content-rename-asset-modal #renameModal
   [asset]="selectedAsset"
 ></app-content-rename-asset-modal>
 
 <app-content-create-asset-modal #createAssetModal></app-content-create-asset-modal>
 <app-content-upload-asset-modal #uploadAssetModal></app-content-upload-asset-modal>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete the selected assets?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>

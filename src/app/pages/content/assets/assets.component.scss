@@ -2,9 +2,10 @@
   height: calc(100vh - 130px);
 
   .assets {
-    height: calc(100vh - 230px);
+    height: calc(100vh - 258px);
     overflow: auto;
-    margin: 20px 5px;
+    margin: 20px 5px 0 5px;
+    position: relative;
     .asset {
       position: relative;
       background: #fff;

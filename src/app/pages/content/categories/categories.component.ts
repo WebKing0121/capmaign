@@ -3,7 +3,6 @@ import { Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { ContentService } from '@app-core/services/content.service';
 import { takeUntil } from 'rxjs/operators';
-import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { ContentCategory } from '@app-models/content-category';
 import { DataSourceChange } from '@app-models/data-source';
@@ -28,7 +27,6 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
   ];
   selected: ContentCategory[] = [];
 
-
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
@@ -37,29 +35,14 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
   modalType = ModalType.New;
   category: ContentCategory;
 
+  loading = false;
+
   constructor(
     private contentService: ContentService
   ) { }
 
   ngOnInit(): void {
-    this.contentService.getCategories()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.categories = data.result;
-            this.totalCount = this.categories.length;
-          } else {
-            this.categories = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.categories);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -100,21 +83,45 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
     this.confirmModal.hide();
   }
 
-  _updateTable(categories: ContentCategory[]) {
-    this.tableSource.next(categories.slice(0, 50), categories.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          categories.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          categories.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.contentService.getCategories(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.categories = data.result;
+            this.totalCount = this.categories.length;
+          } else {
+            this.categories = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.categories, this.totalCount);
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
   }
 }

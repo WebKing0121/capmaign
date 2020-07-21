@@ -107,10 +107,10 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     const columns = [
       { name: 'Campaign', prop: 'campaignName', sortable: true, frozenLeft: true },
       { name: 'Assigned Team', prop: 'teamName', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Type', prop: 'campaintype', sortable: true, maxWidth: 80, fronzenRight: true },
       { name: 'Start', prop: 'startDate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'End', prop: 'endDate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'Progress', prop: 'persentageComplete', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
-      { name: 'Type', prop: 'campaintype', sortable: true, maxWidth: 80, fronzenRight: true },
       { name: 'Status', prop: 'status', sortable: true, maxWidth: 100 },
     ];
 
