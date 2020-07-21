@@ -3,9 +3,8 @@
     <app-card cardTitle="Landing Page Templates" cardClass="table-card" [cardButtons]="cardButtons" [options]="false">
       <div class="normal-page">
         <div class="category">
-          <span class="item-all" [ngClass]="{'selected': selectedCategory === 0}" (click)="onSelectCategory(0)">All
-            <!-- <span class="template-count">{{totalCount}}</span> -->
-          </span> |
+          <span class="item-all" [ngClass]="{'selected': selectedCategory === 0}" (click)="onSelectCategory(0)">All </span>
+          <span class="item-separator"> | </span>
           <span *ngFor="let category of categories" class="item"
             [ngClass]="{'selected': selectedCategory === category.categoryId}"
             (click)="onSelectCategory(category.categoryId)">
@@ -33,7 +32,11 @@
               </div>
             </div>
           </div>
+          <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
         </div>
+        <app-datatable-pagination [tableSource]="tableSource"></app-datatable-pagination>
       </div>
     </app-card>
   </div>

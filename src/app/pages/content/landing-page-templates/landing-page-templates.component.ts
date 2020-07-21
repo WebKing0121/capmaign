@@ -1,15 +1,18 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewEncapsulation } from '@angular/core';
 import { LandingPageTemplate } from '@app-models/landing-page';
 import { ContentService } from '@app-core/services/content.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { ContentCategory } from '@app-models/content-category';
+import { DataTableSource } from '@app-components/datatable/datatable-source';
+import { DataSourceChange } from '@app-core/models/data-source';
 
 @Component({
   selector: 'app-landing-page-templates',
   templateUrl: './landing-page-templates.component.html',
-  styleUrls: ['./landing-page-templates.component.scss']
+  styleUrls: ['./landing-page-templates.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
   @ViewChild('confirmModal', { static: false }) confirmModal;
@@ -21,10 +24,12 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject();
 
   categories: ContentCategory[];
-  totalCount: number;
+  totalCount = 0;
   templates: LandingPageTemplate[];
+  selected: LandingPageTemplate[];
   filteredTemplates: LandingPageTemplate[];
-
+  tableSource: DataTableSource<LandingPageTemplate> = new DataTableSource<LandingPageTemplate>(50);
+  loading = false;
   selectedCategory: number;
 
   selectedTemplates: number[];
@@ -50,7 +55,7 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.contentService.getCategories()
+    this.contentService.getLandingPageCategories()
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
@@ -66,21 +71,7 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
         }
       );
 
-    this.contentService.getLandingPageTemplates()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.templates = data.result.items;
-            this.filteredTemplates = this.templates;
-          } else {
-            this.templates = [];
-          }
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.initTable();
   }
 
   ngOnDestroy(): void {
@@ -135,5 +126,52 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
 
   onDeleteConfirm() {
     this.confirmModal.hide();
+  }
+
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+
+    this.contentService.getLandingPageTemplates(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.templates = data.result.items;
+            this.filteredTemplates = this.templates;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.templates = [];
+
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.templates, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

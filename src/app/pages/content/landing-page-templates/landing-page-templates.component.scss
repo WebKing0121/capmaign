@@ -3,22 +3,31 @@
   .normal-page {
     margin-top: 5px;
     padding: 20px 20px 0px 20px;
+    .category {
+      display: flex;
+      flex-wrap: wrap;
+    }
   }
   .item-all {
     border: 1px solid #ddd;
     padding: 5px 10px;
     margin-right: 10px;
     border-radius: 6px;
+    margin-bottom: 10px;
     cursor: pointer;
     &.selected {
       background-color: #b8e4f7;
     }
+  }
+  .item-separator {
+    padding-top: 5px;
   }
 
   .item {
     border: 1px solid #ddd;
     padding: 5px 10px;
     margin-left: 10px;
+    margin-bottom: 10px;
     cursor: pointer;
     border-radius: 6px;
     &.selected {
@@ -41,8 +50,9 @@
   }
 
   .templates {
-    height: calc(100vh - 290px);
+    height: calc(100vh - 334px);
     overflow: auto;
+    position: relative;
     .template {
       position: relative;
       background: #fff;

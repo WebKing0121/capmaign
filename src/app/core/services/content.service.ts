@@ -22,23 +22,27 @@ export class ContentService {
     return of(LandingPageCategoryMock);
   }
 
-  getLandingPageTemplates(): Observable<any> {
-    return of(LandingPageTemplatesMock);
+  getLandingPageCategories(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/GetLandingPageCategoryInOuIncludingChildren`);
+  }
+
+  getLandingPageTemplates(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/GetLandingPageTemplatesInOuIncludingChildren`, params);
   }
 
   getAssets(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/asset/GetAssetInOuIncludingChildren`, params);
   }
 
-  getEmailTemplates(): Observable<any> {
-    return of(EmailTemplatesMock);
+  getEmailTemplates(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/emailTemplate/GetEmailTemplatesInOuIncludingChildren`, params);
   }
 
-  getLandingPages(): Observable<any> {
-    return of(LandingPagesMock);
+  getLandingPages(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/GetLandingPagesInOuIncludingChildren`, params);
   }
 
-  getDynamicContents(): Observable<any> {
-    return of(DynamicContentsMock);
+  getDynamicContents(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/dynamicContent/GetDynamicContentsInOuIncludingChildren`, params);
   }
 }

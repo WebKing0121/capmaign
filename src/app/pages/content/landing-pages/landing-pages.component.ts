@@ -36,36 +36,19 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   modalType = ModalType.New;
   landingPage: LandingPage;
-
+  loading = false;
   constructor(
     private contentService: ContentService
   ) { }
 
   ngOnInit(): void {
-    this.contentService.getLandingPages()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.landingPages = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.landingPages = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.landingPages);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
       { name: 'Page Name', prop: 'pageNames', sortable: true, cellClass: ['cell-hyperlink'] },
-      { name: 'External URL', prop: 'externalURL', sortable: true },
+      { name: 'External URL', prop: 'externalURL', sortable: true, cellClass: ['cell-hyperlink'], maxWidth: 600, width: 600, },
       { name: 'Status', prop: 'pageStatus', sortable: true },
       { name: 'Description', prop: 'pageDescription', sortable: true },
     ];
@@ -103,21 +86,47 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.confirmModal.hide();
   }
 
-  _updateTable(landingPages: LandingPage[]) {
-    this.tableSource.next(landingPages.slice(0, 50), landingPages.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          landingPages.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          landingPages.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.contentService.getLandingPages(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.landingPages = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.landingPages = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.landingPages, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

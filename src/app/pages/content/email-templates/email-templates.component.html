@@ -2,6 +2,7 @@
   <div class="col-12 card-email-templates">
     <app-datatable [title]="'Email Templates'"
       [buttons]="tableButtons"
+      [loading]="loading"
       [dataSource]="tableSource"
       [rowHeight]="35"
       [selectable]="true"
@@ -12,12 +13,12 @@
   </div>
 </div>
 
-<app-confirm-modal #confirmModal
-  modalTitle="Confirm" modalMessage="Do you want to delete the selected email template?"
-  [buttons]="confirmButtons"
-></app-confirm-modal>
-
 <app-content-email-template-modal #templateModal
   [modalType]="modalType"
   [template]="template"
 ></app-content-email-template-modal>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm" modalMessage="Do you want to delete the selected email template?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>

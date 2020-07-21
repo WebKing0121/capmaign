@@ -4,7 +4,6 @@ import { Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { ContentService } from '@app-core/services/content.service';
 import { takeUntil } from 'rxjs/operators';
-import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { DataSourceChange } from '@app-models/data-source';
 
@@ -28,7 +27,6 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
   ];
   selected: EmailTemplate[] = [];
 
-
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
@@ -37,29 +35,14 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
   modalType = ModalType.New;
   template: EmailTemplate;
 
+  loading = false;
+
   constructor(
     private contentService: ContentService
   ) { }
 
   ngOnInit(): void {
-    this.contentService.getEmailTemplates()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.templates = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.templates = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.templates);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -102,21 +85,47 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
     this.confirmModal.hide();
   }
 
-  _updateTable(templates: EmailTemplate[]) {
-    this.tableSource.next(templates.slice(0, 50), templates.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          templates.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          templates.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.contentService.getEmailTemplates(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.templates = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.templates = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.templates, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

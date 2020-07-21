@@ -37,29 +37,13 @@ export class DynamicContentsComponent implements OnInit, OnDestroy, AfterViewIni
   modalType = ModalType.New;
   content: DynamicContent;
 
+  loading = false;
   constructor(
     private contentService: ContentService
   ) { }
 
   ngOnInit(): void {
-    this.contentService.getDynamicContents()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.contents = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.contents = [];
-            this.totalCount = 0;
-          }
-          this._updateTable(this.contents);
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
+    this.initTable();
   }
 
   ngAfterViewInit(): void {
@@ -109,21 +93,47 @@ export class DynamicContentsComponent implements OnInit, OnDestroy, AfterViewIni
     this.confirmModal.hide();
   }
 
-  _updateTable(contents: DynamicContent[]) {
-    this.tableSource.next(contents.slice(0, 50), contents.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          contents.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          contents.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.contentService.getDynamicContents(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.contents = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.contents = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.contents, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

@@ -2,6 +2,7 @@
   <div class="col-12 card-dynamic-contents">
     <app-datatable [title]="'Dynamic Contents'"
       [buttons]="tableButtons"
+      [loading]="loading"
       [dataSource]="tableSource"
       [rowHeight]="35"
       [selectable]="true"
