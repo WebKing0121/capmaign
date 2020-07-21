@@ -74,6 +74,8 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
   folders: any[]; // data from API;
   dataLoaded: number;
 
+  loading = false;
+  loadingEvents = false;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -114,40 +116,13 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
           console.log('error', error.response);
         }
       );
-
-    this.dataService.getEventLists()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.lists = data.result.items;
-            this.totalCount = data.result.totalCount;
-          } else {
-            this.lists = [];
-            this.totalCount = 0;
-          }
-
-          this.dataLoaded++;
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
+    this.initTable();
+    
 
     this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => res === null && this.store.dispatch({
         type: AppTypes.GetRecordColumns
       }));
-
-    setTimeout(() => this.checkLoaded());
-  }
-
-  checkLoaded() {
-    if (this.dataLoaded === 3) {
-      this._updateTable(this.lists);
-    } else {
-      setTimeout(() => this.checkLoaded);
-    }
   }
 
   ngAfterViewInit(): void {
@@ -187,22 +162,48 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   }
 
-  _updateTable(lists: List[]) {
-    this.tableSource.next(lists.slice(0, 50), lists.length);
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          lists.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          lists.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.dataService.getEventLists(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.lists = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.lists = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.lists, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 
   _updateEventsTable(events: any[]) {

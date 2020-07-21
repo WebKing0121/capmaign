@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { environment } from '../../../environments/environment';
+
+import { of, Observable } from 'rxjs';
 
 import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 @Injectable({
@@ -10,7 +12,7 @@ export class CampaignService {
 
   constructor(private http: HttpClient) { }
 
-  getCampaignMockData() {
-    return of(CampaignResponseMockData);
+  getCampaigns(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
   }
 }

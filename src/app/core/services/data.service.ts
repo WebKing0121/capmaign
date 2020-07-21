@@ -46,8 +46,8 @@ export class DataService {
     return of(ListsMockData);
   }
 
-  getEventLists(): Observable<any> {
-    return of(EventListsMockData);
+  getEventLists(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=true`, params);
   }
 
   getTypeList(): Observable<any> {

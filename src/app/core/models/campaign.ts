@@ -1,16 +1,23 @@
 import { CampaignType } from '@app-core/enums/campaign-type.enum';
 
 export class Campaign {
-  id: string;
+  campaignType: string;
+  creationTime: string;
+  creatorUserId: number | null;
+  deleterUserId: number | null;
+  deletionTime: string | null;
+  displayName: string
+  id: number;
+  isDeleted: boolean;
+  lastModificationTime: string | null;
+  lastModifierUserId: number | null;
+  lastSent: string | null;
+  mobileNumber: string;
   name: string;
+  organizationUnitId: number;
+  scheduled: string | null;
+  senderName: string;
   subject: string;
-  type: CampaignType | string;
-  updated: string;
-  created: string;
-  lastSent: string;
-  scheduled: string;
-  // TODO: Remove later
-  [name: string]: any;
 }
 
 export class EmailCampaign {

@@ -23,9 +23,6 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('addToEventListModal', { static: false }) addToEventListModal;
 
-  @ViewChild('templateDisplayFrom') templateDisplayFrom: TemplateRef<any>;
-  @ViewChild('templateFolder') templateFolder: TemplateRef<any>;
-
   DataListType = DataListType;
   private unsubscribe$ = new Subject();
 
@@ -55,6 +52,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   folders: any[]; // data from API;
   dataLoaded: number;
 
+  loading = false;
   constructor(
     private eventService: EventService
   ) {
@@ -77,27 +75,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
 
-    this.eventService.getEvents()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.events = data.result.items;
-          this.totalCount = data.result.totalCount;
-          this.dataLoaded++;
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-    setTimeout(() => this.checkLoaded());
-  }
-
-  checkLoaded() {
-    if (this.dataLoaded === 2) {
-      this._updateTable(this.events);
-    } else {
-      setTimeout(() => this.checkLoaded);
-    }
+    this.initTable();
+    
   }
 
   ngAfterViewInit(): void {
@@ -112,8 +91,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
       {
         name: 'End Date', prop: 'eventEndDate', sortable: true,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
-      },
-      { name: 'Display From', prop: 'displayName', sortable: true, custom: true, template: this.templateDisplayFrom },
+      }
     ];
     this.tableSource.setColumns(columns);
   }
@@ -122,25 +100,6 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
-
-  _updateTable(events: Event[]) {
-    this.tableSource.next(events.slice(0, 50), events.length);
-    this.tableSource.changed$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          events.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          events.length
-        );
-      });
-    this.tableSource.selection$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
-  }
-
 
   onActive(evt) {
     if (evt.type === 'click') {
@@ -180,5 +139,50 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getDisplayFrom(value: string | null) {
     return value ? this.displayNameList.find(x => x.value === value).label : '';
+  }
+
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+
+    this.eventService.getEvents(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.events = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.events = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.events, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

@@ -17,6 +17,7 @@ import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/sc
 import { CampaignComponent } from '../campaign/campaign.component';
 import { MobileCampaignComponent } from '../../mobile/mobile-campaign/mobile-campaign.component';
 import { DataSourceChange } from '@app-models/data-source';
+import { CampaignService } from '@app-core/services/campaign.service';
 
 @Component({
   selector: 'app-campaigns',
@@ -45,7 +46,10 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false },
     { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked(), disabled: true, hide: false },
   ];
+  campaigns: Campaign[] = [];
+  totalCount = 0;
 
+  loading = false;
   selected: Campaign[] = [];
   searchFormControl: FormControl;
 
@@ -59,6 +63,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
+    private campaignService: CampaignService,
     private modalService: ModalService
   ) { }
 
@@ -67,6 +72,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.initTable();
 /*
     this.tableSource.next(CampaignResponseMockData.slice(0, 50), CampaignResponseMockData.length);
 
@@ -107,17 +113,17 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Subject', prop: 'subject', sortable: true },
-      { name: 'Type', prop: 'type', sortable: true, maxWidth: 90, custom: true, template: this.tableColumnTypeTemplate },
-      { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      { name: 'Type', prop: 'campaignType', sortable: true, maxWidth: 90},
+      { name: 'Modification Date', prop: 'lastModificationTime', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      { name: 'Created Date', prop: 'creationTime', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
       { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
       { name: 'Scheduled', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } }
     ];
@@ -220,5 +226,49 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       });
     }
+  }
+
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.campaignService.getCampaigns(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.campaigns = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.campaigns = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.campaigns, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

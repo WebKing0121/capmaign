@@ -1,6 +1,7 @@
 <div style="height: calc( 100vh - 122px)" class="campaigns-page">
   <app-datatable
     [title]="'Manage Campaigns'"
+    [loading]="loading"
     [dataSource]="tableSource"
     [buttons]="tableButtons"
     [selectable]="true"

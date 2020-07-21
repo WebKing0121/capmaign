@@ -1,6 +1,6 @@
 import { Campaign } from '@app-models/campaign';
 
-export const CampaignResponseMockData: Campaign[] = [
+export const CampaignResponseMockData: any[] = [
   {
     id: '0',
     name: 'Samir Campaign',

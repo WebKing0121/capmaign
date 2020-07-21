@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 import { EventsMockData } from '@app-fake-db/events-mock';
 import { FoldersMock } from '@app-fake-db/common-mock';
 @Injectable({
@@ -24,8 +24,8 @@ export class EventService {
     ]);
   }
 
-  getEvents() {
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/events`);
-    return of(EventsMockData);
+  getEvents(params: any): Observable<any> {
+    // https://c2cstaging.azurewebsites.net/api/services/app/event/GetAllEventCampaignsforPaging
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/event/GetAllEventCampaignsforPaging`, params);
   }
 }

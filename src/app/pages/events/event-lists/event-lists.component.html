@@ -1,12 +1,27 @@
 <div class="row mt-3">
   <div class="col-md-4 card-event-lists">
-    <app-datatable [title]="'Event List'" [buttons]="tableButtons" [dataSource]="tableSource" [rowHeight]="35"
-      [headerHeight]="40" (activate)="onActive($event)"></app-datatable>
+    <app-datatable
+      [title]="'Event List'"
+      [loading]="loading"
+      [buttons]="tableButtons"
+      [dataSource]="tableSource"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      (activate)="onActive($event)"
+    ></app-datatable>
   </div>
   <div class="col-md-8 card-assigned-events">
-    <app-datatable [title]="'Assigned Events'" [buttons]="eventsTableButtons" [dataSource]="tableSourceEvents"
-      [selectionType]="'checkbox'" [selectable]="true" [rowHeight]="35" [headerHeight]="40"
-      (activate)="onActiveEvents($event)"></app-datatable>
+    <app-datatable
+      [title]="'Assigned Events'"
+      [loading]="loadingEvents"
+      [buttons]="eventsTableButtons"
+      [dataSource]="tableSourceEvents"
+      [selectionType]="'checkbox'"
+      [selectable]="true"
+      [rowHeight]="35"
+      [headerHeight]="40"
+      (activate)="onActiveEvents($event)"
+    ></app-datatable>
   </div>
 </div>
 <!-- template of Display From-->
@@ -24,11 +39,17 @@
   [typeList]="typeList"
 ></app-events-event-list-modal>
 
-<app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected list?"
-  [buttons]="confirmButtons"></app-confirm-modal>
-<app-confirm-modal #confirmRemoveEventsModal modalTitle="Confirm"
-  modalMessage="Do you want to remove selected events from the list?" [buttons]="confirmRemoveEventsButtons">
-</app-confirm-modal>
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete selected event list?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>
+
+<app-confirm-modal #confirmRemoveEventsModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to remove selected events from the list?"
+  [buttons]="confirmRemoveEventsButtons"
+></app-confirm-modal>
 
 <app-ui-modal #dataEventsModal [containerClick]="false" dialogClass="modal-dialog-centered modal-event-list modal-xl">
   <div class="app-modal-header">
