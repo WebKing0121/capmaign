@@ -92,7 +92,13 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
         }));
     } else if (this.type === DataListType.EventList) {
       this.tableTitle = 'Assigned Events';
-      this.dataService.getEventLists()
+      const params = {
+        SortDirection: 'Ascending',
+        maxResultCount: this.tableSource.pageSize,
+        skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+        sorting: '',
+      };
+      this.dataService.getEventLists(params)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           data => {

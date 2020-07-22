@@ -52,7 +52,13 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       { value: 'Published', label: 'Published' },
     ];
 
-    this.contentService.getCategories()
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+    this.contentService.getCategories(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {

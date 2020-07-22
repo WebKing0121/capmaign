@@ -51,8 +51,13 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
       { value: '1', label: 'Static' },
       { value: '2', label: 'Dynamic / Responsive' },
     ];
-
-    this.contentService.getCategories()
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+    this.contentService.getCategories(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {

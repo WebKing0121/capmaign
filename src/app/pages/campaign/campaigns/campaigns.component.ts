@@ -37,7 +37,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       label: 'Create', icon: 'fa fa-plus', click: () => this.clickTemplate(),
       childs: [
         { label: 'Email Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Email) },
-        { label: 'Mobile Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Mobile) },
+        { label: 'Mobile Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.SMS) },
         { label: 'Social Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Social) },
         { label: 'Google Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.GoogleAds) },
         { label: 'Facebook Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
@@ -136,8 +136,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       && event.event.target.classList.value === 'datatable-body-cell-label'
     ) {
       const campaign = event.row as Campaign;
-
-      switch (campaign.type) {
+      console.log(campaign.campaignType.toLowerCase());
+      switch (campaign.campaignType.toLowerCase()) {
         case CampaignType.Email: {
           // this.router.navigate([campaign.id], { relativeTo: this.route });
           this.modalService.openModal(CampaignComponent, {
@@ -149,7 +149,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
           });
           return;
         }
-        case CampaignType.Mobile: {
+        case CampaignType.SMS: {
           // this.router.navigate(['mobile', campaign.id]);
           this.modalService.openModal(MobileCampaignComponent, {
             width: '100%',
@@ -181,7 +181,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         });
         return;
       }
-      case CampaignType.Mobile: {
+      case CampaignType.SMS: {
         // this.router.navigate(['mobile', 'new-campaign']);
         this.modalService.openModal(MobileCampaignComponent, {
           width: '100%',

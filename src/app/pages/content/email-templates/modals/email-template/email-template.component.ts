@@ -50,7 +50,13 @@ export class EmailTemplateModalComponent implements OnInit, OnDestroy {
       { value: '2', label: 'Dynamic / Responsive' },
     ];
 
-    this.contentService.getCategories()
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+    this.contentService.getCategories(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {

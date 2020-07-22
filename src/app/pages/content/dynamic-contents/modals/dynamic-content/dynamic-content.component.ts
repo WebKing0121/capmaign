@@ -52,7 +52,13 @@ export class DynamicContentModalComponent implements OnInit, OnDestroy {
       { value: '3', label: 'Mobile Content' },
     ];
 
-    this.contentService.getCategories()
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+    this.contentService.getCategories(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
