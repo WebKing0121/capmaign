@@ -15,4 +15,16 @@ export class CampaignService {
   getCampaigns(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
   }
+
+  getInAppMessages(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
+  }
+
+  getSMSCampaigns(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
+  }
+
+  getPushNotifications(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
+  }
 }

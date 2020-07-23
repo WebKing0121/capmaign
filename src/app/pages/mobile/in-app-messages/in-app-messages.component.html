@@ -1,5 +1,6 @@
 <div style="height: calc( 100vh - 122px)">
   <app-datatable [title]="'Manage InApp Messages'"
+    [loading]="loading"
     [dataSource]="tableSource"
     [buttons]="tableButtons"
     [selectable]="true"

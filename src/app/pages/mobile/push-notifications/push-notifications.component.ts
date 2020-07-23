@@ -32,58 +32,25 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
   ];
 
   selected: Campaign[];
-  inAppMessageData: Campaign[];
+  pushNotifications: Campaign[];
   destroy$ = new Subject();
 
+  loading = false;
+  totalCount = 0;
   constructor(
     private campaignService: CampaignService,
     private modalService: ModalService
   ) {
-    this.inAppMessageData = [];
+    this.pushNotifications = [];
   }
 
   ngOnInit(): void {
-    this.campaignService.getCampaignMockData()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        data => {
-          this.inAppMessageData = data;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-
-    this.tableSource.next(this.inAppMessageData.slice(0, 50), this.inAppMessageData.length);
-
-    this.tableSource.changed$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((change: DataSourceChange) => {
-        let mockData = [];
-        if (change.search) {
-          mockData = this.inAppMessageData.filter(item => item.name.includes(change.search));
-        } else {
-          mockData = this.inAppMessageData;
-        }
-
-        this.tableSource.next(
-          mockData.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1),
-            change.pagination.pageSize * (change.pagination.pageNumber)),
-          mockData.length
-        );
-      });
-
-    this.tableSource.selection$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
+    this.initTable();
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngAfterViewInit(): void {
@@ -123,13 +90,49 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onDeleteClicked() {
-    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message: 'Are you sure you want to delete selected SMS?'
-    //   }
-    // });
     this.confirmModal.show();
   }
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
 
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.campaignService.getPushNotifications(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.pushNotifications = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.pushNotifications = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.pushNotifications, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
+  }
 }

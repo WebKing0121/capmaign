@@ -51,12 +51,11 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
 
   ngOnInit(): void {
     this.initTable();
-    // this.automations = this.automations.filter(item => item.automationType === 1);
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngAfterViewInit(): void {
@@ -106,12 +105,6 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
   }
 
   onDeleteClicked() {
-    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message: 'Are you sure you want to delete selected SMS?'
-    //   }
-    // });
     this.confirmModal.show();
   }
 
