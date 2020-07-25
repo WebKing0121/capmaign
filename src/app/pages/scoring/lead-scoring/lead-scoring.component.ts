@@ -23,7 +23,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
   @ViewChild('confirmModal', { static: false }) confirmModal;
- // confirm Modal
+  // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
   ];
@@ -35,6 +35,9 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     // { label: 'Run Profile', icon: 'far fa-gear', click: () => this.clickTemplate() },
   ];
 
+  loading = false;
+  totalCount = 0;
+
   constructor(
     private scoringService: ScoringService,
     private modalService: ModalService
@@ -43,48 +46,12 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit(): void {
-
-    this.scoringService.getLeadScoringMockData()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        data => {
-          this.leadScoringData = data;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-
-    this.tableSource.next(this.leadScoringData.slice(0, 50), this.leadScoringData.length);
-
-    this.tableSource.changed$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((change: DataSourceChange) => {
-        let mockData = [];
-        if (change.search) {
-          mockData = this.leadScoringData.filter(item =>
-            item.name.includes(change.search) || item.subject.includes(change.search));
-        } else {
-          mockData = this.leadScoringData;
-        }
-
-        this.tableSource.next(
-          mockData.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          mockData.length
-        );
-      });
-
-    this.tableSource.selection$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(selected => {
-        this.selected = selected;
-      });
+    this.initTable();
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngAfterViewInit(): void {
@@ -183,5 +150,49 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
     //   }
     // });
     this.confirmModal.show();
+  }
+
+  initTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
+  }
+
+  loadTableData() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: '',
+    };
+    this.loading = true;
+    this.scoringService.getLeadCategory(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.leadScoringData = data.result.items;
+            this.totalCount = data.result.totalCount;
+          } else {
+            this.leadScoringData = [];
+            this.totalCount = 0;
+          }
+          this.tableSource.next(this.leadScoringData, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

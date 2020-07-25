@@ -1,6 +1,7 @@
 <div style="height: calc( 100vh - 122px)">
   <app-datatable [title]="'Lead Grading'"
     [dataSource]="tableSource"
+    [loading]="loading"
     [buttons]="tableButtons"
     [selectable]="true"
     [selectionType]="'checkbox'"
@@ -12,6 +13,7 @@
   <input *ngIf="value" class="m-l-10" type="checkbox" checked (click)="onCheckClick($event)">
   <input *ngIf="!value" class="m-l-10" type="checkbox" (click)="onCheckClick($event)">
 </ng-template>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
   modalMessage="Do you want to delete selected list?"

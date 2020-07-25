@@ -160,14 +160,13 @@ export class DataFilterModalComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    console.log(this.filter);
     const params = {
       ...this.filter,
       booleanQuery: this.form.value.booleanQuery,
       booleanQueryAsLinq: this.dataService.buildQueryAsLinq(this.filterConditions, this.filterColumns),
       booleanQueryAsReadable: this.dataService.buildQueryAsReadable(this.filterConditions, this.filterColumns),
       booleanQueryAsString: this.dataService.buildQueryAsString(this.filterConditions, this.filterColumns),
-    }
+    };
 
     return;
     this.loading = true;

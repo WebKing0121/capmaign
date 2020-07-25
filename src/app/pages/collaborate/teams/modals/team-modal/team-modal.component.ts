@@ -48,7 +48,7 @@ export class CollaborateTeamModalComponent implements OnInit, OnDestroy {
 
   show() {
     if (this.modalType === ModalType.Edit) {
-      this.loadTeamDetails()
+      this.loadTeamDetails();
     } else {
       this.form.setValue({
         id: 0,

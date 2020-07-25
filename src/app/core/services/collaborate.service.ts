@@ -32,11 +32,11 @@ export class CollaborateService {
   createCollaborateTeam(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/createCollaborationTeam`, params);
   }
-  
+
   updateCollaborateTeam(params: any): Observable<any> {
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/UpdateCollaborationTeam`, params);
   }
-  
+
   getCollaborateCampaigns(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetAllCampaignsforPaging`, params);
   }

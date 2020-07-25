@@ -38,7 +38,7 @@ export class DataService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=false`, params);
   }
 
-  addList(params: any): Observable<any>  {
+  addList(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/AddList`, params);
   }
 
@@ -233,49 +233,20 @@ export class DataService {
   }
 
   buildQueryAsLinq(filterConditions: any[], filterColumns: any[]) {
+    // tslint:disable-next-line
     // booleanQueryAsLinq: "Amount == 100 AND string.Compare(AccountName,  "user account", true) == 0 AND AccountOptOut == true AND DOB == Convert.ToDateTime("07/01/2020")"
-
-    let query = '';
-    let subQuery = '';
-    filterConditions.forEach((filterItem: any) => {
-      console.log(filterItem);
-      // if (filterItem.parentOp !== 'None') {
-      //   query += ` ${filterItem.parentOp}`;
-      // }
-      // if (filterItem.type === 'Item') {
-      //   if (filterItem.conditionOp !== 'is_null' && filterItem.conditionOp !== 'is_not_null') {
-      //     query += ` ${filterItem.fieldName} ${filterItem.conditionOp} "${filterItem.value}"`;
-      //   } else {
-      //     query += ` ${filterItem.fieldName} ${filterItem.conditionOp}`;
-      //   }
-      // } else {
-
-      //   subQuery = '';
-      //   filterItem.children.forEach((subItem: any) => {
-      //     if (subItem.parentOp !== 'None') {
-      //       subQuery += ` ${filterItem.parentOp}`;
-      //     }
-      //     if (subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null') {
-      //       subQuery += ` ${subItem.fieldName} ${subItem.conditionOp} "${subItem.value}"`;
-      //     } else {
-      //       subQuery += ` ${subItem.fieldName} ${subItem.conditionOp}`;
-      //     }
-      //   });
-      //   query += ' (' + subQuery.substr(1) + ')';
-      // }
-    });
-    return query.substr(1);
-
+    return '';
   }
+
   buildQueryAsReadable(filterConditions: any[], filterColumns: any[]) {
+    // tslint:disable-next-line
     // booleanQueryAsReadable: "Amount = "100" AND AccountName = "user account" AND AccountOptOut = "yes" AND DOB = "07/01/2020""
-
-
-
+    return '';
   }
+
   buildQueryAsString(filterConditions: any[], filterColumns: any[]) {
+    // tslint:disable-next-line
     // booleanQueryAsString: "(Amount=="100"&&AccountName=="user account"&&AccountOptOut=="yes"&&DOB=="07/01/2020")"
-
-
+    return '';
   }
 }

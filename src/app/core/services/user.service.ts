@@ -27,7 +27,7 @@ export class UserService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/user/GetUsers`, filter);
   }
 
-  getAllUsersForCollaborateTeam() : Observable<any> {
+  getAllUsersForCollaborateTeam(): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/user/GetAllUsersForCollaborationTeam`);
   }
 
@@ -106,7 +106,7 @@ export class UserService {
   }
 
   getSender(senderId: number): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sender/GetSenderForEdit`, {id: `${senderId}`});
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sender/GetSenderForEdit`, { id: `${senderId}` });
   }
 
   deleteSenders(params: any): Observable<any> {

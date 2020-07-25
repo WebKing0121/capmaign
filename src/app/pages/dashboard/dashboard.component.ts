@@ -209,16 +209,16 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
         );
       });
     // Get UpcomingCampaign Information
-    this.campaignService.getCampaignMockData()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        data => {
-          this.allUpcommingCamp = data;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
+    // this.campaignService.getCampaignMockData()
+    //   .pipe(takeUntil(this.destroy$))
+    //   .subscribe(
+    //     data => {
+    //       this.allUpcommingCamp = data;
+    //     },
+    //     error => {
+    //       console.log('error', error);
+    //     }
+    //   );
 
     this.allUpcommingCamp = this.allUpcommingCamp.filter(item => moment(item.scheduled).diff(new Date()) > 0);
     this.allUpcommingCamp = this.allUpcommingCamp.map(item => ({

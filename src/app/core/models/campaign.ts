@@ -6,7 +6,7 @@ export class Campaign {
   creatorUserId: number | null;
   deleterUserId: number | null;
   deletionTime: string | null;
-  displayName: string
+  displayName: string;
   id: number;
   isDeleted: boolean;
   lastModificationTime: string | null;

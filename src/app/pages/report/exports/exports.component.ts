@@ -69,17 +69,17 @@ export class ReportExportsComponent implements OnInit, AfterViewInit, OnDestroy 
 
   initTable() {
     this.tableSource.changed$
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe((change: DataSourceChange) => {
-      if (change.pagination !== 'totalCount') {
-        this.loadTableData();
-      }
-    });
-  this.tableSource.selection$
-    .pipe(takeUntil(this.unsubscribe$))
-    .subscribe(selected => {
-      this.selected = selected;
-    });
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
+      });
+    this.tableSource.selection$
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(selected => {
+        this.selected = selected;
+      });
   }
 
   loadTableData() {

@@ -76,7 +76,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
       );
 
     this.initTable();
-    
+
   }
 
   ngAfterViewInit(): void {

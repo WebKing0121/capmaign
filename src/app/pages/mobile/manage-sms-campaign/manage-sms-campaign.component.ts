@@ -20,7 +20,7 @@ import { DataSourceChange } from '@app-models/data-source';
 export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('confirmModal', { static: false }) confirmModal;
- // confirm Modal
+  // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
   ];
@@ -101,6 +101,7 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
   onDeleteClicked() {
     this.confirmModal.show();
   }
+
   initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))

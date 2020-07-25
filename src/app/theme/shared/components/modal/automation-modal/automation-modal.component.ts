@@ -416,7 +416,36 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
       description: "test-01 description"
       eventConfigurations: []
       events: []
-      journeyEventLinkJson: "{ "class": "go.GraphLinksModel",↵  "linkFromPortIdProperty": "fromPort",↵  "linkToPortIdProperty": "toPort",↵  "nodeDataArray": [ ↵{"key":"1", "text":"Send email to selected list / filters", "source":"/Common/Images/journey/Email_left.png", "name":"Email", "color":"orange", "stroke":"#F47B3B", "loc":"570 530"},↵{"key":"0", "color":"#229954", "name":"Start", "text":"Start", "category":"Start", "figure":"circle", "height":60, "width":60, "statusIcon":"", "loc":"430 390"},↵{"key":"3", "text":"Segment records based on conditions", "figure":"Diamond", "source":"/Common/Images/journey/Decision_left.png", "name":"Decision", "color":"white", "stroke":"#00AEEF", "loc":"690 670"},↵{"key":"5", "text":"Add certain records to selected list", "source":"/Common/Images/journey/Add_to_list_left.png", "name":"Add to List", "color":"white", "stroke":"#D9B650", "loc":"1010 570"},↵{"key":"-1", "color":"#DC3C00", "name":"End", "text":"End", "category":"End", "figure":"circle", "height":60, "width":60, "statusIcon":"", "loc":"1070 770"}↵ ],↵  "linkDataArray": [ ↵{"from":"0", "to":"1", "fromPort":"B", "toPort":"T", "points":[430,415,430,425,430,449,570,449,570,473,570,483]},↵{"from":"1", "to":"3", "fromPort":"B", "toPort":"T", "points":[570,577,570,587,570,600,690,600,690,613,690,623]},↵{"from":"3", "to":"5", "fromPort":"R", "toPort":"L", "visible":true, "points":[828,670,838,670,850,670,850,570,862,570,872,570]},↵{"from":"5", "to":"-1", "fromPort":"B", "toPort":"T", "points":[1010,617,1010,627,1010,681,1070,681,1070,735,1070,745]}↵ ]}"
+
+      journeyEventLinkJson: "{ "class": "go.GraphLinksModel",
+        "linkFromPortIdProperty": "fromPort",
+        "linkToPortIdProperty": "toPort",
+        "nodeDataArray": [
+          {
+            "key":"1", "text":"Send email to selected list / filters", "source":"/Common/Images/journey/Email_left.png",
+            "name":"Email", "color":"orange", "stroke":"#F47B3B", "loc":"570 530"
+          },
+          {
+            "key":"0", "color":"#229954", "name":"Start", "text":"Start", "category":"Start", "figure":"circle",
+            "height":60, "width":60, "statusIcon":"", "loc":"430 390"
+          },
+          {
+            "key":"3", "text":"Segment records based on conditions", "figure":"Diamond",
+            "source":"/Common/Images/journey/Decision_left.png", "name":"Decision", "color":"white", "stroke":"#00AEEF", "loc":"690 670"},
+          {
+            "key":"5", "text":"Add certain records to selected list", "source":"/Common/Images/journey/Add_to_list_left.png",
+            "name":"Add to List", "color":"white", "stroke":"#D9B650", "loc":"1010 570"
+          },
+          { "key":"-1", "color":"#DC3C00", "name":"End", "text":"End", "category":"End",
+            "figure":"circle", "height":60, "width":60, "statusIcon":"", "loc":"1070 770"
+          }
+        ],
+        "linkDataArray": [
+          {"from":"0", "to":"1", "fromPort":"B", "toPort":"T", "points":[430,415,430,425,430,449,570,449,570,473,570,483]},
+          {"from":"1", "to":"3", "fromPort":"B", "toPort":"T", "points":[570,577,570,587,570,600,690,600,690,613,690,623]},
+          {"from":"3", "to":"5", "fromPort":"R", "toPort":"L", "visible":true, "points":[828,670,838,670,850,670,850,570,862,570,872,570]},
+          {"from":"5", "to":"-1", "fromPort":"B", "toPort":"T", "points":[1010,617,1010,627,1010,681,1070,681,1070,735,1070,745]}
+        ]}"
       name: "test-01"
       status: 0
     */
@@ -442,7 +471,7 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
     });
 
     this.automationModal.show();
-    this.loading  = true;
+    this.loading = true;
     this.automationService.getAutomation(this.automation.id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(

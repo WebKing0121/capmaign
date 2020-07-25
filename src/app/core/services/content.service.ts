@@ -27,6 +27,7 @@ export class ContentService {
   }
 
   getLandingPageTemplates(params: any): Observable<any> {
+    // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/GetLandingPageTemplatesInOuIncludingChildren`, params);
   }
 

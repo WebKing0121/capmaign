@@ -117,7 +117,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       );
     this.initTable();
-    
+
 
     this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
       .subscribe((res) => res === null && this.store.dispatch({
