@@ -25,6 +25,7 @@ export class DataCustomFieldModalComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   defaultValueType: string;
+  valueType: string;
   defaultValue: any;
 
   customFieldsType: NgSelectData[] = [
@@ -60,19 +61,26 @@ export class DataCustomFieldModalComponent implements OnInit, OnDestroy {
     this.form.get('type').valueChanges
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(val => {
-        this.defaultValueType = val;
-        if (val !== 'Date') {
-          this.form.get('defaultValue').setValue('');
-        } else {
+        this.valueType = val;
+        if (val === this.defaultValueType) {
           this.form.get('defaultValue').setValue(this.defaultValue);
+        } else {
+          if (val === 'Date'){
+            this.form.get('defaultValue').setValue(null);
+          } else if (val === 'Text') {
+            this.form.get('defaultValue').setValue('');
+          } else {
+            this.form.get('defaultValue').setValue(0);
+          }
         }
       });
   }
 
   onSave() {
-    if (this.form.invalid) {
+    if (this.form.value.name === '') {
       return;
     }
+
     if (this.modalType === ModalType.New) {
       let defaultValue = '';
       if (this.form.value.type === 'Date') {
@@ -171,17 +179,19 @@ export class DataCustomFieldModalComponent implements OnInit, OnDestroy {
         } else {
           defaultValue = null;
         }
-        this.defaultValue = defaultValue;
       } else {
         defaultValue = this.customField.defaultValue;
       }
-
+      this.defaultValue = defaultValue;
+      this.defaultValueType = this.customField.fieldDataType;
+      console.log('defaultValue', defaultValue);
       this.form.setValue({
         id: this.customField.id,
         name: this.customField.displayName,
         defaultValue,
         type: this.customField.fieldDataType,
       });
+      console.log(this.form.value);
     } else {
       this.form.reset();
       this.form.setValue({

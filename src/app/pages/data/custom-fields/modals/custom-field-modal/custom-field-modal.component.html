@@ -30,19 +30,19 @@
         </div>
         <div class="col-md-12 mt-3">
           <label class="mobile-show">Default Value</label>
-          <div class="input-group" *ngIf="defaultValueType === 'Text'">
+          <div class="input-group" *ngIf="valueType === 'Text'">
             <div class="input-group-prepend mobile-hide">
               <span class="input-group-text">Default Value</span>
             </div>
             <input type="text" class="form-control" formControlName="defaultValue">
           </div>
-          <div class="input-group" *ngIf="defaultValueType === 'Numeric'">
+          <div class="input-group" *ngIf="valueType === 'Numeric'">
             <div class="input-group-prepend mobile-hide">
               <span class="input-group-text">Default Value</span>
             </div>
             <input type="number" class="form-control" formControlName="defaultValue">
           </div>
-          <div class="input-group" *ngIf="defaultValueType === 'Date'">
+          <div class="input-group" *ngIf="valueType === 'Date'">
             <div class="input-group-prepend mobile-hide">
               <span class="input-group-text">Default Value</span>
             </div>

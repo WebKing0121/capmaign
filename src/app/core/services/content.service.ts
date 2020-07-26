@@ -35,12 +35,36 @@ export class ContentService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/asset/GetAssetInOuIncludingChildren`, params);
   }
 
+  renameAsset(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/asset/UpdateImageName`, params);
+  }
+
+  deleteAsset(fileName: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/file/remove?image=${fileName}`, {});
+  }
+
   getEmailTemplates(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/emailTemplate/GetEmailTemplatesInOuIncludingChildren`, params);
   }
 
   getLandingPages(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/GetLandingPagesInOuIncludingChildren`, params);
+  }
+
+  getLandingPage(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/GetPageForEdit`, params);
+  }
+
+  updateLandingPage(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/landingPage/UpdatePage`, params);
+  }
+
+  createLandingPage(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/CreateLandingPage`, params);
+  }
+
+  saveNewFile(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/File/SaveNewFile`, params);
   }
 
   getDynamicContents(params: any): Observable<any> {

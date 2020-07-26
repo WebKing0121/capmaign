@@ -22,8 +22,12 @@
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger"><i class="fa fa-trash"></i>Delete</button>
-    <button type="button" class="btn btn-primary"><i class="fa fa-save"></i>Rename</button>
+    <button type="button" class="btn btn-danger" [disabled]="loading" (click)="onDelete()">
+      <i class="fa fa-trash"></i>Delete
+    </button>
+    <button type="button" class="btn btn-primary" (click)="onRename()" [disabled]="form.value.name === form.value.oldName">
+      <i class="fa fa-save"></i>Rename
+    </button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="renameModal.hide()">
       <i class="fa fa-times-circle"></i>Close
     </button>

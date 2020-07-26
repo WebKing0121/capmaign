@@ -34,6 +34,8 @@
 
 <app-content-rename-asset-modal #renameModal
   [asset]="selectedAsset"
+  (update)="loadAssets()"
+  (delete)="onClickDelete()"
 ></app-content-rename-asset-modal>
 
 <app-content-create-asset-modal #createAssetModal></app-content-create-asset-modal>

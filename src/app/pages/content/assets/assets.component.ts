@@ -95,6 +95,19 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onConfirmDelete() {
+    this.loading = true;
+    this.contentService.deleteAsset(this.selectedAsset.fileName)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.loadAssets();
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
+
     this.confirmModal.hide();
   }
 

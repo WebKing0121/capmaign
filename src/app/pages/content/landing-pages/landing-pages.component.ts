@@ -7,6 +7,7 @@ import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { LandingPage } from '@app-models/landing-page';
 import { DataSourceChange } from '@app-models/data-source';
+import { NgSelectData } from '@app-models/common';
 
 @Component({
   selector: 'app-content-landing-pages',
@@ -28,6 +29,7 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
   ];
   selected: LandingPage[] = [];
 
+  categories: NgSelectData[];
 
   // confirm Modal
   confirmButtons = [
@@ -43,6 +45,26 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.initTable();
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+    this.contentService.getCategories(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.categories = data.result.map(x => ({ value: `${x.categoryId}`, label: x.category }));
+          } else {
+            this.categories = [];
+          }
+        },
+        error => {
+          console.log('error', error.response);
+        }
+        );
   }
 
   ngAfterViewInit(): void {

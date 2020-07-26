@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LandingPage } from '@app-models/landing-page';
@@ -16,18 +16,23 @@ import { takeUntil } from 'rxjs/operators';
 export class LandingPageModalComponent implements OnInit, OnDestroy {
   @Input() modalType = ModalType.New;
   @Input() landingPage: LandingPage;
+  @Input() categories: NgSelectData[];
   @ViewChild('landingPageModal', { static: false }) landingPageModal;
+  @ViewChild('emailCampaignEditor', { static: false }) emailCampaignEditor;
+
+  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
   ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
 
   fullScreen: boolean;
   dialogClass: string;
-
-  categories: NgSelectData[];
+  landingPageOfDB: any;
   statuses: NgSelectData[];
-
+  externalURL = '';
   form: FormGroup;
+  loading = false;
   constructor(
     private fb: FormBuilder,
     private contentService: ContentService
@@ -52,29 +57,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       { value: 'Published', label: 'Published' },
     ];
 
-    const params = {
-      SortDirection: 'Ascending',
-      maxResultCount: 1000,
-      skipCount: 0,
-      sorting: '',
-    };
-    this.contentService.getCategories(params)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.categories = data.result.map(x => ({ value: `${x.categoryId}`, label: x.category }));
-          } else {
-            this.categories = [];
-          }
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
 
   }
-
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();
@@ -92,20 +76,34 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
         status: '',
         content: '',
       });
+      setTimeout(() => this.landingPageModal.show());
     } else {
+      this.contentService.getLandingPage({ id: this.landingPage.id })
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            this.landingPageOfDB = data.result;
+            const { id, pageNames, externalPageDisplayName, pageDescription, pageStatus, externalURL, pageContent, folderId } = this.landingPageOfDB;
+            this.form.setValue({
+              id,
+              name: pageNames,
+              extName: externalPageDisplayName,
+              description: pageDescription,
+              category: `${folderId}`,
+              status: pageStatus,
+              content: pageContent,
+            });
+            this.externalURL = externalURL;
+            setTimeout(() => this.landingPageModal.show());
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
 
-      const { id, pageNames, externalPageDisplayName, pageDescription, pageStatus, externalURL } = this.landingPage;
-      this.form.setValue({
-        id,
-        name: pageNames,
-        extName: externalPageDisplayName,
-        description: pageDescription,
-        category: '',
-        status: pageStatus,
-        content: '',
-      });
     }
-    setTimeout(() => this.landingPageModal.show());
+
   }
 
   hide() {
@@ -115,5 +113,96 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
   revertFullScreen() {
     this.fullScreen = !this.fullScreen;
     this.dialogClass = 'modal-dialog-centered ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
+  }
+
+  onSave() {
+    if (this.form.invalid) {
+      return;
+    }
+
+    const {
+      id,
+      name,
+      extName,
+      description,
+      category,
+      status,
+    } = this.form.value;
+
+    if (this.modalType === ModalType.New) {
+      const createParam = {
+        externalPageDisplayName: extName,
+        externalURL: '',
+        folderId: category ? Number(category) : 1,
+        pageContent: this.emailCampaignEditor.getValue(),
+        pageDescription: description,
+        pageNames: name,
+        pageStatus: status,
+        personalization: '',
+      };
+      this.loading = true;
+      this.contentService.createLandingPage(createParam)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            this.saveNewFile();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+
+    } else {
+      const updateParam = {
+        ...this.landingPageOfDB,
+        externalPageDisplayName: extName,
+        folderId: category ? Number(category) : 1,
+        pageContent: this.emailCampaignEditor.getValue(),
+        pageDescription: description,
+        pageNames: name,
+        pageStatus: status,
+      };
+      this.loading = true;
+      this.contentService.updateLandingPage(updateParam)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            this.saveNewFile();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+
+    }
+  }
+
+  saveNewFile() {
+    this.loading = true;
+    const params = {
+      fileName: `${this.form.value.extName}.html`
+    }
+    this.contentService.saveNewFile(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.save.emit();
+          this.hide();
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          this.save.emit();
+          this.hide();
+          console.log('error', error);
+        }
+      );
+
+  }
+
+  onDelete() {
+    this.delete.emit();
   }
 }
