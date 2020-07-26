@@ -37,6 +37,8 @@
   [modalType]="modalType"
   [eventList]="selectedEventList"
   [typeList]="typeList"
+  (save)="loadTableData()"
+  (delete)="onClickDeleteFromEdit()"
 ></app-events-event-list-modal>
 
 <app-confirm-modal #confirmModal

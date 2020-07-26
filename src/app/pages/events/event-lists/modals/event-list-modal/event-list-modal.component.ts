@@ -1,7 +1,10 @@
-import { Component, OnInit, ViewChild, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { NgSelectData } from '@app-models/common';
+import { EventService } from '@app-core/services/event.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-events-event-list-modal',
@@ -14,11 +17,17 @@ export class EventListModalComponent implements OnInit {
   @Input() modalType = ModalType.New;
   @Input() eventList: any;
   @Input() typeList: NgSelectData[] = [];
+  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
+  
   ModalType = ModalType;
 
+  private unsubscribe$ = new Subject();
   form: FormGroup;
 
+  loading = false;
   constructor(
+    private eventService: EventService,
     private fb: FormBuilder
   ) {
     this.form = this.fb.group({
@@ -62,7 +71,34 @@ export class EventListModalComponent implements OnInit {
 
   // event form submit
   onSaveList() {
-    console.log(this.form.value);
+    if (this.modalType === ModalType.New) {
+      const createParam = {
+        countrecords: '',
+        description: this.form.value.description,
+        folderId: 1,
+        name: this.form.value.name,
+        recordrange: '-',
+        skiprecords: '',
+        source: 'All Records',
+        type: this.form.value.type,
+      };
+      this.eventService.createEventList(createParam)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            this.loading = false;
+            this.save.emit();
+            this.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    }
   }
 
+  onDelete() {
+    this.delete.emit();
+  }
 }

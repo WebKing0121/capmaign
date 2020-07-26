@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 import { DataListType } from '@app-core/enums/data-list-type.enum';
 import { DateFormatPipe } from '../../../pipes/date-format.pipe';
 import { DataSourceChange } from '@app-models/data-source';
+import { EventService } from '@app-core/services/event.service';
 @Component({
   selector: 'app-add-to-list-modal',
   templateUrl: './add-to-list-modal.component.html',
@@ -57,6 +58,7 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
   ];
 
   constructor(
+    private eventService: EventService,
     private dataService: DataService,
     private store: Store<AppState>
   ) {
@@ -98,7 +100,7 @@ export class AddToListModalComponent implements OnInit, AfterViewInit, OnDestroy
         skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
         sorting: '',
       };
-      this.dataService.getEventLists(params)
+      this.eventService.getEventLists(params)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           data => {

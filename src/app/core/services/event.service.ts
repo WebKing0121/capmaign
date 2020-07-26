@@ -28,4 +28,12 @@ export class EventService {
     // https://c2cstaging.azurewebsites.net/api/services/app/event/GetAllEventCampaignsforPaging
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/event/GetAllEventCampaignsforPaging`, params);
   }
+
+  getEventLists(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=true`, params);
+  }
+
+  createEventList(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/AddList`, params);
+  }
 }

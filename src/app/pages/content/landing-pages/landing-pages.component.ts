@@ -39,6 +39,7 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
   modalType = ModalType.New;
   landingPage: LandingPage;
   loading = false;
+  deleteFrom = 0;
   constructor(
     private contentService: ContentService
   ) { }
@@ -101,6 +102,12 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 

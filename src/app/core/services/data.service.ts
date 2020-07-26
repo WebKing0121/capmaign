@@ -46,13 +46,10 @@ export class DataService {
     return of(ListsMockData);
   }
 
-  getEventLists(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=true`, params);
-  }
-
   getTypeList(): Observable<any> {
     return of([
       { value: 'Mailing', label: 'Mailing' },
+      { value: 'Exclusion', label: 'Exclusion' },
       { value: 'SMS', label: 'SMS' },
     ]);
   }

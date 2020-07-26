@@ -76,6 +76,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loading = false;
   loadingEvents = false;
+  deleteFrom = 0;
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -185,7 +186,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
       sorting: '',
     };
     this.loading = true;
-    this.dataService.getEventLists(params)
+    this.eventService.getEventLists(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
@@ -266,6 +267,12 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
