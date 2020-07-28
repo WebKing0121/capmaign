@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, ViewEncapsulation, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { NgSelectData } from '@app-models/common';
@@ -12,14 +12,14 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./event-list-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class EventListModalComponent implements OnInit {
+export class EventListModalComponent implements OnInit, OnDestroy {
   @ViewChild('eventListModal', { static: false }) eventListModal;
   @Input() modalType = ModalType.New;
   @Input() eventList: any;
   @Input() typeList: NgSelectData[] = [];
   @Output() save: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
-  
+
   ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
@@ -40,6 +40,11 @@ export class EventListModalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   show() {

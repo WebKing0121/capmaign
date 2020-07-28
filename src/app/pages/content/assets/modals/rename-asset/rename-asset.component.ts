@@ -54,11 +54,9 @@ export class ContentRenameAssetModalComponent implements OnInit, OnDestroy {
 
   onRename() {
     this.loading = true;
-    this.asset.imgPhysicalPath
     const params = {
       ...this.asset,
       fileName: this.form.value.name,
-      // hostDomain: "http://storage-staging.campaigntocash.com/c2cuat/"
     };
     this.contentService.renameAsset(params)
       .pipe(takeUntil(this.unsubscribe$))

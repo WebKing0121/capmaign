@@ -19,7 +19,7 @@ export class ContentService {
   constructor(private http: HttpClient) { }
 
   getCategories(params: any): Observable<any> {
-    return of(LandingPageCategoryMock);
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/GetLandingPageCategoryInOuIncludingChildren`, params);
   }
 
   getLandingPageCategories(): Observable<any> {
@@ -45,6 +45,22 @@ export class ContentService {
 
   getEmailTemplates(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/emailTemplate/GetEmailTemplatesInOuIncludingChildren`, params);
+  }
+
+  getEmailTemplate(id: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/emailTemplate/GetEmailTemplate`, { id });
+  }
+
+  updateEmailTemplate(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/emailTemplate/UpdateTemplate`, params);
+  }
+
+  createEmailTemplate(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/emailTemplate/CreateEmailTemplate`, params);
+  }
+
+  deleteEmailTemplate(params: any): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/emailTemplate/DeleteTemplate`, params);
   }
 
   getLandingPages(params: any): Observable<any> {

@@ -65,7 +65,7 @@ export class DataCustomFieldModalComponent implements OnInit, OnDestroy {
         if (val === this.defaultValueType) {
           this.form.get('defaultValue').setValue(this.defaultValue);
         } else {
-          if (val === 'Date'){
+          if (val === 'Date') {
             this.form.get('defaultValue').setValue(null);
           } else if (val === 'Text') {
             this.form.get('defaultValue').setValue('');

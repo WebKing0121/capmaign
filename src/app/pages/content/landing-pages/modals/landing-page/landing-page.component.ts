@@ -83,7 +83,10 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
         .subscribe(
           data => {
             this.landingPageOfDB = data.result;
-            const { id, pageNames, externalPageDisplayName, pageDescription, pageStatus, externalURL, pageContent, folderId } = this.landingPageOfDB;
+            const {
+              id, pageNames, externalPageDisplayName, pageDescription,
+              pageStatus, externalURL, pageContent, folderId
+            } = this.landingPageOfDB;
             this.form.setValue({
               id,
               name: pageNames,
@@ -183,7 +186,8 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
     this.loading = true;
     const params = {
       fileName: `${this.form.value.extName}.html`
-    }
+    };
+
     this.contentService.saveNewFile(params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(

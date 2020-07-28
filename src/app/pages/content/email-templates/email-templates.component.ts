@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild, TemplateRef } from '@angular/core';
 import { EmailTemplate } from '@app-models/email-template';
 import { Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
@@ -6,6 +6,7 @@ import { ContentService } from '@app-core/services/content.service';
 import { takeUntil } from 'rxjs/operators';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { DataSourceChange } from '@app-models/data-source';
+import { NgSelectData } from '@app-core/models/common';
 
 @Component({
   selector: 'app-content-email-templates',
@@ -15,12 +16,12 @@ import { DataSourceChange } from '@app-models/data-source';
 export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('templateModal', { static: false }) templateModal;
-
+  @ViewChild('categoryTemplate', { static: false }) categoryTemplate: TemplateRef<any>;
   private unsubscribe$ = new Subject();
 
   templates: EmailTemplate[];
   tableSource: DataTableSource<EmailTemplate> = new DataTableSource<EmailTemplate>(50);
-  totalCount: number;
+  totalCount = 0;
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
@@ -34,8 +35,9 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
 
   modalType = ModalType.New;
   template: EmailTemplate;
-
+  categories: NgSelectData[];
   loading = false;
+  deleteFrom = 0;
 
   constructor(
     private contentService: ContentService
@@ -43,13 +45,14 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
 
   ngOnInit(): void {
     this.initTable();
+    this.loadCategory();
   }
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'] },
       { name: 'Description', prop: 'description', sortable: true },
-      { name: 'Category', prop: 'categoryId', sortable: true },
+      { name: 'Category', prop: 'categoryId', sortable: true, custom: true, template: this.categoryTemplate },
       { name: 'Status', prop: 'pageStatus', sortable: true },
     ];
     this.tableSource.setColumns(columns);
@@ -78,11 +81,34 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
   }
 
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
   onConfirmDelete() {
-    this.confirmModal.hide();
+    const params = {
+      emailTemplateIds: this.deleteFrom === 0 ?
+        this.selected.map(x => x.id) : [this.template.id]
+    };
+    console.log(params);
+    this.loading = true;
+    this.contentService.deleteEmailTemplate(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.loadTableData();
+          this.loading = false;
+          this.confirmModal.hide();
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 
   initTable() {
@@ -127,5 +153,39 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
           console.log('error', error.response);
         }
       );
+  }
+
+  loadCategory() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+
+    this.contentService.getCategories(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.categories = data.result.items.map(x => ({ value: `${x.id}`, label: x.names }));
+          } else {
+            this.categories = [];
+          }
+          console.log(this.categories);
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  getCategory(categoryId: number): string {
+    const category = `${categoryId}`;
+    const findOne = this.categories.find(x => x.value === category);
+    if (findOne) {
+      return findOne.label;
+    }
+    return category;
   }
 }
