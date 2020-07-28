@@ -40,8 +40,7 @@ export class SocialService {
     return of(SocialChatMessagesMockData);
   }
 
-  getSocialEngagers(): Observable<any> {
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/chat-messages/${userId}`);
-    return of(SocialEngagersMockData);
+  getSocialEngagers(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/record/GetRecordsInOuIncludingChildren`, params);
   }
 }

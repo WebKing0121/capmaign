@@ -20,18 +20,11 @@ export class SocialEngagersComponent implements OnInit, OnDestroy, AfterViewInit
     { label: 'New Engager', icon: 'icon-plus-circle', action: () => this.onNewEngager() },
   ];
 
-  showSearch: boolean;
-
-  lastId = 3;
-  createEnabled = false;
-
   destroy$ = new Subject();
 
   loading = false;
-  submitted = false;
-  error = '';
   engagers: any[];
-
+  totalCount = 0;
   tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onNewEngager() },
@@ -51,19 +44,7 @@ export class SocialEngagersComponent implements OnInit, OnDestroy, AfterViewInit
   ) { }
 
   ngOnInit(): void {
-    this.showSearch = false;
-    this.loading = true;
-    this.socialService.getSocialEngagers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        data => {
-          this.engagers = data.result.items;
-          this._updateTable(this.engagers);
-        },
-        error => {
-          console.log('error', error);
-          this.loading = false;
-        });
+    this.initTable();
   }
 
   ngAfterViewInit() {
@@ -103,10 +84,6 @@ export class SocialEngagersComponent implements OnInit, OnDestroy, AfterViewInit
     setTimeout(() => this.engagerModal.show());
   }
 
-  onClickSearchShow() {
-    this.showSearch = !this.showSearch;
-  }
-
   onConfirmDelete() {
 
   }
@@ -115,22 +92,42 @@ export class SocialEngagersComponent implements OnInit, OnDestroy, AfterViewInit
     this.confirmModal.show();
   }
 
-  _updateTable(engagers: any[]) {
-    this.tableSource.next(engagers.slice(0, 50), engagers.length);
-
+  initTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          engagers.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          engagers.length
-        );
+        if (change.pagination !== 'totalCount') {
+          this.loadTableData();
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.destroy$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+
+  loadTableData() {
+    this.loading = true;
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
+    this.socialService.getSocialEngagers(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.engagers = data.result.items;
+          this.totalCount = data.result.totalCount;
+          this.tableSource.next(this.engagers, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

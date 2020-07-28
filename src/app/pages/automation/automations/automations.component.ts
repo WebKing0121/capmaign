@@ -44,10 +44,9 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   loading = false;
+  deleteFrom = 0;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private automationService: AutomationService
   ) {
     this.automations = [];
@@ -111,7 +110,13 @@ export class AutomationsComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedAutomation = null;
     setTimeout(() => this.automationModal.create());
   }
+
   onDeleteAutomation() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+  onDeleteAutomationFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 

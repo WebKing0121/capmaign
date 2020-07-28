@@ -137,7 +137,7 @@ export class TriggerAutomationsComponent implements OnInit, OnDestroy, AfterView
       skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
       sorting: ''
     };
-    this.automationService.getAutomations(params)
+    this.automationService.getTriggerAutomations(params)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         data => {

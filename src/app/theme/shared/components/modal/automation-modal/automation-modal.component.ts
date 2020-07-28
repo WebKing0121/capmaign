@@ -1,4 +1,8 @@
-import { Component, OnInit, ViewChild, Input, ViewEncapsulation, ChangeDetectorRef, AfterViewInit, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, ViewChild, Input, ViewEncapsulation,
+  ChangeDetectorRef, AfterViewInit,
+  OnDestroy, Output, EventEmitter
+} from '@angular/core';
 import * as go from 'gojs';
 import { DiagramComponent, PaletteComponent, DataSyncService } from 'gojs-angular';
 import * as _ from 'lodash';
@@ -37,6 +41,8 @@ export class AutomationModalComponent implements OnInit, AfterViewInit, OnDestro
   @ViewChild('myPalette', { static: true }) public myPaletteComponent: PaletteComponent;
   @Input() modalType = 'new';
   @Input() automation: Automation;
+  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
 
   automationForm: FormGroup;
   private unsubscribe$ = new Subject();

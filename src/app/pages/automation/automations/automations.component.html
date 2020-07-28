@@ -22,6 +22,8 @@
 <app-automation-modal #automationModal
   [modalType]="modalType"
   [automation]="selectedAutomation"
+  (save)="loadTableData()"
+  (delete)="onDeleteAutomationFromEdit()"
 ></app-automation-modal>
 
 <app-confirm-modal #confirmModal
