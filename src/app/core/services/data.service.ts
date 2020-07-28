@@ -232,6 +232,7 @@ export class DataService {
   buildQueryAsLinq(filterConditions: any[], filterColumns: any[]) {
     // tslint:disable-next-line
     // booleanQueryAsLinq: "Amount == 100 AND string.Compare(AccountName,  "user account", true) == 0 AND AccountOptOut == true AND DOB == Convert.ToDateTime("07/01/2020")"
+    console.log(filterConditions);
     return '';
   }
 

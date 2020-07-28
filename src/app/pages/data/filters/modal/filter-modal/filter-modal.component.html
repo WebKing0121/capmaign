@@ -10,7 +10,7 @@
     </button>
   </div>
 
-  <div class="app-modal-body">
+  <div class="app-modal-body position-relative">
     <form [formGroup]="form" (ngSubmit)="onSave()">
       <div class="row">
         <div class="col-md-6">
@@ -123,19 +123,22 @@
         </div>
       </div>
     </div>
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-primary float-left" (click)="onRun()"><i class="fa fa-filter"></i>Run</button>
+    <button type="button" class="btn btn-primary float-left" [disabled]="loading" (click)="onRun()"><i class="fa fa-filter"></i>Run</button>
     
     <button type="button" class="btn btn-secondary float-right" data-dismiss="modal" (click)="filterModal.hide()">
       <i class="fa fa-times-circle"></i>Close
     </button>
-    <button type="button" class="btn btn-primary float-right" (click)="onSave()">
+    <button type="button" class="btn btn-primary float-right" [disabled]="loading || form.invalid" (click)="onSave()">
       <i class="fa"
         [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
     </button>
-    <button type="button" class="btn btn-danger float-right" *ngIf="modalType === ModalType.Edit">
+    <button type="button" class="btn btn-danger float-right" [disabled]="loading" (click)="onDelete()" *ngIf="modalType === ModalType.Edit">
       <i class="fa fa-trash"></i>Delete
     </button>
   </div>

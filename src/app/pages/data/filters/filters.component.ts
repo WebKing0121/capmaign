@@ -40,8 +40,9 @@ export class DataFiltersComponent implements OnInit, AfterViewInit, OnDestroy {
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
-
+  deleteFrom = 0;
   loading = false;
+
   constructor(
     private dataService: DataService
   ) {
@@ -140,8 +141,13 @@ export class DataFiltersComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => this.filterModal.show());
   }
 
-
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 

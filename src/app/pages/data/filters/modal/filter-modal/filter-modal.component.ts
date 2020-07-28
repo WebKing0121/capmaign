@@ -19,6 +19,7 @@ export class DataFilterModalComponent implements OnInit, OnDestroy {
   @Input() modalType = ModalType.New;
   @Output() save: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
+
   ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
@@ -157,6 +158,10 @@ export class DataFilterModalComponent implements OnInit, OnDestroy {
       }]
     });
     this.onConditionChanged('');
+  }
+
+  onDelete() {
+    this.delete.emit();
   }
 
   onSave() {
