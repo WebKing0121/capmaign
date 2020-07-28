@@ -33,7 +33,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   selected: Event[] = [];
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateEvent() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteEvent(), color: 'red', disabled: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
     { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), disabled: true },
   ];
 
@@ -48,35 +48,21 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   displayNameList: NgSelectData[];
   folderList: NgSelectData[];
-
+  senders: any[];
   folders: any[]; // data from API;
-  dataLoaded: number;
 
   loading = false;
+  deleteFrom = 0;
   constructor(
     private eventService: EventService
   ) {
     this.totalCount = 0;
     this.events = [];
-    this.dataLoaded = 0;
   }
 
   ngOnInit(): void {
-
-    this.eventService.getDisplayFrom()
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.displayNameList = data;
-          this.dataLoaded++;
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
     this.initTable();
-
+    this.initDisplayFrom();
   }
 
   ngAfterViewInit(): void {
@@ -124,8 +110,13 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
     setTimeout(() => this.eventModal.show());
   }
 
+  onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
 
-  onDeleteEvent() {
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
@@ -139,6 +130,26 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   getDisplayFrom(value: string | null) {
     return value ? this.displayNameList.find(x => x.value === value).label : '';
+  }
+
+  initDisplayFrom() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: 'Id',
+    };
+    this.eventService.getEventSender(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.senders = data.result.items;
+          this.displayNameList = this.senders.map(x => ({ label: x.senderName, value: `${x.id}` }));
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
   }
 
   initTable() {

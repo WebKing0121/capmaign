@@ -22,9 +22,23 @@ export class ContentService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/GetLandingPageCategoryInOuIncludingChildren`, params);
   }
 
+  deleteCategory(params: any): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/landingPage/deleteLandingPageCategory`, params);
+  }
+
+  createCategory(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/CreateLandingPageCategory`, params);
+  }
+
+  updateCategory(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/landingPage/CreateLandingPageCategory`, params);
+  }
+
   getLandingPageCategories(): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/GetLandingPageCategoryInOuIncludingChildren`);
   }
+
+
 
   getLandingPageTemplates(params: any): Observable<any> {
     // tslint:disable-next-line

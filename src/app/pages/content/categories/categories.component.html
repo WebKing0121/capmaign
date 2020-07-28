@@ -12,13 +12,15 @@
   </div>
 </div>
 
-<app-confirm-modal #confirmModal
-  modalTitle="Confirm" modalMessage="Do you want to delete the selected categories?"
-  [buttons]="confirmButtons"
-></app-confirm-modal>
-
-
 <app-content-category-modal #categoryModal
   [modalType]="modalType"
   [category]="category"
+  (save)="loadTableData()"
+  (delete)="onClickDeleteFromEdit()"
 ></app-content-category-modal>
+
+<app-confirm-modal #confirmModal
+  modalTitle="Confirm"
+  modalMessage="Do you want to delete the selected categories?"
+  [buttons]="confirmButtons"
+></app-confirm-modal>

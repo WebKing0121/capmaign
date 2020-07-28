@@ -17,7 +17,7 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
   @ViewChild('categoryModal', { static: false }) categoryModal;
 
   private unsubscribe$ = new Subject();
-
+  deleteFrom = 0;
   categories: ContentCategory[];
   tableSource: DataTableSource<ContentCategory> = new DataTableSource<ContentCategory>(50);
   totalCount: number;
@@ -47,8 +47,8 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'Category Id', prop: 'categoryId', sortable: true, cellClass: ['cell-hyperlink'] },
-      { name: 'Category', prop: 'category', sortable: true },
+      { name: 'Category Id', prop: 'id', sortable: true, cellClass: ['cell-hyperlink'] },
+      { name: 'Category', prop: 'names', sortable: true },
     ];
     this.tableSource.setColumns(columns);
   }
@@ -76,11 +76,34 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
   onConfirmDelete() {
-    this.confirmModal.hide();
+    const params = {
+      ids: this.deleteFrom === 0 ?
+        this.selected.map(x => x.id) : [this.category.id]
+    };
+    this.loading = true;
+    this.contentService.deleteCategory(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          this.loadTableData();
+          this.loading = false;
+          this.confirmModal.hide();
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 
   initTable() {
@@ -111,8 +134,8 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
       .subscribe(
         data => {
           if (data.result) {
-            this.categories = data.result;
-            this.totalCount = this.categories.length;
+            this.categories = data.result.items;
+            this.totalCount = data.result.totalCount;
           } else {
             this.categories = [];
             this.totalCount = 0;

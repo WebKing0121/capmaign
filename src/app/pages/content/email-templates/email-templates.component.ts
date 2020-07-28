@@ -17,6 +17,7 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('templateModal', { static: false }) templateModal;
   @ViewChild('categoryTemplate', { static: false }) categoryTemplate: TemplateRef<any>;
+
   private unsubscribe$ = new Subject();
 
   templates: EmailTemplate[];

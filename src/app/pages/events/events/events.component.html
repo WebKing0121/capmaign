@@ -24,6 +24,8 @@
   [event]="selectedEvent"
   [displayNameList]="displayNameList"
   [folderList]="folderList"
+  (save)="loadTableData()"
+  (delete)="onClickDeleteFromEdit()"
 ></app-events-event-modal>
 
 <app-confirm-modal #confirmModal

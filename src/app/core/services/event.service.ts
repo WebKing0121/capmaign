@@ -19,15 +19,32 @@ export class EventService {
 
   getDisplayFrom() {
     return of([
-      { value: 'campaigntocash', label: 'CampaignToCash'},
-      { value: 'palskem', label: 'Palskem'},
+      { value: 'campaigntocash', label: 'CampaignToCash' },
+      { value: 'palskem', label: 'Palskem' },
     ]);
   }
 
   getEvents(params: any): Observable<any> {
-    // https://c2cstaging.azurewebsites.net/api/services/app/event/GetAllEventCampaignsforPaging
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/event/GetAllEventCampaignsforPaging`, params);
   }
+
+  getEvent(id: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/event/GetEventForEdit`, { id });
+  }
+
+  createEvent(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/event/CreateEvent`, params);
+  }
+
+  deleteEvent(params: any): Observable<any> {
+    // should be updated.
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/event/GetAllEventCampaignsforPaging`, params);
+  }
+
+  getEventSender(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sender/GetSenderInOuIncludingChildren`, params);
+  }
+
 
   getEventLists(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=true`, params);
