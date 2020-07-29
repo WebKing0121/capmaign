@@ -391,41 +391,41 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'ID', prop: 'id', sortable: true },
-      { name: 'BOUNCE TYPE', prop: 'bounceType', sortable: true },
-      { name: 'EMAIL ADDRESS', prop: 'emailAddress', sortable: true },
-      { name: 'MESSAGE ID', prop: 'messageId', sortable: true },
-      { name: 'SUB-BOUNCE TYPE', prop: 'subBounceType', sortable: true },
+      { name: 'Id', prop: 'id', sortable: true },
+      { name: 'Bounce Type', prop: 'bounceType', sortable: true },
+      { name: 'Email Address', prop: 'emailAddress', sortable: true },
+      { name: 'Message Id', prop: 'messageId', sortable: true },
+      { name: 'Sub-Bounce Type', prop: 'subBounceType', sortable: true },
     ];
     this.tableSource.setColumns(columns);
 
     const topPerformingColumns: DataTableColumn[] = [
       { name: 'Name', prop: 'name', sortable: true, width: 60, maxWidth: 90 },
-      { name: 'DATE & TIME', prop: 'dateTime', sortable: true, width: 60, maxWidth: 170 },
-      { name: 'SENT', prop: 'sent', sortable: true, width: 60, maxWidth: 60 },
-      { name: 'OPEN', prop: 'open', sortable: true, width: 60, maxWidth: 60 },
-      { name: 'CLICKS', prop: 'clicks', sortable: true, width: 60, maxWidth: 60 },
-      { name: 'BOUNCES', prop: 'bounces', sortable: true, width: 60, maxWidth: 60 },
-      { name: 'UNSUBSCRIBE', prop: 'unsubscribe', sortable: true, width: 60, maxWidth: 100 },
+      { name: 'Date & Time', prop: 'dateTime', sortable: true, width: 60, maxWidth: 170 },
+      { name: 'Sent', prop: 'sent', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'Open', prop: 'open', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'Clicks', prop: 'clicks', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'Bounces', prop: 'bounces', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'Unsubscribe', prop: 'unsubscribe', sortable: true, width: 60, maxWidth: 100 },
     ];
     this.topPerformingTableSource.setColumns(topPerformingColumns);
 
     const upComingCampColumns: DataTableColumn[] = [
       { name: 'Campaign', prop: 'name', sortable: true },
       { name: 'Subject', prop: 'subject', sortable: true },
-      { name: 'Schedule For', prop: 'scheduled', sortable: true },
+      { name: 'Scheduled On', prop: 'scheduled', sortable: true },
       { name: 'Status', prop: 'status', sortable: true },
     ];
     this.upComingCampTableSource.setColumns(upComingCampColumns);
 
     const recentEventColumns: DataTableColumn[] = [
       { name: 'Campaign Name', prop: 'name', sortable: true },
-      { name: 'DATE & TIME', prop: 'dateTime', sortable: true },
-      { name: 'INVITED', prop: 'invited', sortable: true },
-      { name: 'REGISTERED', prop: 'registered', sortable: true },
-      { name: 'ATTEENDEES', prop: 'atteendees', sortable: true },
-      { name: 'FEEDBACK', prop: 'feedback', sortable: true },
-      { name: 'UNSUBSCRIBE', prop: 'unsubscribe', sortable: true },
+      { name: 'Date & Time', prop: 'dateTime', sortable: true },
+      { name: 'Invited', prop: 'invited', sortable: true },
+      { name: 'Registered', prop: 'registered', sortable: true },
+      { name: 'Atteendees', prop: 'atteendees', sortable: true },
+      { name: 'Feedback', prop: 'feedback', sortable: true },
+      { name: 'Unsubscribe', prop: 'unsubscribe', sortable: true },
     ];
     this.recentEventTableSource.setColumns(recentEventColumns);
 
