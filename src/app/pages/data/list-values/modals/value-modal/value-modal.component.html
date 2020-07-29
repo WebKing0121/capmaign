@@ -1,0 +1,82 @@
+<app-ui-modal #valueModal dialogClass="modal-dialog-centered modal-list-values modal-lg">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'New' : 'Edit'}} Value</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="valueModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body position-relative">
+    <form [formGroup]="form" (ngSubmit)="onSave()">
+      <div class="row custom-field-input-section">
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Table Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Table Name</span>
+            </div>
+            <ng-select [ngClass]="'ng-select'" formControlName="tableName" [options]="tables"></ng-select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Display Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">DisplayName</span>
+            </div>
+            <input type="text" class="form-control" formControlName="displayName">
+          </div>
+        </div>
+
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Value</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide">
+              <span class="input-group-text">Value</span>
+            </div>
+            <input type="text" class="form-control" formControlName="value">
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="row mt-3">
+      <div class="col-12 card-data-list-values">
+        <app-datatable
+          [title]="''"
+          [showHeader]="false"
+          [dropShadow]="false"
+          [loading]="loading"
+          [buttons]="[]"
+          [dataSource]="tableSource"
+          [rowHeight]="35"
+          [selectable]="false"
+          [headerHeight]="40"
+          [selectionType]="'single'"
+          (activate)="onActive($event)"
+        ></app-datatable>
+      </div>
+    </div>
+    <div class="spinner-border text-primary center-position" *ngIf="saving" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" (click)="onDelete()" [disabled]="saving" *ngIf="modalType === ModalType.Edit">
+      <i class="fa fa-trash"></i>Delete
+    </button>
+    <button type="button" class="btn btn-primary" [disabled]="saving" (click)="onSave()">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="valueModal.hide()">
+      <i class="fa fa-times-circle"></i>Close</button>
+  </div>
+</app-ui-modal>
+
+<ng-template #statusTemplate let-row="row" let-value let-i="index">
+  <span class="user-active">{{value ? 'Activate' : 'Disabled'}}</span>
+</ng-template>

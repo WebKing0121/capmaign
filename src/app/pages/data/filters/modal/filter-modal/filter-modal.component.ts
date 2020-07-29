@@ -83,6 +83,8 @@ export class DataFilterModalComponent implements OnInit, OnDestroy {
 
   onConditionChanged(event) {
     setTimeout(() => {
+      console.log('condition updated');
+      this.updateConditionsForDataType();
       const queryString = this.dataService.buildQuery(this.filterConditions);
       this.form.controls.booleanQuery.setValue(queryString);
     });
@@ -131,9 +133,11 @@ export class DataFilterModalComponent implements OnInit, OnDestroy {
 
   onClickAddCondition() {
     const newId = this.filterConditions.length + 1;
+    const fieldType = this.filterColumns.find(x => x.name === this.filterFields[0].value);
     this.filterConditions.push({
       id: newId,
       type: 'Item',
+      dataType: fieldType.dataType,
       parentOp: newId === 1 ? 'None' : 'AND',
       fieldName: this.filterFields[0].value,
       conditionOp: this.filterOperators[0].value,
@@ -212,14 +216,125 @@ export class DataFilterModalComponent implements OnInit, OnDestroy {
         }
       );
   }
+  getDateFormat(dateObj) {
+    let date = '';
+    if (dateObj.month < 10) {
+      date += `0${dateObj.month}/`;
+    } else {
+      date += `${dateObj.month}/`;
+    }
+    if (dateObj.day < 10) {
+      date += `0${dateObj.day}/`;
+    } else {
+      date += `${dateObj.day}/`;
+    }
+    date += `${dateObj.year}`;
+    return date;
+  }
+
+  updateConditionsForDataType() {
+    this.filterConditions = this.filterConditions.map(x => {
+      if (x.type === 'Item') {
+        const fieldType = this.filterColumns.find(y => y.id === x.fieldName);
+        if (fieldType) {
+          const dataType = fieldType.dataType;
+          const dateValue = { year: 0, month: 0, day: 0 };
+          if (dataType === 'Date') {
+            if (typeof x.value === 'string') {
+              const tmpArr = x.value.split('/');
+              dateValue.year = Number(tmpArr[2]);
+              dateValue.month = Number(tmpArr[0]);
+              dateValue.day = Number(tmpArr[1]);
+              return {
+                ...x,
+                dataType,
+                value: dateValue
+              };
+            } else {
+              return {
+                ...x,
+                dataType,
+              };
+            }
+
+          } else {
+            if (typeof x.value === 'object') {
+              return {
+                ...x,
+                dataType,
+                value: this.getDateFormat(x.value)
+              };
+            } else {
+              return {
+                ...x,
+                dataType,
+              };
+            }
+
+          }
+
+        } else {
+          return {
+            ...x,
+            dataType: 'unknown',
+          };
+        }
+      } else {
+        x.children = x.children.map(xx => {
+          const fieldType = this.filterColumns.find(yy => yy.name === xx.fieldName);
+          if (fieldType) {
+            const dataType = fieldType.dataType;
+            const dateValue = { year: 0, month: 0, day: 0 };
+            if (dataType === 'Date') {
+              if (typeof xx.value === 'string') {
+                const tmpArr = xx.value.split('/');
+                dateValue.year = Number(tmpArr[2]);
+                dateValue.month = Number(tmpArr[0]);
+                dateValue.day = Number(tmpArr[1]);
+                return {
+                  ...xx,
+                  dataType,
+                  value: dateValue
+                };
+              } else {
+                return {
+                  ...xx,
+                  dataType,
+                };
+              }
+            } else {
+              if (typeof xx.value === 'object') {
+                return {
+                  ...xx,
+                  dataType,
+                  value: this.getDateFormat(xx.value)
+                };
+              } else {
+                return {
+                  ...xx,
+                  dataType,
+                };
+              }
+            }
+          } else {
+            return {
+              ...xx,
+              dataType: 'unknown',
+            };
+          }
+        });
+        return x;
+      }
+    });
+    console.log(this.filterConditions);
+  }
 
   show() {
     if (this.modalType === ModalType.Edit) {
-      console.log(this.filter);
-
       const { id, name, description, booleanQuery, booleanQueryAsString, booleanQueryAsLinq } = this.filter;
       this.form.setValue({ id, name, description, booleanQuery, booleanQueryAsString, booleanQueryAsLinq });
       this.filterConditions = this.dataService.analysisQuery(booleanQuery);
+      this.updateConditionsForDataType();
     } else {
       this.form.reset();
       this.filterConditions = [];

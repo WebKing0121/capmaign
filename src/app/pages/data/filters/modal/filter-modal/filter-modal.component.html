@@ -75,9 +75,19 @@
                 
                 <div class="filter-value">
                   <input type="text" (ngModelChange)="onConditionChanged($event)"
-                    *ngIf="item.conditionOp !== 'is_null' && item.conditionOp !== 'is_not_null'"
+                    *ngIf="item.conditionOp !== 'is_null' && item.conditionOp !== 'is_not_null' && (item.dataType==='Numeric' || item.dataType==='Text') "
                     placeholder="Condition Value..."
                     [(ngModel)]="item.value" />
+                  <div *ngIf="item.conditionOp !== 'is_null' && item.conditionOp !== 'is_not_null' && item.dataType==='Date' ">
+                    <input type="text" (ngModelChange)="onConditionChanged($event)"
+                      value="MM/DD/YYYY"
+                      placeholder="Condition Value..."
+                      [(ngModel)]="item.value" ngbDatepicker #d="ngbDatepicker" (focus)="d.open()"/>
+                  </div>
+                  <select (ngModelChange)="onConditionChanged($event)" [(ngModel)]="item.value" *ngIf="item.dataType==='Boolean' ">
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                  </select>
                 </div>
                 <button class="filter-remove" (click)="onClickRemoveCondition(item)">
                   <i class="fa fa-trash"></i>
@@ -107,10 +117,19 @@
                       </select>
                     </div>
                     <div class="filter-value">
-                      <input (ngModelChange)="onConditionChanged($event)" type="text"
-                        *ngIf="subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null'"
+                      <input type="text" (ngModelChange)="onConditionChanged($event)"
+                        *ngIf="subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null' && (subItem.dataType==='Numeric' || subItem.dataType==='Text') "
                         placeholder="Condition Value..."
                         [(ngModel)]="subItem.value" />
+                      <div *ngIf="subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null' && subItem.dataType==='Date' ">
+                        <input type="text" (ngModelChange)="onConditionChanged($event)"
+                          placeholder="Condition Value..."
+                          [(ngModel)]="subItem.value" ngbDatepicker #d="ngbDatepicker" (focus)="d.open()"/>
+                      </div>
+                      <select (ngModelChange)="onConditionChanged($event)" [(ngModel)]="subItem.value" *ngIf="subItem.dataType==='Boolean' ">
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                      </select>
                     </div>
                     <button class="filter-remove" (click)="onClickRemoveConditionInGroup(item, subItem)">
                       <i class="fa fa-trash"></i>

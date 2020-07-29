@@ -17,6 +17,7 @@ import { EventsMockData } from '@app-fake-db/events-mock';
 import { DataFiltersMock, filterColumnsMock } from '@app-fake-db/data-filters-mock';
 import { ListValuesMock } from '@app-fake-db/data-list-values-mock';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,6 +37,10 @@ export class DataService {
 
   getListsOfRecords(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListsInOuIncludingChildren?isEventList=false`, params);
+  }
+
+  getValuesByTable(tableName: string): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/listOfValues/GetByDropDownAllValues?tableName=${tableName}`);
   }
 
   addList(params: any): Observable<any> {
@@ -146,6 +151,9 @@ export class DataService {
   }
 
   analysisQuery(query: string) {
+    // cast(DOB as date) -> DOB
+    query = query.replace(/cast\(/g, '');
+    query = query.replace(/ as date\)/g, '');
     const r1 = this.splitArray(query);
     const { brakets, variables, parentOps, conditionOps } = r1;
     const result = [];
@@ -164,9 +172,7 @@ export class DataService {
       const children = [];
 
       if (item.fieldName.search(/_brackets/g) > 0) {
-
         const r2 = this.splitArray(brakets[bracketNum].replace('(', '').replace(')', ''));
-
         const variables2 = r2.variables;
 
         variables2.forEach((variable2, j) => {
@@ -197,6 +203,22 @@ export class DataService {
     return result;
   }
 
+  getDateFormat(dateObj) {
+    let date = '';
+    if (dateObj.month < 10) {
+      date += `0${dateObj.month}/`;
+    } else {
+      date += `${dateObj.month}/`;
+    }
+    if (dateObj.day < 10) {
+      date += `0${dateObj.day}/`;
+    } else {
+      date += `${dateObj.day}/`;
+    }
+    date += `${dateObj.year}`;
+    return date;
+  }
+
   buildQuery(filterConditions: any[]) {
     let query = '';
     let subQuery = '';
@@ -205,23 +227,33 @@ export class DataService {
         query += ` ${filterItem.parentOp}`;
       }
       if (filterItem.type === 'Item') {
-        if (filterItem.conditionOp !== 'is_null' && filterItem.conditionOp !== 'is_not_null') {
-          query += ` ${filterItem.fieldName} ${filterItem.conditionOp} "${filterItem.value}"`;
-        } else {
-          query += ` ${filterItem.fieldName} ${filterItem.conditionOp}`;
+        if (filterItem.dataType === 'Text' || filterItem.dataType === 'Numeric' || filterItem.dataType === 'Boolean') {
+          if (filterItem.conditionOp !== 'is_null' && filterItem.conditionOp !== 'is_not_null') {
+            query += ` ${filterItem.fieldName} ${filterItem.conditionOp} "${filterItem.value}"`;
+          } else {
+            query += ` ${filterItem.fieldName} ${filterItem.conditionOp}`;
+          }
+        } else if (filterItem.dataType === 'Date') {
+          query += ` cast(${filterItem.fieldName} as date) ${filterItem.conditionOp} "` + this.getDateFormat(filterItem.value) + '"';
         }
+
       } else {
 
         subQuery = '';
         filterItem.children.forEach((subItem: any) => {
           if (subItem.parentOp !== 'None') {
-            subQuery += ` ${filterItem.parentOp}`;
+            subQuery += ` ${subItem.parentOp}`;
           }
-          if (subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null') {
-            subQuery += ` ${subItem.fieldName} ${subItem.conditionOp} "${subItem.value}"`;
+          if (subItem.dataType === 'Text' || subItem.dataType === 'Numeric' || subItem.dataType === 'Boolean') {
+            if (subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null') {
+              subQuery += ` ${subItem.fieldName} ${subItem.conditionOp} "${subItem.value}"`;
+            } else {
+              subQuery += ` ${subItem.fieldName} ${subItem.conditionOp}`;
+            }
           } else {
-            subQuery += ` ${subItem.fieldName} ${subItem.conditionOp}`;
+            subQuery += ` cast(${subItem.fieldName} as date) ${subItem.conditionOp} "` + this.getDateFormat(subItem.value) + '"';
           }
+
         });
         query += ' (' + subQuery.substr(1) + ')';
       }
@@ -231,9 +263,53 @@ export class DataService {
 
   buildQueryAsLinq(filterConditions: any[], filterColumns: any[]) {
     // tslint:disable-next-line
-    // booleanQueryAsLinq: "Amount == 100 AND string.Compare(AccountName,  "user account", true) == 0 AND AccountOptOut == true AND DOB == Convert.ToDateTime("07/01/2020")"
-    console.log(filterConditions);
-    return '';
+    // booleanQueryAsLinq: "Amount == 100 AND string.Compare(AccountName,  "user account", true) == 0 AND AccountOptOut == true 
+    // AND DOB == Convert.ToDateTime("07/01/2020")"
+    let query = '';
+    let subQuery = '';
+    filterConditions.forEach((filterItem: any) => {
+      if (filterItem.parentOp !== 'None') {
+        query += ` ${filterItem.parentOp}`;
+      }
+      if (filterItem.type === 'Item') {
+        if (filterItem.dataType === 'Numeric') {
+          if (filterItem.conditionOp !== 'is_null' && filterItem.conditionOp !== 'is_not_null') {
+            query += ` ${filterItem.fieldName} ${filterItem.conditionOp} ${filterItem.value}`;
+          } else {
+            query += ` ${filterItem.fieldName} ${filterItem.conditionOp}`;
+          }
+        } else if (filterItem.dataType === 'Date') {
+          query += ` ${filterItem.fieldName} ${filterItem.conditionOp} Convert.ToDateTime("` + this.getDateFormat(filterItem.value) + '")';
+        } else if (filterItem.dataType === 'Text') {
+          if (filterItem.conditionOp !== 'is_null' && filterItem.conditionOp !== 'is_not_null') {
+            query += ` string.Compare(${filterItem.fieldName}, ${filterItem.conditionOp} ${filterItem.value}`;
+          } else {
+            query += ` ${filterItem.fieldName} ${filterItem.conditionOp}`;
+          }
+        }
+
+      } else {
+
+        subQuery = '';
+        filterItem.children.forEach((subItem: any) => {
+          if (subItem.parentOp !== 'None') {
+            subQuery += ` ${subItem.parentOp}`;
+          }
+          if (subItem.dataType === 'Text' || subItem.dataType === 'Numeric' || subItem.dataType === 'Boolean') {
+            if (subItem.conditionOp !== 'is_null' && subItem.conditionOp !== 'is_not_null') {
+              subQuery += ` ${subItem.fieldName} ${subItem.conditionOp} "${subItem.value}"`;
+            } else {
+              subQuery += ` ${subItem.fieldName} ${subItem.conditionOp}`;
+            }
+          } else {
+            subQuery += ` cast(${subItem.fieldName} as date) ${subItem.conditionOp} "` + this.getDateFormat(subItem.value) + '"';
+          }
+
+        });
+        query += ' (' + subQuery.substr(1) + ')';
+      }
+    });
+    return query.substr(1);
   }
 
   buildQueryAsReadable(filterConditions: any[], filterColumns: any[]) {

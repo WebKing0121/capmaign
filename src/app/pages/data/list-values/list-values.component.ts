@@ -6,6 +6,7 @@ import { DataTableSource, DataTableColumn } from '@app-components/datatable/data
 import { DataService } from '@app-core/services/data.service';
 import { takeUntil } from 'rxjs/operators';
 import { DataSourceChange } from '@app-models/data-source';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-data-list-values',
@@ -15,11 +16,12 @@ import { DataSourceChange } from '@app-models/data-source';
 })
 export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('confirmModal', { static: false }) confirmModal;
-  @ViewChild('addToListModal', { static: false }) addToListModal;
-  @ViewChild('viewColumnsModal', { static: false }) viewColumnsModal;
-  @ViewChild('importCSVModal', { static: false }) importCSVModal;
-  @ViewChild('dataRecords', { static: false }) dataRecords;
-  @ViewChild('sendEmailModal', { static: false }) sendEmailModal;
+  @ViewChild('statusTemplate', { static: false }) statusTemplate;
+  @ViewChild('valueModal', { static: false }) valueModal;
+
+  ModalType = ModalType;
+  modalType = ModalType.New;
+  selectedValue: any;
 
   private unsubscribe$ = new Subject();
 
@@ -29,6 +31,7 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
   ];
 
   tabs: Tab[];
+  tables: any[];
   recordType: string;
   // columns
   recordColumns$: Observable<GridColumn[]>;
@@ -46,10 +49,12 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
   ];
 
   loading = false;
+  deleteFrom = 0;
   constructor(
     private dataService: DataService
   ) {
     this.tabs = [{ label: 'All', key: 'all', selected: true }];
+    this.tables = [];
   }
 
   ngOnInit(): void {
@@ -62,7 +67,7 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
       { name: 'Table Name', prop: 'tableName', sortable: true },
       { name: 'Display Name', prop: 'displayName', sortable: true, cellClass: ['cell-hyperlink'] },
       { name: 'Value', prop: 'value', sortable: true },
-      { name: 'Status', prop: 'isDeleted', sortable: true },
+      { name: 'Status', prop: 'isDeleted', sortable: true, custom: true, template: this.statusTemplate, cellClass: ['cell-hyperlink'] },
     ];
     this.tableSource.setColumns(columns);
   }
@@ -104,13 +109,28 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
       // this.tableButtons[5].disabled = selected.length !== 1;
       // this.tableButtons[6].disabled = selected.length !== 1;
     }
+    if (event.type === 'click') {
+      if (evt.cellIndex === 2 && evt.event.target.classList.value === 'datatable-body-cell-label') {
+        this.selectedValue = evt.row;
+        this.modalType = ModalType.Edit;
+        setTimeout(() => this.valueModal.show());
+      }
+    }
   }
 
   onClickCreate() {
-    // this.dataRecords.createRecord();
+    this.modalType = ModalType.New;
+    this.selectedValue = null;
+    setTimeout(() => this.valueModal.show());
   }
 
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
@@ -158,6 +178,7 @@ export class DataListValuesComponent implements OnInit, OnDestroy, AfterViewInit
                 this.tabs.push({ ...x });
               }
             });
+            this.tables = [...this.tabs.filter(x => x.key !== 'all').map(x => ({ label: x.label, value: x.label }))];
           } else {
             this.records = [];
             this.filteredRecords = this.records;
