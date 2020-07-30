@@ -149,14 +149,19 @@
       </div>
       <div class="row">
         <div class="col-lg-7 col-md-12 p-r-5 table-height">
-          <app-datatable [title]="'Top Performing Campaigns'" [dataSource]="topPerformingTableSource"
-            [buttons]="topPerformingTableButtons" class="soft-shadow">
-          </app-datatable>
+          <app-datatable [title]="'Top Performing Campaigns'"
+            [dataSource]="topPerformingTableSource"
+            [loading]="alltopPerformingLoading"
+            [buttons]="topPerformingTableButtons"
+            class="soft-shadow"
+          ></app-datatable>
         </div>
         <div class="col-lg-5 col-md-12 table-height p-l-5">
           <div class="card table-card m-0" cardTitle="Top Performing Campaigns">
-            <app-apex-chart chartID="top-performing-campaign-crm" [chartConfig]="topPerformingCampaignData">
-            </app-apex-chart>
+            <app-apex-chart
+              chartID="top-performing-campaign-crm"
+              [chartConfig]="topPerformingCampaignData"
+            ></app-apex-chart>
           </div>
         </div>
       </div>
@@ -178,7 +183,10 @@
         </div>
       </div>
       <div class="col-lg-12 table-height p-0">
-        <app-datatable [title]="'Bounce Email'" [dataSource]="tableSource" [buttons]="tableButtons">
+        <app-datatable [title]="'Bounce Email'"
+          [loading]="loadingBounceEmail"
+          [dataSource]="tableSource"
+          [buttons]="tableButtons">
         </app-datatable>
       </div>
     </div>
@@ -477,7 +485,10 @@
         </div>
       </div>
       <div class="table-height">
-        <app-datatable [title]="'Upcoming Campaigns'" [dataSource]="upComingCampTableSource"
+        <app-datatable
+          [title]="'Upcoming Campaigns'"
+          [loading]="loadingAllUpcommingCamp"
+          [dataSource]="upComingCampTableSource"
           [buttons]="upComingCampTableButtons">
         </app-datatable>
       </div>
