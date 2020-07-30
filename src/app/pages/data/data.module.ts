@@ -20,11 +20,13 @@ import { DataCustomFieldModalComponent } from './custom-fields/modals/custom-fie
 import { DataFiltersComponent } from './filters/filters.component';
 import { DataFilterModalComponent } from './filters/modal/filter-modal/filter-modal.component';
 import { DataListValuesComponent } from './list-values/list-values.component';
+import { DataListValueModalComponent } from './list-values/modals/value-modal/value-modal.component';
 
 @NgModule({
   declarations: [
     DataRecordsComponent,
     DataListValuesComponent,
+    DataListValueModalComponent,
     DataListsComponent,
     DataListModalComponent,
     DataCustomFieldsComponent,
