@@ -76,28 +76,10 @@ export class DataService {
   }
 
   getRecordsByListId(listId: number): Observable<any> {
-    const randVal = listId % 6;
-    switch (randVal) {
-      case 1:
-        return of(AllRecordsMock);
-      case 2:
-        return of(SubscribersMock);
-      case 3:
-        return of(LeadsMock);
-      case 4:
-        return of(ProspectsMock);
-      case 5:
-        return of(TransactionalsMock);
-      default:
-        return of({
-          result: null,
-          targetUrl: null,
-          success: true,
-          error: null,
-          unAuthorizedRequest: false,
-          __abp: true
-        });
-    }
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/record/GetRecordsByTypeAndListId`, {
+      listId,
+      recordType: "All"
+    });
   }
 
   getImportAccounts(): Observable<any> {
