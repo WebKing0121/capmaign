@@ -13,6 +13,7 @@
   <div class="col-md-8 card-records">
     <app-datatable
       [title]="'Assigned Records'"
+      [loading]="loadingRecords"
       [buttons]="recordsTableButtons"
       [dataSource]="tableSourceRecords"
       [selectionType]="'checkbox'"

@@ -22,6 +22,7 @@ import { Tab } from '@app-models/common';
 import { DashboardTabs } from '@app-core/enums/dashboard-type.enum';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { DataSourceChange } from '@app-models/data-source';
+import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 
 const equals = (one: NgbDateStruct, two: NgbDateStruct) =>
   one && two && two.year === one.year && two.month === one.month && two.day === one.day;
@@ -65,17 +66,23 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   showLeadAnalytics: boolean;
 
   // BounceEmail Information
+  loadingBounceEmail = false;
+  totalCountBounceEmail = 0;
   tableSource: DataTableSource<BounceEmail> = new DataTableSource<BounceEmail>(10, false);
   tableButtons = [];
   allBounceEmail: BounceEmail[];
   // TopPerforming Information
   topPerformingTableSource: DataTableSource<TopPerformingCampaign> = new DataTableSource<TopPerformingCampaign>(10, false);
   topPerformingTableButtons = [];
+  alltopPerformingLoading = false;
+  totalCountTopPerformingCampaign = 0;
   alltopPerformingCampaign: TopPerformingCampaign[];
   // Upcoming Campaign Information
   upComingCampTableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(10, false);
   upComingCampTableButtons = [];
   allUpcommingCamp: Campaign[];
+  totalCountAllUpcommingCamp = 0;
+  loadingAllUpcommingCamp = false;
 
   // Recent Event Information
   recentEventTableSource: DataTableSource<RecentEvnet> = new DataTableSource<RecentEvnet>(10, false);
@@ -145,106 +152,35 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.compareFromDate = { year: compareFromDate.year(), month: compareFromDate.month() + 1, day: compareFromDate.date() };
     this.compareToDate = { year: compareToDate.year(), month: compareToDate.month() + 1, day: compareToDate.date() };
 
-    // Get BounceEmail Table Information
-    this.dashboardService.getBounceEmailMockData()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        data => {
-          this.allBounceEmail = data;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
+    this.initBounceEmailTable();
+    this.initTopPerformingCampaignTable();
+    this.initUpcommingCampaignTable();
 
-    this.tableSource.next(this.allBounceEmail.slice(0, 10), this.allBounceEmail.length);
+    // this.allUpcommingCamp = this.allUpcommingCamp.filter(item => moment(item.scheduled).diff(new Date()) > 0);
+    // this.allUpcommingCamp = this.allUpcommingCamp.map(item => ({
+    //   ...item,
+    //   status: 'Scheduled'
+    // }));
 
-    this.tableSource.changed$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((change: DataSourceChange) => {
-        let mockData = [];
-        if (change.search) {
-          mockData = this.allBounceEmail.filter(item => item.emailAddress.includes(change.search));
-        } else {
-          mockData = this.allBounceEmail;
-        }
+    // this.upComingCampTableSource.next(this.allUpcommingCamp.slice(0, 10), this.allUpcommingCamp.length);
 
-        this.tableSource.next(
-          mockData.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1),
-            change.pagination.pageSize * (change.pagination.pageNumber)),
-          mockData.length
-        );
-      });
-
-    // Get TopPerformingCampaign Information
-    this.dashboardService.getTopPerformingCampaignsMockData()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        data => {
-          this.alltopPerformingCampaign = data;
-        },
-        error => {
-          console.log('error', error);
-        }
-      );
-
-    this.topPerformingTableSource.next(this.alltopPerformingCampaign.slice(0, 10), this.alltopPerformingCampaign.length);
-
-    this.topPerformingTableSource.changed$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((change: DataSourceChange) => {
-        let mockData = [];
-        if (change.search) {
-          mockData = this.alltopPerformingCampaign.filter(item => item.name.includes(change.search));
-        } else {
-          mockData = this.alltopPerformingCampaign;
-        }
-
-        this.topPerformingTableSource.next(
-          mockData.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1),
-            change.pagination.pageSize * (change.pagination.pageNumber)),
-          mockData.length
-        );
-      });
-    // Get UpcomingCampaign Information
-    // this.campaignService.getCampaignMockData()
+    // this.upComingCampTableSource.changed$
     //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe(
-    //     data => {
-    //       this.allUpcommingCamp = data;
-    //     },
-    //     error => {
-    //       console.log('error', error);
+    //   .subscribe((change: DataSourceChange) => {
+    //     let mockData = [];
+    //     if (change.search) {
+    //       mockData = this.allUpcommingCamp.filter(item => item.name.includes(change.search));
+    //     } else {
+    //       mockData = this.allUpcommingCamp;
     //     }
-    //   );
 
-    this.allUpcommingCamp = this.allUpcommingCamp.filter(item => moment(item.scheduled).diff(new Date()) > 0);
-    this.allUpcommingCamp = this.allUpcommingCamp.map(item => ({
-      ...item,
-      status: 'Scheduled'
-    }));
-
-    this.upComingCampTableSource.next(this.allUpcommingCamp.slice(0, 10), this.allUpcommingCamp.length);
-
-    this.upComingCampTableSource.changed$
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((change: DataSourceChange) => {
-        let mockData = [];
-        if (change.search) {
-          mockData = this.allUpcommingCamp.filter(item => item.name.includes(change.search));
-        } else {
-          mockData = this.allUpcommingCamp;
-        }
-
-        this.upComingCampTableSource.next(
-          mockData.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1),
-            change.pagination.pageSize * (change.pagination.pageNumber)),
-          mockData.length
-        );
-      });
+    //     this.upComingCampTableSource.next(
+    //       mockData.slice(
+    //         change.pagination.pageSize * (change.pagination.pageNumber - 1),
+    //         change.pagination.pageSize * (change.pagination.pageNumber)),
+    //       mockData.length
+    //     );
+    //   });
 
     // Get Recent Event Information
     this.dashboardService.getRecentEventsMockData()
@@ -411,9 +347,12 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.topPerformingTableSource.setColumns(topPerformingColumns);
 
     const upComingCampColumns: DataTableColumn[] = [
-      { name: 'Campaign', prop: 'name', sortable: true },
-      { name: 'Subject', prop: 'subject', sortable: true },
-      { name: 'Scheduled On', prop: 'scheduled', sortable: true },
+      { name: 'Campaign', prop: 'emailName', sortable: true },
+      { name: 'Subject', prop: 'emailSubject', sortable: true },
+      {
+        name: 'Scheduled On', prop: 'scheduledDateTime', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' }
+      },
       { name: 'Status', prop: 'status', sortable: true },
     ];
     this.upComingCampTableSource.setColumns(upComingCampColumns);
@@ -545,5 +484,106 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   showAppstates(type) {
     this.showAndroid = type === 1 ? true : false;
+  }
+  initBounceEmailTable() {
+    this.tableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadBounceEmailTableData();
+        }
+      });
+  }
+
+  loadBounceEmailTableData() {
+    this.loadingBounceEmail = true;
+    this.dashboardService.getBounceEmails()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.allBounceEmail = data.result;
+            this.totalCountBounceEmail = data.result.length;
+          } else {
+            this.allBounceEmail = [];
+            this.totalCountBounceEmail = 0;
+          }
+          this.tableSource.next(this.allBounceEmail, this.totalCountBounceEmail);
+          this.loadingBounceEmail = false;
+        },
+        error => {
+          this.loadingBounceEmail = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  initTopPerformingCampaignTable() {
+    this.topPerformingTableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadTopPerformingCampaignTableData();
+        }
+      });
+  }
+
+  loadTopPerformingCampaignTableData() {
+    const from = moment([this.fromDate.year, this.fromDate.month - 1, this.fromDate.day]).format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const to = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day, 23, 59, 59]).format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+    console.log(from, to);
+    this.alltopPerformingLoading = true;
+    this.dashboardService.getTopPerformingCampaigns(from, to)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.alltopPerformingCampaign = data.result;
+            this.totalCountTopPerformingCampaign = data.result.length;
+          } else {
+            this.alltopPerformingCampaign = [];
+            this.totalCountTopPerformingCampaign = 0;
+          }
+          this.topPerformingTableSource.next(this.alltopPerformingCampaign, this.totalCountTopPerformingCampaign);
+          this.alltopPerformingLoading = false;
+        },
+        error => {
+          this.alltopPerformingLoading = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  initUpcommingCampaignTable() {
+    this.upComingCampTableSource.changed$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((change: DataSourceChange) => {
+        if (change.pagination !== 'totalCount') {
+          this.loadUpcommingCampaignTableData();
+        }
+      });
+  }
+
+  loadUpcommingCampaignTableData() {
+    this.loadingAllUpcommingCamp = true;
+    this.dashboardService.getUpcommingCampaigns()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.allUpcommingCamp = data.result;
+            this.totalCountAllUpcommingCamp = data.result.length;
+          } else {
+            this.allUpcommingCamp = [];
+            this.totalCountAllUpcommingCamp = 0;
+          }
+          this.upComingCampTableSource.next(this.allUpcommingCamp, this.totalCountAllUpcommingCamp);
+          this.loadingAllUpcommingCamp = false;
+        },
+        error => {
+          this.loadingAllUpcommingCamp = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

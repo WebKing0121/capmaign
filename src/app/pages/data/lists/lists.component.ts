@@ -43,6 +43,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   // Records Tables
   tableSourceRecords: DataTableSource<any> = new DataTableSource<any>(50);
   totalRecordsCount: number;
+  loadingRecords = false;
   selectedRecords: any[] = [];
   recordsTableButtons = [
     { label: 'Add Records', icon: 'fa fa-plus', click: () => this.onClickAddRecords(), disabled: true },
@@ -192,7 +193,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.tableButtons[1].disabled = false;
       this.recordsTableButtons[0].disabled = false;
       this.recordsTableButtons[1].disabled = true;
-
+      this.loadingRecords = true;
       this.dataService.getRecordsByListId(this.selectedList.listId)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
@@ -204,9 +205,11 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
               this.records = [];
               this.totalRecordsCount = 0;
             }
-            // this._updateRecordsTable(this.records);
+            this.tableSourceRecords.next(this.records, this.totalRecordsCount);
+            this.loadingRecords = false;
           },
           error => {
+            this.loadingRecords = false;
             console.log('error', error.response);
           }
         );

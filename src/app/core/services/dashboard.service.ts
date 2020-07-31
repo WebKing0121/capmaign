@@ -1,7 +1,7 @@
-
+import { environment } from '../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { of } from 'rxjs';
+import { of, Observable } from 'rxjs';
 
 import {
   BounceEmailMockData,
@@ -23,8 +23,20 @@ export class DashboardService {
     return of(BounceEmailMockData);
   }
 
+  getBounceEmails(): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/email/GetAllEmailBounce`, {});
+  }
+
   getTopPerformingCampaignsMockData() {
     return of(TopPerformingCampaignsMockData);
+  }
+
+  getTopPerformingCampaigns(from: string, to: string): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/email/GetTopPerformingEmailDetails?fromDate=${from}&toDate=${to}`);
+  }
+
+  getUpcommingCampaigns(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/email/GetScheduledEmailsForDashboard`);
   }
 
   getRecentEventsMockData() {
