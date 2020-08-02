@@ -194,7 +194,16 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.recordsTableButtons[0].disabled = false;
       this.recordsTableButtons[1].disabled = true;
       this.loadingRecords = true;
-      this.dataService.getRecordsByListId(this.selectedList.listId)
+
+      const params = {
+        listId: this.selectedList.listId,
+        SortDirection: 'Ascending',
+        maxResultCount: this.tableSourceRecords.pageSize,
+        skipCount: (this.tableSourceRecords.currentPage - 1) * this.tableSourceRecords.pageSize,
+        sorting: ''
+      };
+
+      this.dataService.getRecordsByListId(params)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           data => {

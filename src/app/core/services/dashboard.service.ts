@@ -31,6 +31,20 @@ export class DashboardService {
     return of(TopPerformingCampaignsMockData);
   }
 
+  getEmailDataByChangePercentage(currentFrom: string, currentTo: string, previousFrom: string, previousTo: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/email/GetEmailDataByChangePercentage?currentFromDate=${currentFrom}&currentToDate=${currentTo}&previousFromDate=${previousFrom}&previousToDate=${previousTo}`);
+  }
+
+  getTotalSubscribedCountByEmails(from: string, to: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/email/GetTotalSubscribedCountForEmails?fromDate=${from}&toDate=${to}`);
+  }
+  getTotalUnsubscribedCountByEmails(from: string, to: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/email/GetTotalUnsubscribedCountForEmails?fromDate=${from}&toDate=${to}`);
+  }
+
   getTopPerformingCampaigns(from: string, to: string): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/email/GetTopPerformingEmailDetails?fromDate=${from}&toDate=${to}`);
   }

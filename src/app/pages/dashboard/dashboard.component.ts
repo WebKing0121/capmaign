@@ -43,11 +43,18 @@ const after = (one: NgbDateStruct, two: NgbDateStruct) =>
 export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('content') content: ElementRef;
   @ViewChild('mobileAppModal', { static: false }) mobileAppModal;
+  @ViewChild('topPerformingChart', { static: false }) topPerformingChart;
+  @ViewChild('subscriberChart', { static: false }) subscriberChart;
+  @ViewChild('unSubscriberChart', { static: false }) unSubscriberChart;
+
 
   tabs: Tab[] = DashboardTabs;
   dashboardType: string;
   // columns
   records: any[];
+
+  // month array
+  month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
   // Date Range Picker
   hoveredDate: NgbDateStruct;
@@ -110,8 +117,16 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   // chart
   public topPerformingCampaignData: any;
+  topPerformingCampaignDataXAxis: any;
+  topPerformingCampaignDataSeries: any[];
+
   public subscribersData: any;
+  subscribersDataXAxis: any;
+  subscribersDataSeries: any;
+
   public unsubscribers: any;
+  unsubscribersDataXAxis: any;
+  unsubscribersDataSeries: any;
 
   // mobile chart info
   public topPerformingMobileData: any;
@@ -122,6 +137,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   modalType: ModalType.New;
   selectedApp: null;
   showAndroid: boolean;
+  emailDataByChangePercent: any;
 
   constructor(
     private router: Router,
@@ -139,49 +155,60 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.invitedRegistrationsData = EventDashCrm.InvitedRegistrationsData;
     this.showEmailAnalytics = true;
     this.showAndroid = true;
+    this.emailDataByChangePercent = {
+      bounceCountNew: 0,
+      bounceCountOld: 0,
+      bouncePercentageNew: '0.00',
+      bouncePercentageOld: '0.00',
+      clickThroughCountNew: 0,
+      clickThroughCountOld: 0,
+      clickThroughPercentageNew: '0.00',
+      clickThroughPercentageOld: '0.00',
+      openCountNew: 0,
+      openCountOld: 0,
+      openCountPercentageNew: '0.00',
+      openCountPercentageOld: '0.00',
+      percentageDecreaseBounce: '0.00',
+      percentageDecreaseClickThrough: '0.00',
+      percentageDecreaseOpen: '0.00',
+      percentageDecreaseUnsubscribe: '0.00',
+      percentageIncreaseBounce: '0.00',
+      percentageIncreaseClickThrough: '0.00',
+      percentageIncreaseOpen: '0.00',
+      percentageIncreaseUnsubscribe: '0.00',
+      sentCountNew: 0,
+      sentCountOld: 0,
+      sentPercentageNew: '0.00',
+      sentPercentageOld: '0.00',
+      unsubscribeCountNew: 0,
+      unsubscribeCountOld: 4,
+      unsubscribePercentageNew: '0.00',
+      unsubscribePercentageOld: '0.00',
+    };
   }
 
   ngOnInit(): void {
     this.showDateRangePickerFlag = false;
-    const today = new Date();
-    const oneMonthBeforeDate = moment().subtract(1, 'month');
-    this.toDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
-    this.fromDate = { year: oneMonthBeforeDate.year(), month: oneMonthBeforeDate.month() + 1, day: oneMonthBeforeDate.date() };
-    const compareToDate = oneMonthBeforeDate.subtract(1, 'day');
-    const compareFromDate = compareToDate.subtract(1, 'month');
-    this.compareFromDate = { year: compareFromDate.year(), month: compareFromDate.month() + 1, day: compareFromDate.date() };
-    this.compareToDate = { year: compareToDate.year(), month: compareToDate.month() + 1, day: compareToDate.date() };
+    // const today = new Date();
+    // const oneMonthBeforeDate = moment().subtract(1, 'month');
+    // this.toDate = { year: today.getFullYear(), month: today.getMonth() + 1, day: today.getDate() };
+    // this.fromDate = { year: oneMonthBeforeDate.year(), month: oneMonthBeforeDate.month() + 1, day: oneMonthBeforeDate.date() };
+    // const compareToDate = oneMonthBeforeDate.subtract(1, 'day');
+    // const compareFromDate = compareToDate.subtract(1, 'month');
+    // this.compareFromDate = { year: compareFromDate.year(), month: compareFromDate.month() + 1, day: compareFromDate.date() };
+    // this.compareToDate = { year: compareToDate.year(), month: compareToDate.month() + 1, day: compareToDate.date() };
+    this.fromDate = { year: 2019, month: 1, day: 1 };
+    this.toDate = { year: 2019, month: 12, day: 31 };
+    this.compareFromDate = { year: 2018, month: 1, day: 1 };
+    this.compareToDate = { year: 2018, month: 12, day: 31 };
 
+    // Init Email Analytics
     this.initBounceEmailTable();
     this.initTopPerformingCampaignTable();
     this.initUpcommingCampaignTable();
-
-    // this.allUpcommingCamp = this.allUpcommingCamp.filter(item => moment(item.scheduled).diff(new Date()) > 0);
-    // this.allUpcommingCamp = this.allUpcommingCamp.map(item => ({
-    //   ...item,
-    //   status: 'Scheduled'
-    // }));
-
-    // this.upComingCampTableSource.next(this.allUpcommingCamp.slice(0, 10), this.allUpcommingCamp.length);
-
-    // this.upComingCampTableSource.changed$
-    //   .pipe(takeUntil(this.destroy$))
-    //   .subscribe((change: DataSourceChange) => {
-    //     let mockData = [];
-    //     if (change.search) {
-    //       mockData = this.allUpcommingCamp.filter(item => item.name.includes(change.search));
-    //     } else {
-    //       mockData = this.allUpcommingCamp;
-    //     }
-
-    //     this.upComingCampTableSource.next(
-    //       mockData.slice(
-    //         change.pagination.pageSize * (change.pagination.pageNumber - 1),
-    //         change.pagination.pageSize * (change.pagination.pageNumber)),
-    //       mockData.length
-    //     );
-    //   });
-
+    this.loadEmailByChangePercentage();
+    this.loadSubscribers();
+    this.loadUnsubscribers();
     // Get Recent Event Information
     this.dashboardService.getRecentEventsMockData()
       .pipe(takeUntil(this.destroy$))
@@ -459,6 +486,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       this.toDate = null;
       this.fromDate = date;
     }
+    this.loadTopPerformingCampaignTableData();
   }
 
   setCompareDates() {
@@ -488,6 +516,35 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   showAppstates(type) {
     this.showAndroid = type === 1 ? true : false;
   }
+
+  loadEmailByChangePercentage() {
+    const currentFrom = moment([this.fromDate.year, this.fromDate.month - 1, this.fromDate.day])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const currentTo = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day, 23, 59, 59])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+    const previousFrom = moment([this.compareFromDate.year, this.compareFromDate.month - 1, this.compareFromDate.day])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const previousTo = moment([this.compareToDate.year, this.compareToDate.month - 1, this.compareToDate.day, 23, 59, 59])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+
+    this.dashboardService.getEmailDataByChangePercentage(currentFrom, currentTo, previousFrom, previousTo)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.emailDataByChangePercent = data.result[0];
+          }
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  getPercent(percent: number | string) {
+    return Math.round(+percent * 100) / 100;
+  }
+
   initBounceEmailTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.destroy$))
@@ -543,6 +600,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
           if (data.result) {
             this.alltopPerformingCampaign = data.result;
             this.totalCountTopPerformingCampaign = data.result.length;
+            this.setTopPerformingCampaignGraphData(this.alltopPerformingCampaign);
           } else {
             this.alltopPerformingCampaign = [];
             this.totalCountTopPerformingCampaign = 0;
@@ -555,6 +613,35 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log('error', error.response);
         }
       );
+  }
+
+  setTopPerformingCampaignGraphData(performingCampaigns: any[]) {
+    this.topPerformingCampaignDataXAxis = {
+      title: {
+        text: 'Campaign'
+      },
+      categories: performingCampaigns.map(x => x.emailCampaignName)
+    };
+
+    this.topPerformingCampaignDataSeries = [
+      {
+        name: 'Sent',
+        data: performingCampaigns.map(x => Number(x.totalSentCount)),
+      }, {
+        name: 'Open',
+        data: performingCampaigns.map(x => Number(x.openCount)),
+      }, {
+        name: 'Clicks',
+        data: performingCampaigns.map(x => Number(x.clickThroughCount)),
+      }, {
+        name: 'Bounce',
+        data: performingCampaigns.map(x => Number(x.bounceCount)),
+      }, {
+        name: 'Unsubscribe',
+        data: performingCampaigns.map(x => Number(x.unsubscribedCount)),
+      }
+    ];
+    this.topPerformingChart.render();
   }
 
   initUpcommingCampaignTable() {
@@ -585,6 +672,68 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         error => {
           this.loadingAllUpcommingCamp = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  loadSubscribers() {
+    const from = moment([this.fromDate.year, this.fromDate.month - 1, this.fromDate.day]).format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const to = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day, 23, 59, 59]).format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+    this.dashboardService.getTotalSubscribedCountByEmails(from, to)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+
+            this.subscribersDataXAxis = {
+              title: {
+                text: 'Month'
+              },
+              categories: data.result.map(x => `${x.day}, ${this.month[x.month - 1]}`)
+            };
+
+            this.subscribersDataSeries = [
+              {
+                name: 'Subscribers',
+                data: data.result.map(x => Number(x.subscribedCount)),
+              }
+            ];
+            this.subscriberChart.render();
+          }
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  loadUnsubscribers() {
+    const from = moment([this.fromDate.year, this.fromDate.month - 1, this.fromDate.day]).format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const to = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day, 23, 59, 59]).format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+    this.dashboardService.getTotalUnsubscribedCountByEmails(from, to)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+
+            this.unsubscribersDataXAxis = {
+              title: {
+                text: 'Month'
+              },
+              categories: data.result.map(x => `${x.day}, ${this.month[x.month - 1]}`)
+            };
+
+            this.unsubscribersDataSeries = [
+              {
+                name: 'Unsubscribers',
+                data: data.result.map(x => Number(x.unSubscribedCount)),
+              }
+            ];
+            this.unSubscriberChart.render();
+          }
+        },
+        error => {
           console.log('error', error.response);
         }
       );

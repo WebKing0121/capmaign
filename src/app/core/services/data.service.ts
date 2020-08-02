@@ -75,11 +75,8 @@ export class DataService {
     return this.http.delete<any>(`${environment.apiUrl}/api/services/app/custom/DeleteSelectedFields?input=${customFieldId}`);
   }
 
-  getRecordsByListId(listId: number): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/services/app/record/GetRecordsByTypeAndListId`, {
-      listId,
-      recordType: "All"
-    });
+  getRecordsByListId(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListRecords`, params);
   }
 
   getImportAccounts(): Observable<any> {

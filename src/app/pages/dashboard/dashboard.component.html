@@ -17,7 +17,11 @@
               {{ parserFormatter.format(compareToDate) }}</span>
           </div>
           <div *ngIf="showDateRangePickerFlag" class="horizontal-scroll dateRangerPicker">
-            <ngb-datepicker #dp ngModel (ngModelChange)="onDateChange($event)" [displayMonths]="2" [dayTemplate]="t">
+            <ngb-datepicker #dp
+              ngModel
+              (ngModelChange)="onDateChange($event)"
+              [displayMonths]="2"
+              [dayTemplate]="t">
             </ngb-datepicker>
 
             <ng-template #t let-date="date" let-focused="focused">
@@ -64,61 +68,76 @@
         <div class="dashboard-top-card card">
           <div class="dashboard-top-card_header">
             <span class="dashboard-top-card_header_title">Click - through</span>
-            <span class="text-success dashboard-top-card_header_pro">+10%</span>
+            <span class="dashboard-top-card_header_pro"
+              [ngClass]="{'text-success': +emailDataByChangePercent.clickThroughPercentageNew >= 0, 'text-danger': +emailDataByChangePercent.clickThroughPercentageNew < 0}">
+              {{getPercent(emailDataByChangePercent.clickThroughPercentageNew)}}%
+            </span>
           </div>
           <div class="dashboard-top-card_main-value">
-            <span>152</span>
+            <span>{{emailDataByChangePercent.clickThroughCountNew}}</span>
           </div>
           <div class="progress mt-2" style="height:5px">
             <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-              style="width:60%"></div>
+              [ngStyle]="{'width': emailDataByChangePercent.percentageIncreaseClickThrough + '%'}"></div>
           </div>
           <div class="dashboard-top-card_footer">
               <small class="dashboard-top-card_footer_txt">Charge</small>
-              <span class="dashboard-top-card_footer_pro text-danger">-8%</span>
+              <span class="dashboard-top-card_footer_pro"
+                [ngClass]="{'text-success': +emailDataByChangePercent.percentageIncreaseClickThrough >= 0, 'text-danger': +emailDataByChangePercent.percentageIncreaseClickThrough < 0}"
+              >{{getPercent(emailDataByChangePercent.percentageIncreaseClickThrough)}}%</span>
           </div>
         </div>
         <div class="dashboard-top-card card">
           <div class="dashboard-top-card_header">
             <span class="dashboard-top-card_header_title">Open</span>
-            <span class="text-danger dashboard-top-card_header_pro">-21.05%</span>
+            <span class="dashboard-top-card_header_pro"
+              [ngClass]="{'text-success': +emailDataByChangePercent.openCountPercentageNew >= 0, 'text-danger': +emailDataByChangePercent.openCountPercentageNew < 0}"
+            >{{getPercent(emailDataByChangePercent.openCountPercentageNew)}}%</span>
           </div>
           <div class="dashboard-top-card_main-value">
-            <span>123</span>
+            <span>{{emailDataByChangePercent.openCountNew}}</span>
           </div>
           <div class="progress mt-2" style="height:5px">
-            <div class="progress-bar bg-c-red" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-              style="width:60%"></div>
+            <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
+              [ngStyle]="{'width': emailDataByChangePercent.percentageIncreaseOpen + '%'}"></div>
           </div>
           <div class="dashboard-top-card_footer">
               <small class="dashboard-top-card_footer_txt">Charge</small>
-              <span class="dashboard-top-card_footer_pro text-danger">-8%</span>
+              <span class="dashboard-top-card_footer_pro"
+                [ngClass]="{'text-success': +emailDataByChangePercent.percentageIncreaseOpen >= 0, 'text-danger': +emailDataByChangePercent.percentageIncreaseOpen < 0}"
+              >{{getPercent(emailDataByChangePercent.percentageIncreaseOpen)}}%</span>
           </div>
         </div>
         <div class="dashboard-top-card card">
           <div class="dashboard-top-card_header">
             <span class="dashboard-top-card_header_title">Bounce</span>
-            <span class="text-danger dashboard-top-card_header_pro">+10.53%</span>
+            <span class="dashboard-top-card_header_pro"
+              [ngClass]="{'text-success': +emailDataByChangePercent.bouncePercentageNew >= 0, 'text-danger': +emailDataByChangePercent.bouncePercentageNew < 0}"
+            >{{getPercent(emailDataByChangePercent.bouncePercentageNew)}}%</span>
           </div>
           <div class="dashboard-top-card_main-value">
-            <span>72</span>
+            <span>{{emailDataByChangePercent.bounceCountNew}}</span>
           </div>
           <div class="progress mt-2" style="height:5px">
             <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-              style="width:1%"></div>
+            [ngStyle]="{'width': emailDataByChangePercent.percentageIncreaseBounce + '%'}"></div>
           </div>
           <div class="dashboard-top-card_footer">
               <small class="dashboard-top-card_footer_txt">Charge</small>
-              <span class="dashboard-top-card_footer_pro text-danger">-1%</span>
+              <span class="dashboard-top-card_footer_pro"
+                [ngClass]="{'text-success': +emailDataByChangePercent.percentageIncreaseBounce >= 0, 'text-danger': +emailDataByChangePercent.percentageIncreaseBounce < 0}"
+              >{{getPercent(emailDataByChangePercent.percentageIncreaseBounce)}}%</span>
           </div>
         </div>
         <div class="dashboard-top-card card">
           <div class="dashboard-top-card_header">
             <span class="dashboard-top-card_header_title">Delivery</span>
-            <span class="text-success dashboard-top-card_header_pro">+18.00%</span>
+            <span class="dashboard-top-card_header_pro"
+              [ngClass]="{'text-success': +emailDataByChangePercent.sentPercentageNew >= 0, 'text-danger': +emailDataByChangePercent.sentPercentageNew < 0}"
+            >{{getPercent(emailDataByChangePercent.sentPercentageNew)}}%</span>
           </div>
           <div class="dashboard-top-card_main-value">
-            <span>132</span>
+            <span>{{emailDataByChangePercent.sentCountNew}}</span>
           </div>
           <div class="progress mt-2" style="height:5px">
             <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
@@ -126,24 +145,32 @@
           </div>
           <div class="dashboard-top-card_footer">
               <small class="dashboard-top-card_footer_txt">Charge</small>
-              <span class="dashboard-top-card_footer_pro text-success">+18.00%</span>
+              <span class="dashboard-top-card_footer_pro"
+                [ngClass]="{'text-success': +emailDataByChangePercent.sentPercentageNew >= 0, 'text-danger': +emailDataByChangePercent.sentPercentageNew < 0}"
+              >{{getPercent(emailDataByChangePercent.sentPercentageNew)}}%</span>
           </div>
         </div>
         <div class="dashboard-top-card card">
           <div class="dashboard-top-card_header">
             <span class="dashboard-top-card_header_title">Unsubscribe</span>
-            <span class="text-success dashboard-top-card_header_pro"></span>
+            <span class="text-success dashboard-top-card_header_pro"
+              [ngClass]="{'text-success': +emailDataByChangePercent.unsubscribePercentageNew >= 0, 'text-danger': +emailDataByChangePercent.unsubscribePercentageNew < 0}"
+              >{{getPercent(emailDataByChangePercent.unsubscribePercentageNew)}}%
+            </span>
           </div>
           <div class="dashboard-top-card_main-value">
-            <span>852</span>
+            <span>{{emailDataByChangePercent.unsubscribeCountNew}}</span>
           </div>
           <div class="progress mt-2" style="height:5px">
             <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-              style="width:0%"></div>
+            [ngStyle]="{'width': emailDataByChangePercent.percentageIncreaseUnsubscribe + '%'}"></div>
           </div>
           <div class="dashboard-top-card_footer">
               <small class="dashboard-top-card_footer_txt">Charge</small>
-              <span class="dashboard-top-card_footer_pro text-success"></span>
+              <span class="dashboard-top-card_footer_pro text-success"
+                [ngClass]="{'text-success': +emailDataByChangePercent.percentageIncreaseUnsubscribe >= 0, 'text-danger': +emailDataByChangePercent.percentageIncreaseUnsubscribe < 0}"
+              >{{getPercent(emailDataByChangePercent.percentageIncreaseUnsubscribe)}}%
+              </span>
           </div>
         </div>
       </div>
@@ -158,27 +185,42 @@
         </div>
         <div class="col-lg-5 col-md-12 table-height p-l-5">
           <div class="card table-card m-0" cardTitle="Top Performing Campaigns">
-            <app-apex-chart
+            <app-apex-chart #topPerformingChart
               chartID="top-performing-campaign-crm"
               [chartConfig]="topPerformingCampaignData"
+              [xAxis] = "topPerformingCampaignDataXAxis"
+              [newData] = "topPerformingCampaignDataSeries"
             ></app-apex-chart>
           </div>
         </div>
       </div>
       <div class="col-lg-12 table-height p-0">
-        <app-datatable [title]="'Upcoming Campaigns'" [dataSource]="upComingCampTableSource"
+        <app-datatable
+          [title]="'Upcoming Campaigns'"
+          [dataSource]="upComingCampTableSource"
           [buttons]="upComingCampTableButtons">
         </app-datatable>
       </div>
       <div class="row">
         <div class="col-lg-6 col-md-12 p-r-5 table-height">
           <div class="card table-card m-0" cardTitle="Subscribers">
-            <app-apex-chart chartID="subscribe-crm" [chartConfig]="subscribersData"></app-apex-chart>
+            <app-apex-chart #subscriberChart
+              chartID="subscribe-crm"
+              [chartConfig]="subscribersData"
+              [xAxis] = "subscribersDataXAxis"
+              [newData] = "subscribersDataSeries"
+            ></app-apex-chart>
           </div>
         </div>
         <div class="col-lg-6 col-md-12 p-l-5 table-height">
           <div class="card table-card m-0" cardTitle="Unsubscribers">
-            <app-apex-chart chartID="unsubscribers-crm" [chartConfig]="unsubscribers"></app-apex-chart>
+            <app-apex-chart
+              #unSubscriberChart
+              chartID="unsubscribers-crm"
+              [chartConfig]="unsubscribers"
+              [xAxis] = "unsubscribersDataXAxis"
+              [newData] = "unsubscribersDataSeries"
+            ></app-apex-chart>
           </div>
         </div>
       </div>

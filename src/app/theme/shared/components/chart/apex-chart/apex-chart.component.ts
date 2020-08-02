@@ -38,13 +38,17 @@ export class ApexChartComponent implements OnInit, OnDestroy {
 
     this.apexEvent.changeSeriesData.pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       if (this.newData) {
-        this.chart.updateSeries([{
-          data: this.newData
-        }]);
+        this.chart.updateSeries(this.newData);
       }
     });
   }
 
+  render() {
+    setTimeout(() => {
+      this.apexEvent.eventChangeTimeRange();
+      this.apexEvent.eventChangeSeriesData();
+    });
+  }
 
   ngOnDestroy(): void {
     this.unsubscribe$.next();

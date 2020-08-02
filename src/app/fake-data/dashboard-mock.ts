@@ -109,19 +109,19 @@ export class EmailDashCrm {
     },
     series: [{
       name: 'Sent',
-      data: [TopPerformingCampaignsMockData[0].sent, TopPerformingCampaignsMockData[1].sent],
+      data: [],
     }, {
       name: 'Open',
-      data: [TopPerformingCampaignsMockData[0].open, TopPerformingCampaignsMockData[1].open],
+      data: [],
     }, {
       name: 'Clicks',
-      data: [TopPerformingCampaignsMockData[0].clicks, TopPerformingCampaignsMockData[1].clicks],
+      data: [],
     }, {
       name: 'Bounce',
-      data: [TopPerformingCampaignsMockData[0].bounces, TopPerformingCampaignsMockData[1].bounces],
+      data: [],
     }, {
       name: 'Unsubscribe',
-      data: [TopPerformingCampaignsMockData[0].unsubscribe, TopPerformingCampaignsMockData[1].unsubscribe],
+      data: [],
     }],
     grid: {
       borderColor: '#e2e5e829',
@@ -130,7 +130,7 @@ export class EmailDashCrm {
       title: {
         text: 'Campaign'
       },
-      categories: ['Lipstick', 'Samir Campaign'],
+      categories: [],
     },
     yaxis: {
       title: {
@@ -139,6 +139,9 @@ export class EmailDashCrm {
     },
     fill: {
       opacity: 0.85
+    },
+    noData: {
+      text: 'Loading...'
     },
     tooltip: {
       marker: {
@@ -181,7 +184,7 @@ export class EmailDashCrm {
     },
     series: [
       {
-        data: [17, 2, 1, 1],
+        data: [],
       }
     ],
     grid: {
@@ -191,7 +194,7 @@ export class EmailDashCrm {
       title: {
         text: 'Month'
       },
-      categories: ['9-Jun', '17-Jun', '19-Jun', '22-Jun'],
+      categories: [],
     },
     yaxis: {
       title: {
