@@ -19,13 +19,14 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   destroy$ = new Subject();
   leadScoringData: Scoring[];
   selected: Scoring[] = [];
-
+  selectedForConfirm = '';
+  selectedScore: any;
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   // confirm Modal
   confirmButtons = [
-    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+    { label: 'Yes', action: this.onConfirm.bind(this), class: 'btn-primary' }
   ];
 
   tableSource: DataTableSource<Scoring> = new DataTableSource<Scoring>(50);
@@ -37,6 +38,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
 
   loading = false;
   totalCount = 0;
+  modalMessage = '';
 
   constructor(
     private scoringService: ScoringService,
@@ -59,7 +61,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Description', prop: 'description', sortable: true },
       {
-        name: 'Is Default For New Record', prop: 'isDefaultForNewRecord',
+        name: 'Is Default For New Record', prop: 'isDefaultForRecord',
         sortable: false, custom: true, template: this.tableColumnCheckTemplate
       },
       {
@@ -67,7 +69,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
         sortable: false, custom: true, template: this.tableColumnCheckTemplate
       },
       {
-        name: 'Is Lead Scoring For Website', prop: 'isLeadScoringForWebsite',
+        name: 'Is Lead Scoring For Website', prop: 'isLeadScoringProfileForWebsite',
         sortable: false, custom: true, template: this.tableColumnCheckTemplate
       },
       { name: 'Is Active', prop: 'isActive', sortable: true, custom: true, template: this.tableColumnCheckTemplate },
@@ -86,39 +88,69 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onActive(event) {
-    let message = '';
-    const scoring = event.row as Scoring;
     // TODO: Simplify later
-    if (event.type === 'click' && event.event.target.classList.value === 'datatable-body-cell-label') {
+    if (event.type === 'click') {
+      let message = '';
+      const scoring = event.row as Scoring;
+      this.selectedScore = scoring;
+
       switch (event.cellIndex) {
         case 1:
-          this.modalService.openModal(CreateLeadScoringComponent, {
-            width: '100%',
-            data: {
-              scoring,
-              mode: 'edit'
-            }
-          });
+          if (event.event.target.classList.value === 'datatable-body-cell-label') {
+            this.modalService.openModal(CreateLeadScoringComponent, {
+              width: '100%',
+              data: {
+                scoring,
+                mode: 'edit'
+              }
+            });
+          }
+
           break;
         case 3:
-          message = 'Are You Sure You want to make this profile as default for new record?';
-          this.openSetDefaultConfirmModal(message);
+          if (event.event.target.type === 'checkbox') {
+            if (scoring.isDefaultForRecord) {
+              message = 'Are you sure you want to remove this profile as default for new record?';
+            } else {
+              message = 'Are you sure you want to make this profile as default for new record?';
+            }
+            this.selectedForConfirm = 'record';
+            this.openSetDefaultConfirmModal(message);
+          }
           break;
         case 4:
-          message = 'Are You Sure You want to make this profile as default for campaign';
-          this.openSetDefaultConfirmModal(message);
+          if (event.event.target.type === 'checkbox') {
+            if (scoring.isDefaultForCampaign) {
+              message = 'Are you sure you want to remove this profile as default for campaign';
+            } else {
+              message = 'Are you sure you want to make this profile as default for campaign';
+            }
+            this.selectedForConfirm = 'campaign';
+            this.openSetDefaultConfirmModal(message);
+          }
           break;
         case 5:
-          message = 'Are You Sure You want to make this profile as lead scoring profile for website?';
-          this.openSetDefaultConfirmModal(message);
+          if (event.event.target.type === 'checkbox') {
+            this.selectedForConfirm = 'website';
+            if (scoring.isLeadScoringProfileForWebsite) {
+              message = 'Are you sure you want to remove this profile as lead scoring profile for website?';
+            } else {
+              message = 'Are you sure you want to make this profile as lead scoring profile for website?';
+            }
+            this.openSetDefaultConfirmModal(message);
+          }
           break;
         case 6:
-          if (scoring.isActive) {
-            message = 'Are you sure you want to deactivate this Lead Scoring Profile?';
-          } else {
-            message = 'Are you sure you want to activate this Lead Scoring Profile?';
+          if (event.event.target.type === 'checkbox') {
+            this.selectedForConfirm = 'activate';
+            if (scoring.isActive) {
+              message = 'Are you sure you want to deactivate this Lead Scoring Profile?';
+            } else {
+              message = 'Are you sure you want to activate this Lead Scoring Profile?';
+            }
+
+            this.openSetDefaultConfirmModal(message);
           }
-          this.openSetDefaultConfirmModal(message);
           break;
       }
     }
@@ -129,12 +161,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openSetDefaultConfirmModal(message: string) {
-    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message
-    //   }
-    // });
+    this.modalMessage = message;
     this.confirmModal.show();
   }
 
@@ -143,13 +170,140 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDeleteClicked() {
-    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message: 'Are you sure you want to delete selected Lead Scoring/s?'
-    //   }
-    // });
+
     this.confirmModal.show();
+  }
+
+  onConfirm() {
+    switch (this.selectedForConfirm) {
+      case 'record':
+        if (this.selectedScore.isDefaultForRecord) {
+          this.scoringService.updateLeadScoringIsDefaultRecordColumnByGrid(this.selectedScore.id, 'false')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.loadTableData();
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        } else {
+          this.scoringService.updateLeadScoringIsDefaultRecordColumn()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.scoringService.updateLeadScoringIsDefaultRecordColumnByGrid(this.selectedScore.id, 'true')
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(
+                    () => {
+                      this.loadTableData();
+                    },
+                    error => {
+                      this.loading = false;
+                      console.log('error', error.response);
+                    }
+                  );
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        }
+        break;
+      case 'campaign':
+        if (this.selectedScore.isDefaultForCampaign) {
+          this.scoringService.updateLeadScoringIsDefaultCampaignColumnByGrid(this.selectedScore.id, 'false')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.loadTableData();
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        } else {
+          this.scoringService.updateLeadScoringIsDefaultCampaignColumn()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.scoringService.updateLeadScoringIsDefaultCampaignColumnByGrid(this.selectedScore.id, 'true')
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(
+                    () => {
+                      this.loadTableData();
+                    },
+                    error => {
+                      this.loading = false;
+                      console.log('error', error.response);
+                    }
+                  );
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        }
+        break;
+      case 'website':
+        if (this.selectedScore.isLeadScoringProfileForWebsite) {
+          this.scoringService.updateLeadScoringForWebsiteColumnByGrid(this.selectedScore.id, 'false')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.loadTableData();
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        } else {
+          this.scoringService.updateLeadScoringForWebsiteColumn()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.scoringService.updateLeadScoringForWebsiteColumnByGrid(this.selectedScore.id, 'true')
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(
+                    () => {
+                      this.loadTableData();
+                    },
+                    error => {
+                      this.loading = false;
+                      console.log('error', error.response);
+                    }
+                  );
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        }
+        break;
+      case 'activate':
+
+        this.scoringService.updateLeadScoringIsActiveColumnByGrid(this.selectedScore.id, this.selectedScore.isActive ? 'false' : 'true')
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            () => {
+              this.loadTableData();
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+        break;
+      default:
+        break;
+    }
   }
 
   initTable() {
@@ -175,7 +329,7 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
       sorting: '',
     };
     this.loading = true;
-    this.scoringService.getLeadCategory(params)
+    this.scoringService.getLeadScoring(params)
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         data => {

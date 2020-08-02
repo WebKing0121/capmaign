@@ -40,6 +40,38 @@ export class ScoringService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetLeadScoringProfileInOuIncludingChildren`, params);
   }
 
+  updateLeadScoringIsDefaultRecordColumn(): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringIsDefaultRecordColumn`, {});
+  }
+
+  updateLeadScoringIsDefaultRecordColumnByGrid(id: number, value: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringIsDefaultRecordColumnByGrid?id=${id}&isDefaultForRecord=${value}`, {});
+  }
+
+  updateLeadScoringIsDefaultCampaignColumn(): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringIsDefaultCampaignColumn`, {});
+  }
+
+  updateLeadScoringIsDefaultCampaignColumnByGrid(id: number, value: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringIsDefaultCampaignColumnByGrid?id=${id}&isDefaultForCampaign=${value}`, {});
+  }
+
+  updateLeadScoringForWebsiteColumn(): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringForWebsiteColumn`, {});
+  }
+
+  updateLeadScoringForWebsiteColumnByGrid(id: number, value: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringForWebsiteColumnByGrid?id=${id}&isLeadScoringProfileForWebsite=${value}`, {});
+  }
+
+  updateLeadScoringIsActiveColumnByGrid(id: number, value: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringIsActiveColumnByGrid?id=${id}&isActive=${value}`, {});
+  }
+
   getLeadGrading(params: any): Observable<any> {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/GetLeadGradingProfileInOuIncludingChildren`, params);

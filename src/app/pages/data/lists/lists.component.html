@@ -52,7 +52,10 @@
   </div>
 
   <div class="app-modal-body">
-    <app-data-records [buttons]="tableRecordsButtons" (activate)="onActiveRecordsTable($event)"></app-data-records>
+    <app-data-records
+      [buttons]="tableRecordsButtons"
+      (activate)="onActiveRecordsTable($event)"
+    ></app-data-records>
   </div>
 
   <div class="app-modal-footer">

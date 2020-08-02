@@ -1,0 +1,8 @@
+.modal-message {
+  display: flex;
+  align-items: center;
+  p {
+    flex-grow: 1;
+    line-height: 25px;
+  }
+}

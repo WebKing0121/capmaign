@@ -6,7 +6,11 @@
 		</button>
 	</div>
 	<div class="app-modal-body">
-		<p><i class="fa fa-info-circle" [style.marginRight.px]="10" [style.color]="'#ffd86b'"></i>{{modalMessage}}</p>
+		<div class="modal-message">
+			<i class="fa fa-info-circle" [style.marginRight.px]="10" [style.color]="'#ffd86b'"></i>
+			<p>{{modalMessage}}</p>
+		</div>
+		
 	</div>
 	<div class="app-modal-footer">
 		<button type="button" *ngFor="let button of buttons" class="btn" [disabled]="button.disabled"

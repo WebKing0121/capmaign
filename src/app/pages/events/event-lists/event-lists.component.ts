@@ -227,7 +227,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   onActive(evt) {
     if (evt.type === 'click') {
-      const list: List = evt.row as List;
+      const list = evt.row as any;
       this.tableButtons[1].disabled = false;
       this.eventsTableButtons[0].disabled = false;
       this.eventsTableButtons[1].disabled = true;
