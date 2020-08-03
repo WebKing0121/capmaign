@@ -2,9 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
-import { of, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
-import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 @Injectable({
   providedIn: 'root'
 })
@@ -17,14 +16,14 @@ export class CampaignService {
   }
 
   getInAppMessages(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetInAppNotificationData`, params);
   }
 
   getSMSCampaigns(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaigns`, params);
   }
 
   getPushNotifications(params: any): Observable<any> {
-    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllPushNotificationData`, params);
   }
 }

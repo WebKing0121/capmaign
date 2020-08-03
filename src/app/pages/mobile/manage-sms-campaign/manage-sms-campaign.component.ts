@@ -7,8 +7,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 import { MobileCampaignComponent } from '../mobile-campaign/mobile-campaign.component';
-// tslint:disable-next-line
-import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataSourceChange } from '@app-models/data-source';
 
@@ -29,7 +27,8 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateClicked() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false },
+    { label: 'Send', icon: 'fa fa-phone', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
   ];
 
   selected: Campaign[];
@@ -40,9 +39,7 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
   totalCount = 0;
   constructor(
     private campaignService: CampaignService,
-    private modalService: ModalService,
-    private router: Router,
-    private route: ActivatedRoute
+    private modalService: ModalService
   ) {
     this.smsCampaignData = [];
   }
@@ -58,11 +55,26 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'Sms Campaign Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
-      { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Last Sent', prop: 'lastSent', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Scheduled Date', prop: 'scheduled', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } }
+      {
+        name: 'Sms Campaign Name', prop: 'smsCampaignName', sortable: true,
+        cellClass: ['cell-hyperlink'], alwaysVisible: true
+      },
+      {
+        name: 'Created Date', prop: 'creationTime', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' }
+      },
+      {
+        name: 'Modification Date', prop: 'lastModificationTime', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' }
+      },
+      {
+        name: 'Last Sent', prop: 'lastSent', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' }
+      },
+      {
+        name: 'Scheduled Date', prop: 'scheduled', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' }
+      }
     ];
     this.tableSource.setColumns(columns);
   }

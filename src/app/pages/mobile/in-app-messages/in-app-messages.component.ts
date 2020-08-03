@@ -6,8 +6,6 @@ import { CampaignService } from '@app-core/services/campaign.service';
 import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
-// tslint:disable-next-line
-import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { InAppMessageComponent } from '../in-app-message/in-app-message.component';
 import { DataSourceChange } from '@app-models/data-source';
 
@@ -19,7 +17,7 @@ import { DataSourceChange } from '@app-models/data-source';
 export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @ViewChild('confirmModal', { static: false }) confirmModal;
- // confirm Modal
+  // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
   ];
@@ -55,9 +53,18 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngAfterViewInit(): void {
     const columns: DataTableColumn[] = [
-      { name: 'In App Campaign Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
-      { name: 'Created Date', prop: 'created', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
-      { name: 'Modification Date', prop: 'updated', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' } },
+      {
+        name: 'In App Campaign Name', prop: 'header', sortable: true,
+        cellClass: ['cell-hyperlink'], alwaysVisible: true
+      },
+      {
+        name: 'Created Date', prop: 'creationTime', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' }
+      },
+      {
+        name: 'Modification Date', prop: 'lastModificationTime', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' }
+      },
     ];
     this.tableSource.setColumns(columns);
   }
