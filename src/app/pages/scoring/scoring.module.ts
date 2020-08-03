@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SelectModule } from 'ng-select';
 
 import { ScoringRoutingModule } from './scoring-routing.module';
 import { LeadScoringComponent } from './lead-scoring/lead-scoring.component';
@@ -41,6 +42,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
     DatatableModule,
     FormsModule,
     ReactiveFormsModule,
+    SelectModule,
     SharedModule
   ]
 })

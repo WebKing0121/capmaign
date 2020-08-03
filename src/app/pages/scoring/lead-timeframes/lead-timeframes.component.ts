@@ -1,69 +1,73 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, Inject } from '@angular/core';
-import { CategoryComponent } from '../lead-category/components/category/category.component';
+import {
+  Component, OnInit, ViewChild, ViewContainerRef,
+  ComponentRef, ComponentFactoryResolver,
+  OnDestroy, ViewEncapsulation
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
-import { LeadCategoryModalComponent } from '../lead-category/lead-category-modal/lead-category-modal.component';
 import { TimeFrameComponent } from './components/time-frame/time-frame.component';
+import { ScoringService } from '@app-core/services/scoring.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-lead-timeframes',
   templateUrl: './lead-timeframes.component.html',
-  styleUrls: ['./lead-timeframes.component.scss']
+  styleUrls: ['./lead-timeframes.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class LeadTimeframesComponent implements OnInit {
-
-  leadScoringTypeList = [
-    {
-      id: '1',
-      value: 'Default'
-    },
-    {
-      id: '2',
-      value: 'Default-new record'
-    },
-    {
-      id: '3',
-      value: 'Default new'
-    },
-    {
-      id: '4',
-      value: 'Default scoring'
-    },
-    {
-      id: '5',
-      value: 'Default profile'
-    },
-    {
-      id: '6',
-      value: 'Demarcation location'
-    },
-    {
-      id: '7',
-      value: 'Demo lead scoring'
-    },
-    {
-      id: '8',
-      value: 'Demo sample'
-    }
-  ];
-
-  @ViewChild('timeFrameList', { read: ViewContainerRef })
-  timeFrameList: ViewContainerRef;
+export class LeadTimeframesComponent implements OnInit, OnDestroy {
+  @ViewChild('timeFrameList', { read: ViewContainerRef }) timeFrameList: ViewContainerRef;
 
   childUniqueKey: number;
   timeFrameRefList = Array<ComponentRef<TimeFrameComponent>>();
-  formGroup: FormGroup;
+  form: FormGroup;
 
+  destroy$ = new Subject();
+  selected = [];
+  leadScoringTypeList = [];
+  loading = false;
   constructor(
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
+    private scoringService: ScoringService
   ) {
     this.childUniqueKey = 0;
+    this.form = this.fb.group({
+      scoringName: ['', Validators.required]
+    });
   }
 
   ngOnInit(): void {
-    this.formGroup = this.fb.group({
-    });
+    this.loadScoringTypeList();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  loadScoringTypeList() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+    this.loading = true;
+    this.scoringService.getLeadScoringProfiles(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.leadScoringTypeList = data.result.items.map(x => ({ value: `${x.id}`, label: x.name }));
+          }
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 
   add() {

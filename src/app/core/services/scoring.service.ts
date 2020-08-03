@@ -99,4 +99,9 @@ export class ScoringService {
     // tslint:disable-next-line
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingIsActiveColumnByGrid?id=${id}&isActive=${value}`, {});
   }
+
+  getLeadScoringProfiles(params: any): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetLeadScoringProfileInOuIncludingChildren`, params);
+  }
 }
