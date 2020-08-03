@@ -49,8 +49,22 @@ export class DashboardService {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/email/GetTopPerformingEmailDetails?fromDate=${from}&toDate=${to}`);
   }
 
+  getTopPerformingCampaignsForSMS(from: string, to: string): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/sms/GetTopPerformingSms?fromDate=${from}&toDate=${to}`);
+  }
+
   getUpcommingCampaigns(): Observable<any> {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/email/GetScheduledEmailsForDashboard`);
+  }
+
+  getFireBaseEvents(currentFrom: string, currentTo: string, previousFrom: string, previousTo: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/sms/GetFireBaseEvents?currentFromDate=${currentFrom}&currentToDate=${currentTo}&previousFromDate=${previousFrom}&previousToDate=${previousTo}`);
+  }
+
+  getSMSByChangePercentage(currentFrom: string, currentTo: string, previousFrom: string, previousTo: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/sms/GetSMSByChangePercentage?currentFromDate=${currentFrom}&currentToDate=${currentTo}&previousFromDate=${previousFrom}&previousToDate=${previousTo}`);
   }
 
   getRecentEventsMockData() {

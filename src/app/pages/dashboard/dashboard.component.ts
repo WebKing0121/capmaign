@@ -138,11 +138,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
   selectedApp: null;
   showAndroid: boolean;
   emailDataByChangePercent: any;
+  firebaseEvents: any;
+  smsByChangePercentage: any;
 
   constructor(
-    private router: Router,
     private dashboardService: DashboardService,
-    private campaignService: CampaignService,
     public parserFormatter: NgbDateParserFormatter
   ) {
     this.topPerformingCampaignData = EmailDashCrm.TopPerformingCampaignData;
@@ -185,6 +185,28 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       unsubscribePercentageNew: '0.00',
       unsubscribePercentageOld: '0.00',
     };
+    this.smsByChangePercentage = {
+      appInstalledCountNew: 0,
+      appInstalledCountPre: 0,
+      appUnInstalledCountNew: 0,
+      appUnInstalledCountPre: 0,
+      clickThroughCountNew: 0,
+      clickThroughCountPerNewPer: '0.00',
+      clickThroughCountPre: 0,
+      clickThroughCountPrePer: '0.00',
+      linkOpenCountNew: 0,
+      linkOpenCountNewPer: '0.00',
+      linkOpenCountNewPrePer: '0.00',
+      linkOpenCountPre: 0,
+      percentageAppInstalled: '0.00',
+      percentageAppUnInstalled: '0.00',
+      percentageIncreaseChurn: '0.00',
+      percentageIncreaseEngagement: '0.00',
+      percentagedecereaseClickThrough: '0.00',
+      percentagedecereaseLinkOpen: '0.00',
+      percentageincreaseClickThrough: '',
+      percentageincreaseLinkOpen: '',
+    };
   }
 
   ngOnInit(): void {
@@ -209,6 +231,9 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadEmailByChangePercentage();
     this.loadSubscribers();
     this.loadUnsubscribers();
+    // Init Mobile Analytics
+
+
     // Get Recent Event Information
     this.dashboardService.getRecentEventsMockData()
       .pipe(takeUntil(this.destroy$))
@@ -341,7 +366,7 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnDestroy(): void {
     this.destroy$.next(true);
-    this.destroy$.unsubscribe();
+    this.destroy$.complete();
 
     this.tableSource.destroy();
     this.topPerformingTableSource.destroy();
@@ -363,13 +388,16 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     this.tableSource.setColumns(columns);
 
     const topPerformingColumns: DataTableColumn[] = [
-      { name: 'Name', prop: 'name', sortable: true, width: 60, maxWidth: 90 },
-      { name: 'Date & Time', prop: 'dateTime', sortable: true, width: 60, maxWidth: 170 },
-      { name: 'Sent', prop: 'sent', sortable: true, width: 60, maxWidth: 60 },
-      { name: 'Open', prop: 'open', sortable: true, width: 60, maxWidth: 60 },
-      { name: 'Clicks', prop: 'clicks', sortable: true, width: 60, maxWidth: 60 },
-      { name: 'Bounces', prop: 'bounces', sortable: true, width: 60, maxWidth: 60 },
-      { name: 'Unsubscribe', prop: 'unsubscribe', sortable: true, width: 60, maxWidth: 100 },
+      { name: 'Name', prop: 'emailCampaignName', sortable: true, width: 60, maxWidth: 90 },
+      {
+        name: 'Date & Time', prop: 'emailSentDate', sortable: true, width: 60, maxWidth: 170,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm A' }
+      },
+      { name: 'Sent', prop: 'totalSentCount', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'Open', prop: 'openCount', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'Clicks', prop: 'clickThroughCount', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'Bounces', prop: 'bounceCount', sortable: true, width: 60, maxWidth: 60 },
+      { name: 'Unsubscribe', prop: 'unsubscribedCount', sortable: true, width: 60, maxWidth: 100 },
     ];
     this.topPerformingTableSource.setColumns(topPerformingColumns);
 
@@ -441,6 +469,11 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
       prevTab.selected = false;
     }
 
+    if (this.showEmailAnalytics) {
+      this.reloadEmailReports();
+    } else if (this.showMobileAnalytics) {
+      this.reloadMobileReports();
+    }
     // if (tab) {
     //   this.dashboardType = tab.key;
     //   tab.selected = true;
@@ -493,6 +526,21 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     const b = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day]);
     a.subtract(b.diff(a, 'day') - 1, 'days');
     this.compareFromDate = { year: a.year(), month: a.month() + 1, day: a.date() };
+  }
+
+  reloadEmailReports() {
+    this.loadBounceEmailTableData();
+    this.loadTopPerformingCampaignTableData();
+    this.loadUpcommingCampaignTableData();
+    this.loadEmailByChangePercentage();
+    this.loadSubscribers();
+    this.loadUnsubscribers();
+  }
+
+  reloadMobileReports() {
+    this.loadFireBaseEvents();
+    this.loadSMSByChangePercentage();
+    this.loadTopPerformingCampaignTableData();
   }
 
   // onCompareDateChange(date: NgbDateStruct) {
@@ -590,26 +638,50 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
     const to = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day, 23, 59, 59]).format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
     console.log(from, to);
     this.alltopPerformingLoading = true;
-    this.dashboardService.getTopPerformingCampaigns(from, to)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.alltopPerformingCampaign = data.result;
-            this.totalCountTopPerformingCampaign = data.result.length;
-            this.setTopPerformingCampaignGraphData(this.alltopPerformingCampaign);
-          } else {
-            this.alltopPerformingCampaign = [];
-            this.totalCountTopPerformingCampaign = 0;
+    if (this.showEmailAnalytics) {
+      this.dashboardService.getTopPerformingCampaigns(from, to)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          data => {
+            if (data.result) {
+              this.alltopPerformingCampaign = data.result;
+              this.totalCountTopPerformingCampaign = data.result.length;
+              this.setTopPerformingCampaignGraphData(this.alltopPerformingCampaign);
+            } else {
+              this.alltopPerformingCampaign = [];
+              this.totalCountTopPerformingCampaign = 0;
+            }
+            this.topPerformingTableSource.next(this.alltopPerformingCampaign, this.totalCountTopPerformingCampaign);
+            this.alltopPerformingLoading = false;
+          },
+          error => {
+            this.alltopPerformingLoading = false;
+            console.log('error', error.response);
           }
-          this.topPerformingTableSource.next(this.alltopPerformingCampaign, this.totalCountTopPerformingCampaign);
-          this.alltopPerformingLoading = false;
-        },
-        error => {
-          this.alltopPerformingLoading = false;
-          console.log('error', error.response);
-        }
-      );
+        );
+    } else if (this.showMobileAnalytics) {
+      this.dashboardService.getTopPerformingCampaignsForSMS(from, to)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          data => {
+            if (data.result) {
+              this.alltopPerformingCampaign = data.result;
+              this.totalCountTopPerformingCampaign = data.result.length;
+              this.setTopPerformingCampaignGraphData(this.alltopPerformingCampaign);
+            } else {
+              this.alltopPerformingCampaign = [];
+              this.totalCountTopPerformingCampaign = 0;
+            }
+            this.topPerformingTableSource.next(this.alltopPerformingCampaign, this.totalCountTopPerformingCampaign);
+            this.alltopPerformingLoading = false;
+          },
+          error => {
+            this.alltopPerformingLoading = false;
+            console.log('error', error.response);
+          }
+        );
+    }
+
   }
 
   setTopPerformingCampaignGraphData(performingCampaigns: any[]) {
@@ -728,6 +800,53 @@ export class DashboardComponent implements OnInit, OnDestroy, AfterViewInit {
               }
             ];
             this.unSubscriberChart.render();
+          }
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  loadFireBaseEvents() {
+    const currentFrom = moment([this.fromDate.year, this.fromDate.month - 1, this.fromDate.day])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const currentTo = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day, 23, 59, 59])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+    const previousFrom = moment([this.compareFromDate.year, this.compareFromDate.month - 1, this.compareFromDate.day])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const previousTo = moment([this.compareToDate.year, this.compareToDate.month - 1, this.compareToDate.day, 23, 59, 59])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+
+    this.dashboardService.getFireBaseEvents(currentFrom, currentTo, previousFrom, previousTo)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.firebaseEvents = data.result[0];
+          }
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
+  }
+  loadSMSByChangePercentage() {
+    const currentFrom = moment([this.fromDate.year, this.fromDate.month - 1, this.fromDate.day])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const currentTo = moment([this.toDate.year, this.toDate.month - 1, this.toDate.day, 23, 59, 59])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+    const previousFrom = moment([this.compareFromDate.year, this.compareFromDate.month - 1, this.compareFromDate.day])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.000Z';
+    const previousTo = moment([this.compareToDate.year, this.compareToDate.month - 1, this.compareToDate.day, 23, 59, 59])
+      .format('YYYY-MM-DD[T]HH:mm:ss') + '.999Z';
+
+    this.dashboardService.getSMSByChangePercentage(currentFrom, currentTo, previousFrom, previousTo)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.smsByChangePercentage = data.result[0];
           }
         },
         error => {

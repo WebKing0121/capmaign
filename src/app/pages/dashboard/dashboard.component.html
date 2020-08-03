@@ -81,7 +81,7 @@
               [ngStyle]="{'width': emailDataByChangePercent.percentageIncreaseClickThrough + '%'}"></div>
           </div>
           <div class="dashboard-top-card_footer">
-              <small class="dashboard-top-card_footer_txt">Charge</small>
+              <small class="dashboard-top-card_footer_txt">Change</small>
               <span class="dashboard-top-card_footer_pro"
                 [ngClass]="{'text-success': +emailDataByChangePercent.percentageIncreaseClickThrough >= 0, 'text-danger': +emailDataByChangePercent.percentageIncreaseClickThrough < 0}"
               >{{getPercent(emailDataByChangePercent.percentageIncreaseClickThrough)}}%</span>
@@ -102,7 +102,7 @@
               [ngStyle]="{'width': emailDataByChangePercent.percentageIncreaseOpen + '%'}"></div>
           </div>
           <div class="dashboard-top-card_footer">
-              <small class="dashboard-top-card_footer_txt">Charge</small>
+              <small class="dashboard-top-card_footer_txt">Change</small>
               <span class="dashboard-top-card_footer_pro"
                 [ngClass]="{'text-success': +emailDataByChangePercent.percentageIncreaseOpen >= 0, 'text-danger': +emailDataByChangePercent.percentageIncreaseOpen < 0}"
               >{{getPercent(emailDataByChangePercent.percentageIncreaseOpen)}}%</span>
@@ -123,7 +123,7 @@
             [ngStyle]="{'width': emailDataByChangePercent.percentageIncreaseBounce + '%'}"></div>
           </div>
           <div class="dashboard-top-card_footer">
-              <small class="dashboard-top-card_footer_txt">Charge</small>
+              <small class="dashboard-top-card_footer_txt">Change</small>
               <span class="dashboard-top-card_footer_pro"
                 [ngClass]="{'text-success': +emailDataByChangePercent.percentageIncreaseBounce >= 0, 'text-danger': +emailDataByChangePercent.percentageIncreaseBounce < 0}"
               >{{getPercent(emailDataByChangePercent.percentageIncreaseBounce)}}%</span>
@@ -144,7 +144,7 @@
               style="width:90%"></div>
           </div>
           <div class="dashboard-top-card_footer">
-              <small class="dashboard-top-card_footer_txt">Charge</small>
+              <small class="dashboard-top-card_footer_txt">Change</small>
               <span class="dashboard-top-card_footer_pro"
                 [ngClass]="{'text-success': +emailDataByChangePercent.sentPercentageNew >= 0, 'text-danger': +emailDataByChangePercent.sentPercentageNew < 0}"
               >{{getPercent(emailDataByChangePercent.sentPercentageNew)}}%</span>
@@ -166,7 +166,7 @@
             [ngStyle]="{'width': emailDataByChangePercent.percentageIncreaseUnsubscribe + '%'}"></div>
           </div>
           <div class="dashboard-top-card_footer">
-              <small class="dashboard-top-card_footer_txt">Charge</small>
+              <small class="dashboard-top-card_footer_txt">Change</small>
               <span class="dashboard-top-card_footer_pro text-success"
                 [ngClass]="{'text-success': +emailDataByChangePercent.percentageIncreaseUnsubscribe >= 0, 'text-danger': +emailDataByChangePercent.percentageIncreaseUnsubscribe < 0}"
               >{{getPercent(emailDataByChangePercent.percentageIncreaseUnsubscribe)}}%
@@ -243,18 +243,22 @@
               <div class="dashboard-top-card card">
                 <div class="dashboard-top-card_header">
                   <span class="dashboard-top-card_header_title">Click - through</span>
-                  <span class="text-success dashboard-top-card_header_pro">+10%</span>
+                  <span class="dashboard-top-card_header_pro"
+                    [ngClass]="{'text-success': +smsByChangePercentage.clickThroughCountPerNewPer >= 0, 'text-danger': +smsByChangePercentage.clickThroughCountPerNewPer < 0}"
+                  >{{getPercent(smsByChangePercentage.clickThroughCountPerNewPer)}}%</span>
                 </div>
                 <div class="dashboard-top-card_main-value">
-                  <span>1,098</span>
+                  <span>{{smsByChangePercentage.clickThroughCountNew}}</span>
                 </div>
                 <div class="progress mt-2" style="height:5px">
                   <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                    style="width:60%"></div>
+                    [ngStyle]="{'width': smsByChangePercentage.clickThroughCountPrePer + '%'}"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
-                    <span class="text-danger dashboard-top-card_footer_pro">-8%</span>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
+                    <span class="dashboard-top-card_footer_pro"
+                      [ngClass]="{'text-success': +smsByChangePercentage.clickThroughCountPrePer >= 0, 'text-danger': +smsByChangePercentage.clickThroughCountPrePer < 0}"
+                    >{{getPercent(smsByChangePercentage.clickThroughCountPrePer)}}%</span>
                 </div>
               </div>
             </div>
@@ -262,18 +266,22 @@
               <div class="dashboard-top-card card">
                 <div class="dashboard-top-card_header">
                   <span class="dashboard-top-card_header_title">Open Link</span>
-                  <span class="text-success dashboard-top-card_header_pro">+20.00%</span>
+                  <span class="dashboard-top-card_header_pro"
+                    [ngClass]="{'text-success': +smsByChangePercentage.linkOpenCountNewPer >= 0, 'text-danger': +smsByChangePercentage.linkOpenCountNewPer < 0}"
+                  >{{getPercent(smsByChangePercentage.linkOpenCountNewPer)}}%</span>
                 </div>
                 <div class="dashboard-top-card_main-value">
-                  <span>1,053</span>
+                  <span>{{smsByChangePercentage.linkOpenCountNew}}</span>
                 </div>
                 <div class="progress mt-2" style="height:5px">
                   <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                    style="width:60%"></div>
+                    [ngStyle]="{'width': smsByChangePercentage.linkOpenCountNewPrePer + '%'}"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
-                    <span class="text-danger dashboard-top-card_footer_pro">0.00%</span>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
+                    <span class="dashboard-top-card_footer_pro"
+                      [ngClass]="{'text-success': +smsByChangePercentage.linkOpenCountNewPrePer >= 0, 'text-danger': +smsByChangePercentage.linkOpenCountNewPrePer < 0}"
+                    >{{getPercent(smsByChangePercentage.linkOpenCountNewPrePer)}}%</span>
                 </div>
               </div>
             </div>
@@ -281,18 +289,22 @@
               <div class="dashboard-top-card card">
                 <div class="dashboard-top-card_header">
                   <span class="dashboard-top-card_header_title">Engagement</span>
-                  <span class="text-success dashboard-top-card_header_pro">0.00%</span>
+                  <span class="dashboard-top-card_header_pro"
+                    [ngClass]="{'text-success': +smsByChangePercentage.linkOpenCountNewPer >= 0, 'text-danger': +smsByChangePercentage.linkOpenCountNewPer < 0}"
+                  >{{getPercent(smsByChangePercentage.linkOpenCountNewPer)}}%</span>
                 </div>
                 <div class="dashboard-top-card_main-value">
-                  <span>1,017</span>
+                  <span>{{smsByChangePercentage.linkOpenCountNew}}</span>
                 </div>
                 <div class="progress mt-2" style="height:5px">
                   <div class="progress-bar bg-c-blue" role="progressbar" aria-valuemin="0" aria-valuemax="100"
-                    style="width:60%"></div>
+                    [ngStyle]="{'width': smsByChangePercentage.linkOpenCountNewPrePer + '%'}"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
-                    <span class="text-danger dashboard-top-card_footer_pro">0.00%</span>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
+                    <span class="dashboard-top-card_footer_pro"
+                      [ngClass]="{'text-success': +smsByChangePercentage.linkOpenCountNewPrePer >= 0, 'text-danger': +smsByChangePercentage.linkOpenCountNewPrePer < 0}"
+                    >{{getPercent(smsByChangePercentage.linkOpenCountNewPrePer)}}%</span>
                 </div>
               </div>
             </div>
@@ -310,7 +322,7 @@
                     style="width:60%"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
                     <span class="text-success dashboard-top-card_footer_pro">+18.00%</span>
                 </div>
               </div>
@@ -376,7 +388,7 @@
                     style="width:0%"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
                     <span class="text-success dashboard-top-card_footer_pro">+453.33.00%</span>
                 </div>
               </div>
@@ -403,7 +415,7 @@
                     style="width:0%"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
                     <span class="text-danger dashboard-top-card_footer_pro">-8%</span>
                 </div>
               </div>
@@ -430,7 +442,7 @@
                     style="width:0%"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
                     <span class="text-success dashboard-top-card_footer_pro">1%</span>
                 </div>
               </div>
@@ -457,7 +469,7 @@
                     style="width:0%"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
                     <span class="text-success dashboard-top-card_footer_pro">+18.00%</span>
                 </div>
               </div>
@@ -481,7 +493,7 @@
                     style="width:0%"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
                     <span class="text-success dashboard-top-card_footer_pro"></span>
                 </div>
               </div>
@@ -505,7 +517,7 @@
                     style="width:0%"></div>
                 </div>
                 <div class="dashboard-top-card_footer">
-                    <small class="dashboard-top-card_footer_txt">Charge</small>
+                    <small class="dashboard-top-card_footer_txt">Change</small>
                     <span class="text-success dashboard-top-card_footer_pro"></span>
                 </div>
               </div>
@@ -514,7 +526,7 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-lg-7 col-md-12 p-r-5">
+        <div class="col-lg-7 col-md-12 table-height p-r-5">
           <app-datatable [title]="'Top Performing Campaigns'" [dataSource]="topPerformingTableSource"
             [buttons]="topPerformingTableButtons">
           </app-datatable>

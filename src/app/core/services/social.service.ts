@@ -20,9 +20,8 @@ export class SocialService {
     private http: HttpClient
   ) { }
 
-  getSocialAccounts(): Observable<SocialAccount[]> {
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/accounts`);
-    return of(SocialAccountsMockData);
+  getSocialAccounts(): Observable<any> {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/accessToken/GetAllAccessTokenDetailsInOuIncludingChildern`);
   }
 
   getSocialSites(): Observable<SocialSite[]> {

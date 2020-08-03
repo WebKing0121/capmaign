@@ -24,7 +24,7 @@ import { DataService } from '@app-services/data.service';
     map((res) => ({
       type: AppTypes.UpdateState,
       payload: {
-        [AppFields.SocialAccounts]: res
+        [AppFields.SocialAccounts]: res.result
       }
     }))
   );
