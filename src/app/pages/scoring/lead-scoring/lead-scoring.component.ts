@@ -5,7 +5,6 @@ import { Subject } from 'rxjs';
 import { ScoringService } from '@app-core/services/scoring.service';
 import { Scoring } from '@app-models/scoring';
 import { ModalService } from '@app-components/modal/modal.service';
-import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
 import { DataSourceChange } from '@app-models/data-source';
 
@@ -15,15 +14,15 @@ import { DataSourceChange } from '@app-models/data-source';
   styleUrls: ['./lead-scoring.component.scss']
 })
 export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
+  @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
 
   destroy$ = new Subject();
   leadScoringData: Scoring[];
   selected: Scoring[] = [];
   selectedForConfirm = '';
   selectedScore: any;
-  @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
-  @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
-  @ViewChild('confirmModal', { static: false }) confirmModal;
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirm.bind(this), class: 'btn-primary' }

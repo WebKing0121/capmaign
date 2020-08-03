@@ -16,23 +16,27 @@ import { DataSourceChange } from '@app-models/data-source';
   styleUrls: ['./lead-grading.component.scss']
 })
 export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
+  @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
+  @ViewChild('confirmModal', { static: false }) confirmModal;
 
   destroy$ = new Subject();
   leadGradingData: Grading[];
   selected: Grading[] = [];
 
-  @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
-  @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
-  @ViewChild('confirmModal', { static: false }) confirmModal;
+  selectedGrade: any;
+  modalMessage = '';
+  selectedForConfirm = '';
+
   // confirm Modal
   confirmButtons = [
-    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+    { label: 'Yes', action: this.onConfirm.bind(this), class: 'btn-primary' }
   ];
 
   tableSource: DataTableSource<Grading> = new DataTableSource<Grading>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.createLeadGrading(), },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked.bind(this), color: 'red', disabled: true, hide: false }
     // { label: 'Run Profile', icon: 'far fa-gear', click: () => this.clickTemplate() },
   ];
 
@@ -40,8 +44,6 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   totalCount = 0;
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private scoringService: ScoringService,
     private modalService: ModalService
   ) {
@@ -62,7 +64,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
       { name: 'Name', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], alwaysVisible: true },
       { name: 'Description', prop: 'description', sortable: true },
       {
-        name: 'Is Default For New Record', prop: 'isDefaultForNewRecord',
+        name: 'Is Default For New Record', prop: 'isDefaultForRecord',
         sortable: false, custom: true, template: this.tableColumnCheckTemplate
       },
       {
@@ -86,27 +88,46 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onActive(event) {
-    let message = '';
-    const grading = event.row as Grading;
+
     // TODO: Simplify later
-    if (event.type === 'click' && event.event.target.classList.value === 'datatable-body-cell-label') {
+    if (event.type === 'click') {
+      let message = '';
+      const grading = event.row as any;
+      this.selectedGrade = grading;
+
       switch (event.cellIndex) {
         case 1:
-          this.modalService.openModal(CreateLeadGradingComponent, {
-            width: '100%',
-            data: {
-              grading: event.row,
-              mode: 'edit'
-            }
-          });
+          if (event.event.target.classList.value === 'datatable-body-cell-label') {
+            this.modalService.openModal(CreateLeadGradingComponent, {
+              width: '100%',
+              data: {
+                grading: event.row,
+                mode: 'edit'
+              }
+            });
+          }
           break;
         case 3:
-          message = 'Are You Sure You want to make this profile as default for new record?';
-          this.openSetDefaultConfirmModal(message);
+          if (event.event.target.type === 'checkbox') {
+            if (grading.isDefaultForRecord) {
+              message = 'Are you sure you want to remove this profile as default for new record?';
+            } else {
+              message = 'Are you sure you want to make this profile as default for new record?';
+            }
+            this.selectedForConfirm = 'record';
+            this.openSetDefaultConfirmModal(message);
+          }
           break;
         case 4:
-          message = 'Are You Sure You want to make this profile as default for campaign';
-          this.openSetDefaultConfirmModal(message);
+          if (event.event.target.type === 'checkbox') {
+            if (grading.isDefaultForCampaign) {
+              message = 'Are you sure you want to remove this profile as default for campaign';
+            } else {
+              message = 'Are you sure you want to make this profile as default for campaign';
+            }
+            this.selectedForConfirm = 'campaign';
+            this.openSetDefaultConfirmModal(message);
+          }
           break;
         case 5:
           if (grading.isActive) {
@@ -114,6 +135,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
           } else {
             message = 'Are you sure you want to activate this Lead Scoring Profile?';
           }
+          this.selectedForConfirm = 'activate';
           this.openSetDefaultConfirmModal(message);
           break;
       }
@@ -125,12 +147,8 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   openSetDefaultConfirmModal(message: string) {
-    this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-      width: '400px',
-      data: {
-        message
-      }
-    });
+    this.modalMessage = message;
+    this.confirmModal.show();
   }
 
   onCheckClick(e) {
@@ -138,13 +156,101 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDeleteClicked() {
-    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message: 'Are you sure you want to delete selected Lead Grading/s?'
-    //   }
-    // });
     this.confirmModal.show();
+  }
+
+  onConfirm() {
+    switch (this.selectedForConfirm) {
+      case 'record':
+        if (this.selectedGrade.isDefaultForRecord) {
+          this.scoringService.updateLeadGradingIsDefaultRecordColumnByGrid(this.selectedGrade.id, 'false')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.loadTableData();
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        } else {
+          this.scoringService.updateLeadGradingIsDefaultRecordColumn()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.scoringService.updateLeadGradingIsDefaultRecordColumnByGrid(this.selectedGrade.id, 'true')
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(
+                    () => {
+                      this.loadTableData();
+                    },
+                    error => {
+                      this.loading = false;
+                      console.log('error', error.response);
+                    }
+                  );
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        }
+        break;
+      case 'campaign':
+        if (this.selectedGrade.isDefaultForCampaign) {
+          this.scoringService.updateLeadGradingIsDefaultCampaignColumnByGrid(this.selectedGrade.id, 'false')
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.loadTableData();
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        } else {
+          this.scoringService.updateLeadGradingIsDefaultCampaignColumn()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.scoringService.updateLeadGradingIsDefaultCampaignColumnByGrid(this.selectedGrade.id, 'true')
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(
+                    () => {
+                      this.loadTableData();
+                    },
+                    error => {
+                      this.loading = false;
+                      console.log('error', error.response);
+                    }
+                  );
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        }
+        break;
+      case 'activate':
+        this.scoringService.updateLeadGradingIsActiveColumnByGrid(this.selectedGrade.id, this.selectedGrade.isActive ? 'false' : 'true')
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            () => {
+              this.loadTableData();
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+        break;
+      default:
+        break;
+    }
   }
 
   initTable() {

@@ -76,5 +76,27 @@ export class ScoringService {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/GetLeadGradingProfileInOuIncludingChildren`, params);
   }
+  updateLeadGradingIsDefaultRecordColumn(): Observable<any> {
+    // https://c2cstaging.azurewebsites.net/api/services/app/leadGradingProfile/UpdateLeadGradingIsDefaultRecordColumn
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingIsDefaultRecordColumn`, {});
+  }
 
+  updateLeadGradingIsDefaultRecordColumnByGrid(id: number, value: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingIsDefaultRecordColumnByGrid?id=${id}&isDefaultForRecord=${value}`, {});
+  }
+
+  updateLeadGradingIsDefaultCampaignColumn(): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingIsDefaultCampaignColumn`, {});
+  }
+
+  updateLeadGradingIsDefaultCampaignColumnByGrid(id: number, value: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingIsDefaultCampaignColumnByGrid?id=${id}&isDefaultForCampaign=${value}`, {});
+  }
+
+  updateLeadGradingIsActiveColumnByGrid(id: number, value: string): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingIsActiveColumnByGrid?id=${id}&isActive=${value}`, {});
+  }
 }
