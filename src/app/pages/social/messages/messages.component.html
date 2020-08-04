@@ -5,15 +5,15 @@
 				<ngb-tab title="Inbox">
 					<ng-template ngbTabContent>
 						<ul class="chat-users">
-							<li *ngFor="let user of socialChatUsers" (click)="selectUser(user.id)" [ngClass]="{'selected': user.id===selectedUserId}">
-								<img [src]="user.profile_image" class="profile-image" />
-								<img [src]="socialIcons[user.site]" class="social-site" />
+							<li *ngFor="let social of socialAccounts" (click)="selectUser(social)"
+								[ngClass]="{'selected':selectedUser && social.uniqueUserId===selectedUser.uniqueUserId}">
+								<img class="profile-image" [src]="getProfileImage(social)" />
+								<img class="social-site" [src]="SocialSiteImages[social.socialMediaType]" />
 								<div class="user-name">
-									<div class="page">{{user.page}}</div>
+									<div class="page">{{social.extensionData.pageName || social.extensionData.screenName}}</div>
 									<div class="name">
-
-										{{user.profile_name}}
-										<span class="float-right created_at">{{user.registeredAt | date}}</span>
+										{{social.extensionData.userName}}
+										<span class="float-right created_at">{{social.extensionData.authorizationDateUTC | date}}</span>
 									</div>
 								</div>
 							</li>
@@ -29,10 +29,10 @@
 		</app-card>
 	</div>
 	<div class="col-md-8 col-sm-12 message-section">
-		<app-card cardTitle="Conversation with CampaignToCash">
+		<app-card [cardTitle]="chatTitle" [loading]="loadingChatMessages">
 			<ul class="chat-messages">
 				<li *ngFor="let message of socialChatMessages">
-					<div *ngIf="message.mine === 0" class="d-flex">
+					<div *ngIf="message.personId !== selectedUser.uniqueUserId" class="d-flex">
 						<div class="user-image">
 							<img [src]="message.profile_image" /><br />
 							<span>12:43</span>
@@ -41,7 +41,7 @@
 							{{message.message}}
 						</p>
 					</div>
-					<div *ngIf="message.mine === 1" class="d-flex justify-content-end">
+					<div *ngIf="message.personId === selectedUser.uniqueUserId" class="d-flex justify-content-end">
 						<p class="mine-chat-text">
 							{{message.message}}
 						</p>

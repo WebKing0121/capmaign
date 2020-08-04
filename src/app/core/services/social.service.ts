@@ -34,9 +34,9 @@ export class SocialService {
     return of(SocialChatUsersMockData);
   }
 
-  getSocialChatMessages(userId: any): Observable<SocialChatMessage[]> {
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/chat-messages/${userId}`);
-    return of(SocialChatMessagesMockData);
+  getSocialChatMessages(userId: any, socialSite: string): Observable<any> {
+    console.log(`${environment.apiUrl}/api/services/app/${socialSite}/GetPageMessages?id=${userId}`)
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/${socialSite}/GetPageMessages?id=${userId}`);
   }
 
   getSocialEngagers(params: any): Observable<any> {
