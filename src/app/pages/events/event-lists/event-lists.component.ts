@@ -136,19 +136,31 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
     ];
     this.tableSource.setColumns(columns);
 
-    const eventColumns: DataTableColumn[] = [
-      { name: 'Name', prop: 'eventName', sortable: true },
-      { name: 'Subject', prop: 'eventSubject', sortable: true },
-      {
-        name: 'Start Date', prop: 'eventStartDate', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
-      },
-      {
-        name: 'End Date', prop: 'eventEndDate', sortable: true,
-        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+    // const eventColumns: DataTableColumn[] = [
+    //   { name: 'Name', prop: 'eventName', sortable: true },
+    //   { name: 'Subject', prop: 'eventSubject', sortable: true },
+    //   {
+    //     name: 'Start Date', prop: 'eventStartDate', sortable: true,
+    //     pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+    //   },
+    //   {
+    //     name: 'End Date', prop: 'eventEndDate', sortable: true,
+    //     pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY hh:mm:ss A' }
+    //   }
+    // ];
+    this.recordColumns$.pipe(takeUntil(this.unsubscribe$)).subscribe(data => {
+      if (data) {
+        const columnsRecords: DataTableColumn[] = data.map((x: GridColumn) => ({
+          name: x.columnName, prop: this.capitalize(x.columnName), sortable: true
+        }));
+        // columnsRecords[0].width = 130;
+        // columnsRecords[0].maxWidth = 130;
+        // columnsRecords[1].width = 400;
+        // columnsRecords[1].maxWidth = 400;
+        this.tableSourceEvents.setColumns(columnsRecords);
       }
-    ];
-    this.tableSourceEvents.setColumns(eventColumns);
+    });
+
 
   }
 
@@ -207,31 +219,20 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
       );
   }
 
-  _updateEventsTable(events: any[]) {
-    this.tableSourceEvents.next(events.slice(0, 50), events.length);
-    this.tableSourceEvents.changed$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe((change: DataSourceChange) => {
-        this.tableSourceEvents.next(
-          events.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          events.length
-        );
-      });
-    this.tableSourceEvents.selection$
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(selected => {
-        this.selectedEvents = selected;
-      });
-  }
-
   onActive(evt) {
     if (evt.type === 'click') {
       const list = evt.row as any;
       this.tableButtons[1].disabled = false;
       this.eventsTableButtons[0].disabled = false;
       this.eventsTableButtons[1].disabled = true;
-      this.dataService.getEventsByListId(list.listId)
+      const params = {
+        listId: list.listId,
+        SortDirection: 'Ascending',
+        maxResultCount: this.tableSourceEvents.pageSize,
+        skipCount: (this.tableSourceEvents.currentPage - 1) * this.tableSourceEvents.pageSize,
+        sorting: ''
+      };
+      this.dataService.getEventsByListId(params)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
           data => {
@@ -242,7 +243,7 @@ export class EventListsComponent implements OnInit, AfterViewInit, OnDestroy {
               this.records = [];
               this.totalEventsCount = 0;
             }
-            this._updateEventsTable(this.records);
+            this.tableSourceEvents.next(this.records, this.totalEventsCount);
           },
           error => {
             console.log('error', error.response);

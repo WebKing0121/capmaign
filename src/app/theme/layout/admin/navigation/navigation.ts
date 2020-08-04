@@ -103,7 +103,15 @@ const NavigationItems = [
             type: 'item',
             url: '/data/lists',
             external: false
-          }, {
+          },
+          {
+            id: 'data-event-lists',
+            title: 'Event Lists',
+            type: 'item',
+            url: '/events/lists',
+            external: false,
+          }
+          , {
             id: 'data-list-values',
             title: 'List of Values',
             type: 'item',
@@ -242,13 +250,7 @@ const NavigationItems = [
             url: '/events/events',
             external: false,
           },
-          {
-            id: 'data-event-lists',
-            title: 'Event Lists',
-            type: 'item',
-            url: '/events/lists',
-            external: false,
-          },
+
         ]
       },
       {

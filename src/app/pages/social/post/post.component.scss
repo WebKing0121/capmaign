@@ -53,11 +53,12 @@
   }
 }
 
-
-
 .social-site-card {
   position: relative;
-
+  .card-body {
+    padding: 10px;
+    min-height: 40px;
+  }
   .profile-image {
     position: absolute;
     left: 5px;
@@ -74,13 +75,153 @@
   .brand {
     position: absolute;
     left: 30px;
-    top: 30px;
+    top: 25px;
     width: 20px;
     height: 20px;
   }
   .brand.disabled {
     filter: grayscale(100%);
     opacity: 0.6;
+  }
+  .feed-content {
+    height: calc(100vh - 200px);
+    overflow: auto;
+    &::-webkit-scrollbar {
+      width: 2px;
+    }
+    .facebook {
+      border: 1px solid #afa7a7;
+      padding: 4px 10px;
+      margin-bottom: 5px;
+      background: #fff;
+      border-radius: 10px;
+      position: relative;
+      .facebook-header {
+        font-size: 12px;
+        text-align: left;
+        margin-bottom: 5px;
+        margin-top: 5px;
+        color: #999;
+        display: flex;
+        .user-container {
+          padding-left: 40px;
+          a {
+            display: block;
+            font-size: 18px;
+            color: #337ab7;
+            text-align: left;
+            margin-bottom: 5px;
+          }
+        }
+      }
+      .fb-content {
+        display: flex;
+        justify-content: space-between;
+        .facebook-content {
+          font-size: 14px;
+          color: #333;
+          line-height: 17px;
+          margin-top: 7px;
+        }
+        .facebook-image {
+          text-align: center;
+          img {
+            width: 120px;
+            margin-right: 20px;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+  .linkedIn {
+    border: 1px solid #afa7a7;
+    padding: 4px 10px;
+    margin-bottom: 5px;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+    .linkedIn-header {
+      font-size: 12px;
+      text-align: left;
+      margin-bottom: 5px;
+      margin-top: 5px;
+      color: #999;
+      display: flex;
+      .user-container {
+        padding-left: 40px;
+        a {
+          display: block;
+          font-size: 18px;
+          color: #337ab7;
+          text-align: left;
+          margin-bottom: 5px;
+        }
+      }
+    }
+
+    .ln-content {
+      display: flex;
+      justify-content: space-between;
+      .linkedIn-content {
+        font-size: 14px;
+        color: #333;
+        line-height: 17px;
+        margin-top: 7px;
+      }
+      .linkedIn-image {
+        text-align: center;
+        img {
+          width: 120px;
+          margin-right: 20px;
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+  .twitter {
+    border: 1px solid #afa7a7;
+    padding: 4px 10px;
+    margin-bottom: 5px;
+    background: #fff;
+    border-radius: 10px;
+    position: relative;
+    .twitter-header {
+      font-size: 12px;
+      text-align: left;
+      margin-bottom: 5px;
+      margin-top: 5px;
+      color: #999;
+      display: flex;
+      .user-container {
+        padding-left: 40px;
+        a {
+          display: block;
+          font-size: 18px;
+          color: #337ab7;
+          text-align: left;
+          margin-bottom: 5px;
+        }
+      }
+    }
+    .tw-content {
+      display: flex;
+      justify-content: space-between;
+      .twitter-content {
+        font-size: 14px;
+        color: #333;
+        line-height: 17px;
+        margin-top: 7px;
+      }
+      .twitter-image {
+        text-align: center;
+        img {
+          width: 120px;
+          margin-right: 20px;
+          margin-bottom: 10px;
+        }
+      }
+    }
   }
 
   h5 {

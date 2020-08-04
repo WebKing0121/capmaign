@@ -1,7 +1,8 @@
 export enum SocialType {
-  Facebook = 'facebook',
-  LinkedIn = 'linkedin',
-  Twitter = 'twitter'
+  Twitter = 0,
+  Facebook = 1,
+  GooglePlus = 2,
+  LinkedIn = 3,
 }
 
 export enum SocialLabelType {
@@ -11,8 +12,8 @@ export enum SocialLabelType {
 }
 
 export enum SocialAccountType {
-  Profile = 'profile',
-  Page = 'page',
-  Group = 'group'
+  Profile = 0,
+  Page = 1,
+  Group = 2
 }
 

@@ -42,4 +42,13 @@ export class SocialService {
   getSocialEngagers(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/record/GetRecordsInOuIncludingChildren`, params);
   }
+
+
+  getLinkedProfileImage(userId, token) {
+    return this.http.get<any>(`http://api.linkedin.com/v1/people/${userId}/picture-url`);
+  }
+
+  getFeeds() {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/socialMediaMonitor/GetAllFieldOnAddedAccessToken`);
+  }
 }

@@ -91,9 +91,10 @@ export class DataService {
     return of(MapsMappingImportMocks);
   }
 
-  getEventsByListId(listId: number): Observable<any> {
-    return of(EventsMockData);
+  getEventsByListId(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/GetAllListRecords?isEventList=true`, params);
   }
+
 
   getEvents(): Observable<any> {
     return of(EventsMockData);

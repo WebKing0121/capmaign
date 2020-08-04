@@ -5,13 +5,68 @@
   </div>
   <div class="row mt-3 flex-wrap social-card">
     <div class="col-md-4 col-sm-12 social-site-card" *ngFor="let social of socialAccounts$ | async">
-      <app-card [cardTitle]="social.type === 'profile' ? social.user_profile_name : social.page_name">
-        <!-- <img class="profile-image" [src]="social.user_profile_image" [ngClass]="{'disabled': !social.connected}" />
-        <img class="brand" [src]="social.img" [ngClass]="{'disabled': !social.connected}" />
-        <div class="text-center" *ngIf="!social.connected">
+      <app-card [cardTitle]="getPageName(social)" [loading]="loading">
+        <img class="profile-image" [src]="getProfileImage(social)" />
+        <img class="brand" [src]="SocialSiteImages[social.socialMediaType]" />
+        <!-- <div class="text-center" *ngIf="!social.connected">
           <button class="btn btn-primary"><i class="feather icon-link-2"></i> Connect</button>
         </div> -->
-        {{social.extensionData}}
+        <ul *ngIf="posts && posts[social.uniqueUserId]" class="feed-content">
+          <li *ngFor="let post of posts[social.uniqueUserId]">
+            <div class="facebook" *ngIf="social.socialMediaType === SocialType.Facebook">
+              <div class="facebook-header">
+                <img class="profile-image" [src]="getProfileImage(social)" />
+                <img class="brand" [src]="SocialSiteImages[social.socialMediaType]" />
+                <div class="user-container">
+                  <a href='#'>{{getPageName(social)}}</a>
+                  {{post.updated_time | date: 'dd.MM.yyyy hh:mm aa'}}
+                </div>
+                
+              </div>
+              <div class="fb-content">
+                <div class="facebook-image">
+                  <img [src]="post.full_picture" />
+                </div>
+                <div class="facebook-content" [innerHTML]="getHtmlMessage(post.message)"></div>
+                
+              </div>
+            </div>
+            <div class="linkedIn" *ngIf="social.socialMediaType === SocialType.LinkedIn">
+              <div class="linkedIn-header">
+                <img class="profile-image" [src]="getProfileImage(social)" />
+                <img class="brand" [src]="SocialSiteImages[social.socialMediaType]" />
+                <div class="user-container">
+                  <a href='#'>{{getPageName(social)}}</a>
+                  {{post.timestamp | date: 'dd.MM.yyyy hh:mm aa'}}
+                </div>
+                
+              </div>
+              <div class="ln-content">
+                <div class="linkedIn-image" *ngIf="post.contentity">
+                  <img [src]="post.contentity[0].entityLocation" />
+                </div>
+                <div class="linkedIn-content" [innerHTML]="getHtmlMessage(post.textcomment)"></div>
+              </div>
+            </div>
+            <div class="twitter" *ngIf="social.socialMediaType === SocialType.Twitter">
+              <div class="twitter-header">
+                <img class="profile-image" [src]="getProfileImage(social)" />
+                <img class="brand" [src]="SocialSiteImages[social.socialMediaType]" />
+                <div class="user-container">
+                  <a href='#'>{{getPageName(social)}}</a>
+                  {{post.createdAt | date: 'dd.MM.yyyy hh:mm aa'}}
+                </div>
+                
+              </div>
+              <div class="tw-content">
+                <div class="twitter-image" *ngIf="post.extendedEntities && post.extendedEntities.mediaEntities && post.extendedEntities.mediaEntities.length > 0">
+                  <img [src]="post.extendedEntities.mediaEntities[0].mediaUrlHttps" />
+                </div>
+                <div class="twitter-content" [innerHTML]="getHtmlMessage(post.text)"></div>
+              </div>
+            </div>
+          </li>
+        </ul>
       </app-card>
     </div>
   </div>
