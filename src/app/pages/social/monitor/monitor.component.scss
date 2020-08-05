@@ -8,6 +8,63 @@
 }
 .tab-section {
   margin-top: -15px;
+
+  .stream {
+    height: calc(100vh - 310px);
+    .card-body {
+      padding: 10px;
+      height: calc(100vh - 370px);
+      overflow: auto;
+      
+      ul {
+        height: 100%;
+        li {
+          margin-bottom: 10px;
+          .profile-image {
+            width: 50px !important;
+            height: 50px;
+            border-radius: 50%;
+            border: 2px solid #f1f1f1;
+            margin-right: 10px;
+          }
+          .social-site {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 30px;
+            left: 35px;
+            border-radius: 50%;
+          }
+
+          .article {
+            font-family: helvetica, Roboto, sans-serif;
+            flex-grow: 1;
+            .article-name {
+              color: black;
+              font-size: 18px;
+              white-space: initial;
+              display: block;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+            .screen-name {
+              color: gray;
+              font-size: 14px;
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+            .article-description {
+              font-size: 14px;
+              color: #333;
+              word-break: break-word; 
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 .btn-close-tab {

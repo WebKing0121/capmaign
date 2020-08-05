@@ -55,4 +55,12 @@ export class SocialService {
   getFeeds() {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/socialMediaMonitor/GetAllFieldOnAddedAccessToken`);
   }
+
+  getSocialTabs() {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/socialMediaMonitor/GetAllTabSListInOuIncludingClidren`);
+  }
+
+  getSocialTabStreams(tabId: number) {
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/socialMediaMonitor/GetSocialMediaStreamsByTabIdInOu?tabId=${tabId}`);
+  }
 }

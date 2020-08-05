@@ -6,19 +6,56 @@
 					<i class="feather icon-plus"></i> Add Tab
 				</button>
 			</div>
-			<div *ngIf="tabs.length === 0" role="alert" class="alert alert-warning">
+			<div *ngIf="tabs.length === 0 && !loadingTabs" role="alert" class="alert alert-warning">
 				<i class="feather icon-alert-triangle"></i> Please add <a href='#'>Tab</a> first.
 			</div>
+			<div class="spinner-border text-primary center-position" *ngIf="loadingTabs" role="status">
+				<span class="sr-only">Loading...</span>
+			</div>
 			<div *ngIf="tabs.length > 0" class="tab-section">
-				<ngb-tabset>
-					<ngb-tab *ngFor="let tab of tabs" [title]="tab.label">
+				<ngb-tabset (tabChange)="onClickTab($event)">
+					<ngb-tab *ngFor="let tab of tabs" [id]="tab.id" [title]="tab.tabName">
 						<ng-template ngbTabContent>
-							<div *ngIf="tab.streams.length === 0" role="alert" class="alert alert-warning mt-3">
+							<div *ngIf="tab.streams.length === 0 && !loading" role="alert" class="alert alert-warning mt-3">
 								Please add stream to monitor social tag or keywords.
 							</div>
-							<div *ngIf="tab.streams.length > 0" class="mt-3">
-								<app-card *ngFor="let stream of tab.streams" [cardTitle]="stream.label"></app-card>
+							<div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+								<span class="sr-only">Loading...</span>
 							</div>
+							<div *ngIf="tab.streams.length > 0" class="mt-3 row">
+								<div class="col-md-4 stream" *ngFor="let stream of tab.streams">
+									<app-card  [cardTitle]="stream.streamName">
+										<ul>
+											<li> Peoples </li>
+											<li *ngFor="let article of stream.extensionData.twitterSearch[0].foundUsers">
+												<div class="d-flex justify-content-between position-relative">
+													<img [src]="article.profileImageUrlHttps" class="profile-image" />
+													<img [src]="SocialSiteImages[0]" class="social-site" />
+													<div class="article">
+														<a [href]="article.url" target="_blank" class="article-name">{{article.name}}</a>
+														<span class="screen-name">{{article.screenNameResponse}}</span>
+														<p class="article-description">{{article.description}}</p>
+													</div>
+												</div>
+											</li>
+											<li> HashTag Search for : <b>{{stream.extensionData.twitterSearch[0].statusTweets[0].query}}</b></li>
+											<li *ngFor="let article of stream.extensionData.twitterSearch[0].statusTweets[0].statuses">
+												<div class="d-flex justify-content-between position-relative">
+													<img [src]="article.user.profileImageUrlHttps" class="profile-image" />
+													<img [src]="SocialSiteImages[0]" class="social-site" />
+													<div class="article">
+														<a [href]="article.url" target="_blank" class="article-name">{{article.user.name}}</a>
+														<span class="screen-name">{{article.user.screenNameResponse}}</span>
+														<p class="article-description">{{article.user.description}}</p>
+													</div>
+												</div>
+											</li>
+										</ul>
+									</app-card>
+								</div>
+								
+							</div>
+
 							<button type="button" class="btn btn-outline-success btn-close-tab" (click)="onAddStream(tab.id)"><i
 									class="feather icon-plus"></i> {{tab.streams.length > 0 ? 'Update' : 'Add'}} Stream </button>
 							<button type="button" class="btn btn-outline-primary float-right btn-close-tab"
