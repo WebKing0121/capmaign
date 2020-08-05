@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-4 col-sd-12 user-section">
-		<app-card cardTitle="Users">
+		<app-card cardTitle="Users" [options]="false" [loading]="loading">
 			<ngb-tabset>
 				<ngb-tab title="Inbox">
 					<ng-template ngbTabContent>
@@ -29,25 +29,38 @@
 		</app-card>
 	</div>
 	<div class="col-md-8 col-sm-12 message-section">
-		<app-card [cardTitle]="chatTitle" [loading]="loadingChatMessages">
+		<app-card [cardTitle]="chatTitle" [options]="false" [loading]="loadingChatMessages">
 			<ul class="chat-messages">
 				<li *ngFor="let message of socialChatMessages">
-					<div *ngIf="message.personId !== selectedUser.uniqueUserId" class="d-flex">
-						<div class="user-image">
-							<img [src]="message.profile_image" /><br />
-							<span>12:43</span>
-						</div>
-						<p class="user-chat-text">
-							{{message.message}}
-						</p>
+					<div *ngIf="message.type === 'separator'" class="separator">
+						<div class="first-hr"><hr /></div>
+						<div class="date">{{message.value}}</div>
+						<div class="last-hr"><hr /></div>
 					</div>
-					<div *ngIf="message.personId === selectedUser.uniqueUserId" class="d-flex justify-content-end">
-						<p class="mine-chat-text">
-							{{message.message}}
-						</p>
-						<div class="user-image">
-							<img [src]="message.profile_image" /><br />
-							<span>12:43</span>
+					<div *ngIf="message.personId !== selectedUser.uniqueUserId && message.message">
+						<div class="user-opp-name">
+							{{message.creationDateTime | date: 'hh:mm a'}}
+						</div>
+						<div class="d-flex">
+							<span class="user-avatar" [title]="message.fromName">
+								{{getInitial(message.fromName)}}
+							</span>
+							<p class="user-chat-text">
+								{{message.message}}
+							</p>
+						</div>
+					</div>
+					<div *ngIf="message.personId === selectedUser.uniqueUserId && message.message">
+						<div class="user-name">
+							{{message.creationDateTime | date: 'hh:mm a'}}
+						</div>
+						<div class="d-flex justify-content-end">
+							<p class="mine-chat-text">
+								{{message.message}}
+							</p>
+							<span class="user-avatar" [title]="message.fromName">
+								{{getInitial(message.fromName)}}
+							</span>
 						</div>
 					</div>
 				</li>

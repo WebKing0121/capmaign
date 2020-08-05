@@ -35,7 +35,11 @@ export class SocialService {
   }
 
   getSocialChatMessages(userId: any, socialSite: string): Observable<any> {
-    console.log(`${environment.apiUrl}/api/services/app/${socialSite}/GetPageMessages?id=${userId}`)
+    if (socialSite === 'twitter') {
+      return this.http.get<any>(`${environment.apiUrl}/api/services/app/${socialSite}/GetTwitterMessages?id=${userId}`);
+    } else if (socialSite === 'facebook') {
+      return this.http.get<any>(`${environment.apiUrl}/api/services/app/${socialSite}/GetPageMessages?id=${userId}`);
+    }
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/${socialSite}/GetPageMessages?id=${userId}`);
   }
 

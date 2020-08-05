@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState, selectSocialAccounts } from '@app-store/app.models';
 import { SocialType, SocialAccountType } from '@app-core/enums/social-type.enum';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-social-messages',
@@ -55,13 +56,13 @@ export class SocialMessagesComponent implements OnInit, OnDestroy {
       .subscribe(
         data => {
           if (data.success) {
-            this.socialAccounts = data.result.filter(x => (x.connectionType === SocialAccountType.Page && x.socialMediaType === SocialType.Facebook)
-              || (x.connectionType === SocialAccountType.Profile && x.socialMediaType === SocialType.Twitter))
-              .map(x => ({ ...x, extensionData: JSON.parse(x.extensionData) }));
+            this.socialAccounts = data.result.filter(x => (
+              x.connectionType === SocialAccountType.Page && x.socialMediaType === SocialType.Facebook)
+              || (x.connectionType === SocialAccountType.Profile && x.socialMediaType === SocialType.Twitter)
+            ).map(x => ({ ...x, extensionData: JSON.parse(x.extensionData) }));
           } else {
             this.socialAccounts = [];
           }
-          console.log(this.socialAccounts);
           this.loading = false;
         },
         error => {
@@ -86,7 +87,7 @@ export class SocialMessagesComponent implements OnInit, OnDestroy {
 
   get chatTitle() {
     if (this.selectedUser) {
-      return 'Conversation with ' + this.selectedUser.extensionData.pageName || this.selectedUser.extensionData.screenName
+      return 'Conversation with ' + this.selectedUser.extensionData.pageName || this.selectedUser.extensionData.screenName;
     } else {
       return 'Conversation with ';
     }
@@ -115,13 +116,35 @@ export class SocialMessagesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.socialChatMessages = data.result;
+          const messages = data.result;
+          const tmpMessages = [];
+          if (messages && messages.length > 0) {
+            let prevDate = '';
+            messages.forEach(message => {
+              if (message.message) {
+                const curDate = this.getDate(message.creationDateTime);
+                if (curDate !== prevDate) {
+                  tmpMessages.push({
+                    type: 'separator',
+                    value: curDate
+                  });
+                  prevDate = curDate;
+                }
+                tmpMessages.push({ ...message, type: 'message' });
+              }
+            });
+          }
+          this.socialChatMessages = tmpMessages;
           this.loadingChatMessages = false;
         },
         error => {
           console.log('error', error);
           this.loadingChatMessages = false;
         });
+  }
+
+  getDate(date: string) {
+    return moment(date).format('dddd, MMMM DD, YYYY');
   }
 
   getProfileImage(social: any) {
@@ -133,5 +156,9 @@ export class SocialMessagesComponent implements OnInit, OnDestroy {
     }
 
     return '';
+  }
+
+  getInitial(name: string) {
+    return name.split(' ').map(x => x.charAt(0).toLowerCase()).join('');
   }
 }
