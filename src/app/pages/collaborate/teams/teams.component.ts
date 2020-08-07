@@ -125,10 +125,10 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
 
     const columnsCampaign: DataTableColumn[] = [
       { name: 'Campaign', prop: 'name', sortable: true, frozenLeft: true },
+      { name: 'Type', prop: 'campaignType', sortable: true, maxWidth: 80 },
       { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' } },
       { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' } },
       { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate },
-      { name: 'Type', prop: 'type', sortable: true, maxWidth: 80 },
       { name: 'Status', prop: 'status', sortable: true, maxWidth: 100 },
     ];
 
@@ -279,13 +279,19 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
       this.tableSourceCampaigns.next(this.campaigns, 0);
     }
     this.loadingCampaigns = true;
-    this.collaborateService.getCollaborateCampaignsByTeam(teamId)
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSourceCampaigns.pageSize,
+      skipCount: (this.tableSourceCampaigns.currentPage - 1) * this.tableSourceCampaigns.pageSize,
+      sorting: '',
+    };
+    this.collaborateService.getCollaborateCampaignsByTeam(teamId, params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
           if (data.success) {
-            this.campaigns = data.result;
-            this.campaignsTotalCount = this.campaigns.length;
+            this.campaigns = data.result.items;
+            this.campaignsTotalCount = data.result.totalCount;
           }
 
           this.tableSourceCampaigns.next(this.campaigns, this.teamsTotalCount);

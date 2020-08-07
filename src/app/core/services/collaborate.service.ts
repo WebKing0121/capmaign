@@ -41,9 +41,9 @@ export class CollaborateService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetAllCampaignsforPaging`, params);
   }
 
-  getCollaborateCampaignsByTeam(teamId: number) {
+  getCollaborateCampaignsByTeam(teamId: number, params: any) {
     // tslint:disable-next-line
-    return this.http.get<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetAllCampaignsByTeam?teamid=${teamId}`);
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllCampaignsByTeam?teamid=${teamId}`, params);
   }
 
   getCampaignTasks(campaignId: number) {
