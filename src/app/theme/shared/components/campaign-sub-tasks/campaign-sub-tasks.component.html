@@ -1,6 +1,10 @@
 <app-datatable
 	[title]="'Sub Tasks'"
-	[dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
+	[loading]="loading"
+	[dataSource]="tableSource"
+	[rowHeight]="35"
+	[headerHeight]="40"
+	[selectionType]="'single'"
 	[buttons]="tableButtons"
 	[selectable]="false"
 	(activate)="onClickSubTask($event)">

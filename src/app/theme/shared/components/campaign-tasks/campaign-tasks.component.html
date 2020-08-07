@@ -1,8 +1,14 @@
 <app-datatable
 	[title]="'Tasks'"
-	 [dataSource]="tableSource" [rowHeight]="35" [headerHeight]="40" [selectionType]="'single'"
+	[loading]="loading"
+	[dataSource]="tableSource"
+	[rowHeight]="35"
+	[headerHeight]="40"
+	[selectionType]="'single'"
 	[buttons]="tableButtons"
-	[selectable]="false" (activate)="onClickTask($event)"></app-datatable>
+	[selectable]="false"
+	(activate)="onClickTask($event)"
+></app-datatable>
 
 <app-ui-modal #addTaskModal dialogClass="modal-dialog-centered modal-lg add-task-modal">
 	<div class="app-modal-header">
@@ -123,7 +129,8 @@
 
 	<div class="app-modal-footer">
 		<button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>Assign</button>
-		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addTaskModal.hide()"><i class="fa fa-times-circle"></i>Close</button>
+		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addTaskModal.hide()"><i
+				class="fa fa-times-circle"></i>Close</button>
 	</div>
 </app-ui-modal>
 

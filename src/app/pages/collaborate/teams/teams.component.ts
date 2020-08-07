@@ -145,7 +145,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
     if (event.type === 'click') {
       this.selectedTeam = event.row;
       this.tableButtons[1].hide = false;
-      // this._updateCampaignTable(this._campaignsOfSelectedTeam());
+      this.loadCampaigns(this.selectedTeam.teamid);
       this.campaignTasks.loadTasksFromCampaign(0);
       this.campaignSubTasks.loadSubTasks(0);
 
@@ -157,10 +157,6 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
         setTimeout(() => this.teamModal.show());
       }
     }
-  }
-
-  _campaignsOfSelectedTeam() {
-    return this.campaigns.filter((x: CollaborateCampaign) => this.selectedTeam.campaigns.indexOf(x.id) >= 0);
   }
 
   /*******************************************************
@@ -238,7 +234,11 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
         if (change.pagination !== 'totalCount') {
-          this.loadCampaigns();
+          if (this.selectedTeam) {
+            this.loadCampaigns(this.selectedTeam.teamid);
+          } else {
+            this.loadCampaigns(0);
+          }
         }
       });
     this.tableSourceCampaigns.selection$
@@ -273,19 +273,28 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
       );
   }
 
-  loadCampaigns() {
-  //   this.loadingCampaigns = true;
-  //   this.collaborateService.getCollaborateCampaigns()
-  //     .pipe(takeUntil(this.unsubscribe$))
-  //     .subscribe(
-  //       data => {
-  //         this.campaigns = data;
-  //         this.loadingCampaigns = false;
-  //       },
-  //       error => {
-  //         this.loadingCampaigns = false;
-  //         console.log('error', error);
-  //       }
-  //     );
+  loadCampaigns(teamId: number) {
+    if (teamId === 0) {
+      this.campaigns = [];
+      this.tableSourceCampaigns.next(this.campaigns, 0);
+    }
+    this.loadingCampaigns = true;
+    this.collaborateService.getCollaborateCampaignsByTeam(teamId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.success) {
+            this.campaigns = data.result;
+            this.campaignsTotalCount = this.campaigns.length;
+          }
+
+          this.tableSourceCampaigns.next(this.campaigns, this.teamsTotalCount);
+          this.loadingCampaigns = false;
+        },
+        error => {
+          this.loadingCampaigns = false;
+          console.log('error', error);
+        }
+      );
   }
 }

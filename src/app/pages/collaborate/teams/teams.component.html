@@ -16,6 +16,7 @@
 			<div class="campaigns">
 				<app-datatable
 					[title]="'Assigned Campaigns'"
+					[loading]="loadingCampaigns"
 					[dataSource]="tableSourceCampaigns"
 					[buttons]="tableButtonsCampaigns"
 					[rowHeight]="35"

@@ -41,14 +41,18 @@ export class CollaborateService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetAllCampaignsforPaging`, params);
   }
 
+  getCollaborateCampaignsByTeam(teamId: number) {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetAllCampaignsByTeam?teamid=${teamId}`);
+  }
+
   getCampaignTasks(campaignId: number) {
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/campaign/${campaignId}/tasks`);
-    return of(CollaborateCampaignsTasksMockData.filter(x => x.campaign_id === campaignId));
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationTaskByCampaign?campaignid=${campaignId}`);
   }
 
   getCampaignSubTasks(taskId: number) {
-    // return this.http.get<any>(`${environment.apiUrl}/${this.url}/task/${taskId}/sub-tasks`);
-    return of(CollaborateCampaignsSubtasksMockData.filter(x => x.task_id === taskId));
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationSubTaskByTask?taskid=${taskId}`);
   }
 
   getRecentActivities(date: string, campaignId: number) {

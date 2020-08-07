@@ -39,7 +39,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   private unsubscribe$ = new Subject();
 
-  tasks: CollaborateCampaignTask[];
+  tasks: any[];
   selectedTaskId: number;
 
   confirmButtons = [
@@ -50,8 +50,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   modalCampaignName: string;
   modalTeamMembers: any[];
 
-  tableSource: DataTableSource<CollaborateCampaignTask> = new DataTableSource<CollaborateCampaignTask>(50);
-  selected: CollaborateCampaignTask[] = [];
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
+  selected: any[] = [];
   tableButtons: CardButton[] = [
     {
       label: 'Create', icon: 'fa fa-edit', click: () => this.onClickAddTask()
@@ -60,20 +60,24 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   ];
   taskForm: FormGroup;
 
+  totalCount = 0;
+  loading = false;
+
   constructor(
     private fb: FormBuilder,
     private collaborateService: CollaborateService,
     private toastEvent: ToastService
   ) {
-    this.tasks = CollaborateCampaignsTasksMockData;
+    // this.tasks = CollaborateCampaignsTasksMockData;
     this.selectedTaskId = 0;
     this.modalTeamName = '';
     this.modalCampaignName = '';
     this.modalTeamMembers = [];
+    this.tasks = [];
   }
 
   ngOnInit(): void {
-    this._updateTable([]);
+    this.initTaskTable();
     this.taskForm = this.fb.group({
       id: 0,
       task_name: ['', Validators.required],
@@ -85,16 +89,16 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
     });
   }
 
-  _updateTable(tasks: CollaborateCampaignTask[]) {
-    this.tableSource.next(tasks.slice(0, 50), tasks.length);
+  initTaskTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          tasks.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          tasks.length
-        );
+        if (change.pagination !== 'totalCount') {
+          if (this.campaign) {
+            this.loadTasksFromCampaign(this.campaign.id);
+          }
+
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
@@ -106,13 +110,13 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   ngAfterViewInit() {
 
     const columns = [
-      { name: 'Task', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
-      { name: 'Description', prop: 'desc', sortable: true },
-      { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
+      { name: 'Task', prop: 'taskname', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
+      { name: 'Description', prop: 'taskdescription', sortable: true },
+      { name: 'Start', prop: 'startdate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
+      { name: 'End', prop: 'enddate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
-      { name: 'Est.', prop: 'esti_hours', sortable: true, maxWidth: 80 },
-      { name: 'Member', prop: 'user_id', sortable: true, custom: true, template: this.userNameTemplate, maxWidth: 150 },
+      { name: 'Est.', prop: 'estimatedhours ', sortable: true, maxWidth: 80 },
+      { name: 'Member', prop: 'memberId', sortable: true, custom: true, template: this.userNameTemplate, maxWidth: 150 },
     ];
 
     this.tableSource.setColumns(columns);
@@ -224,26 +228,29 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   loadTasksFromCampaign(campaignId: number) {
-    let tasksFromServer;
     this.tableButtons[1].hide = true;
     if (campaignId === 0) {
-      tasksFromServer = [];
-    } else {
-      tasksFromServer = this.tasks.filter((x: CollaborateCampaignTask) => x.campaign_id === campaignId);
+      this.tasks = [];
+      this.tableSource.next(this.tasks, 0);
+      return;
     }
-    this._updateTable(tasksFromServer);
-    this.selected = [];
-    // this.cardTasks.setCardRefresh(true);
-    // this.collaborateService.getCampaignTasks(campaignId)
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       this.tasks = data;
-    //       this.cardTasks.setCardRefresh(false);
-    //     },
-    //     error => {
-    //       console.log('error', error);
-    //     }
-    //   );
+
+    this.loading = true;
+    this.collaborateService.getCampaignTasks(campaignId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.success) {
+            this.tasks = data.result;
+            this.totalCount = this.tasks.length;
+          }
+          this.tableSource.next(this.tasks, this.totalCount);
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error);
+        }
+      );
   }
 }

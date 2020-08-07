@@ -173,8 +173,6 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
 
   }
 
-
-
   getTeamName(teamId: number) {
     const team = this.teams.find(x => x.id === teamId);
     if (team) {

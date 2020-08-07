@@ -24,7 +24,7 @@ import { DataSourceChange } from '@app-models/data-source';
   encapsulation: ViewEncapsulation.None
 })
 export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() task: CollaborateCampaignTask;
+  @Input() task: any;
   @Input() user: any;
 
   @ViewChild('cardSubTasks', { static: false }) cardSubTasks;
@@ -41,10 +41,10 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
 
-  subTasks: CollaborateCampaignSubtask[];
+  subTasks: any[];
   selectedSubTaskId: number;
 
-  tableSource: DataTableSource<CollaborateCampaignTask> = new DataTableSource<CollaborateCampaignTask>(50);
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   selected: CollaborateCampaignTask[] = [];
   tableButtons: CardButton[] = [
     {
@@ -54,6 +54,9 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
   ];
 
   subTaskForm: FormGroup;
+
+  totalCount = 0;
+  loading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -65,7 +68,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   ngOnInit(): void {
-    this._updateTable([]);
+    this.initSubTaskTable();
     this.subTaskForm = this.fb.group({
       id: 0,
       subtask_name: ['', Validators.required],
@@ -76,37 +79,47 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
     });
   }
 
-  ngAfterViewInit() {
-
-    const columns = [
-      { name: 'Sub Task', prop: 'name', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
-      { name: 'Description', prop: 'desc', sortable: true },
-      { name: 'Start', prop: 'started', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'End', prop: 'ended', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
-      { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
-      { name: 'Est.', prop: 'esti_hours', sortable: true, maxWidth: 80 },
-      { name: 'Member', prop: 'user_id', sortable: true, custom: true, template: this.userNameTemplate, maxWidth: 150 },
-    ];
-
-    this.tableSource.setColumns(columns);
-  }
-
-  _updateTable(tasks: CollaborateCampaignTask[]) {
-    this.tableSource.next(tasks.slice(0, 50), tasks.length);
+  initSubTaskTable() {
     this.tableSource.changed$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((change: DataSourceChange) => {
-        this.tableSource.next(
-          tasks.slice(
-            change.pagination.pageSize * (change.pagination.pageNumber - 1), change.pagination.pageSize * (change.pagination.pageNumber)),
-          tasks.length
-        );
+        if (change.pagination !== 'totalCount') {
+          if (this.task) {
+            this.loadSubTasks(this.task.id);
+          }
+        }
       });
     this.tableSource.selection$
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(selected => {
         this.selected = selected;
       });
+  }
+  ngAfterViewInit() {
+
+    const columns = [
+      { name: 'Sub Task', prop: 'subtaskName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
+      { name: 'Description', prop: 'desubtaskDescriptionsc', sortable: true },
+      {
+        name: 'Start', prop: 'subtaskStartDate', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120
+      },
+      {
+        name: 'End', prop: 'subtaskEndDate', sortable: true,
+        pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120
+      },
+      {
+        name: 'Progress', prop: 'percent', sortable: true, custom: true,
+        template: this.progressTemplate, maxWidth: 120
+      },
+      { name: 'Est.', prop: 'subtaskestimatehourshours', sortable: true, maxWidth: 80 },
+      {
+        name: 'Member', prop: 'subtaskmemberId', sortable: true, custom: true,
+        template: this.userNameTemplate, maxWidth: 150
+      },
+    ];
+
+    this.tableSource.setColumns(columns);
   }
 
   ngOnDestroy(): void {
@@ -170,27 +183,32 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   loadSubTasks(taskId: number) {
-    let subtasksFromServer;
+    // let subtasksFromServer;
     this.tableButtons[1].hide = true;
     if (taskId === 0) {
-      subtasksFromServer = [];
-    } else {
-      subtasksFromServer = this.subTasks.filter((x: CollaborateCampaignSubtask) => x.task_id === taskId);
+      this.subTasks = [];
+      this.tableSource.next(this.subTasks, 0);
+      return;
     }
-    this._updateTable(subtasksFromServer);
-    this.selected = [];
-    // this.cardSubTasks.setCardRefresh(true);
-    // this.collaborateService.getCampaignSubTasks(taskId)
-    //   .pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe(
-    //     data => {
-    //       this.subTasks = data;
-    //       this.cardSubTasks.setCardRefresh(false);
-    //     },
-    //     error => {
-    //       console.log('error', error);
-    //     }
-    //   );
+
+    this.loading = true;
+    this.collaborateService.getCampaignSubTasks(taskId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.success) {
+            this.subTasks = data.result;
+            this.totalCount = this.subTasks.length;
+            this.tableSource.next(this.subTasks, this.totalCount);
+
+          }
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error);
+        }
+      );
 
   }
 }

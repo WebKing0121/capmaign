@@ -38,7 +38,7 @@
 
           .article {
             font-family: helvetica, Roboto, sans-serif;
-            flex-grow: 1;
+            width: calc(100% - 65px);
             .article-name {
               color: black;
               font-size: 18px;
