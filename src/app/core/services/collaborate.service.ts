@@ -46,13 +46,14 @@ export class CollaborateService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllCampaignsByTeam?teamid=${teamId}`, params);
   }
 
-  getCampaignTasks(campaignId: number) {
+  getCampaignTasks(campaignId: number, params: any) {
     // tslint:disable-next-line
-    return this.http.get<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationTaskByCampaign?campaignid=${campaignId}`);
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationTaskByCampaign?campaignid=${campaignId}`, params);
   }
 
-  getCampaignSubTasks(taskId: number) {
-    return this.http.get<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationSubTaskByTask?taskid=${taskId}`);
+  getCampaignSubTasks(taskId: number, params: any) {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationSubTaskByTask?taskid=${taskId}`, params);
   }
 
   getRecentActivities(date: string, campaignId: number) {

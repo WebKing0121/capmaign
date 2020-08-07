@@ -271,9 +271,10 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
   loadCampaigns() {
     this.loadingCampaigns = true;
     const params = {
-      SortDirection: 'Ascending',
+      sortDirection: 'Ascending',
       maxResultCount: this.tableSource.pageSize,
       skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      searchQuery: '',
       sorting: '',
     };
     this.collaborateService.getCollaborateCampaigns(params)

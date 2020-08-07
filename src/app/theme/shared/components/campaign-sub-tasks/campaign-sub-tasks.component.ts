@@ -99,7 +99,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
 
     const columns = [
       { name: 'Sub Task', prop: 'subtaskName', sortable: true, cellClass: ['cell-hyperlink'], frozenLeft: true },
-      { name: 'Description', prop: 'desubtaskDescriptionsc', sortable: true },
+      { name: 'Description', prop: 'subtaskDescription', sortable: true },
       {
         name: 'Start', prop: 'subtaskStartDate', sortable: true,
         pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120
@@ -112,7 +112,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
         name: 'Progress', prop: 'percent', sortable: true, custom: true,
         template: this.progressTemplate, maxWidth: 120
       },
-      { name: 'Est.', prop: 'subtaskestimatehourshours', sortable: true, maxWidth: 80 },
+      { name: 'Est.', prop: 'subtaskestimatehours', sortable: true, maxWidth: 80 },
       {
         name: 'Member', prop: 'subtaskmemberId', sortable: true, custom: true,
         template: this.userNameTemplate, maxWidth: 150
@@ -191,17 +191,22 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
       return;
     }
 
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
     this.loading = true;
-    this.collaborateService.getCampaignSubTasks(taskId)
+    this.collaborateService.getCampaignSubTasks(taskId, params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          if (data.success) {
-            this.subTasks = data.result;
-            this.totalCount = this.subTasks.length;
-            this.tableSource.next(this.subTasks, this.totalCount);
-
+          if (data.success && data.result) {
+            this.subTasks = data.result.items;
+            this.totalCount = data.result.totalCount;
           }
+          this.tableSource.next(this.subTasks, this.totalCount);
           this.loading = false;
         },
         error => {

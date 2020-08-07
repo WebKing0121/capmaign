@@ -115,7 +115,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
       { name: 'Start', prop: 'startdate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'End', prop: 'enddate', sortable: true, pipe: { pipe: new DateFormatPipe(), args: 'MMM, DD, YYYY' }, maxWidth: 120 },
       { name: 'Progress', prop: 'percent', sortable: true, custom: true, template: this.progressTemplate, maxWidth: 120 },
-      { name: 'Est.', prop: 'estimatedhours ', sortable: true, maxWidth: 80 },
+      { name: 'Est.', prop: 'estimatedhours', sortable: true, maxWidth: 80 },
       { name: 'Member', prop: 'memberId', sortable: true, custom: true, template: this.userNameTemplate, maxWidth: 150 },
     ];
 
@@ -234,15 +234,20 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
       this.tableSource.next(this.tasks, 0);
       return;
     }
-
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSource.pageSize,
+      skipCount: (this.tableSource.currentPage - 1) * this.tableSource.pageSize,
+      sorting: ''
+    };
     this.loading = true;
-    this.collaborateService.getCampaignTasks(campaignId)
+    this.collaborateService.getCampaignTasks(campaignId, params)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          if (data.success) {
-            this.tasks = data.result;
-            this.totalCount = this.tasks.length;
+          if (data.success && data.result) {
+            this.tasks = data.result.items;
+            this.totalCount = data.result.totalCount;
           }
           this.tableSource.next(this.tasks, this.totalCount);
           this.loading = false;
