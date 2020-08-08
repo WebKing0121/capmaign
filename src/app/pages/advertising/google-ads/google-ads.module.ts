@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { SharedModule } from '../../../theme/shared/shared.module';
 import {
   NgbProgressbarModule,
   NgbDatepickerModule, NgbButtonsModule,
@@ -23,7 +23,8 @@ import { GoogleAdsCreateComponent } from './google-ads-create/google-ads-create.
     NgbDatepickerModule,
     NgbButtonsModule,
     NgbDropdownModule,
-    NgbTooltipModule
+    NgbTooltipModule,
+    SharedModule
   ]
 })
 export class GoogleAdsModule { }

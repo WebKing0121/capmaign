@@ -1,0 +1,9 @@
+:host {
+  .google-ads-section {
+    height: calc(100vh - 150px);
+    .google-ads-list {
+      height: calc(100vh - 290px);
+      overflow: auto;
+    }
+  }
+}

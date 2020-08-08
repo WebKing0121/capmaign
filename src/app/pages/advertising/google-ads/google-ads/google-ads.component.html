@@ -1,41 +1,59 @@
-<div class="card">
-  <div class="card-header">
-    Facebook Ads
-  </div>
-  <div class="card-body">
-    <div class="row">
+<div class="card google-ads-section">
+  <div class="card-header">Google Ads</div>
+  <div class="card-body position-relative">
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+    <div class="row form-group">
       <div class="col-lg-4">
-        <div class="form-group form-md-line-input form-md-floating-label no-hint margin-top-10">
-          <label class="text-bold">Select Customer Account</label>
-          <select ng-model="vm.usertoken" ng-change="vm.getAdAccounts()"
-            class="form-control ng-pristine ng-untouched ng-valid ng-empty"
-            ng-options="aduser.token as aduser.username for aduser in adusers">
-            <option value="" class="" selected="selected"></option>
-            <option label="Ajay Rathore"
-              value="string:EAAC8iL8KTAgBAGRMk2zgZB8PHeiDmxJvfZBgozzG3B7KCWBqGjOpsCF7A6mk2HSHbhAkM6o7HzutKow7UWDKGCZBmxJoiDugI6cyKhGrlBtqhC0PYatrKqkkOZBTgd1ynTxeO2ZCzgs0ZAJ4uzNALn6V0b046PPpoZD">
-              GadManager</option>
+        <label class="mobile-show">Google User</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Google User</span>
+          </div>
+          <select class="form-control" [disabled]="loading" (change)="onChangeAdCustomer($event.target.value)" >
+            <option *ngif="adsCustomers.length === 0" value="" selected="selected"></option>
+            <option *ngFor="let adCustomer of adsCustomers"
+              [value]="adCustomer.customerId">
+              {{adCustomer.customerName}}
+            </option>
           </select>
         </div>
       </div>
       <div class="col-lg-4">
-        <div class="form-group form-md-line-input form-md-floating-label no-hint margin-top-10">
-          <label class="text-bold">Select Billing Account</label>
-          <select ng-model="vm.adaccount" ng-change="vm.getCampaigns()"
-            class="form-control ng-pristine ng-untouched ng-valid ng-empty">
-            <option value=""></option>
+        <label class="mobile-show">Ad Account</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Ad Account</span>
+          </div>
+          <select [disabled]="loading" (change)="onChangeAdAccount($event.target.value)" class="form-control">
+            <option *ngif="adAccounts.length === 0" value="" selected="selected"></option>
             <!-- ngRepeat: account in adaccounts -->
+            <option *ngFor="let adAccount of adAccounts" [value]="adAccount.clientId">
+              {{adAccount.clientId}}
+            </option>
           </select>
         </div>
       </div>
-      <div class="col-lg-4">
-        <label class="text-bold">&nbsp;</label>
-        <div class="form-group margin-top-20 pull-right">
-          <button class="btn btn-primary" (click)="onClickCreate()">
-            <i class="fa fa-plus mr-2"></i>
-            Create New
-          </button>
-        </div>
+      <div class="col-lg-4 text-right">
+        <button class="btn btn-primary" [disabled]="loading" (click)="onClickCreate()">
+          <i class="fa fa-plus mr-2"></i>
+          Create New
+        </button>
       </div>
+    </div>
+    <div class="row google-ads-list">
+      <div class="col-lg-3 col-md-4 col-sm-6" *ngFor="let campaign of adCampaigns">
+        <div class="card">
+          <div class="card-header">{{campaign.campaignName}}</div>
+          <div class="card-body position-relative">
+            <div>[Group] {{campaign.groupName}}</div>
+            <div>{{campaign.headline1}} | {{campaign.headline2}} </div>
+            <div>{{campaign.finalURL}}</div>
+            <div>[Status] {{campaign.status}}</div>
+          </div>
+        </div>
+      </div> 
     </div>
   </div>
 </div>

@@ -2,43 +2,64 @@
   <div class="card-header">
     Facebook Ads
   </div>
-  <div class="card-body">
+  <div class="card-body position-relative">
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
     <div class="row">
-      <div class="col-lg-4">
-        <div class="form-group form-md-line-input form-md-floating-label no-hint margin-top-10">
-          <label class="text-bold">Select Facebook User</label>
-          <select ng-model="vm.usertoken" ng-change="vm.getAdAccounts()"
-            class="form-control ng-pristine ng-untouched ng-valid ng-empty"
-            ng-options="aduser.token as aduser.username for aduser in adusers">
-            <option value="" class="" selected="selected"></option>
-            <option label="Ajay Rathore"
-              value="string:EAAC8iL8KTAgBAGRMk2zgZB8PHeiDmxJvfZBgozzG3B7KCWBqGjOpsCF7A6mk2HSHbhAkM6o7HzutKow7UWDKGCZBmxJoiDugI6cyKhGrlBtqhC0PYatrKqkkOZBTgd1ynTxeO2ZCzgs0ZAJ4uzNALn6V0b046PPpoZD">
-              Ajay Rathore</option>
-            <option label="Manoj Laddha"
-              value="string:EAAC8iL8KTAgBAJs5ykO0xQD5YdUeikrcCfYGjFcRJ5jK0sDprGQ466XuZCfGGVTL1ZAmvZCvhUZAEQ6m2J1ZB7oserpxxWCCWUezN7RGtMPY2QSeY6RNi85m8rULXJHVesh65aGw3SMNldXHZCacHSLC9zAI3xivgKBufZBBbLDZBwZDZD">
-              Manoj Laddha</option>
+      <div class="col-lg-4 form-group">
+        <label class="mobile-show">Facebook User</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Facebook User</span>
+          </div>
+          <select [disabled]="loading || loadingCampaigns"
+            (change)="onChangeToken($event.target.value)"
+            class="form-control"
+          >
+            <option *ngif="tokens.length === 0" value="" class="" selected="selected"></option>
+            <option *ngFor="let token of tokens"
+              [value]="token.token">
+              {{token.userName}}
+            </option>
           </select>
         </div>
       </div>
-      <div class="col-lg-4">
-        <div class="form-group form-md-line-input form-md-floating-label no-hint margin-top-10">
-          <label class="text-bold">Select Ad Account</label>
-          <select ng-model="vm.adaccount" ng-change="vm.getCampaigns()"
-            class="form-control ng-pristine ng-untouched ng-valid ng-empty">
-            <option value=""></option>
+      <div class="col-lg-4 form-group">
+        <label class="mobile-show">Ad Account</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Ad Account</span>
+          </div>
+          <select [disabled]="loading || loadingCampaigns" (change)="onChangeAdAccount($event.target.value)" class="form-control">
+            <option *ngif="adAccounts.length === 0" value="" selected="selected"></option>
             <!-- ngRepeat: account in adaccounts -->
+            <option *ngFor="let adAccount of adAccounts" [value]="adAccount.id">
+              {{adAccount.account_id}}
+            </option>
           </select>
         </div>
       </div>
-      <div class="col-lg-4">
-        <label class="text-bold">&nbsp;</label>
-        <div class="form-group margin-top-20 pull-right">
-          <button class="btn btn-primary" (click)="onClickCreate()">
-            <i class="fa fa-plus mr-2"></i>
-            Create New
-          </button>
-        </div>
+      <div class="col-lg-4 form-group text-right">
+        <button [disabled]="loading || loadingCampaigns" class="btn btn-primary" (click)="onClickCreate()">
+          <i class="fa fa-plus mr-2"></i>
+          Create New
+        </button>
       </div>
+    </div>
+    <div class="campaign-section">
+      <app-datatable [title]="''"
+        [showHeader]="false"
+        [dropShadow]="false"
+        [buttons]="[]"
+        [dataSource]="tableSource"
+        [rowHeight]="40"
+        [selectable]="false"
+        [selectionType]="'single'"
+        [headerHeight]="40"
+        (activate)="onActive($event)"
+        [loading]="loadingCampaigns"
+      ></app-datatable>
     </div>
   </div>
 </div>
