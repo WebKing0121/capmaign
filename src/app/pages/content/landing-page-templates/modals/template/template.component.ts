@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, OnDestroy, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LandingPageTemplate } from '@app-models/landing-page';
@@ -16,6 +16,9 @@ import { takeUntil } from 'rxjs/operators';
 export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
   @Input() modalType = ModalType.New;
   @Input() template: LandingPageTemplate;
+  @Input() categories = [];
+  @Output() save: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
   @ViewChild('templateModal', { static: false }) templateModal;
   ModalType = ModalType;
 
@@ -24,10 +27,12 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
   fullScreen: boolean;
   dialogClass: string;
 
-  categories: NgSelectData[];
+  // categories: NgSelectData[];
   types: NgSelectData[];
-
+  loading = false;
   form: FormGroup;
+  landingPageFromDB: any;
+
   constructor(
     private fb: FormBuilder,
     private contentService: ContentService
@@ -45,33 +50,8 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
       type: ['', Validators.required],
       url: ['', Validators.required],
       content: ['', Validators.required],
+      status: ['', Validators.required],
     });
-
-    this.types = [
-      { value: '1', label: 'Static' },
-      { value: '2', label: 'Dynamic / Responsive' },
-    ];
-    const params = {
-      SortDirection: 'Ascending',
-      maxResultCount: 1000,
-      skipCount: 0,
-      sorting: '',
-    };
-    this.contentService.getCategories(params)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.categories = data.result.map(x => ({ value: `${x.categoryId}`, label: x.category }));
-          } else {
-            this.categories = [];
-          }
-        },
-        error => {
-          console.log('error', error.response);
-        }
-      );
-
   }
 
 
@@ -88,22 +68,43 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
         description: '',
         category: '',
         type: '',
+        status: 'Draft',
         url: '',
         content: '',
       });
+      setTimeout(() => this.templateModal.show());
     } else {
-      const { id, categoryId, name, description, template, templateURL, templateType } = this.template;
-      this.form.setValue({
-        id,
-        name,
-        description,
-        category: `${categoryId}`,
-        type: `${templateType}`,
-        url: templateURL,
-        content: template,
-      });
+      this.loading = true;
+      this.contentService.getLandingPageTemplate(this.template.id)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            this.loading = false;
+            if (data.success && data.result) {
+              this.landingPageFromDB = data.result;
+            }
+
+            const { id, categoryId, name, description, template, templateURL, templateType } = this.template;
+            this.form.setValue({
+              id,
+              name,
+              description,
+              category: `${categoryId}`,
+              type: `${templateType}`,
+              url: templateURL,
+              status: this.landingPageFromDB.pageStatus,
+              content: template,
+            });
+            setTimeout(() => this.templateModal.show());
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+
     }
-    setTimeout(() => this.templateModal.show());
+
   }
 
   hide() {
@@ -113,5 +114,69 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
   revertFullScreen() {
     this.fullScreen = !this.fullScreen;
     this.dialogClass = 'modal-dialog-centered ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
+  }
+
+  onSave() {
+    const { id, name, description, category, type, url, content, status } = this.form.value;
+    if (this.modalType === ModalType.New) {
+      const params = {
+        TemplateType: type,
+        TemplateURL: url,
+        categoryId: category,
+        description,
+        folderId: 1,
+        isSystem: true,
+        name,
+        pageStatus: status,
+        template: content,
+      };
+      this.loading = true;
+      this.contentService.createLandingPageTemplate(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.save.emit();
+            this.templateModal.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    } else {
+      const params = {
+        organizationUnitId: this.landingPageFromDB.organizationUnitId,
+        name,
+        template: content,
+        description,
+        templateURL: url,
+        templateType: type,
+        folderId: this.landingPageFromDB.folderId,
+        categoryId: category,
+        category: '',
+        pageStatus: status,
+        isSystem: this.landingPageFromDB.isSystem,
+        id,
+      };
+      this.loading = true;
+      this.contentService.updateLandingPageTemplate(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.save.emit();
+            this.templateModal.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    }
+  }
+
+  onDelete() {
+    this.delete.emit();
   }
 }

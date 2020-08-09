@@ -44,11 +44,29 @@ export class ContentService {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/GetLandingPageCategoryInOuIncludingChildren`);
   }
 
-
-
   getLandingPageTemplates(params: any): Observable<any> {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/GetLandingPageTemplatesInOuIncludingChildren`, params);
+  }
+
+  getLandingPageTemplate(id: number): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/GetLandingPageTemplate`, { id });
+  }
+
+  createLandingPageTemplate(params: any): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/CreateLandingPageTemplate`, params);
+  }
+
+  updateLandingPageTemplate(params: any): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/UpdateTemplate`, params);
+  }
+
+  deleteLandingPageTemplate(id: number): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/landingPageTemplate/DeleteTemplate?templateId=${id}`);
   }
 
   getAssets(params: any): Observable<any> {
@@ -69,7 +87,6 @@ export class ContentService {
   }
 
   uploadAsset(File: any): Observable<any> {
-    // https://c2cstaging.azurewebsites.net/File/AttachFile
     const formData = new FormData();
     formData.append('uploadedFile', File);
     return this.http.post<any>('https://c2cstaging.azurewebsites.net/File/AttachFile', formData);
@@ -92,7 +109,7 @@ export class ContentService {
   }
 
   deleteEmailTemplate(params: any): Observable<any> {
-    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/emailTemplate/DeleteTemplate`, params);
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/emailTemplate/DeleteTemplate`, { params });
   }
 
   getLandingPages(params: any): Observable<any> {

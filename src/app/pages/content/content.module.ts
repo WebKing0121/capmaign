@@ -9,6 +9,7 @@ import { FileUploadModule } from '@iplab/ngx-file-upload';
 
 import { LandingPageTemplatesComponent } from './landing-page-templates/landing-page-templates.component';
 import { LandingPageTemplateModalComponent } from './landing-page-templates/modals/template/template.component';
+import { LandingPageTemplateDemoModalComponent } from './landing-page-templates/modals/demo/demo.component';
 import { EmailTemplatesComponent } from './email-templates/email-templates.component';
 import { EmailTemplateModalComponent } from './email-templates/modals/email-template/email-template.component';
 import { ContentAssetsComponent } from './assets/assets.component';
@@ -29,6 +30,7 @@ import { ContentCategoryModalComponent } from './categories/modals/category/cate
     ContentCategoryModalComponent,
     LandingPageTemplatesComponent,
     LandingPageTemplateModalComponent,
+    LandingPageTemplateDemoModalComponent,
     EmailTemplatesComponent,
     EmailTemplateModalComponent,
     ContentAssetsComponent,

@@ -8,7 +8,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div class="app-modal-body">
+  <div class="app-modal-body position-relative">
     <form [formGroup]="form">
       <div class="template-input-section">
         <div class="row">
@@ -22,6 +22,17 @@
             </div>
           </div>
           <div class="col-md-6 mt-3">
+            <label class="mobile-show">Category</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Category</span>
+              </div>
+              <select formControlName="category" class="form-control">
+                <option *ngFor="let cate of categories" [value]="cate.categoryId">{{cate.category}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12 mt-3">
             <label class="mobile-show">Description</label>
             <div class="input-group">
               <div class="input-group-prepend">
@@ -30,24 +41,29 @@
               <input type="text" class="form-control" formControlName="description">
             </div>
           </div>
-          <div class="col-md-6 mt-3">
-            <label class="mobile-show">Category</label>
-            <div class="input-group">
-              <div class="input-group-prepend">
-                <span class="input-group-text">Category</span>
-              </div>
-              <ng-select [ngClass]="'ng-select'" formControlName="category" [options]="categories">
-              </ng-select>
-            </div>
-          </div>
+          
           <div class="col-md-6 mt-3">
             <label class="mobile-show">Template Type</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text">Template Type</span>
               </div>
-              <ng-select [ngClass]="'ng-select'" formControlName="type" [options]="types">
-              </ng-select>
+              <select formControlName="type" class="form-control">
+                <option value="1">Static</option>
+                <option value="2">Dynamic / Responsive</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6 mt-3">
+            <label class="mobile-show">Page Status</label>
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text">Page Status</span>
+              </div>
+              <select formControlName="status" class="form-control">
+                <option value="Draft">Draft</option>
+                <option value="Publish">Publish</option>
+              </select>
             </div>
           </div>
           <div class="col-12 mt-3">
@@ -77,13 +93,16 @@
 
       </div>
     </form>
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
 
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" *ngIf="modalType === ModalType.Edit">
+    <button type="button" class="btn btn-danger" (click)="onDelete()" *ngIf="modalType === ModalType.Edit">
       <i class="fa fa-trash"></i>Delete
     </button>
-    <button type="button" class="btn btn-primary">
+    <button type="button" class="btn btn-primary" (click)="onSave()">
       <i class="fa"
         [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
     </button>

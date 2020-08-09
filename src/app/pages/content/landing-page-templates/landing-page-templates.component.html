@@ -26,8 +26,8 @@
                   {{template.name}}
                 </div>
                 <div class="buttons">
-                  <button class="btn btn-primary mr-3"> <i class="fa fa-eye"></i> View Demo </button>
-                  <button class="btn btn-outline-success"> <i class="fa fa-download"></i> Download </button>
+                  <button class="btn btn-primary mr-3" (click)="onViewDemo(template.id)"> <i class="fa fa-eye"></i> View Demo </button>
+                  <button class="btn btn-outline-success" (click)="onDownload(template)"> <i class="fa fa-download"></i> Download </button>
                 </div>
               </div>
             </div>
@@ -41,18 +41,21 @@
     </app-card>
   </div>
 </div>
-<!-- 
-<app-mobile-app-modal #mobileAppModal [modalType]="modalType"
-  [mobileApp]="selectedApp"
-></app-mobile-app-modal>
--->
+
+<app-landing-page-template-modal #templateModal
+  [modalType]="templateModalType"
+  [template]="templateObject"
+  [categories]="categories"
+  (save)="loadTableData()"
+  (delete)="onClickDeleteFromEdit()"
+></app-landing-page-template-modal>
+
+<app-landing-page-template-demo-modal #demoModal
+  [templateId]="templateIdForDemo"
+></app-landing-page-template-demo-modal>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
   modalMessage="Do you want to delete selected template(s)?"
   [buttons]="confirmButtons"
 ></app-confirm-modal>
-
-<app-landing-page-template-modal #templateModal
-  [modalType]="templateModalType"
-  [template]="templateObject"
-></app-landing-page-template-modal>

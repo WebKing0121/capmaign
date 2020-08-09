@@ -103,11 +103,11 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
         data => {
           this.loadTableData();
           this.loading = false;
-          this.confirmModal.hide();
+          // this.confirmModal.hide();
         },
         error => {
           this.loading = false;
-          console.log('error', error.response);
+          console.log('error', error);
         }
       );
   }
@@ -173,7 +173,6 @@ export class EmailTemplatesComponent implements OnInit, OnDestroy, AfterViewInit
           } else {
             this.categories = [];
           }
-          console.log(this.categories);
         },
         error => {
           console.log('error', error.response);

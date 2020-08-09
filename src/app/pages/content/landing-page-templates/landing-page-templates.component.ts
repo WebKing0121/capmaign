@@ -17,7 +17,7 @@ import { DataSourceChange } from '@app-core/models/data-source';
 export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   @ViewChild('confirmCategoryModal', { static: false }) confirmCategoryModal;
-
+  @ViewChild('demoModal', { static: false }) demoModal;
   @ViewChild('categoryModal', { static: false }) categoryModal;
   @ViewChild('templateModal', { static: false }) templateModal;
 
@@ -45,6 +45,9 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
   confirmButtons = [
     { label: 'Yes', action: this.onDeleteConfirm.bind(this), class: 'btn-primary' }
   ];
+  deleteFrom = 0;
+  deletedCount = 0;
+  templateIdForDemo = 0;
 
   constructor(
     private contentService: ContentService
@@ -93,7 +96,6 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
     } else {
       this.filteredTemplates = this.templates.filter(x => x.categoryId === category);
     }
-
   }
 
   onSelectTemplate(templateId: number) {
@@ -121,11 +123,65 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
   }
 
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
   onDeleteConfirm() {
-    this.confirmModal.hide();
+    if (this.deleteFrom === 1) {
+      this.contentService.deleteLandingPageTemplate(this.templateObject.id)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          () => {
+            this.selectedTemplates = [];
+            this.loadTableData();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    } else {
+      this.selectedTemplates.forEach(templateId => {
+        this.contentService.deleteLandingPageTemplate(templateId)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(
+            () => {
+              this.deletedCount++;
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+      });
+      setTimeout(() => this.isDeletedDone());
+    }
+  }
+
+  isDeletedDone() {
+    if (this.deletedCount === this.selectedTemplates.length) {
+      this.selectedTemplates = [];
+      this.loadTableData();
+      this.templateModal.hide();
+      this.deletedCount = 0;
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
+    }
+  }
+
+  onViewDemo(templateId: number) {
+    this.templateIdForDemo = templateId;
+    setTimeout(() => this.demoModal.show());
+  }
+
+  onDownload(template: any) {
+    console.log(template);
+
   }
 
   initTable() {
@@ -158,8 +214,8 @@ export class LandingPageTemplatesComponent implements OnInit, OnDestroy {
         data => {
           if (data.result) {
             this.templates = data.result.items;
-            this.filteredTemplates = this.templates;
             this.totalCount = data.result.totalCount;
+            this.onSelectCategory(this.selectedCategory);
           } else {
             this.templates = [];
 

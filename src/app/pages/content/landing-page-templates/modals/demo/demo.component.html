@@ -1,0 +1,14 @@
+<app-ui-modal #demoModal [dialogClass]="dialogClass">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{landingPageFromDB ? landingPageFromDB.name : 'loading...'}}</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="demoModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body demo">
+    <iframe id="demoTemplate" class="qr-frame" width="100%" height="100%" [srcdoc]="template" *ngIf="landingPageType === 1" >
+    </iframe>
+    <iframe id="demoTemplateDynamic" class="qr-frame" width="100%" height="100%" [src]="urlSafe" *ngIf="landingPageType === 2" >
+    </iframe>
+  </div>
+</app-ui-modal>
