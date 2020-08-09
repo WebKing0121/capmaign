@@ -19,6 +19,11 @@ export class ContentService {
 
   constructor(private http: HttpClient) { }
 
+  removeFiles(files: string[]): Observable<any> {
+    const q = files.map(x => `image=${x}`).join('&');
+    return this.http.post<any>(`${environment.apiUrl}/file/remove?${q}`, {});
+  }
+
   getCategories(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/GetLandingPageCategoryInOuIncludingChildren`, params);
   }
@@ -59,8 +64,8 @@ export class ContentService {
   }
 
   deleteAssets(fileNames: string[]): Observable<any> {
-    const query = fileNames.map(x=>`image=${x}`).join('&');
-    return this.http.post<any>(`${environment.apiUrl}/file/remove?${query}`, {});
+    const q = fileNames.map(x => `image=${x}`).join('&');
+    return this.http.post<any>(`${environment.apiUrl}/file/remove?${q}`, {});
   }
 
   uploadAsset(File: any): Observable<any> {
@@ -108,6 +113,10 @@ export class ContentService {
 
   saveNewFile(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/File/SaveNewFile`, params);
+  }
+
+  deleteLandingPage(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/landingPage/DeleteSelectedLandingPage?items=${id}`);
   }
 
   getDynamicContents(params: any): Observable<any> {

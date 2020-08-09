@@ -56,8 +56,6 @@ export class LandingPageModalComponent implements OnInit, OnDestroy {
       { value: 'Draft', label: 'Draft' },
       { value: 'Published', label: 'Published' },
     ];
-
-
   }
 
   ngOnDestroy(): void {

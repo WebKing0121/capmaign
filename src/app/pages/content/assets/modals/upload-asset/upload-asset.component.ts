@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { FileUploadValidators } from '@iplab/ngx-file-upload';
 import { ContentService } from '@app-core/services/content.service';
@@ -10,7 +10,7 @@ import { takeUntil } from 'rxjs/operators';
   templateUrl: './upload-asset.component.html',
   styleUrls: ['./upload-asset.component.scss']
 })
-export class ContentUploadAssetModalComponent implements OnInit {
+export class ContentUploadAssetModalComponent implements OnInit, OnDestroy {
   @ViewChild('uploadAssetModal', { static: false }) uploadAssetModal;
   @Output() uploaded: EventEmitter<any> = new EventEmitter();
   private filesControl = new FormControl(null, FileUploadValidators.filesLimit(10));
@@ -26,6 +26,11 @@ export class ContentUploadAssetModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 
   show() {

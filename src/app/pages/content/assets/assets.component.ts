@@ -106,40 +106,40 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
     // const FileNames = selected
     if (this.deleteFrom === 1) {
       this.contentService.deleteAsset(this.selectedAsset.fileName)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          console.log(data);
-          this.loadAssets();
-        },
-        error => {
-          this.loading = false;
-          if (error ==='OK') {
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            console.log(data);
             this.loadAssets();
-          } else {
-            console.log('error', error.response);
+          },
+          error => {
+            this.loading = false;
+            if (error === 'OK') {
+              this.loadAssets();
+            } else {
+              console.log('error', error.response);
+            }
           }
-        }
-      );
+        );
     } else {
-      const assetsForDelete = this.selected.map(x=>x.fileName);
+      const assetsForDelete = this.selected.map(x => x.fileName);
       this.contentService.deleteAssets(assetsForDelete)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.loadAssets();
-        },
-        error => {
-          this.loading = false;
-          if (error ==='OK') {
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
             this.loadAssets();
-          } else {
-            console.log('error', error.response);
+          },
+          error => {
+            this.loading = false;
+            if (error === 'OK') {
+              this.loadAssets();
+            } else {
+              console.log('error', error.response);
+            }
           }
-        }
-      );
+        );
     }
-    
+
   }
 
   onClickTableView() {

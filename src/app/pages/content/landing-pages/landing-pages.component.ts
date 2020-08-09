@@ -40,32 +40,14 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
   landingPage: LandingPage;
   loading = false;
   deleteFrom = 0;
+  deletedCount = 0;
   constructor(
     private contentService: ContentService
   ) { }
 
   ngOnInit(): void {
     this.initTable();
-    const params = {
-      SortDirection: 'Ascending',
-      maxResultCount: 1000,
-      skipCount: 0,
-      sorting: '',
-    };
-    this.contentService.getCategories(params)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          if (data.result) {
-            this.categories = data.result.map(x => ({ value: `${x.categoryId}`, label: x.category }));
-          } else {
-            this.categories = [];
-          }
-        },
-        error => {
-          console.log('error', error.response);
-        }
-        );
+    this.loadCategories();
   }
 
   ngAfterViewInit(): void {
@@ -111,8 +93,95 @@ export class LandingPagesComponent implements OnInit, OnDestroy, AfterViewInit {
     this.confirmModal.show();
   }
 
+  getFileNameFromUrl(strPath: string) {
+    return strPath.replace('http://storage-staging.campaigntocash.com/c2cuat/', '').split('?')[0];
+  }
+
   onConfirmDelete() {
-    this.confirmModal.hide();
+
+    if (this.deleteFrom === 1) {
+      const fileName = this.getFileNameFromUrl(this.landingPage.externalURL);
+      this.contentService.removeFiles([fileName])
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            console.log(data);
+          },
+          error => {
+            console.log('error', error);
+          }
+        );
+      this.contentService.deleteLandingPage(this.landingPage.id)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          () => {
+            this.landingPageModal.hide();
+            this.loadTableData();
+          },
+          error => {
+            console.log('error', error.response);
+          }
+        );
+
+    } else {
+      this.deletedCount = 0;
+      const files = this.selected.map(x => this.getFileNameFromUrl(x.externalURL));
+      this.contentService.removeFiles(files)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          data => {
+            console.log(data);
+          },
+          error => {
+            console.log('error', error);
+          }
+        );
+      this.selected.forEach(x => {
+        this.contentService.deleteLandingPage(x.id)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(
+            () => {
+              this.deletedCount++;
+            },
+            error => {
+              console.log('error', error.response);
+            }
+          );
+      });
+      setTimeout(() => this.isDeletedDone());
+    }
+  }
+
+  isDeletedDone() {
+    if (this.deletedCount === this.selected.length) {
+      this.loadTableData();
+      this.deletedCount = 0;
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
+    }
+  }
+
+  loadCategories() {
+    const params = {
+      SortDirection: 'Ascending',
+      maxResultCount: 1000,
+      skipCount: 0,
+      sorting: '',
+    };
+    this.contentService.getCategories(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.categories = data.result.items.map(x => ({ value: `${x.categoryId}`, label: x.category }));
+          } else {
+            this.categories = [];
+          }
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
   }
 
   initTable() {
