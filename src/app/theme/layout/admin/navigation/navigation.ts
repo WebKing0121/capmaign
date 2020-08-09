@@ -352,7 +352,7 @@ const NavigationItems = [
             id: 'advertising-ad-simulator',
             title: 'Ad Simulator',
             type: 'item',
-            url: 'javascript:',
+            url: '/advertising/ad-simulator',
             external: false
           },
         ]

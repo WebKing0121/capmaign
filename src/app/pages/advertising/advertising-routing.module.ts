@@ -7,6 +7,9 @@ const routes: Routes = [
   },
   {
     path: 'facebook-ads', loadChildren: () => import('./facebook-ads/facebook-ads.module').then(m => m.FacebookAdsModule)
+  },
+  {
+    path: 'ad-simulator', loadChildren: () => import('./ad-simulator/ad-simulator.module').then(m => m.AdSimulatorModule)
   }
 ];
 
