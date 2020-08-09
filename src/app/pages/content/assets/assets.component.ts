@@ -47,6 +47,7 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
   ];
 
   loading = false;
+  deleteFrom = 0;
   constructor(
     private contentService: ContentService
   ) {
@@ -91,12 +92,38 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
 
   }
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
   onConfirmDelete() {
     this.loading = true;
-    this.contentService.deleteAsset(this.selectedAsset.fileName)
+    // const FileNames = selected
+    if (this.deleteFrom === 1) {
+      this.contentService.deleteAsset(this.selectedAsset.fileName)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          console.log(data);
+          this.loadAssets();
+        },
+        error => {
+          this.loading = false;
+          if (error ==='OK') {
+            this.loadAssets();
+          } else {
+            console.log('error', error.response);
+          }
+        }
+      );
+    } else {
+      const assetsForDelete = this.selected.map(x=>x.fileName);
+      this.contentService.deleteAssets(assetsForDelete)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
@@ -104,11 +131,15 @@ export class ContentAssetsComponent implements OnInit, OnDestroy, AfterViewInit 
         },
         error => {
           this.loading = false;
-          console.log('error', error.response);
+          if (error ==='OK') {
+            this.loadAssets();
+          } else {
+            console.log('error', error.response);
+          }
         }
       );
-
-    this.confirmModal.hide();
+    }
+    
   }
 
   onClickTableView() {

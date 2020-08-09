@@ -8,6 +8,7 @@ import { AssetsMock } from '@app-fake-db/content-assets-mock';
 import { EmailTemplatesMock } from '@app-fake-db/content-email-templates-mock';
 import { LandingPagesMock } from '@app-fake-db/content-landing-pages-mock';
 import { DynamicContentsMock } from '@app-fake-db/content-dynamic-contents-mock';
+import { query } from '@angular/animations';
 
 @Injectable({
   providedIn: 'root'
@@ -55,6 +56,18 @@ export class ContentService {
 
   deleteAsset(fileName: string): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/file/remove?image=${fileName}`, {});
+  }
+
+  deleteAssets(fileNames: string[]): Observable<any> {
+    const query = fileNames.map(x=>`image=${x}`).join('&');
+    return this.http.post<any>(`${environment.apiUrl}/file/remove?${query}`, {});
+  }
+
+  uploadAsset(File: any): Observable<any> {
+    // https://c2cstaging.azurewebsites.net/File/AttachFile
+    const formData = new FormData();
+    formData.append('uploadedFile', File);
+    return this.http.post<any>('https://c2cstaging.azurewebsites.net/File/AttachFile', formData);
   }
 
   getEmailTemplates(params: any): Observable<any> {

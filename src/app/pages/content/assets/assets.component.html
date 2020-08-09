@@ -35,11 +35,13 @@
 <app-content-rename-asset-modal #renameModal
   [asset]="selectedAsset"
   (update)="loadAssets()"
-  (delete)="onClickDelete()"
+  (delete)="onClickDeleteFromEdit()"
 ></app-content-rename-asset-modal>
 
 <app-content-create-asset-modal #createAssetModal></app-content-create-asset-modal>
-<app-content-upload-asset-modal #uploadAssetModal></app-content-upload-asset-modal>
+<app-content-upload-asset-modal #uploadAssetModal
+  (uploaded)="loadAssets()"
+></app-content-upload-asset-modal>
 
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"

@@ -12,14 +12,14 @@
           Social Media Post <br />
           800x800px
         </p>
-        <button class="btn btn-primary">Create Design</button>
+        <button class="btn btn-primary" (click)="createDesign(0)">Create Design</button>
       </div>
       <div class="big-post">
         <p>
           Poster <br />
           42x59.4cm
         </p>
-        <button class="btn btn-primary">Create Design</button>
+        <button class="btn btn-primary" (click)="createDesign(1)">Create Design</button>
       </div>
     </div>
   </div>
@@ -28,5 +28,18 @@
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="createAssetModal.hide()">
       <i class="fa fa-times-circle"></i>Close
     </button>
+  </div>
+</app-ui-modal>
+
+<app-ui-modal #hotjarModal dialogClass="modal-dialog-centered modal-xl mobile-app-modal">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{selectedIndex === 0 ? 'Social Media Post (800x800px)': 'Poster 42x59.4cm'}}</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close" (click)="hotjarModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body new-design">
+    <iframe id="createAssetIframe" class="qr-frame" width="100%" height="600px" *ngIf="iFramePath" [src]="urlSafe">
+    </iframe>
   </div>
 </app-ui-modal>

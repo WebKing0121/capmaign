@@ -14,8 +14,9 @@
   </div>
 
   <div class="app-modal-footer">
-    <button class="btn btn-primary"><i class="fa fa-upload"></i>Upload</button>
-    <button type="button" class="btn btn-secondary" data-dismiss="modal"
-      (click)="uploadAssetModal.hide()"><i class="fa fa-times-circle"></i>Close</button>
+    <button class="btn btn-primary" [disabled]="uploading" (click)="onUpload()"><i class="fa fa-upload"></i>Upload</button>
+    <button type="button" [disabled]="uploading" class="btn btn-secondary" data-dismiss="modal" (click)="uploadAssetModal.hide()">
+      <i class="fa fa-times-circle"></i>Close
+    </button>
   </div>
 </app-ui-modal>
