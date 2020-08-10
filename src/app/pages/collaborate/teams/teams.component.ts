@@ -4,7 +4,6 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
-import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
 import { DataSourceChange } from '@app-models/data-source';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 
@@ -38,7 +37,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   submitted = false;
 
   teams: any[];
-  campaigns: CollaborateCampaign[];
+  campaigns: any[];
   allUsers: any[];
   loaded: number;
 
@@ -57,16 +56,16 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
   ];
 
-  tableSourceCampaigns: DataTableSource<CollaborateCampaign> = new DataTableSource<CollaborateCampaign>(50);
-  selectedCampaigns: CollaborateCampaign[] = [];
+  tableSourceCampaigns: DataTableSource<any> = new DataTableSource<any>(50);
+  selectedCampaigns: any[] = [];
   campaignsTotalCount = 0;
-  selectedCampaign: CollaborateCampaign;
+  selectedCampaign: any;
   tableButtonsCampaigns = [
     { label: 'Assign', icon: 'fa fa-link', click: () => this.onClickAssignCampaign() },
     { label: 'Unassign', icon: 'fa fa-times', click: () => this.onClickUnassignCampaign(), color: 'red', hide: true },
   ];
 
-  selectedTask: CollaborateCampaignTask;
+  selectedTask: any;
   selectedUser: any;
   // Team Modal related;
   modalType = ModalType.New;
@@ -95,7 +94,7 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.allUsers = data.result.map(x => ({ value: `${x.id}`, label: x.surname + ' ' + x.name }));
+          this.allUsers = data.result.map(x => ({ id: x.id, username: x.userName, label: x.surname + ' ' + x.name }));
         },
         error => {
           console.log('error', error);
@@ -237,8 +236,11 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   *******************************************************/
   onClickCampaign(event) {
     if (event.type === 'click') {
-      const campaign = event.row as CollaborateCampaign;
+      const campaign = event.row;
       this.selectedCampaign = campaign;
+      this.selectedCampaign.teamName = this.selectedTeam.teamName;
+      this.selectedCampaign.memberName = this.selectedTeam.memberName;
+      this.campaignTasks.setEnableCreate();
       this.campaignTasks.loadTasksFromCampaign(campaign.id);
       this.campaignSubTasks.loadSubTasks(0);
     }
@@ -246,7 +248,8 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
 
   onSelectTask(task: any) {
     this.selectedTask = task;
-    this.selectedUser = this.allUsers.find(x => x.id === task.user_id);
+    this.selectedUser = this.allUsers.find(x => x.id === task.memberId);
+    this.campaignSubTasks.setEnableCreate();
     this.campaignSubTasks.loadSubTasks(task.id);
   }
 
@@ -325,9 +328,12 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          if (data.success) {
+          if (data.success && data.result) {
             this.campaigns = data.result.items;
             this.campaignsTotalCount = data.result.totalCount;
+          } else {
+            this.campaigns = [];
+            this.campaignsTotalCount = 0;
           }
 
           this.tableSourceCampaigns.next(this.campaigns, this.teamsTotalCount);
