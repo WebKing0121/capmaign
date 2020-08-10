@@ -12,8 +12,8 @@ import { UserService } from '@app-services/user.service';
 import { DataTableSource } from '@app-components/datatable/datatable-source';
 
 import { CampaignFilterType } from '@app-core/enums/campaign-type.enum';
-import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
-import { User } from '@app-models/user';
+// import { CollaborateCampaign, CollaborateCampaignTask, CollaborateTeam } from '@app-models/collaborate';
+
 
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
 import { ModalType } from '@app-core/enums/modal-type.enum';
@@ -43,7 +43,7 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
   modalType = ModalType.New;
 
   selectedCampaign: any;
-  selectedTask: CollaborateCampaignTask;
+  selectedTask: any;
   selectedUser: any;
   totalCount = 0;
 
@@ -125,7 +125,7 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
-          this.allUsers = data.result.map(x => ({ value: `${x.id}`, label: x.surname + ' ' + x.name }));
+          this.allUsers = data.result.map(x => ({ id: x.id, username: x.userName, label: x.surname + ' ' + x.name }));
         },
         error => {
           console.log('error', error);
@@ -156,7 +156,9 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     if (event.type === 'click') {
 
       const campaign = event.row;
+
       this.selectedCampaign = campaign;
+      this.campaignTasks.setEnableCreate();
       this.campaignTasks.loadTasksFromCampaign(campaign.id);
       this.campaignSubTasks.loadSubTasks(0);
 
@@ -195,9 +197,10 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     // this._updateTable(this._filterCampaigns());
   }
 
-  onSelectTask(task: CollaborateCampaignTask) {
+  onSelectTask(task) {
     this.selectedTask = task;
-    this.selectedUser = this.allUsers.find((x: User) => x.id === task.user_id);
+    this.selectedUser = this.allUsers.find(x => x.id === task.memberId);
+    this.campaignSubTasks.setEnableCreate();
     this.campaignSubTasks.loadSubTasks(task.id);
   }
 
@@ -210,22 +213,22 @@ export class CollaborateCampaignsComponent implements OnInit, OnDestroy, AfterVi
     // this.addSubTaskModal.show();
   }
 
-  _filterCampaigns(): CollaborateCampaign[] {
+  _filterCampaigns(): any[] {
     console.log(this.selectedFilter, this.selectedStatus);
     if (this.selectedFilter === 'All') {
       if (this.selectedStatus === 'in-progress') {
-        return this.campaigns.filter((x: CollaborateCampaign) => x.status === 'in-progress');
+        return this.campaigns.filter((x: any) => x.status === 'in-progress');
       } else {
-        return this.campaigns.filter((x: CollaborateCampaign) => x.status !== 'in-progress');
+        return this.campaigns.filter((x: any) => x.status !== 'in-progress');
       }
 
     } else {
       if (this.selectedStatus === 'in-progress') {
-        return this.campaigns.filter((x: CollaborateCampaign) => x.type === this.selectedFilter)
-          .filter((x: CollaborateCampaign) => x.status === 'in-progress');
+        return this.campaigns.filter((x: any) => x.type === this.selectedFilter)
+          .filter((x: any) => x.status === 'in-progress');
       } else {
-        return this.campaigns.filter((x: CollaborateCampaign) => x.type === this.selectedFilter)
-          .filter((x: CollaborateCampaign) => x.status !== 'in-progress');
+        return this.campaigns.filter((x: any) => x.type === this.selectedFilter)
+          .filter((x: any) => x.status !== 'in-progress');
       }
     }
   }

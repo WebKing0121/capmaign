@@ -74,6 +74,8 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
 
   loadingTeams = false;
   loadingCampaigns = false;
+  deleteFrom = 0;
+  deletedCount = 0;
 
   constructor(
     private collaborateService: CollaborateService,
@@ -100,17 +102,6 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
         }
       );
   }
-
-  // checkLoaded() {
-  //   if (this.loaded === 3) {
-  //     // this.getUnassignedCampaigns();
-  //     // this.cardTeams.setCardRefresh(false);
-  //     this._updateTeamTable(this.teams);
-  //     this._updateCampaignTable([]);
-  //   } else {
-  //     setTimeout(() => this.checkLoaded());
-  //   }
-  // }
 
   ngAfterViewInit() {
 
@@ -170,11 +161,56 @@ export class CollaborateTeamsComponent implements OnInit, OnDestroy, AfterViewIn
   }
 
   onClickDelete() {
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
   onConfirmDelete() {
+    if (this.deleteFrom === 1) {
+      this.collaborateService.deleteCollaborateTeam(this.selectedTeam.id)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.loadTeams();
+            this.teamModal.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    } else {
+      this.selected.forEach(team => {
+        this.collaborateService.deleteCollaborateTeam(team.id)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(
+            () => {
+              this.deletedCount++;
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+      });
+      setTimeout(() => this.isDeletedDone());
+    }
 
+  }
+
+  isDeletedDone() {
+    if (this.deletedCount === this.selected.length) {
+      this.loadTeams();
+      this.deletedCount = 0;
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
+    }
   }
 
   onSaveTeam() {

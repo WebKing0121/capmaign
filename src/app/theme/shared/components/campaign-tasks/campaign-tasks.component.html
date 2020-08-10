@@ -10,130 +10,6 @@
 	(activate)="onClickTask($event)"
 ></app-datatable>
 
-<app-ui-modal #addTaskModal dialogClass="modal-dialog-centered modal-lg add-task-modal">
-	<div class="app-modal-header">
-		<h5 class="modal-title">Add Task</h5>
-		<button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
-			(click)="addTaskModal.hide()">
-			<span aria-hidden="true">&times;</span>
-		</button>
-	</div>
-
-	<div class="app-modal-body">
-		<div class="row">
-
-			<div class="col-md-6 col-sm-12 mt-2">
-				<div class="input-group mobile-input-view">
-					<label>Team</label>
-				</div>
-				<div class="input-group">
-					<div class="input-group-prepend mobile-input-group">
-						<span class="input-group-text">Team</span>
-					</div>
-					<input type="text" class="form-control" [value]="modalTeamName" readonly />
-				</div>
-			</div>
-			<div class="col-md-6 col-sm-12 mt-2">
-				<div class="input-group mobile-input-view">
-					<label>Campaign</label>
-				</div>
-				<div class="input-group">
-					<div class="input-group-prepend mobile-input-group">
-						<span class="input-group-text">Campaign</span>
-					</div>
-					<input type="text" class="form-control" [value]="modalCampaignName" readonly />
-				</div>
-			</div>
-		</div>
-		<form [formGroup]="taskForm" (ngSubmit)="onCreateTask()">
-			<div class="row mt-4">
-				<div class="col-md-12 input-group">
-					<div class="input-group mobile-input-view">
-						<label>Task Name</label>
-					</div>
-					<div class="input-group-prepend mobile-input-group">
-						<span class="input-group-text">Task Name</span>
-					</div>
-					<input type="text" class="form-control" formControlName="task_name" />
-				</div>
-			</div>
-			<div class="row mt-2">
-				<div class="col-md-12 input-group">
-					<div class="input-group mobile-input-view">
-						<label>Description</label>
-					</div>
-					<div class="input-group-prepend mobile-input-group">
-						<span class="input-group-text">Description</span>
-					</div>
-					<input type="text" class="form-control" formControlName="desc" />
-				</div>
-			</div>
-
-			<div class="row">
-				<div class="col-md-6 col-sm-12 input-group  mt-2">
-					<div class="input-group mobile-input-view">
-						<label>Start</label>
-					</div>
-					<!-- <div class="input-group-prepend mobile-input-group">
-						<span class="input-group-text">Start</span>
-					</div> -->
-					<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
-						#d_f="ngbDatepicker" formControlName="start">
-					<div class="input-group-append">
-						<span class="input-group-text" (click)="d_f.toggle()">
-							<i class="fa fa-calendar"></i>
-						</span>
-					</div>
-					<input type="time" class="form-control" placeholder="Date" value="20:55">
-				</div>
-				<div class="col-md-6 col-sm-12 input-group  mt-2">
-					<div class="input-group mobile-input-view">
-						<label>End</label>
-					</div>
-					<!-- <div class="input-group-prepend mobile-input-group">
-						<span class="input-group-text">End</span>
-					</div> -->
-					<input class="form-control" autocomplete="off" placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
-						#d_t="ngbDatepicker" formControlName="end">
-					<div class="input-group-append">
-						<span class="input-group-text" (click)="d_t.toggle()">
-							<i class="fa fa-calendar"></i>
-						</span>
-					</div>
-					<input type="time" class="form-control" placeholder="Date" value="20:55">
-				</div>
-			</div>
-			<div class="row">
-
-				<div class="col-md-6 col-sm-12 input-group mt-2">
-					<div class="input-group mobile-input-view">
-						<label>User</label>
-					</div>
-					<div class="input-group-prepend mobile-input-group">
-						<span class="input-group-text">User</span>
-					</div>
-					<ng-select [ngClass]="'ng-select'" formControlName="user" [options]="modalTeamMembers"></ng-select>
-				</div>
-				<div class="col-md-6 col-sm-12 input-group mt-2">
-					<div class="input-group mobile-input-view">
-						<label>Estimation</label>
-					</div>
-					<div class="input-group-prepend mobile-input-group">
-						<span class="input-group-text">Estimation</span>
-					</div>
-					<input type="text" class="form-control" formControlName="esti_hours" />
-				</div>
-			</div>
-		</form>
-	</div>
-
-	<div class="app-modal-footer">
-		<button type="button" class="btn btn-primary"><i class="fa fa-plus"></i>Assign</button>
-		<button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="addTaskModal.hide()"><i
-				class="fa fa-times-circle"></i>Close</button>
-	</div>
-</app-ui-modal>
-
 <div class="toast-div">
 	<app-toast uID="toast1" toastTitle="Notice" toastCaption="" toastClass="bg-blue-light m-b-10 m-r-10">
 		Please Select Campaign.
@@ -151,6 +27,14 @@
 	<span *ngIf="value > 0">{{ getUserName(value) }}</span>
 	<span class="btn btn-outline-primary btn-normal-padding" *ngIf="value === 0">Assign Team</span>
 </ng-template>
+
+<app-campaign-tasks-task-modal #taskModal
+	[modalType]="taskModalType"
+	[task]="selectedTask"
+	[members]="modalTeamMembers"
+	(update)="reloadTasks()"
+	(delete)="onClickDelete()"
+></app-campaign-tasks-task-modal>
 
 <app-confirm-modal #confirmModal modalTitle="Confirm" modalMessage="Do you want to delete selected task?"
 	[buttons]="confirmButtons"></app-confirm-modal>

@@ -37,6 +37,10 @@ export class CollaborateService {
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/UpdateCollaborationTeam`, params);
   }
 
+  deleteCollaborateTeam(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/DeleteCollaborationTeam?teamid=${id}`);
+  }
+
   getCollaborateCampaigns(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetAllCampaignsforPaging`, params);
   }
@@ -51,9 +55,33 @@ export class CollaborateService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationTaskByCampaign?campaignid=${campaignId}`, params);
   }
 
+  createCollaborateTask(params): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/CreateCollaborateTask`, params);
+  }
+
+  updateCollaborateTask(params): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/UpdateCollaborateTask`, params);
+  }
+
+  deleteCollaborateTask(id): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/DeleteCollaborateTask?taskid=${id}`);
+  }
+
   getCampaignSubTasks(taskId: number, params: any) {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/GetCollaborationSubTaskByTask?taskid=${taskId}`, params);
+  }
+
+  createCollaborateSubTask(params): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/CreateCollaborateSubTask`, params);
+  }
+
+  updateCollaborateSubTask(params): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/UpdateCollaborateSubTask`, params);
+  }
+
+  deleteCollaborateSubTask(id): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/collaborationTeam/DeleteCollaborateSubTask?subtaskid=${id}`);
   }
 
   getRecentActivities(date: string, campaignId: number) {

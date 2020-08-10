@@ -20,13 +20,16 @@ import { LightboxModule } from 'ngx-lightbox';
 import { TinymceModule } from 'angular2-tinymce';
 import { NgbTabsetModule, NgbProgressbarModule, NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { AmazingTimePickerModule } from 'amazing-time-picker';
+import { SelectModule } from 'ng-select';
 
 import { SocialAddConnectionComponent } from './components/social-add-connection/social-add-connection.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { SocialAccountListComponent } from './components/social-account-list/social-account-list.component';
 import { CampaignTasksComponent } from './components/campaign-tasks/campaign-tasks.component';
-import { SelectModule } from 'ng-select';
+import { CampaignTasksTaskModalComponent } from './components/campaign-tasks/modals/campaign-task/campaign-task.component';
+
 import { CampaignSubTasksComponent } from './components/campaign-sub-tasks/campaign-sub-tasks.component';
+import { CampaignTasksSubTaskModalComponent } from './components/campaign-sub-tasks/modals/campaign-sub-task/campaign-sub-task.component';
 import { ChatWidgetComponent } from './components/chat-widget/chat-widget.component';
 import { DataRecordTabsComponent } from './components/data-record-tabs/data-record-tabs.component';
 import { DataRecordsComponent } from './components/data-records/data-records.component';
@@ -100,7 +103,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     SocialAddConnectionComponent,
     SocialAccountListComponent,
     CampaignTasksComponent,
+    CampaignTasksTaskModalComponent,
     CampaignSubTasksComponent,
+    CampaignTasksSubTaskModalComponent,
     ChatWidgetComponent,
     DataRecordTabsComponent,
     DataRecordsComponent,

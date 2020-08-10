@@ -10,12 +10,11 @@ import { takeUntil } from 'rxjs/operators';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
 import { CollaborateCampaignTask, CollaborateCampaignSubtask } from '@app-models/collaborate';
 import { CardButton } from '@app-models/card';
-
-import { CollaborateCampaignsSubtasksMockData } from '@app-fake-db/collaborate-campaign-subtasks-mock';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 import { CollaborateService } from '@app-services/collaborate.service';
 import { ToastService } from '../toast/toast.service';
 import { DataSourceChange } from '@app-models/data-source';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-campaign-sub-tasks',
@@ -26,14 +25,16 @@ import { DataSourceChange } from '@app-models/data-source';
 export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewInit {
   @Input() task: any;
   @Input() user: any;
+  @Output() selectRow: EventEmitter<any> = new EventEmitter();
 
   @ViewChild('cardSubTasks', { static: false }) cardSubTasks;
-  @ViewChild('addSubTaskModal', { static: false }) addSubTaskModal;
+  @ViewChild('subTaskModal', { static: false }) subTaskModal;
   @ViewChild('progressTemplate') progressTemplate: TemplateRef<any>;
   @ViewChild('userNameTemplate') userNameTemplate: TemplateRef<any>;
   @ViewChild('confirmModal', { static: false }) confirmModal;
 
-  @Output() selectRow: EventEmitter<any> = new EventEmitter();
+  modalType = ModalType.New;
+  selectedSubTask: any;
 
   private unsubscribe$ = new Subject();
 
@@ -48,12 +49,10 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
   selected: CollaborateCampaignTask[] = [];
   tableButtons: CardButton[] = [
     {
-      label: 'Create', icon: 'fa fa-edit', click: () => this.onClickAddTask()
+      label: 'Create', icon: 'fa fa-edit', click: () => this.onClickAddTask(), disabled: true
     },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
   ];
-
-  subTaskForm: FormGroup;
 
   totalCount = 0;
   loading = false;
@@ -63,20 +62,11 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
     private collaborateService: CollaborateService,
     private toastEvent: ToastService
   ) {
-    this.subTasks = CollaborateCampaignsSubtasksMockData;
     this.selectedSubTaskId = 0;
   }
 
   ngOnInit(): void {
     this.initSubTaskTable();
-    this.subTaskForm = this.fb.group({
-      id: 0,
-      subtask_name: ['', Validators.required],
-      desc: ['', Validators.required],
-      start: ['', Validators.required],
-      end: ['', Validators.required],
-      esti_hours: ['', Validators.required],
-    });
   }
 
   initSubTaskTable() {
@@ -95,6 +85,7 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
         this.selected = selected;
       });
   }
+
   ngAfterViewInit() {
 
     const columns = [
@@ -134,8 +125,9 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
    **********************************************/
   onClickAddTask() {
     if (this.task && this.task.id > 0) {
-      this.subTaskForm.reset();
-      this.addSubTaskModal.show();
+      this.selectedSubTask = null;
+      this.modalType = ModalType.New;
+      setTimeout(() => this.subTaskModal.show());
     } else {
       this.toastEvent.toast({ uid: 'toast2', delay: 3000 });
     }
@@ -146,6 +138,10 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
 
   onConfirmDelete() {
 
+  }
+
+  setEnableCreate() {
+    this.tableButtons[0].disabled = false;
   }
 
   onCreateSubTask() {
@@ -160,31 +156,29 @@ export class CampaignSubTasksComponent implements OnInit, OnDestroy, AfterViewIn
     // this.selectedSubTaskId = subTaskId;
     // this.selectRow.emit(this.selectedSubTaskId);
     if (event.type === 'click') {
-      const subTask = event.row as CollaborateCampaignSubtask;
+      const subTask = event.row;
       this.selectRow.emit(subTask);
-      this.tableButtons[1].hide = false;
+
+      this.tableButtons[1].disabled = false;
       // open edit modal;
       if (
         event.cellIndex === 0
         && event.event.target.classList.value === 'datatable-body-cell-label'
       ) {
-
-        this.subTaskForm.setValue({
-          id: subTask.id,
-          subtask_name: subTask.name,
-          desc: subTask.desc,
-          start: subTask.started,
-          end: subTask.ended,
-          esti_hours: subTask.esti_hours,
-        });
-        this.addSubTaskModal.show();
+        this.selectedSubTask = subTask;
+        this.modalType = ModalType.Edit;
+        setTimeout(() => this.subTaskModal.show());
       }
     }
   }
 
+  reloadSubTasks() {
+    this.loadSubTasks(this.task.id);
+  }
+
   loadSubTasks(taskId: number) {
     // let subtasksFromServer;
-    this.tableButtons[1].hide = true;
+    this.tableButtons[1].disabled = true;
     if (taskId === 0) {
       this.subTasks = [];
       this.tableSource.next(this.subTasks, 0);

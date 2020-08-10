@@ -8,15 +8,14 @@ import { DataTableColumn, DataTableSource } from '@app-components/datatable/data
 
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { CollaborateCampaign, CollaborateTeam, CollaborateCampaignTask } from '@app-models/collaborate';
 import { CardButton } from '@app-models/card';
 
-import { CollaborateCampaignsTasksMockData } from '@app-fake-db/collaborate-campaign-tasks-mock';
 import { DateFormatPipe } from '../../pipes/date-format.pipe';
 
 import { CollaborateService } from '@app-services/collaborate.service';
 import { ToastService } from '../toast/toast.service';
 import { DataSourceChange } from '@app-models/data-source';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-campaign-tasks',
@@ -25,12 +24,12 @@ import { DataSourceChange } from '@app-models/data-source';
   encapsulation: ViewEncapsulation.None
 })
 export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit {
-  @Input() campaign: CollaborateCampaign = null;
+  @Input() campaign: any = null;
   @Input() teams: any[];
   @Input() campaigns: any[];
   @Input() users: any[];
   @ViewChild('cardTasks', { static: false }) cardTasks;
-  @ViewChild('addTaskModal', { static: false }) addTaskModal;
+  @ViewChild('taskModal', { static: false }) taskModal;
   @ViewChild('progressTemplate') progressTemplate: TemplateRef<any>;
   @ViewChild('userNameTemplate') userNameTemplate: TemplateRef<any>;
   @ViewChild('confirmModal', { static: false }) confirmModal;
@@ -41,7 +40,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   tasks: any[];
   selectedTaskId: number;
-
+  taskModalType = ModalType.New;
+  selectedTask: any;
   confirmButtons = [
     { label: 'Yes', action: this.onConfirmDelete.bind(this), class: 'btn-primary' }
   ];
@@ -54,14 +54,16 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
   selected: any[] = [];
   tableButtons: CardButton[] = [
     {
-      label: 'Create', icon: 'fa fa-edit', click: () => this.onClickAddTask()
+      label: 'Create', icon: 'fa fa-edit', click: () => this.onClickAddTask(), disabled: true,
     },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', hide: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
   ];
   taskForm: FormGroup;
 
   totalCount = 0;
   loading = false;
+  deleteFrom = 0;
+  deletedCount = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -78,15 +80,6 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   ngOnInit(): void {
     this.initTaskTable();
-    this.taskForm = this.fb.group({
-      id: 0,
-      task_name: ['', Validators.required],
-      desc: ['', Validators.required],
-      start: ['', Validators.required],
-      end: ['', Validators.required],
-      user: ['', Validators.required],
-      esti_hours: ['', Validators.required],
-    });
   }
 
   initTaskTable() {
@@ -138,15 +131,18 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
    **********************************************/
   onClickAddTask() {
     if (this.campaign && this.campaign.id > 0) {
-      this.modalTeamName = this.getTeamName();
-      this.modalCampaignName = this.getCampaignName();
+      this.selectedTask = null;
+      this.taskModalType = ModalType.New;
       this.modalTeamMembers = this.getTeamMembers();
-      this.taskForm.reset();
-      this.addTaskModal.show();
+      setTimeout(() => this.taskModal.show());
     } else {
       this.toastEvent.toast({ uid: 'toast1', delay: 3000 });
     }
 
+  }
+
+  setEnableCreate() {
+    this.tableButtons[0].disabled = false;
   }
 
   /******************************************************
@@ -156,30 +152,22 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
    *******************************************************/
   onClickTask(event) {
     if (event.type === 'click') {
-      const task = event.row as CollaborateCampaignTask;
+      const task = event.row;
       this.selectRow.emit(task);
-      this.tableButtons[1].hide = false;
+      this.tableButtons[1].disabled = false;
+
       if (event.cellIndex === 0 && event.column.frozenLeft && event.event.target.classList.value === 'datatable-body-cell-label') {
-        this.modalTeamName = this.getTeamName();
-        this.modalCampaignName = this.getCampaignName();
+        this.selectedTask = task;
+        this.taskModalType = ModalType.Edit;
         this.modalTeamMembers = this.getTeamMembers();
-        this.taskForm.setValue({
-          id: task.id,
-          task_name: task.name,
-          desc: task.desc,
-          start: task.started,
-          end: task.ended,
-          user: `${task.user_id}`,
-          esti_hours: task.esti_hours,
-        });
-        this.addTaskModal.show();
+        setTimeout(() => this.taskModal.show());
       }
     }
   }
 
   onCreateTask() {
     this.taskForm.reset();
-    this.addTaskModal.hide();
+    this.taskModal.hide();
   }
 
   onClickDelete() {
@@ -188,6 +176,10 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   onConfirmDelete() {
 
+  }
+
+  reloadTasks() {
+    this.loadTasksFromCampaign(this.campaign.id);
   }
 
   getUserName(userId: number) {
@@ -201,8 +193,8 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   getTeamName() {
     if (this.campaign && this.campaign.id > 0) {
-      const { team_id } = this.campaigns.find((x: CollaborateCampaign) => x.id === this.campaign.id);
-      return this.teams.find((x: CollaborateTeam) => x.id === team_id).name;
+      const { team_id } = this.campaigns.find(x => x.id === this.campaign.id);
+      return this.teams.find(x => x.id === team_id).name;
     } else {
       return '';
     }
@@ -210,7 +202,7 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   getCampaignName() {
     if (this.campaign && this.campaign.id > 0) {
-      return this.campaigns.find((x: CollaborateCampaign) => x.id === this.campaign.id).name;
+      return this.campaigns.find(x => x.id === this.campaign.id).name;
     } else {
       return '';
     }
@@ -218,17 +210,15 @@ export class CampaignTasksComponent implements OnInit, OnDestroy, AfterViewInit 
 
   getTeamMembers() {
     if (this.campaign && this.campaign.id > 0) {
-      const { team_id } = this.campaigns.find((x: CollaborateCampaign) => x.id === this.campaign.id);
-      const { members } = this.teams.find((x: CollaborateTeam) => x.id === team_id);
-      return this.users.filter(x => members.indexOf(x.id) >= 0)
-        .map(x => ({ value: '' + x.id, label: x.label }));
+      const { memberName } = this.teams.find(x => x.teamName === this.campaign.teamName);
+      return this.users.filter(x => memberName.indexOf(x.username) >= 0);
     } else {
       return [];
     }
   }
 
   loadTasksFromCampaign(campaignId: number) {
-    this.tableButtons[1].hide = true;
+    this.tableButtons[1].disabled = true;
     if (campaignId === 0) {
       this.tasks = [];
       this.tableSource.next(this.tasks, 0);

@@ -1,0 +1,95 @@
+<app-ui-modal #taskModal [containerClick]="false" dialogClass="modal-dialog-centered modal-task modal-lg">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'New' : 'Edit'}} Task</h5>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="taskModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body position-relative">
+    <form [formGroup]="form">
+      <div class="row" style='margin-top: -20px'>
+        <div class="col-md-12 mt-3">
+          <label class="mobile-show">Task Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Task Name</span>
+            </div>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+        </div>
+        <div class="col-md-12 mt-3">
+          <label class="mobile-show">Task Description</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Task Description</span>
+            </div>
+            <input type="text" class="form-control" formControlName="description">
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Team Member</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Team Member</span>
+            </div>
+            <select class="form-control"  formControlName="member">
+              <option *ngFor="let user of members" [value]="user.id">
+                {{user.label}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Estimated Hours</label>
+          <div class="input-group">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Estimated Hours</span>
+            </div>
+            <input type="text" class="form-control" formControlName="estHours">
+          </div>
+        </div>
+				<div class="col-md-6 mt-3">
+          <label class="mobile-show">Start Date</label>
+          <div class="input-group">
+            <input class="form-control" autocomplete="off" formControlName="startDate"
+              placeholder="yyyy-mm-dd" name="dp_from" ngbDatepicker
+              #d_f="ngbDatepicker">
+            <div class="input-group-append">
+              <span class="input-group-text" (click)="d_f.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+          </div>
+				</div>
+				<div class="col-md-6 mt-3">
+          <label class="mobile-show">End Date</label>
+          <div class="input-group">
+            <input class="form-control" autocomplete="off"  formControlName="endDate"
+              placeholder="yyyy-mm-dd" name="dp_to" ngbDatepicker
+              #d_t="ngbDatepicker">
+            <div class="input-group-append">
+              <span class="input-group-text" (click)="d_t.toggle()">
+                <i class="fa fa-calendar"></i>
+              </span>
+            </div>
+          </div>
+				</div>
+      </div>
+    </form>
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" (click)="onDelete()" [disabled]="loading" *ngIf="modalType === ModalType.Edit"><i class="fa fa-trash"></i>Delete</button>
+    <button type="button" class="btn btn-primary" (click)="onSave()" [disabled]="loading || form.invalid">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="taskModal.hide()">
+      <i class="fa fa-times-circle"></i>Close</button>
+  </div>
+</app-ui-modal>
