@@ -86,6 +86,7 @@ export class ScoringLeadCategoryModalComponent implements OnInit {
   fullScreen: boolean;
   modalClass: string;
 
+  loading = false;
   constructor(
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
@@ -132,6 +133,9 @@ export class ScoringLeadCategoryModalComponent implements OnInit {
     }
   }
 
+  onDelete() {
+    this.delete.emit();
+  }
 
   onSave() {
     this.categoryModal.hide();
