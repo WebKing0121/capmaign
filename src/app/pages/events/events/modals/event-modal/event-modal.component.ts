@@ -61,6 +61,7 @@ export class EventModalComponent implements OnInit, OnDestroy {
   show() {
     if (this.modalType === ModalType.Edit) {
       this.loading = true;
+      this.form.reset();
       this.eventService.getEvent(this.event.id)
         .pipe(takeUntil(this.unsubscribe$))
         .subscribe(
@@ -132,7 +133,6 @@ export class EventModalComponent implements OnInit, OnDestroy {
   }
 
   getDisplayNameKey(displayName: string): string {
-    console.log('displayName', displayName);
     const findOne = this.displayNameList.find(x => x.label === displayName);
     if (findOne) {
       return findOne.value;
@@ -141,7 +141,6 @@ export class EventModalComponent implements OnInit, OnDestroy {
   }
 
   getDisplayName(displayNameKey: string): string {
-    console.log('displayNameKey', displayNameKey);
     const findOne = this.displayNameList.find(x => x.value === displayNameKey);
     if (findOne) {
       return findOne.label;

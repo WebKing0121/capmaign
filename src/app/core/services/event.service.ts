@@ -36,9 +36,8 @@ export class EventService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/event/CreateEvent`, params);
   }
 
-  deleteEvent(params: any): Observable<any> {
-    // should be updated.
-    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/event/GetAllEventCampaignsforPaging`, params);
+  deleteEvent(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/event/DeleteSelectedEvent?eventId=${id}`);
   }
 
   getEventSender(params: any): Observable<any> {

@@ -21,7 +21,6 @@ import { DataSourceChange } from '@app-models/data-source';
 export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('eventModal', { static: false }) eventModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
-  @ViewChild('addToEventListModal', { static: false }) addToEventListModal;
 
   DataListType = DataListType;
   private unsubscribe$ = new Subject();
@@ -33,8 +32,7 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   selected: Event[] = [];
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateEvent() },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true },
-    { label: 'Add to list', icon: 'fa fa-list', click: () => this.onClickAddToList(), disabled: true },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true }
   ];
 
   // add, edit event modal
@@ -53,6 +51,8 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loading = false;
   deleteFrom = 0;
+  deletedCount = 0;
+
   constructor(
     private eventService: EventService
   ) {
@@ -91,7 +91,6 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (evt.type === 'click') {
       // control buttons to disabled / enabled
       this.tableButtons[1].disabled = this.selected.length === 0;
-      this.tableButtons[2].disabled = this.selected.length === 0;
       // open edit modal
       if (
         evt.cellIndex === 1
@@ -121,11 +120,50 @@ export class EventsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onConfirmDelete() {
-    this.confirmModal.hide();
+    if (this.deleteFrom === 1) {
+      this.loading = true;
+      this.eventService.deleteEvent(this.selectedEvent.id)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.loadTableData();
+            this.eventModal.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    } else {
+      this.loading = true;
+      this.selected.forEach(event => {
+        this.eventService.deleteEvent(event.id)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(
+            () => {
+              this.deletedCount++;
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+      });
+      setTimeout(() => this.isDeletedDone());
+    }
+
   }
 
-  onClickAddToList() {
-    this.addToEventListModal.show();
+  isDeletedDone() {
+    if (this.deletedCount === this.selected.length) {
+      this.loading = false;
+      this.loadTableData();
+      this.deletedCount = 0;
+      this.eventModal.hide();
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
+    }
   }
 
   getDisplayFrom(value: string | null) {
