@@ -1,13 +1,11 @@
 import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { LeadCategory } from '@app-models/scoring';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { ScoringService } from '@app-core/services/scoring.service';
 import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
-import { LeadCategoryModalComponent } from './lead-category-modal/lead-category-modal.component';
-import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
 import { DataSourceChange } from '@app-models/data-source';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-lead-category',
@@ -15,18 +13,20 @@ import { DataSourceChange } from '@app-models/data-source';
   styleUrls: ['./lead-category.component.scss']
 })
 export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
-
+  @ViewChild('categoryModal', { static: false }) categoryModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
   ];
 
-  destroy$ = new Subject();
-  leadCategoryData: LeadCategory[];
-  selected: LeadCategory[];
+  modalType = ModalType.New;
 
-  tableSource: DataTableSource<LeadCategory> = new DataTableSource<LeadCategory>(50);
+  destroy$ = new Subject();
+  leadCategoryData: any[];
+  selected: any[];
+  selectedCategory: any;
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onClickCreate() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
@@ -34,6 +34,9 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
 
   loading = false;
   totalCount = 0;
+  deleteFrom = 0;
+  deletedCount = 0;
+
   constructor(
     private scoringService: ScoringService,
     private modalService: ModalService
@@ -60,34 +63,45 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onClickCreate() {
-    this.modalService.openModal(LeadCategoryModalComponent, {
-      width: '100%',
-      data: {
-        createMode: true
-      }
-    });
+    this.modalType = ModalType.New;
+    this.selectedCategory = null;
+    setTimeout(() => this.categoryModal.show());
   }
 
   onDeleteClicked() {
-    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message: 'Are you sure you want to delete selected Lead Category/s?'
-    //   }
-    // });
+    this.deleteFrom = 0;
+    this.confirmModal.show();
+  }
+  onDeleteClickedForEdit() {
+    this.deleteFrom = 1;
     this.confirmModal.show();
   }
 
+  onClickDeleteConfirm() {
+    const params = {
+      categoryIds: this.deleteFrom === 1 ? [this.selectedCategory.id] : this.selected.map(x => x.id)
+    };
+    this.scoringService.deleteLeadCategory(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          this.loading = false;
+          this.loadTableData();
+          this.categoryModal.hide();
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
+
   onActive(event) {
     if (event.type === 'click' && event.cellIndex === 1 && event.event.target.classList.value === 'datatable-body-cell-label') {
-      const leadCategory = event.row as LeadCategory;
-      this.modalService.openModal(LeadCategoryModalComponent, {
-        width: '100%',
-        data: {
-          leadCategory,
-          createMode: false
-        }
-      });
+      this.selectedCategory = event.row;
+      this.modalType = ModalType.Edit;
+      setTimeout(() => this.categoryModal.show());
     }
 
     if (event.type === 'checkbox') {

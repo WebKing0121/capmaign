@@ -15,7 +15,7 @@ import { CreateLeadGradingComponent } from './create-lead-grading/create-lead-gr
 import { RuleComponent } from './create-lead-grading/rule/rule.component';
 import { LeadCardComponent } from './create-lead-scoring/components/lead-card/lead-card.component';
 import { RuleTemplateComponent } from './create-lead-scoring/components/rule-template/rule-template.component';
-import { LeadCategoryModalComponent } from './lead-category/lead-category-modal/lead-category-modal.component';
+import { ScoringLeadCategoryModalComponent } from './lead-category/lead-category-modal/lead-category-modal.component';
 import { CategoryComponent } from './lead-category/components/category/category.component';
 import { TimeFrameComponent } from './lead-timeframes/components/time-frame/time-frame.component';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -32,7 +32,7 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
     RuleComponent,
     LeadCardComponent,
     RuleTemplateComponent,
-    LeadCategoryModalComponent,
+    ScoringLeadCategoryModalComponent,
     CategoryComponent,
     TimeFrameComponent,
   ],

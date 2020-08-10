@@ -35,6 +35,19 @@ export class ScoringService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/GetLeadScoringCategoryInOuIncludingChildren`, params);
   }
 
+  createLeadCategory(params: any) : Observable<any> {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/CreateLeadScoringCategory`, params);
+  }
+  updateLeadCategory(params: any) : Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/UpdateLeadScoringCategory`, params);
+  }
+  deleteLeadCategory(params: any) : Observable<any> {
+    // tslint:disable-next-line
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/DeleteLeadScoringCategory`, params);
+  }
+
   getLeadScoring(params: any): Observable<any> {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetLeadScoringProfileInOuIncludingChildren`, params);

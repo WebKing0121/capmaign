@@ -9,8 +9,16 @@
     (activate)="onActive($event)">
   </app-datatable>
 </div>
+
+<app-scoring-lead-category-modal #categoryModal
+  [modalType]="modalType"
+  [leadCategory]="selectedCategory"
+  (update)="loadTableData()"
+  (delete)="onDeleteClickedForEdit()"
+></app-scoring-lead-category-modal>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
-  modalMessage="Do you want to delete selected list?"
+  modalMessage="Do you want to delete selected category?"
   [buttons]="confirmButtons"
 ></app-confirm-modal>

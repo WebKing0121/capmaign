@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LeadCategoryModalComponent } from '../../lead-category-modal/lead-category-modal.component';
+import { ScoringLeadCategoryModalComponent } from '../../lead-category-modal/lead-category-modal.component';
 import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 export class CategoryComponent implements OnInit {
 
   public uniqueKey: number;
-  public parentRef: LeadCategoryModalComponent;
+  public parentRef: ScoringLeadCategoryModalComponent;
 
   formGroup: FormGroup;
 

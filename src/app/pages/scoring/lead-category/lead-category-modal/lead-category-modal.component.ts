@@ -1,23 +1,23 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, Inject } from '@angular/core';
-import { LeadCategory } from '@app-models/scoring';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, Inject, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { CategoryComponent } from '../components/category/category.component';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
-
-interface ComponentProps {
-  leadCategory: LeadCategory;
-  createMode: boolean;
-}
+import { ModalType } from '@app-core/enums/modal-type.enum';
+import { ScoringService } from '@app-core/services/scoring.service';
 
 @Component({
-  selector: 'app-lead-category-modal',
+  selector: 'app-scoring-lead-category-modal',
   templateUrl: './lead-category-modal.component.html',
-  styleUrls: ['./lead-category-modal.component.scss']
+  styleUrls: ['./lead-category-modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class LeadCategoryModalComponent implements OnInit {
+export class ScoringLeadCategoryModalComponent implements OnInit {
+  @Input() leadCategory;
+  @Input() modalType = ModalType.New;
+  @Output() update: EventEmitter<any> = new EventEmitter();
+  @Output() delete: EventEmitter<any> = new EventEmitter();
+  @ViewChild('categoryModal', { static: false }) categoryModal;
 
-  leadCategory: LeadCategory;
-  mode: boolean;
+  ModalType = ModalType;
   leadCategoryTypeList = [
     {
       id: '1',
@@ -89,25 +89,23 @@ export class LeadCategoryModalComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
-    @Inject(ModalRef) private modalRef: ModalRef<LeadCategoryModalComponent>,
-    @Inject(MODAL_DATA) private props: ComponentProps
+    private scoringService: ScoringService
   ) {
     this.childUniqueKey = 0;
     this.fullScreen = false;
-    this.modalClass = 'modal-wrapper';
-  }
+    this.modalClass = 'modal-dialog-centered ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
 
-  ngOnInit(): void {
     this.formGroup = this.fb.group({
-      name: [this.props.leadCategory && this.props.leadCategory.name, Validators.required],
+      name: ['', Validators.required],
       leadCategory: '',
       fieldName: '',
-      criteria: this.props.leadCategory && this.props.leadCategory.criteria,
+      criteria: '',
       leadCategoryType: ''
     });
 
-    this.mode = this.props.createMode;
   }
+
+  ngOnInit(): void { }
 
   add() {
     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CategoryComponent);
@@ -134,16 +132,41 @@ export class LeadCategoryModalComponent implements OnInit {
     }
   }
 
-  onCancelClick() {
-    this.modalRef.cancel();
-  }
 
-  onSaveClick() {
-    this.modalRef.cancel();
+  onSave() {
+    this.categoryModal.hide();
   }
 
   revertFullScreen() {
     this.fullScreen = !this.fullScreen;
-    this.modalClass = 'modal-wrapper' + (this.fullScreen ? ' full-screen' : '');
+    this.modalClass = 'modal-dialog-centered ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
   }
+
+  show() {
+    if (this.modalType === ModalType.Edit) {
+      console.log(this.leadCategory);
+      this.formGroup = this.fb.group({
+        name: ['', Validators.required],
+        leadCategory: '',
+        fieldName: '',
+        criteria: '',
+        leadCategoryType: ''
+      });
+    } else {
+      this.formGroup = this.fb.group({
+        name: ['', Validators.required],
+        leadCategory: '',
+        fieldName: '',
+        criteria: '',
+        leadCategoryType: ''
+      });
+    }
+
+    setTimeout(() => this.categoryModal.show());
+  }
+
+  hide() {
+    this.categoryModal.hide();
+  }
+
 }
