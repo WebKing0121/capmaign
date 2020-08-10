@@ -20,6 +20,8 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
   @Output() save: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
   @ViewChild('templateModal', { static: false }) templateModal;
+  @ViewChild('emailCampaignEditor', { static: false }) emailCampaignEditor;
+
   ModalType = ModalType;
 
   private unsubscribe$ = new Subject();
@@ -128,7 +130,7 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
         isSystem: true,
         name,
         pageStatus: status,
-        template: content,
+        template: this.emailCampaignEditor.getValue(),
       };
       this.loading = true;
       this.contentService.createLandingPageTemplate(params)
@@ -148,7 +150,7 @@ export class LandingPageTemplateModalComponent implements OnInit, OnDestroy {
       const params = {
         organizationUnitId: this.landingPageFromDB.organizationUnitId,
         name,
-        template: content,
+        template: this.emailCampaignEditor.getValue(),
         description,
         templateURL: url,
         templateType: type,

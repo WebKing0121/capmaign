@@ -12,18 +12,26 @@ import {
 import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { EmailCampaignEditorModule } from '@app-components/email-campaign-editor/email-campaign-editor.module';
 
-import { CampaignRoutingModule } from './campaign-routing.module';
-import { CampaignsComponent } from './campaigns/campaigns.component';
-import { CampaignComponent } from './campaign/campaign.component';
-import { CampaignSendModalComponent } from './components/campaign-send-modal/campaign-send-modal.component';
+import { CampaignsRoutingModule } from './campaigns-routing.module';
 import { ListModule } from '@app-components/list/list.module';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
 
+import { CampaignsComponent } from './campaigns/campaigns.component';
+import { EmailCampaignModalComponent } from './campaigns/modals/email-campaign/email-campaign.component';
+import { SmsCampaignModalComponent } from './campaigns/modals/sms-campaign/sms-campaign.component';
+import { CampaignSendModalComponent } from './campaigns/modals/campaign-send-modal/campaign-send-modal.component';
+
+
 @NgModule({
-  declarations: [CampaignComponent, CampaignsComponent, CampaignSendModalComponent],
+  declarations: [
+    SmsCampaignModalComponent,
+    EmailCampaignModalComponent,
+    CampaignsComponent,
+    CampaignSendModalComponent
+  ],
   imports: [
     CommonModule,
-    CampaignRoutingModule,
+    CampaignsRoutingModule,
     ReactiveFormsModule,
     NgbDropdownModule,
     NgbProgressbarModule,
@@ -31,7 +39,6 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
     NgbButtonsModule,
     NgbTooltipModule,
     FormsModule,
-
     DatatableModule,
     EmailCampaignEditorModule,
     ArchwizardModule,

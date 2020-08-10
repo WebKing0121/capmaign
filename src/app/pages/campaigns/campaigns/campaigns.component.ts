@@ -7,17 +7,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Campaign } from '@app-models/campaign';
 import { CampaignType } from '@app-core/enums/campaign-type.enum';
 import { DataTableColumn, DataTableSource } from '@app-components/datatable/datatable-source';
-import { ModalService } from '@app-components/modal/modal.service';
 
-import { CampaignResponseMockData } from '@app-fake-db/campaign-mock';
 import { DateFormatPipe } from '../../../theme/shared/pipes/date-format.pipe';
-import { CampaignSendModalComponent } from '../components/campaign-send-modal/campaign-send-modal.component';
-// tslint:disable-next-line
-import { ScoringConfirmDefaultModalComponent } from '../../scoring/components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
-import { CampaignComponent } from '../campaign/campaign.component';
-import { MobileCampaignComponent } from '../../mobile/mobile-campaign/mobile-campaign.component';
 import { DataSourceChange } from '@app-models/data-source';
 import { CampaignService } from '@app-core/services/campaign.service';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
   selector: 'app-campaigns',
@@ -30,6 +24,8 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnType') tableColumnTypeTemplate: TemplateRef<any>;
   @ViewChild('confirmModal', { static: false }) confirmModal;
+  @ViewChild('emailCampaignModal', { static: false }) emailCampaignModal;
+  @ViewChild('smsCampaignModal', { static: false }) smsCampaignModal;
 
   tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
   tableButtons = [
@@ -43,7 +39,7 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
         { label: 'Facebook Ads Campaign', icon: 'fa fa-email', click: () => this.onCampaignTypeClicked(CampaignType.Facebook) },
       ]
     },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false },
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onClickDelete(), color: 'red', disabled: true, hide: false },
     { label: 'Send Campaign', icon: 'far fa-envelope', click: () => this.onSendClicked(), disabled: true, hide: false },
   ];
   campaigns: Campaign[] = [];
@@ -53,18 +49,21 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   selected: Campaign[] = [];
   searchFormControl: FormControl;
 
+  selectedCampaign: any;
+  emailCampaignModalType = ModalType.New;
+  smsCampaignModalType = ModalType.New;
+  deleteFrom = 0;
+  deletedCount = 0;
   destroy$ = new Subject();
 
   // confirm Modal
   confirmButtons = [
-    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+    { label: 'Yes', action: this.onClickDeleteConfirm.bind(this), class: 'btn-primary' }
   ];
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private campaignService: CampaignService,
-    private modalService: ModalService
   ) { }
 
   clickTemplate() {
@@ -111,27 +110,16 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
       && event.event.target.classList.value === 'datatable-body-cell-label'
     ) {
       const campaign = event.row as Campaign;
+      this.selectedCampaign = campaign;
       switch (campaign.campaignType.toLowerCase()) {
         case CampaignType.Email: {
-          // this.router.navigate([campaign.id], { relativeTo: this.route });
-          this.modalService.openModal(CampaignComponent, {
-            width: '100%',
-            data: {
-              mode: 'edit',
-              id: campaign.id
-            }
-          });
+          this.emailCampaignModalType = ModalType.Edit;
+          setTimeout(() => this.emailCampaignModal.show());
           return;
         }
         case CampaignType.SMS: {
-          // this.router.navigate(['mobile', campaign.id]);
-          this.modalService.openModal(MobileCampaignComponent, {
-            width: '100%',
-            data: {
-              mode: 'edit',
-              id: campaign.id
-            }
-          });
+          this.smsCampaignModalType = ModalType.Edit;
+          setTimeout(() => this.smsCampaignModal.show());
           return;
         }
       }
@@ -146,23 +134,19 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
   onCampaignTypeClicked(type: CampaignType) {
     switch (type) {
       case CampaignType.Email: {
-        // this.router.navigate(['new-email'], { relativeTo: this.route });
-        this.modalService.openModal(CampaignComponent, {
-          width: '100%',
-          data: {
-            mode: 'new'
-          }
-        });
+        this.selectedCampaign = null;
+        this.emailCampaignModalType = ModalType.New;
+        setTimeout(() => this.emailCampaignModal.show());
         return;
       }
       case CampaignType.SMS: {
         // this.router.navigate(['mobile', 'new-campaign']);
-        this.modalService.openModal(MobileCampaignComponent, {
-          width: '100%',
-          data: {
-            mode: 'new'
-          }
-        });
+        // this.modalService.openModal(MobileCampaignComponent, {
+        //   width: '100%',
+        //   data: {
+        //     mode: 'new'
+        //   }
+        // });
         return;
       }
       case CampaignType.Social: {
@@ -179,26 +163,79 @@ export class CampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  onDeleteClicked() {
-    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message: 'Are you sure you want to delete campaign/s?'
-    //   }
-    // });
+  onClickDelete() {
+    this.deleteFrom = 0;
     this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteConfirm() {
+    if (this.deleteFrom === 1) {
+      this.campaignService.deleteEmailCampaign(this.selectedCampaign.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.loadTableData();
+            if (this.selectedCampaign.campaignType.toLowerCase() === CampaignType.Email) {
+              this.emailCampaignModal.hide();
+            } else if (this.selectedCampaign.campaignType.toLowerCase() === CampaignType.SMS) {
+              this.smsCampaignModal.hide();
+            }
+
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    } else {
+      this.selected.forEach(campaign => {
+        this.campaignService.deleteEmailCampaign(campaign.id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            () => {
+              this.deletedCount++;
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+      });
+      setTimeout(() => this.isDeletedDone());
+    }
+
+  }
+
+  isDeletedDone() {
+    if (this.deletedCount === this.selected.length) {
+      this.loadTableData();
+      this.deletedCount = 0;
+      if (this.selectedCampaign.campaignType.toLowerCase() === CampaignType.Email) {
+        this.emailCampaignModal.hide();
+      } else if (this.selectedCampaign.campaignType.toLowerCase() === CampaignType.SMS) {
+        this.smsCampaignModal.hide();
+      }
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
+    }
   }
 
   onSendClicked() {
     if (this.selected.length < 1) {
       return;
     } else {
-      this.modalService.openModal(CampaignSendModalComponent, {
-        width: '100%',
-        data: {
-          campaign: this.tableSource.selected[0]
-        }
-      });
+      // this.modalService.openModal(CampaignSendModalComponent, {
+      //   width: '100%',
+      //   data: {
+      //     campaign: this.tableSource.selected[0]
+      //   }
+      // });
     }
   }
 

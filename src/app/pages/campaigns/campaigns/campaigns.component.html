@@ -19,6 +19,21 @@
   {{value === CampaignType.Email ? 'Email' : 'SMS' }}
 </ng-template>
 
+<app-campaigns-email-campaign-modal #emailCampaignModal
+  [campaign]="selectedCampaign"
+  [modalType]="emailCampaignModalType"
+  (update)="loadTableData()"
+  (delete)="onClickDeleteFromEdit()"
+></app-campaigns-email-campaign-modal>
+
+
+<app-campaigns-sms-campaign-modal #smsCampaignModal
+  [campaign]="selectedCampaign"
+  [modalType]="smsCampaignModalType"
+  (update)="loadTableData()"
+  (delete)="onClickDeleteFromEdit()"
+></app-campaigns-sms-campaign-modal>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
   modalMessage="Do you want to delete selected list?"

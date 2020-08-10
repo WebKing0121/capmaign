@@ -36,8 +36,8 @@ const routes: Routes = [
         loadChildren: () => import('./pages/events/events.module').then(module => module.EventsModule)
       },
       {
-        path: 'campaign',
-        loadChildren: () => import('./pages/campaign/campaign.module').then(module => module.CampaignModule)
+        path: 'campaigns',
+        loadChildren: () => import('./pages/campaigns/campaigns.module').then(module => module.CampaignModule)
       },
       {
         path: 'content',

@@ -184,11 +184,11 @@ const NavigationItems = [
         ]
       },
       {
-        id: 'campaign',
+        id: 'campaigns',
         title: 'Campaigns',
         type: 'item',
         icon: 'feather icon-globe',
-        url: '/campaign',
+        url: '/campaigns',
         external: false
       },
       {

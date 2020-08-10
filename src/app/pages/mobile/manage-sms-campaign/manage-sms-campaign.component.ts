@@ -6,7 +6,7 @@ import { CampaignService } from '@app-core/services/campaign.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
-import { MobileCampaignComponent } from '../mobile-campaign/mobile-campaign.component';
+
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataSourceChange } from '@app-models/data-source';
 
@@ -81,12 +81,12 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
 
   onCreateClicked() {
     // this.router.navigate(['create'], { relativeTo: this.route });
-    this.modalService.openModal(MobileCampaignComponent, {
-      width: '100%',
-      data: {
-        mode: 'new'
-      }
-    });
+    // this.modalService.openModal(MobileCampaignComponent, {
+    //   width: '100%',
+    //   data: {
+    //     mode: 'new'
+    //   }
+    // });
   }
 
   onActive(event) {
@@ -96,13 +96,13 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
     ) {
       const campaign = event.row as Campaign;
       // this.router.navigate(['mobile', campaign.id]);
-      this.modalService.openModal(MobileCampaignComponent, {
-        width: '100%',
-        data: {
-          mode: 'edit',
-          id: campaign.id
-        }
-      });
+      // this.modalService.openModal(MobileCampaignComponent, {
+      //   width: '100%',
+      //   data: {
+      //     mode: 'edit',
+      //     id: campaign.id
+      //   }
+      // });
     }
 
     if (event.type === 'checkbox') {

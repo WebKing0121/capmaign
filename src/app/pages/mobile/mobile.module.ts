@@ -6,7 +6,7 @@ import { NgbDropdownModule, NgbTabsetModule, NgbDatepickerModule } from '@ng-boo
 import { EmailCampaignEditorModule } from '@app-components/email-campaign-editor/email-campaign-editor.module';
 
 import { MobileRoutingModule } from './mobile-routing.module';
-import { MobileCampaignComponent } from './mobile-campaign/mobile-campaign.component';
+// import { MobileCampaignComponent } fro../campaigns/campaigns/modals/mobile-campaign/mobile-campaign.componentent';
 import { ManageSmsCampaignComponent } from './manage-sms-campaign/manage-sms-campaign.component';
 import { DatatableModule } from '@app-components/datatable/datatable.module';
 import { InAppMessagesComponent } from './in-app-messages/in-app-messages.component';
@@ -17,7 +17,8 @@ import { TriggerAutomationsComponent } from './trigger-automations/trigger-autom
 import { ArchwizardModule } from 'angular-archwizard';
 
 @NgModule({
-  declarations: [MobileCampaignComponent,
+  declarations: [
+    // MobileCampaignComponent,
     ManageSmsCampaignComponent,
     InAppMessagesComponent,
     InAppMessageComponent,

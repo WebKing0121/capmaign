@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ModalRef, MODAL_DATA } from '@app-components/modal/modal-ref';
-import { CampaignSendModalComponent } from 'src/app/pages/campaign/components/campaign-send-modal/campaign-send-modal.component';
+// import { CampaignSendModalComponent } from 'src/app/pages/campaigns/components/campaign-send-modal/campaign-send-modal.component';
 import { Scoring } from '@app-models/scoring';
 
 interface ComponentProps {
@@ -20,23 +20,21 @@ export class ScoringConfirmDefaultModalComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    @Inject(ModalRef) private modalRef: ModalRef<CampaignSendModalComponent>,
-    @Inject(MODAL_DATA) private props: ComponentProps
   ) {
     this.message = '';
     this.warningMode = false;
   }
 
   ngOnInit(): void {
-    this.message = this.props.message;
-    this.warningMode = this.props.mode ? true : false;
+    // this.message = this.props.message;
+    // this.warningMode = this.props.mode ? true : false;
   }
 
   onCancelClicked() {
-    this.modalRef.cancel();
+    // this.modalRef.cancel();
   }
 
   onYesClicked() {
-    this.modalRef.cancel();
+    // this.modalRef.cancel();
   }
 }

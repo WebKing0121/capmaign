@@ -1,0 +1,89 @@
+<app-ui-modal #smsCampaignModal [dialogClass]="modalClass">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'Create' : 'Edit'}} Mobile Campaign</h5>
+    <button type="button" class="maximize" (click)="revertFullScreen()"><i class="fa"
+        [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i></button>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="smsCampaignModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body position-relative">
+    <div class="email-campaign-form-wrapper">
+      <form [formGroup]="formGroup">
+        <div class="row">
+          <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+            <label class="mobile-show">Campaign Name<span class="text-danger">*</span></label>
+            <div class="input-group m-t-10">
+              <div class="input-group-prepend mobile-hide">
+                <span class="input-group-text" style="width: 150px;">Campaign Name</span>
+              </div>
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+          </div>
+          <!-- <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+            <label class="mobile-show">Folder Name</label>
+            <div class="input-group m-t-10">
+              <div class="input-group-prepend mobile-hide">
+                <span class="input-group-text" style="width: 150px;">Folder Name</span>
+              </div>
+              <select class="form-control" formControlName="folderName">
+              </select>
+            </div>
+          </div> -->
+          <div class="col-lg-6 col-md-12" style="margin: 5px 0;">
+            <label class="mobile-show">Sender Name</label>
+            <div class="input-group m-t-10">
+              <div class="input-group-prepend mobile-hide">
+                <span class="input-group-text" style="width: 150px;">Sender Name</span>
+              </div>
+              <select class="form-control" formControlName="senderName">
+                <option *ngFor="let sender of senders" [value]="sender.id">{{sender.senderName}}</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-5 content-editor">
+          <div class="col-12 preview-toolbar mb-1 d-flex flex-wrap align-items-center">
+            <app-personalization-selector class="d-block mr-2" [editor]="mobileCampaignEditor">
+            </app-personalization-selector>
+
+            <button class="btn btn-success" appEmailCampaignDynamics [editor]="mobileCampaignEditor">Dynamics</button>
+            <button class="btn btn-success ml-auto mr-2" *ngIf="modalType === ModalType.Edit">Edit</button>
+            <button class="btn btn-success mr-2" [class.ml-auto]="modalType === ModalType.New" appEmailCampaignPreview
+              [editor]="mobileCampaignEditor">Preview</button>
+
+          </div>
+          <div class="col-12" style="overflow-y: auto; height: calc( 100vh - 370px);">
+            <app-mobile-campaign-editor #mobileCampaignEditor></app-mobile-campaign-editor>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+
+  <div class="app-modal-footer">
+    <div class="btn-group mr-2 dropdown float-left" ngbDropdown placement="top-left"
+      *ngIf="modalType === ModalType.Edit">
+      <button class="btn btn-primary" ngbDropdownToggle type="button">Send SMS</button>
+      <div ngbDropdownMenu>
+        <a class="dropdown-item" href="javascript:">Full Send</a>
+        <a class="dropdown-item" href="javascript:">Test Send</a>
+      </div>
+    </div>
+    <button type="button" class="btn btn-danger" [disabled]="loading" (click)="onDelete()"
+      *ngIf="modalType === ModalType.Edit">
+      <i class="fa fa-trash"></i>Delete
+    </button>
+    <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onSave()">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button class="btn btn-secondary " (click)="smsCampaignModal.hide()">
+      <i class="fa fa-times-circle"></i>Close</button>
+  </div>
+</app-ui-modal>

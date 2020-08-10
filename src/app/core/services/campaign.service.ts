@@ -15,6 +15,30 @@ export class CampaignService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaignsForManageCampion`, params);
   }
 
+  getEmailCampaign(id: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/email/GetEmailForEdit`, { id });
+  }
+
+  getSmsCampaign(id: string): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetSMSForEdit`, { id });
+  }
+
+  getSenders(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sender/GetSenderInOuIncludingChildren`, params);
+  }
+
+  createEmailCampaign(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/email/CreateEmail`, params);
+  }
+
+  updateEmailCampaign(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/email/UpdateEmail`, params);
+  }
+
+  deleteEmailCampaign(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/email/DeleteSelectedEmails?id=${id}`);
+  }
+
   getInAppMessages(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetInAppNotificationData`, params);
   }
