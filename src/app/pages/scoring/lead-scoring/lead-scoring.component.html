@@ -17,6 +17,14 @@
 <ng-template #isStaticColumn let-value let-column="column">
 </ng-template>
 
+<app-scoring-lead-scoring-modal #leadScoringModal
+  [modalType]="modalType"
+  [leadScoring]="selectedScore"
+  [leadCategories]="leadCategories"
+  (update)="loadTableData()"
+  (delete)="onDeleteClickedForEdit()"
+></app-scoring-lead-scoring-modal>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
   [modalMessage]="modalMessage"

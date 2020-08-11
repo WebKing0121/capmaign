@@ -2,17 +2,16 @@ import { Component, OnInit, ViewChild, OnDestroy, AfterViewInit } from '@angular
 import { Subject } from 'rxjs';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
 import { ScoringService } from '@app-core/services/scoring.service';
-import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DataSourceChange } from '@app-models/data-source';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-lead-category',
+  selector: 'app-scoring-lead-category',
   templateUrl: './lead-category.component.html',
   styleUrls: ['./lead-category.component.scss']
 })
-export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ScoringLeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('categoryModal', { static: false }) categoryModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
   // confirm Modal
@@ -44,8 +43,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   websiteAnalyticsColumns = [];
 
   constructor(
-    private scoringService: ScoringService,
-    private modalService: ModalService
+    private scoringService: ScoringService
   ) {
     this.leadCategoryData = [];
     this.loadLeadDbColumns();

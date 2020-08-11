@@ -35,6 +35,11 @@ export class ScoringService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/GetLeadScoringCategoryInOuIncludingChildren`, params);
   }
 
+  getLeadCategoryFromScoringPage() {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/GetLeadScoringCategoryListInOuIncludingChildren`);
+  }
+
   createLeadCategory(params: any): Observable<any> {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/CreateLeadScoringCategory`, params);
@@ -54,6 +59,11 @@ export class ScoringService {
   getLeadDbColumns(): Observable<any> {
     // tslint:disable-next-line
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetLeadDbColumns`);
+  }
+
+  getLeadDbColumnsByLeadCategory(id: number): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetDbColumns?id=${id}`);
   }
 
   getEmailAnalyticsColumns(): Observable<any> {
@@ -86,6 +96,11 @@ export class ScoringService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetLeadScoringProfileInOuIncludingChildren`, params);
   }
 
+  getLeadScoringProfile(id: number): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetLeadScoringProfile`, { id });
+  }
+
   updateLeadScoringIsDefaultRecordColumn(): Observable<any> {
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringIsDefaultRecordColumn`, {});
   }
@@ -116,6 +131,20 @@ export class ScoringService {
   updateLeadScoringIsActiveColumnByGrid(id: number, value: string): Observable<any> {
     // tslint:disable-next-line
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringIsActiveColumnByGrid?id=${id}&isActive=${value}`, {});
+  }
+
+  updateLeadScoringProfile(params: any): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/UpdateLeadScoringProfile`, params);
+  }
+  createLeadScoringProfile(params: any): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/CreateLeadScoringProfile`, params);
+  }
+
+  deleteLeadScoringProfile(id: number): Observable<any>  {
+    // tslint:disable-next-line
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/DeleteLeadScoringProfile?scoreID=${id}`);
   }
 
   getLeadGrading(params: any): Observable<any> {

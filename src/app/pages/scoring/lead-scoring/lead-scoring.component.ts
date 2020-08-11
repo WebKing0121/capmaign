@@ -4,25 +4,28 @@ import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ScoringService } from '@app-core/services/scoring.service';
 import { Scoring } from '@app-models/scoring';
-import { ModalService } from '@app-components/modal/modal.service';
-import { CreateLeadScoringComponent } from '../create-lead-scoring/create-lead-scoring.component';
 import { DataSourceChange } from '@app-models/data-source';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-lead-scoring',
+  selector: 'app-scoring-lead-scoring',
   templateUrl: './lead-scoring.component.html',
   styleUrls: ['./lead-scoring.component.scss']
 })
-export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ScoringLeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
+  @ViewChild('leadScoringModal', { static: false }) leadScoringModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
 
+  modalType = ModalType.New;
   destroy$ = new Subject();
-  leadScoringData: Scoring[];
-  selected: Scoring[] = [];
+  leadScoringData: any[];
+  selected: any[] = [];
   selectedForConfirm = '';
   selectedScore: any;
+  leadDbColumns: any[] = [];
+  leadCategories: any[] = [];
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onConfirm.bind(this), class: 'btn-primary' }
@@ -39,15 +42,18 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   totalCount = 0;
   modalMessage = '';
 
+  deletedCount = 0;
+
   constructor(
     private scoringService: ScoringService,
-    private modalService: ModalService
   ) {
     this.leadScoringData = [];
   }
 
   ngOnInit(): void {
     this.initTable();
+    this.loadLeadDbColumns();
+    this.loadLeadCategory();
   }
 
   ngOnDestroy(): void {
@@ -78,12 +84,9 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   createLeadScoring() {
-    this.modalService.openModal(CreateLeadScoringComponent, {
-      width: '100%',
-      data: {
-        mode: 'new'
-      }
-    });
+    this.modalType = ModalType.New;
+    this.selectedScore = null;
+    setTimeout(() => this.leadScoringModal.show());
   }
 
   onActive(event) {
@@ -96,13 +99,8 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
       switch (event.cellIndex) {
         case 1:
           if (event.event.target.classList.value === 'datatable-body-cell-label') {
-            this.modalService.openModal(CreateLeadScoringComponent, {
-              width: '100%',
-              data: {
-                scoring,
-                mode: 'edit'
-              }
-            });
+            this.modalType = ModalType.Edit;
+            setTimeout(() => this.leadScoringModal.show());
           }
 
           break;
@@ -169,8 +167,15 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDeleteClicked() {
+    const message = 'Are you sure you want to delete selected lead score?';
+    this.selectedForConfirm = 'delete';
+    this.openSetDefaultConfirmModal(message);
+  }
 
-    this.confirmModal.show();
+  onDeleteClickedForEdit() {
+    const message = 'Are you sure you want to delete selected lead score?';
+    this.selectedForConfirm = 'deleteFromEdit';
+    this.openSetDefaultConfirmModal(message);
   }
 
   onConfirm() {
@@ -300,8 +305,50 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         break;
+      case 'delete':
+        this.deletedCount = 0;
+        this.selected.forEach(score => {
+          this.scoringService.deleteLeadScoringProfile(score.id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.deletedCount++;
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        });
+        setTimeout(() => this.isDeletedDone());
+        break;
+      case 'deleteFromEdit':
+        this.loading = true;
+        this.scoringService.deleteLeadScoringProfile(this.selectedScore.id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            () => {
+              this.loading = false;
+              this.loadTableData();
+              this.leadScoringModal.hide();
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+        break;
       default:
         break;
+    }
+  }
+
+  isDeletedDone() {
+    if (this.deletedCount === this.selected.length) {
+      this.loadTableData();
+      this.deletedCount = 0;
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
     }
   }
 
@@ -347,5 +394,32 @@ export class LeadScoringComponent implements OnInit, OnDestroy, AfterViewInit {
           console.log('error', error.response);
         }
       );
+  }
+
+  loadLeadDbColumns() {
+    this.scoringService.getLeadDbColumns()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.leadDbColumns = data.result;
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  loadLeadCategory() {
+    this.scoringService.getLeadCategoryFromScoringPage()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.leadCategories = data.result;
+        },
+        error => {
+          console.log('error', error.response);
+        }
+      );
+
   }
 }

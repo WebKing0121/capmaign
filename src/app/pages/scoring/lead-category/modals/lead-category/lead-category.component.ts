@@ -10,8 +10,8 @@ import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scoring-lead-category-modal',
-  templateUrl: './lead-category-modal.component.html',
-  styleUrls: ['./lead-category-modal.component.scss'],
+  templateUrl: './lead-category.component.html',
+  styleUrls: ['./lead-category.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 export class ScoringLeadCategoryModalComponent implements OnInit, OnDestroy {

@@ -1,0 +1,145 @@
+<app-ui-modal #leadScoringModal [dialogClass]="modalClass">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'Create' : 'Edit'}} Lead Scoring</h5>
+    <button type="button" class="maximize" (click)="revertFullScreen()">
+      <i class="fa" [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i>
+    </button>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="leadScoringModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body position-relative lead-scoring-modal">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="col-md-6">
+          <label class="mobile-show">Profile Name</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Profile Name</span></div>
+            <input type="text" formControlName="profileName" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <label class="mobile-show">Description</label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Description</span></div>
+            <input type="text" formControlName="description" class="form-control">
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="row mt-3">
+      <div class="fields-list col-lg-3">
+        <div class="search">
+          <i class="fa fa-search"></i>
+          <input (ngModelChange)="searchLeadCategories($event)" [(ngModel)]="searchIdx" placeholder="Search..."
+            class="form-control" />
+        </div>
+        <div class="left-fields">
+          <div class="csv-fields">
+            <ul class="fields">
+              <li *ngFor="let leadCategory of filteredLeadCategories" class="input-group">
+                <span class="field-name">{{leadCategory.name}}</span>
+                <span (click)="onClickLeadCategory(leadCategory)" class="field-action">
+                  <i class="fa fa-chevron-right"></i>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-9 p-l-0">
+        <div class="col-lg-12 right-fields pt-3" *ngIf="scoringProfileFromDB">
+          <div class="card" *ngFor="let group of scoringProfileFromDB.leadScoringGroups; let indexOfElement=index;">
+            <div class="card-header main-header d-flex">
+              <div class="col-md-4 pl-0">
+                <label>Profile Rules-Lead</label>
+                <div class="input-group">
+                  <input type="text" [(ngModel)]="group.columnName" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4 p-0">
+                <label>Value Type</label>
+                <div class="input-group">
+
+                  <input type="text" [(ngModel)]="group.valueType" class="form-control">
+                </div>
+              </div>
+              <div class="col-md-4 pr-0">
+                <label>Weightage</label>
+                <div class="input-group">
+                  <input type="text" [(ngModel)]="group.weightage" class="form-control">
+                </div>
+              </div>
+              <span class="m-l-10 d-flex remove-me" (click)="removeGroup(indexOfElement)">
+                <i class="fa fa-times"></i>
+              </span>
+            </div>
+            <div class="card-body p-0">
+              <div class="d-flex">
+                <div class="w-25 header-field">
+                  <span>Rule Description</span>
+                </div>
+                <div class="w-25 header-field">
+                  <span>Condition</span>
+                </div>
+                <div class="w-25 header-field">
+                  <span>Value</span>
+                </div>
+                <div class="w-25 header-field">
+                  <span>Point</span>
+                </div>
+                <div class="remove-btn" ></div>
+              </div>
+              
+              <div class="col-lg-12 d-flex p-0" *ngFor="let rule of group.rules; let indexOfRule=index;">
+                <div class="w-25">
+                  <input type="text" [(ngModel)]="rule.name" class="form-control">
+                </div>
+                <div class="w-25">
+                  <select [(ngModel)]="rule.condition" class="form-control">
+                    <option value="conditions">Contains</option>
+                    <option value="equals">Equals</option>
+                  </select>
+                </div>
+                <div class="w-25">
+                  <input type="text" [(ngModel)]="rule.valueToCompare" class="form-control">
+                </div>
+                <div class="w-25">
+                  <input type="text" [(ngModel)]="rule.score" class="form-control">
+                </div>
+                <div class="remove-btn" (click)="removeRule(indexOfElement, indexOfRule)">
+                  <span>
+                    <i class="fa fa-trash"></i>
+                  </span>
+                </div>
+              </div>
+
+              <span class="m-l-10 d-flex add-card">
+                <i class="fa fa-plus" (click)="addRule(indexOfElement)"></i>
+              </span>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" [disabled]="loading" (click)="onDelete()"
+      *ngIf="modalType === ModalType.Edit">
+      <i class="fa fa-trash"></i>Delete
+    </button>
+    <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onSave()">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button class="btn btn-secondary " (click)="leadScoringModal.hide()">
+      <i class="fa fa-times-circle"></i>Close</button>
+  </div>
+</app-ui-modal>
