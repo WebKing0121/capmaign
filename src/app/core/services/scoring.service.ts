@@ -86,9 +86,9 @@ export class ScoringService {
     return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetWebsiteAnalyticsColumns`);
   }
 
-  getDropDownValues(): Observable<any> {
+  getDropDownValues(dropDownName: string): Observable<any> {
     // tslint:disable-next-line
-    return this.http.get<any>(`${environment.apiUrl}/api/services/app/listOfValues/GetByDropDown?dropDownName=LeadCategories`);
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/listOfValues/GetByDropDown?dropDownName=${dropDownName}`);
   }
 
   getLeadScoring(params: any): Observable<any> {
@@ -142,7 +142,7 @@ export class ScoringService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/CreateLeadScoringProfile`, params);
   }
 
-  deleteLeadScoringProfile(id: number): Observable<any>  {
+  deleteLeadScoringProfile(id: number): Observable<any> {
     // tslint:disable-next-line
     return this.http.delete<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/DeleteLeadScoringProfile?scoreID=${id}`);
   }
@@ -151,6 +151,12 @@ export class ScoringService {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/GetLeadGradingProfileInOuIncludingChildren`, params);
   }
+
+  getLeadGradingProfile(id: number): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/GetLeadGradingProfile`, { id });
+  }
+
   updateLeadGradingIsDefaultRecordColumn(): Observable<any> {
     // https://c2cstaging.azurewebsites.net/api/services/app/leadGradingProfile/UpdateLeadGradingIsDefaultRecordColumn
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingIsDefaultRecordColumn`, {});
@@ -173,6 +179,19 @@ export class ScoringService {
   updateLeadGradingIsActiveColumnByGrid(id: number, value: string): Observable<any> {
     // tslint:disable-next-line
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingIsActiveColumnByGrid?id=${id}&isActive=${value}`, {});
+  }
+
+  createLeadGradingProfile(params: any): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/CreateLeadGradingProfile`, params);
+  }
+  updateLeadGradingProfile(params: any): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/UpdateLeadGradingProfile`, params);
+  }
+  deleteLeadGradingProfile(id: number): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/leadGradingProfile/DeleteLeadGradingProfile?leadGradingId=${id}`);
   }
 
   getLeadScoringProfiles(params: any): Observable<any> {

@@ -14,6 +14,14 @@
   <input *ngIf="!value" class="m-l-10" type="checkbox" (click)="onCheckClick($event)">
 </ng-template>
 
+<app-scoring-lead-grading-modal #leadGradingModal
+  [modalType]="modalType"
+  [leadGrading]="selectedGrade"
+  [listValuesDropDown]="listValuesDropDown"
+  (update)="loadTableData()"
+  (delete)="onDeleteClickedFromEdit()"
+></app-scoring-lead-grading-modal>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
   [modalMessage]="modalMessage"

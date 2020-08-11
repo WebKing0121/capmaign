@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ScoringLeadCategoryComponent } from './lead-category/lead-category.component';
 import { ScoringLeadScoringComponent } from './lead-scoring/lead-scoring.component';
-import { LeadGradingComponent } from './lead-grading/lead-grading.component';
+import { ScoringLeadGradingComponent } from './lead-grading/lead-grading.component';
 import { LeadTimeframesComponent } from './lead-timeframes/lead-timeframes.component';
 
 const routes: Routes = [
@@ -16,7 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'lead-grading',
-    component: LeadGradingComponent
+    component: ScoringLeadGradingComponent
   },
   {
     path: 'lead-timeframes',

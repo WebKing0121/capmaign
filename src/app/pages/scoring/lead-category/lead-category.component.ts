@@ -236,8 +236,7 @@ export class ScoringLeadCategoryComponent implements OnInit, OnDestroy, AfterVie
   }
 
   loadDropDownValues() {
-
-    this.scoringService.getDropDownValues()
+    this.scoringService.getDropDownValues('getDropDownValues')
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         data => {

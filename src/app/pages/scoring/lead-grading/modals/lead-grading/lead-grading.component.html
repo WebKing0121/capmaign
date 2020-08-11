@@ -1,0 +1,94 @@
+<app-ui-modal #leadGradingModal [dialogClass]="modalClass">
+  <div class="app-modal-header">
+    <h5 class="modal-title">{{modalType === ModalType.New ? 'Create' : 'Edit'}} Lead Grading Profile</h5>
+    <button type="button" class="maximize" (click)="revertFullScreen()">
+      <i class="fa" [ngClass]="{'fa-arrows-alt': !fullScreen, 'fa-compress': fullScreen}"></i>
+    </button>
+    <button type="button" class="close basic-close" data-dismiss="modal" aria-label="Close"
+      (click)="leadGradingModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="app-modal-body position-relative lead-grading-modal">
+    <form [formGroup]="formGroup">
+      <div class="row" style="margin-top: -20px">
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Name<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Name</span></div>
+            <input type="text" formControlName="name" class="form-control">
+          </div>
+        </div>
+        <div class="col-md-6 mt-3">
+          <label class="mobile-show">Description<span class="text-danger">*</span></label>
+          <div class="input-group">
+            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Description</span></div>
+            <input type="text" formControlName="description" class="form-control">
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="card mt-3 mb-0">
+      <div class="main-header card-header">
+        <span>Profile Rules</span>
+      </div>
+      <div class="card-body p-0">
+        <div class="d-flex rule-header">
+          <div class="col-sm-3 text-center sub-header">
+            <span>Rule Description</span>
+          </div>
+          <div class="col-sm-3 text-center sub-header">
+            <span>Greater Than/Equal To</span>
+          </div>
+          <div class="col-sm-2 text-center sub-header">
+            <span>Less Than</span>
+          </div>
+          <div class="col-sm-3 text-center sub-header">
+            <span>Grade</span>
+          </div>
+          <div class="col-sm-1 text-center sub-header add-btn" (click)="addRule()">
+            <span><i class="fa fa-plus"></i></span>
+          </div>
+        </div>
+        <div class="rule-container">
+          <div class="d-flex" *ngFor="let rule of filteredRules">
+            <div class="col-sm-3 p-0">
+              <input type="text" [(ngModel)]="rule.name" class="form-control field">
+            </div>
+            <div class="col-sm-3 p-0">
+              <input type="number" [(ngModel)]="rule.minRange" class="form-control field">
+            </div>
+            <div class="col-sm-2 p-0">
+              <input type="number" [(ngModel)]="rule.maxRange" class="form-control field">
+            </div>
+            <div class="col-sm-3 p-0">
+              <select class="form-control field" [(ngModel)]="rule.grade">
+                <option [value]="grade.id" *ngFor="let grade of listValuesDropDown">
+                  {{grade.displayName}}
+                </option>
+              </select>
+            </div>
+            <div class="col-sm-1 d-flex justify-content-center align-items-center remove-btn" (click)="removeRule(rule.id)">
+              <span>
+                <i class="fa fa-trash"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="app-modal-footer">
+    <button type="button" class="btn btn-danger" [disabled]="loading" (click)="onDelete()"
+      *ngIf="modalType === ModalType.Edit">
+      <i class="fa fa-trash"></i>Delete
+    </button>
+    <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onSave()">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    </button>
+    <button class="btn btn-secondary " (click)="leadGradingModal.hide()">
+      <i class="fa fa-times-circle"></i>Close</button>
+  </div>
+</app-ui-modal>

@@ -1,30 +1,29 @@
 import { Component, OnInit, ViewChild, TemplateRef, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Grading } from '@app-models/scoring';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
-import { Router, ActivatedRoute } from '@angular/router';
 import { ScoringService } from '@app-core/services/scoring.service';
-import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
-import { ScoringConfirmDefaultModalComponent } from '../components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
-import { CreateLeadGradingComponent } from '../create-lead-grading/create-lead-grading.component';
 import { DataSourceChange } from '@app-models/data-source';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-lead-grading',
+  selector: 'app-scoring-lead-grading',
   templateUrl: './lead-grading.component.html',
   styleUrls: ['./lead-grading.component.scss']
 })
-export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ScoringLeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('tableColumnSettings') tableColumnSettingsTemplate: TemplateRef<any>;
   @ViewChild('tableColumnCheck') tableColumnCheckTemplate: TemplateRef<any>;
   @ViewChild('confirmModal', { static: false }) confirmModal;
+  @ViewChild('leadGradingModal', { static: false }) leadGradingModal;
+
+  modalType = ModalType.New;
 
   destroy$ = new Subject();
-  leadGradingData: Grading[];
-  selected: Grading[] = [];
-
+  leadGradingData: any[];
+  selected: any[] = [];
   selectedGrade: any;
+  listValuesDropDown: any[] = [];
   modalMessage = '';
   selectedForConfirm = '';
 
@@ -33,22 +32,22 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
     { label: 'Yes', action: this.onConfirm.bind(this), class: 'btn-primary' }
   ];
 
-  tableSource: DataTableSource<Grading> = new DataTableSource<Grading>(50);
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.createLeadGrading(), },
-    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked.bind(this), color: 'red', disabled: true, hide: false }
+    { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
     // { label: 'Run Profile', icon: 'far fa-gear', click: () => this.clickTemplate() },
   ];
 
   loading = false;
   totalCount = 0;
-
+  deletedCount = 0;
   constructor(
     private scoringService: ScoringService,
-    private modalService: ModalService
   ) {
     this.leadGradingData = [];
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -56,6 +55,7 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit(): void {
     this.initTable();
+    this.loadDropDownValues();
   }
 
   ngAfterViewInit(): void {
@@ -78,13 +78,9 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   createLeadGrading() {
-    // this.router.navigate(['create-new-grading'], { relativeTo: this.route });
-    this.modalService.openModal(CreateLeadGradingComponent, {
-      width: '100%',
-      data: {
-        mode: 'new'
-      }
-    });
+    this.modalType = ModalType.New;
+    this.selectedGrade = null;
+    setTimeout(() => this.leadGradingModal.show());
   }
 
   onActive(event) {
@@ -98,13 +94,8 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
       switch (event.cellIndex) {
         case 1:
           if (event.event.target.classList.value === 'datatable-body-cell-label') {
-            this.modalService.openModal(CreateLeadGradingComponent, {
-              width: '100%',
-              data: {
-                grading: event.row,
-                mode: 'edit'
-              }
-            });
+            this.modalType = ModalType.Edit;
+            setTimeout(() => this.leadGradingModal.show());
           }
           break;
         case 3:
@@ -156,7 +147,15 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onDeleteClicked() {
-    this.confirmModal.show();
+    this.selectedForConfirm = 'delete';
+    const message = 'Do you want to delete the selected lead grading?';
+    this.openSetDefaultConfirmModal(message);
+  }
+
+  onDeleteClickedFromEdit() {
+    this.selectedForConfirm = 'deleteFromEdit';
+    const message = 'Do you want to delete current lead grading?';
+    this.openSetDefaultConfirmModal(message);
   }
 
   onConfirm() {
@@ -248,8 +247,50 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
             }
           );
         break;
+      case 'delete':
+        this.deletedCount = 0;
+        this.selected.forEach(score => {
+          this.scoringService.deleteLeadGradingProfile(score.id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(
+              () => {
+                this.deletedCount++;
+              },
+              error => {
+                this.loading = false;
+                console.log('error', error.response);
+              }
+            );
+        });
+        setTimeout(() => this.isDeletedDone());
+        break;
+      case 'deleteFromEdit':
+        this.loading = true;
+        this.scoringService.deleteLeadGradingProfile(this.selectedGrade.id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            () => {
+              this.loading = false;
+              this.loadTableData();
+              this.leadGradingModal.hide();
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+        break;
       default:
         break;
+    }
+  }
+
+  isDeletedDone() {
+    if (this.deletedCount === this.selected.length) {
+      this.loadTableData();
+      this.deletedCount = 0;
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
     }
   }
 
@@ -292,6 +333,19 @@ export class LeadGradingComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         error => {
           this.loading = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  loadDropDownValues() {
+    this.scoringService.getDropDownValues('LeadGrades')
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.listValuesDropDown = data.result;
+        },
+        error => {
           console.log('error', error.response);
         }
       );

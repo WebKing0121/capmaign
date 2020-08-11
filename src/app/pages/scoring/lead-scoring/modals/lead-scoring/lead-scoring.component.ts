@@ -138,7 +138,7 @@ export class ScoringLeadScoringModalComponent implements OnInit, OnDestroy {
         leadScoringGroups: []
       };
       this.searchLeadCategories('');
-      this.formGroup = this.fb.group({
+      this.formGroup.setValue({
         searchLeadCard: '',
         profileName: '',
         description: '',

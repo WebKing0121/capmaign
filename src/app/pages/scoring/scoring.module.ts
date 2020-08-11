@@ -12,15 +12,11 @@ import { ScoringLeadScoringComponent } from './lead-scoring/lead-scoring.compone
 import { ScoringLeadScoringModalComponent } from './lead-scoring/modals/lead-scoring/lead-scoring.component';
 
 
-import { LeadGradingComponent } from './lead-grading/lead-grading.component';
+import { ScoringLeadGradingComponent } from './lead-grading/lead-grading.component';
+import { ScoringLeadGradingModalComponent } from './lead-grading/modals/lead-grading/lead-grading.component';
 
 import { LeadTimeframesComponent } from './lead-timeframes/lead-timeframes.component';
 import { ScoringConfirmDefaultModalComponent } from './components/scoring-confirm-default-modal/scoring-confirm-default-modal.component';
-import { CreateLeadGradingComponent } from './create-lead-grading/create-lead-grading.component';
-import { RuleComponent } from './create-lead-grading/rule/rule.component';
-// import { LeadCardComponent } from './lead-scoring/modals/create-lead-scoring/components/lead-card/lead-card.component';
-// import { RuleTemplateComponent } from './lead-scoring/modals/create-lead-scoring/components/rule-template/rule-template.component';
-
 
 import { TimeFrameComponent } from './lead-timeframes/components/time-frame/time-frame.component';
 import { SharedModule } from 'src/app/theme/shared/shared.module';
@@ -32,16 +28,12 @@ import { SharedModule } from 'src/app/theme/shared/shared.module';
 
     ScoringLeadScoringComponent,
     ScoringLeadScoringModalComponent,
-
-    LeadGradingComponent,
+    ScoringLeadGradingComponent,
+    ScoringLeadGradingModalComponent,
 
     LeadTimeframesComponent,
     ScoringConfirmDefaultModalComponent,
 
-    CreateLeadGradingComponent,
-    RuleComponent,
-    // LeadCardComponent,
-    // RuleTemplateComponent,
     TimeFrameComponent,
   ],
   imports: [
