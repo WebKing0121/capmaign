@@ -3,48 +3,70 @@
     <span>Manage lead timeframes</span>
   </div>
 
-  <div class="card-body main-body">
-    <form [formGroup]="form">
-      <div class="row">
-        <div class="col-md-12 input-item">
-          <label class="mobile-show">Lead Scoring</label>
-          <div class="input-group">
-            <div class="input-group-prepend mobile-hide"><span class="input-group-text">Lead Scoring</span></div>
-            <!-- <select type="text" class="form-control">
-              <option *ngFor="let item of leadScoringTypeList" value="item.id">{{item.value}}</option>
-            </select> -->
-            <ng-select [ngClass]="'ng-select'" formControlName="scoringName" [options]="leadScoringTypeList">
-            </ng-select>
-          </div>
+  <div class="card-body main-body position-relative">
+    <div class="row">
+      <div class="col-md-12">
+        <label class="mobile-show">Lead Scoring</label>
+        <div class="input-group">
+          <div class="input-group-prepend mobile-hide"><span class="input-group-text">Lead Scoring</span></div>
+          <ng-select [ngClass]="'ng-select'" [(ngModel)]="scoringProfileId" (ngModelChange)="onChange($event)"
+            [options]="leadScoringTypeList">
+          </ng-select>
         </div>
       </div>
-      <div class="card m-l-15 m-r-15">
-        <div class="card-header main-header">
-          <span>Profile Details</span>
+    </div>
+    <div class="card mt-4 mb-0">
+      <div class="card-header main-header">
+        <span>Profile Details</span>
+      </div>
+
+      <div class="card-body p-0">
+        <div class="d-flex">
+          <div class="col-md-4 text-center sub-header">
+            <span>Scoring Profile TimeFrame</span>
+          </div>
+          <div class="col-md-3 text-center sub-header">
+            <span>Weightage/Percent</span>
+          </div>
+          <div class="col-md-4 text-center sub-header">
+            <span>Status</span>
+          </div>
+          <div class="col-md-1 text-center sub-header add-btn" (click)="addTimeFrame()">
+            <span><i class="fa fa-plus"></i></span>
+          </div>
         </div>
 
-        <div class="card-body p-0">
-          <div class="row">
-            <div class="col-md-4 text-center sub-header">
-              <span>Scoring Profile TimeFrame</span>
+        <div class="timeframe-container">
+          <div class="d-flex" *ngFor="let timeframe of filteredTimeframes">
+            <div class="col-md-4 p-0">
+              <select type="text" [(ngModel)]="timeframe.timeFrame" class="form-control field">
+                <option *ngFor="let item of timeList" [value]="item.id">{{item.value}}</option>
+              </select>
             </div>
-            <div class="col-md-3 text-center sub-header">
-              <span>Weightage/Percent</span>
+            <div class="col-md-3 p-0">
+              <input type="text" [(ngModel)]="timeframe.percent" class="form-control field">
             </div>
-            <div class="col-md-4 text-center sub-header">
-              <span>Status</span>
+            <div class="col-md-4 p-0" style="align-items: center;">
+              <select type="text" [(ngModel)]="timeframe.type" class="form-control field">
+                <option value="1">Positive</option>
+                <option value="0">Negative</option>
+              </select>
             </div>
-            <div class="col-md-1 text-center sub-header add-btn" (click)="add()">
-              <span><i class="fa fa-plus"></i></span>
+            <div class="col-md-1 d-flex remove-btn justify-content-center align-items-center" (click)="removeTimeFrame(timeframe.id)">
+              <span>
+                <i class="fa fa-trash"></i>
+              </span>
             </div>
           </div>
-          <ng-template #timeFrameList></ng-template>
         </div>
       </div>
-    </form>
+    </div>
+    <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
   </div>
   <div class="card-footer">
-    <button [disabled]="form.invalid" class="btn btn-primary m-l-10" (click)="onSaveClick()">
+    <button [disabled]="scoringProfileId === ''" class="btn btn-primary m-l-10" (click)="onSaveClick()">
       <i class="fa fa-save m-r-10"></i>Save
     </button>
   </div>

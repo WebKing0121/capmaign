@@ -198,4 +198,11 @@ export class ScoringService {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetLeadScoringProfileInOuIncludingChildren`, params);
   }
+  getLeadScoringTimeFrame(id: number): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadTimeFrame/GetLeadTimeFrame`, { id });
+  }
+
+  saveLeadScoringTimeFrame(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadTimeFrame/Create_UpdateLeadTimeFrame`, params);
+  }
 }

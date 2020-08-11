@@ -1,10 +1,4 @@
-import {
-  Component, OnInit, ViewChild, ViewContainerRef,
-  ComponentRef, ComponentFactoryResolver,
-  OnDestroy, ViewEncapsulation
-} from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { TimeFrameComponent } from './components/time-frame/time-frame.component';
+import { Component, OnInit, OnDestroy, ViewEncapsulation } from '@angular/core';
 import { ScoringService } from '@app-core/services/scoring.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -15,26 +9,48 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./lead-timeframes.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class LeadTimeframesComponent implements OnInit, OnDestroy {
-  @ViewChild('timeFrameList', { read: ViewContainerRef }) timeFrameList: ViewContainerRef;
-
+export class ScoringLeadTimeframesComponent implements OnInit, OnDestroy {
   childUniqueKey: number;
-  timeFrameRefList = Array<ComponentRef<TimeFrameComponent>>();
-  form: FormGroup;
+  scoringProfileId = '';
 
   destroy$ = new Subject();
   selected = [];
   leadScoringTypeList = [];
   loading = false;
+  leadScoringTimeFrame: any;
+  timeframes: any[] = [];
+  filteredTimeframes: any[] = [];
+  timeList = [
+    {
+      id: '30',
+      value: 'Less than 30 days'
+    },
+    {
+      id: '60',
+      value: 'Less than 60 days'
+    },
+    {
+      id: '90',
+      value: 'Less than 90 days'
+    },
+    {
+      id: '180',
+      value: 'Less than 180 days'
+    },
+    {
+      id: '360',
+      value: 'Less than 360 days'
+    },
+    {
+      id: '700',
+      value: 'Less than 700 days'
+    }
+  ];
+
   constructor(
-    private fb: FormBuilder,
-    private componentFactoryResolver: ComponentFactoryResolver,
     private scoringService: ScoringService
   ) {
     this.childUniqueKey = 0;
-    this.form = this.fb.group({
-      scoringName: ['', Validators.required]
-    });
   }
 
   ngOnInit(): void {
@@ -44,6 +60,10 @@ export class LeadTimeframesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  onChange(profileId) {
+    this.loadScoringTimeFrame(profileId);
   }
 
   loadScoringTypeList() {
@@ -70,34 +90,70 @@ export class LeadTimeframesComponent implements OnInit, OnDestroy {
       );
   }
 
-  add() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(TimeFrameComponent);
-    const categoryRef = this.timeFrameList.createComponent(componentFactory);
-    const category = categoryRef.instance;
-    category.uniqueKey = ++this.childUniqueKey;
-    category.parentRef = this;
-    this.timeFrameRefList.push(categoryRef);
-  }
-
-  remove(key) {
-    if (this.timeFrameList.length < 1) {
-      return;
-    } else {
-      const componentRef = this.timeFrameRefList.filter(
-        x => x.instance.uniqueKey === key
-      )[0];
-
-      const vcrIndex: number = this.timeFrameList.indexOf(componentRef.hostView);
-      this.timeFrameList.remove(vcrIndex);
-      this.timeFrameRefList = this.timeFrameRefList.filter(
-        x => x.instance.uniqueKey !== key
+  loadScoringTimeFrame(profileId) {
+    this.scoringService.getLeadScoringTimeFrame(+profileId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.childUniqueKey = 0;
+            this.leadScoringTimeFrame = data.result;
+            this.timeframes = this.leadScoringTimeFrame.timeFrames;
+            this.filteredTimeframes = this.timeframes.filter(x => !x.isDeleted);
+          }
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
       );
-    }
   }
 
-  onCancelClick() {
+  addTimeFrame() {
+    if (this.scoringProfileId === '') {
+      return;
+    }
+
+    this.childUniqueKey++;
+    const timeFrame = {
+      id: `new_${this.childUniqueKey}`,
+      isDeleted: true,
+      percent: 0,
+      timeFrame: 30,
+      type: 1,
+    };
+    this.timeframes.push(timeFrame);
+    this.filteredTimeframes = this.timeframes.filter(x => !x.isDeleted);
+  }
+
+  removeTimeFrame(timeFrameId) {
+    this.timeframes.find(x => x.id === timeFrameId).isDeleted = true;
+    this.filteredTimeframes = this.timeframes.filter(x => !x.isDeleted);
   }
 
   onSaveClick() {
+    this.timeframes.forEach(x => {
+      if (isNaN(x.id)) {
+        delete x.id;
+      }
+    });
+
+    const params = {
+      ...this.leadScoringTimeFrame,
+      timeFrames: this.timeframes
+    };
+    this.loading = true;
+    this.scoringService.saveLeadScoringTimeFrame(params)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        () => {
+          this.loading = false;
+        },
+        error => {
+          this.loading = false;
+          console.log('error', error.response);
+        }
+      );
   }
 }

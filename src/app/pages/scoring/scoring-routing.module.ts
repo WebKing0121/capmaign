@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { ScoringLeadCategoryComponent } from './lead-category/lead-category.component';
 import { ScoringLeadScoringComponent } from './lead-scoring/lead-scoring.component';
 import { ScoringLeadGradingComponent } from './lead-grading/lead-grading.component';
-import { LeadTimeframesComponent } from './lead-timeframes/lead-timeframes.component';
+import { ScoringLeadTimeframesComponent } from './lead-timeframes/lead-timeframes.component';
 
 const routes: Routes = [
   {
@@ -20,7 +20,7 @@ const routes: Routes = [
   },
   {
     path: 'lead-timeframes',
-    component: LeadTimeframesComponent
+    component: ScoringLeadTimeframesComponent
   },
 ];
 
