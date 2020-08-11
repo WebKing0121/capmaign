@@ -8,6 +8,14 @@
     (activate)="onActive($event)">
   </app-datatable>
 </div>
+
+<app-mobile-sms-campaign-modal #smsCampaignModal
+  [campaign]="selectedCampaign"
+  [modalType]="modalType"
+  (update)="loadTableData()"
+  (delete)="onClickDeleteFromEdit()"
+></app-mobile-sms-campaign-modal>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
   modalMessage="Do you want to delete selected list?"

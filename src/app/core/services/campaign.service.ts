@@ -47,6 +47,19 @@ export class CampaignService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllSmsCampaigns`, params);
   }
 
+  createSMSCampaign(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/CreateSmsCampaigns`, params);
+  }
+
+  updateSMSCampaign(params: any): Observable<any> {
+    return this.http.put<any>(`${environment.apiUrl}/api/services/app/sms/UpdateSMS`, params);
+  }
+
+  deleteSMSCampaign(id: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/sms/DeleteSelectedSMS?ids=${id}`);
+  }
+
+
   getPushNotifications(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/sms/GetAllPushNotificationData`, params);
   }

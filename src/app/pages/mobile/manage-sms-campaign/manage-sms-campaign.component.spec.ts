@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ManageSmsCampaignComponent } from './manage-sms-campaign.component';
+import { MobileSmsCampaignsComponent } from './manage-sms-campaign.component';
 
-describe('ManageSmsCampaignComponent', () => {
-  let component: ManageSmsCampaignComponent;
-  let fixture: ComponentFixture<ManageSmsCampaignComponent>;
+describe('MobileSmsCampaignsComponent', () => {
+  let component: MobileSmsCampaignsComponent;
+  let fixture: ComponentFixture<MobileSmsCampaignsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ManageSmsCampaignComponent ]
+      declarations: [ MobileSmsCampaignsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ManageSmsCampaignComponent);
+    fixture = TestBed.createComponent(MobileSmsCampaignsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

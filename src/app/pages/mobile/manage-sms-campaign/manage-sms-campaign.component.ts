@@ -1,45 +1,48 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
-import { Campaign } from '@app-models/campaign';
-import { ModalService } from '@app-components/modal/modal.service';
 import { CampaignService } from '@app-core/services/campaign.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
 
-import { Router, ActivatedRoute } from '@angular/router';
 import { DataSourceChange } from '@app-models/data-source';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-manage-sms-campaign',
+  selector: 'app-mobile-sms-campaign',
   templateUrl: './manage-sms-campaign.component.html',
   styleUrls: ['./manage-sms-campaign.component.scss']
 })
-export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewInit {
-
+export class MobileSmsCampaignsComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('smsCampaignModal', { static: false }) smsCampaignModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
+
+  modalType = ModalType.New;
   // confirm Modal
   confirmButtons = [
-    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+    { label: 'Yes', action: this.onClickDeleteConfirm.bind(this), class: 'btn-primary' }
   ];
 
 
-  tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateClicked() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false },
     { label: 'Send', icon: 'fa fa-phone', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
   ];
 
-  selected: Campaign[];
-  smsCampaignData: Campaign[];
+  selected: any[];
+  smsCampaignData: any[];
+  selectedCampaign: any;
   destroy$ = new Subject();
 
   loading = false;
   totalCount = 0;
+  deleteFrom = 0;
+  deletedCount = 0;
+
   constructor(
     private campaignService: CampaignService,
-    private modalService: ModalService
   ) {
     this.smsCampaignData = [];
   }
@@ -80,13 +83,9 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onCreateClicked() {
-    // this.router.navigate(['create'], { relativeTo: this.route });
-    // this.modalService.openModal(MobileCampaignComponent, {
-    //   width: '100%',
-    //   data: {
-    //     mode: 'new'
-    //   }
-    // });
+    this.modalType = ModalType.New;
+    this.selectedCampaign = null;
+    setTimeout(() => this.smsCampaignModal.show());
   }
 
   onActive(event) {
@@ -94,15 +93,9 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
       event.type === 'click' && event.cellIndex === 1
       && event.event.target.classList.value === 'datatable-body-cell-label'
     ) {
-      const campaign = event.row as Campaign;
-      // this.router.navigate(['mobile', campaign.id]);
-      // this.modalService.openModal(MobileCampaignComponent, {
-      //   width: '100%',
-      //   data: {
-      //     mode: 'edit',
-      //     id: campaign.id
-      //   }
-      // });
+      this.selectedCampaign = event.row;
+      this.modalType = ModalType.Edit;
+      setTimeout(() => this.smsCampaignModal.show());
     }
 
     if (event.type === 'checkbox') {
@@ -111,7 +104,57 @@ export class ManageSmsCampaignComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onDeleteClicked() {
+    this.deleteFrom = 0;
     this.confirmModal.show();
+  }
+
+  onClickDeleteFromEdit() {
+    this.deleteFrom = 1;
+    this.confirmModal.show();
+  }
+
+  onClickDeleteConfirm() {
+    if (this.deleteFrom === 1) {
+      this.campaignService.deleteSMSCampaign(this.selectedCampaign.id)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.loadTableData();
+            this.smsCampaignModal.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    } else {
+      this.selected.forEach(campaign => {
+        this.campaignService.deleteSMSCampaign(campaign.id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(
+            () => {
+              this.deletedCount++;
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+      });
+      setTimeout(() => this.isDeletedDone());
+    }
+
+  }
+
+  isDeletedDone() {
+    if (this.deletedCount === this.selected.length) {
+      this.loadTableData();
+      this.deletedCount = 0;
+      this.smsCampaignModal.hide();
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
+    }
   }
 
   initTable() {

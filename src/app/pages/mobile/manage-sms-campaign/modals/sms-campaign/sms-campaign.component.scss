@@ -1,0 +1,70 @@
+:host {
+
+  .campaign-modal {
+    padding: 0 10%;
+
+    @media only screen and (max-width: 1024px) {
+      padding: 0 5%;
+    }
+
+    @media only screen and (max-width: 425px) {
+      padding: 0 10px;
+    }
+  }
+
+  .campaign-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .full-screen {
+    padding: 0;
+    
+    .card {
+      position: absolute;
+      width: 100vw;
+      height: 100vh;
+      top: -53px;
+    }
+  }
+
+  .basic-close {
+    margin-top: -2px;
+    margin-right: -7px;
+  }
+  
+  .mobile-show {
+    display: none;
+
+    @media only screen and (max-width: 767px) {
+      display: inherit;
+    }
+  }
+
+  .mobile-hide {
+    display: inherit;
+
+    @media only screen and (max-width: 767px) {
+      display: none;
+    }
+  }
+
+  @media only screen and (max-width: 414px) {
+
+    .btn {
+      padding: 0.625rem 1.1875rem;
+    }
+  }
+
+  @media only screen and (max-width: 360px) {
+    
+    .card {
+      margin: -15px!important;
+
+      .btn {
+        padding: 5px;
+      }
+    }
+  }
+}

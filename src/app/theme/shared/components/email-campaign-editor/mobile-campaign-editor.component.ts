@@ -16,7 +16,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 export class MobileCampaignEditorComponent implements OnInit, ControlValueAccessor {
   @ViewChild('mobileCampaign') mobileCampaign: ElementRef<HTMLDivElement>;
   campaignText = '';
-
+  sender = '';
   editMode = false;
 
   constructor() { }
@@ -34,6 +34,15 @@ export class MobileCampaignEditorComponent implements OnInit, ControlValueAccess
   }
 
   writeValue(obj: any): void {
+    this.campaignText = obj;
+  }
+
+  setSender(sender: string): void {
+    this.sender = sender;
+  }
+
+  getSender(): string {
+    return this.sender;
   }
 
   onContentEdit() {
@@ -45,6 +54,6 @@ export class MobileCampaignEditorComponent implements OnInit, ControlValueAccess
   }
 
   getValue(): string {
-    return this.mobileCampaign.nativeElement.innerHTML;
+    return this.campaignText;
   }
 }
