@@ -1,8 +1,12 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, Inject, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
-import { CategoryComponent } from '../components/category/category.component';
+import {
+  Component, OnInit, OnDestroy, ViewChild, ComponentFactoryResolver,
+  ViewEncapsulation, Input, Output, EventEmitter
+} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalType } from '@app-core/enums/modal-type.enum';
 import { ScoringService } from '@app-core/services/scoring.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-scoring-lead-category-modal',
@@ -10,127 +14,92 @@ import { ScoringService } from '@app-core/services/scoring.service';
   styleUrls: ['./lead-category-modal.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class ScoringLeadCategoryModalComponent implements OnInit {
+export class ScoringLeadCategoryModalComponent implements OnInit, OnDestroy {
   @Input() leadCategory;
   @Input() modalType = ModalType.New;
+  @Input() listValuesDropDown = [];
+  @Input() leadDbColumns = [];
+  @Input() emailAnalyticsColumns = [];
+  @Input() mobileAnalyticsColumns = [];
+  @Input() socialMediaAnalyticsColumns = [];
+  @Input() websiteAnalyticsColumns = [];
   @Output() update: EventEmitter<any> = new EventEmitter();
   @Output() delete: EventEmitter<any> = new EventEmitter();
   @ViewChild('categoryModal', { static: false }) categoryModal;
 
   ModalType = ModalType;
-  leadCategoryTypeList = [
-    {
-      id: '1',
-      value: 'Email'
-    },
-    {
-      id: '2',
-      value: 'Records'
-    },
-    {
-      id: '3',
-      value: 'Mobile'
-    },
-    {
-      id: '4',
-      value: 'Social'
-    },
-    {
-      id: '5',
-      value: 'Website'
-    }
-  ];
 
-  fieldNameTypeList = [
-    {
-      id: '1',
-      value: 'accountName'
-    },
-    {
-      id: '2',
-      value: 'accountNumber'
-    },
-    {
-      id: '3',
-      value: 'accountOptOut'
-    },
-    {
-      id: '4',
-      value: 'AccountOwner'
-    },
-    {
-      id: '5',
-      value: 'AccountSite'
-    },
-    {
-      id: '6',
-      value: 'accountOptOut'
-    },
-    {
-      id: '7',
-      value: 'AccountOwner'
-    },
-    {
-      id: '8',
-      value: 'AccountSite'
-    }
-  ];
-
-  @ViewChild('categoryList', { read: ViewContainerRef })
-  categoryList: ViewContainerRef;
-
-  childUniqueKey: number;
-  categoryRefList = Array<ComponentRef<CategoryComponent>>();
   formGroup: FormGroup;
-
+  fields = [];
   fullScreen: boolean;
   modalClass: string;
-
+  conditions = [];
   loading = false;
+  newId = 0;
+  destroy$ = new Subject();
+
   constructor(
     private fb: FormBuilder,
     private componentFactoryResolver: ComponentFactoryResolver,
     private scoringService: ScoringService
   ) {
-    this.childUniqueKey = 0;
     this.fullScreen = false;
     this.modalClass = 'modal-dialog-centered ' + (this.fullScreen ? 'modal-fullscreen' : 'modal-xl');
 
     this.formGroup = this.fb.group({
       name: ['', Validators.required],
-      leadCategory: '',
+      leadCategoryName: '',
       fieldName: '',
       criteria: '',
-      leadCategoryType: ''
     });
 
   }
 
   ngOnInit(): void { }
 
-  add() {
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(CategoryComponent);
-    const categoryRef = this.categoryList.createComponent(componentFactory);
-    const category = categoryRef.instance;
-    category.uniqueKey = ++this.childUniqueKey;
-    category.parentRef = this;
-    this.categoryRefList.push(categoryRef);
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
-  remove(key) {
-    if (this.categoryList.length < 1) {
-      return;
-    } else {
-      const componentRef = this.categoryRefList.filter(
-        x => x.instance.uniqueKey === key
-      )[0];
+  onChangeCategory(event) {
+    const category = event.target.value;
+    this.setFields(category);
+  }
 
-      const vcrIndex: number = this.categoryList.indexOf(componentRef.hostView);
-      this.categoryList.remove(vcrIndex);
-      this.categoryRefList = this.categoryRefList.filter(
-        x => x.instance.uniqueKey !== key
-      );
+  setFields(category) {
+    switch (category) {
+      case 'Email':
+        this.fields = this.emailAnalyticsColumns;
+        break;
+      case 'Records':
+        this.fields = this.leadDbColumns;
+        break;
+      case 'Mobile':
+        this.fields = this.mobileAnalyticsColumns;
+        break;
+      case 'Social':
+        this.fields = this.socialMediaAnalyticsColumns;
+        break;
+      case 'Website':
+        this.fields = this.websiteAnalyticsColumns;
+        break;
     }
+  }
+
+  addCondition() {
+    this.newId++;
+    this.conditions = [...this.conditions, {
+      id: `new_${this.newId}`,
+      name: '',
+      value: '',
+      score: 0,
+      condition: 'contains'
+    }];
+  }
+
+  removeCondition(conditionId) {
+    this.conditions = this.conditions.filter(x => x.id !== conditionId);
   }
 
   onDelete() {
@@ -138,7 +107,75 @@ export class ScoringLeadCategoryModalComponent implements OnInit {
   }
 
   onSave() {
-    this.categoryModal.hide();
+    const {
+      name,
+      leadCategoryName,
+      fieldName,
+      criteria,
+    } = this.formGroup.value;
+    if (this.modalType === ModalType.Edit) {
+      const conditions = [];
+      this.conditions.forEach(x => {
+        if (isNaN(x.id)) {
+          conditions.push({ name: x.name, value: x.value, score: x.score, condition: x.condition });
+        } else {
+          conditions.push({ ...x });
+        }
+      });
+
+      const params = {
+        id: this.leadCategory.id,
+        name,
+        leadCategoryName,
+        fieldName,
+        criteria,
+        scoringCategoryFields: conditions
+      };
+      this.loading = true;
+      this.scoringService.updateLeadCategory(params)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.update.emit();
+            this.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    } else {
+      const conditions = [];
+      this.conditions.forEach(x => {
+        if (isNaN(x.id)) {
+          conditions.push({ name: x.name, value: x.value, score: x.score, condition: x.condition });
+        } else {
+          conditions.push({ ...x });
+        }
+      });
+      const params = {
+        name,
+        leadCategoryName,
+        fieldName,
+        criteria,
+        scoringCategoryFields: conditions
+      };
+      this.loading = true;
+      this.scoringService.createLeadCategory(params)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.update.emit();
+            this.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    }
   }
 
   revertFullScreen() {
@@ -147,30 +184,38 @@ export class ScoringLeadCategoryModalComponent implements OnInit {
   }
 
   show() {
+    this.newId = 0;
     if (this.modalType === ModalType.Edit) {
-      console.log(this.leadCategory);
-      this.formGroup = this.fb.group({
-        name: ['', Validators.required],
-        leadCategory: '',
-        fieldName: '',
-        criteria: '',
-        leadCategoryType: ''
+      const {
+        name,
+        leadCategoryName,
+        fieldName,
+        criteria,
+        scoringCategoryFields
+      } = this.leadCategory;
+
+      this.setFields(leadCategoryName);
+      this.conditions = scoringCategoryFields;
+      this.formGroup.setValue({
+        name,
+        leadCategoryName,
+        fieldName,
+        criteria,
       });
     } else {
+      this.conditions = [];
       this.formGroup = this.fb.group({
-        name: ['', Validators.required],
-        leadCategory: '',
+        name: '',
+        leadCategoryName: 'Email',
         fieldName: '',
-        criteria: '',
-        leadCategoryType: ''
+        criteria: 'Explicit',
       });
-    }
 
+    }
     setTimeout(() => this.categoryModal.show());
   }
 
   hide() {
     this.categoryModal.hide();
   }
-
 }

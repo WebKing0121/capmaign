@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 import * as moment from 'moment';
 
@@ -35,17 +35,50 @@ export class ScoringService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/GetLeadScoringCategoryInOuIncludingChildren`, params);
   }
 
-  createLeadCategory(params: any) : Observable<any> {
+  createLeadCategory(params: any): Observable<any> {
     // tslint:disable-next-line
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/CreateLeadScoringCategory`, params);
   }
-  updateLeadCategory(params: any) : Observable<any> {
+  updateLeadCategory(params: any): Observable<any> {
     // tslint:disable-next-line
     return this.http.put<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/UpdateLeadScoringCategory`, params);
   }
-  deleteLeadCategory(params: any) : Observable<any> {
+  deleteLeadCategory(params: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: params
+    };
     // tslint:disable-next-line
-    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/DeleteLeadScoringCategory`, params);
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/leadScoringCategory/DeleteLeadScoringCategory`, httpOptions);
+  }
+
+  getLeadDbColumns(): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetLeadDbColumns`);
+  }
+
+  getEmailAnalyticsColumns(): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetEmailAnalyticsColumns`);
+  }
+
+  getMobileAnalyticsColumns(): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetMobileAnalyticsColumns`);
+  }
+
+  getSocialMediaAnalyticsColumns(): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetSocialMediaAnalyticsColumns`);
+  }
+
+  getWebsiteAnalyticsColumns(): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/leadScoringProfile/GetWebsiteAnalyticsColumns`);
+  }
+
+  getDropDownValues(): Observable<any> {
+    // tslint:disable-next-line
+    return this.http.get<any>(`${environment.apiUrl}/api/services/app/listOfValues/GetByDropDown?dropDownName=LeadCategories`);
   }
 
   getLeadScoring(params: any): Observable<any> {

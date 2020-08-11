@@ -17,15 +17,16 @@
           <label class="mobile-show">Name</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide"><span class="input-group-text">Name</span></div>
-            <input type="text" formControlName="name" class="form-control ng-untouched ng-pristine ng-invalid">
+            <input type="text" formControlName="name" class="form-control">
           </div>
         </div>
         <div class="col-md-6 mt-3">
           <label class="mobile-show">Lead Category</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide"><span class="input-group-text">Lead Category</span></div>
-            <select formControlName="leadCategoryType" class="form-control ng-untouched ng-pristine ng-invalid">
-              <option *ngFor="let item of leadCategoryTypeList" value="item.id">{{item.value}}</option>
+            <select formControlName="leadCategoryName" (change)="onChangeCategory($event)" class="form-control">
+              <option *ngFor="let categoryType of listValuesDropDown" [value]="categoryType.value">
+                {{categoryType.displayName}}</option>
             </select>
           </div>
         </div>
@@ -33,8 +34,8 @@
           <label class="mobile-show">Field Name</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide"><span class="input-group-text">Field Name</span></div>
-            <select formControlName="fieldName" class="form-control ng-untouched ng-pristine ng-invalid">
-              <option *ngFor="let item of fieldNameTypeList" value="item.id">{{item.value}}</option>
+            <select formControlName="fieldName" class="form-control">
+              <option *ngFor="let column of fields" [value]="column.displayMappedField">{{column.displayMappedField}}</option>
             </select>
           </div>
         </div>
@@ -42,48 +43,75 @@
           <label class="mobile-show">Criteria</label>
           <div class="input-group">
             <div class="input-group-prepend mobile-hide"><span class="input-group-text">Criteria</span></div>
-            <input type="text" formControlName="criteria" disabled
-              class="form-control ng-untouched ng-pristine ng-invalid">
-          </div>
-        </div>
-      </div>
-      <div class="card main-table mt-3">
-        <div class="card-header main-header">
-          <span>Category Fields</span>
-        </div>
 
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3 text-center sub-header">
-              <span>Category Name</span>
-            </div>
-            <div class="col-md-4 text-center sub-header">
-              <span>Value</span>
-            </div>
-            <div class="col-md-2 text-center sub-header">
-              <span>Score</span>
-            </div>
-            <div class="col-md-2 text-center sub-header">
-              <span>Condition</span>
-            </div>
-            <div class="col-md-1 text-center sub-header add-btn" (click)="add()">
-              <span class="p-10"><i class="fa fa-plus"></i></span>
-            </div>
+            <select formControlName="criteria" class="form-control">
+              <option value="Implicit">Implicit</option>
+              <option value="Explicit">Explicit</option>
+            </select>
           </div>
-          <ng-template #categoryList></ng-template>
         </div>
       </div>
+
     </form>
+    <div class="card main-table mt-3">
+      <div class="card-header main-header">
+        <span>Category Fields</span>
+      </div>
+
+      <div class="card-body">
+        <div class="row mb-3  ">
+          <div class="col-md-3 text-center sub-header">
+            <span>Category Name</span>
+          </div>
+          <div class="col-md-4 text-center sub-header">
+            <span>Value</span>
+          </div>
+          <div class="col-md-2 text-center sub-header">
+            <span>Score</span>
+          </div>
+          <div class="col-md-2 text-center sub-header">
+            <span>Condition</span>
+          </div>
+          <div class="col-md-1 text-center sub-header add-btn" (click)="addCondition()">
+            <span class="p-10"><i class="fa fa-plus"></i></span>
+          </div>
+        </div>
+        <div class='conditions'>
+          <div class="row" *ngFor="let condition of conditions">
+            <div class="col-md-3 pr-0">
+              <input type="text" [(ngModel)]="condition.name" class="form-control field">
+            </div>
+            <div class="col-md-4 pr-0">
+              <input type="text" [(ngModel)]="condition.value" class="form-control field">
+            </div>
+            <div class="col-md-2 pr-0">
+              <input type="text" [(ngModel)]="condition.score" class="form-control field">
+            </div>
+            <div class="col-md-2 pr-0">
+              <select [(ngModel)]="condition.condition" class="form-control field">
+                <option value='contains'>Contains</option>
+                <option value='equals'>Equals</option>
+              </select>
+            </div>
+            <div class="col-md-1 d-flex col-md-1 d-flex justify-content-center align-items-center"  (click)="removeCondition(condition.id)">
+              <span><i class="fa fa-trash"></i></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="spinner-border text-primary center-position" *ngIf="loading" role="status">
       <span class="sr-only">Loading...</span>
     </div>
   </div>
   <div class="app-modal-footer">
-    <button type="button" class="btn btn-danger" [disabled]="loading" (click)="onDelete()" *ngIf="modalType === ModalType.Edit">
+    <button type="button" class="btn btn-danger" [disabled]="loading" (click)="onDelete()"
+      *ngIf="modalType === ModalType.Edit">
       <i class="fa fa-trash"></i>Delete
     </button>
-    <button type="button" class="btn btn-primary"  [disabled]="loading" (click)="onSave()">
-      <i class="fa" [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
+    <button type="button" class="btn btn-primary" [disabled]="loading" (click)="onSave()">
+      <i class="fa"
+        [ngClass]="{'fa-save': modalType === ModalType.Edit, 'fa-plus': modalType === ModalType.New}"></i>{{modalType === ModalType.New ? 'Create' : 'Save'}}
     </button>
     <button class="btn btn-secondary " (click)="categoryModal.hide()">
       <i class="fa fa-times-circle"></i>Close</button>

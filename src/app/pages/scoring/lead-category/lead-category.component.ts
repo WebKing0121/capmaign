@@ -17,7 +17,7 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('confirmModal', { static: false }) confirmModal;
   // confirm Modal
   confirmButtons = [
-    { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
+    { label: 'Yes', action: this.onClickDeleteConfirm.bind(this), class: 'btn-primary' }
   ];
 
   modalType = ModalType.New;
@@ -36,12 +36,24 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
   totalCount = 0;
   deleteFrom = 0;
   deletedCount = 0;
+  leadDbColumns = [];
+  listValuesDropDown = [];
+  emailAnalyticsColumns = [];
+  mobileAnalyticsColumns = [];
+  socialMediaAnalyticsColumns = [];
+  websiteAnalyticsColumns = [];
 
   constructor(
     private scoringService: ScoringService,
     private modalService: ModalService
   ) {
     this.leadCategoryData = [];
+    this.loadLeadDbColumns();
+    this.getEmailAnalyticsColumns();
+    this.getMobileAnalyticsColumns();
+    this.getSocialMediaAnalyticsColumns();
+    this.getWebsiteAnalyticsColumns();
+    this.loadDropDownValues();
   }
 
   ngOnInit(): void {
@@ -87,7 +99,9 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
         () => {
           this.loading = false;
           this.loadTableData();
-          this.categoryModal.hide();
+          if (this.deleteFrom === 1) {
+            this.categoryModal.hide();
+          }
         },
         error => {
           this.loading = false;
@@ -148,6 +162,91 @@ export class LeadCategoryComponent implements OnInit, OnDestroy, AfterViewInit {
         },
         error => {
           this.loading = false;
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  loadLeadDbColumns() {
+    this.scoringService.getLeadDbColumns()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.leadDbColumns = data.result;
+        },
+        error => {
+
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  getEmailAnalyticsColumns() {
+    this.scoringService.getEmailAnalyticsColumns()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.emailAnalyticsColumns = data.result;
+        },
+        error => {
+
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  getMobileAnalyticsColumns() {
+    this.scoringService.getMobileAnalyticsColumns()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.mobileAnalyticsColumns = data.result;
+        },
+        error => {
+
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  getSocialMediaAnalyticsColumns() {
+    this.scoringService.getSocialMediaAnalyticsColumns()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.socialMediaAnalyticsColumns = data.result;
+        },
+        error => {
+
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  getWebsiteAnalyticsColumns() {
+    this.scoringService.getWebsiteAnalyticsColumns()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.websiteAnalyticsColumns = data.result;
+        },
+        error => {
+
+          console.log('error', error.response);
+        }
+      );
+  }
+
+  loadDropDownValues() {
+
+    this.scoringService.getDropDownValues()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        data => {
+          this.listValuesDropDown = data.result;
+        },
+        error => {
+
           console.log('error', error.response);
         }
       );
