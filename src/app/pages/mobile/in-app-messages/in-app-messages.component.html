@@ -8,6 +8,14 @@
     (activate)="onActive($event)">
   </app-datatable>
 </div>
+
+<app-mobile-in-app-message-modal #inAppMessageModal
+  [message]="selectedMessage"
+  [modalType]="modalType"
+  [pushNotification]="0"
+  (update)="loadTableData()"
+></app-mobile-in-app-message-modal>
+
 <app-confirm-modal #confirmModal
   modalTitle="Confirm"
   modalMessage="Do you want to delete selected list?"

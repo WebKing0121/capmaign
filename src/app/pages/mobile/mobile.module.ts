@@ -9,8 +9,8 @@ import { MobileRoutingModule } from './mobile-routing.module';
 
 import { MobileSmsCampaignsComponent } from './manage-sms-campaign/manage-sms-campaign.component';
 import { MobileSmsCampaignModalComponent } from './manage-sms-campaign/modals/sms-campaign/sms-campaign.component';
-import { InAppMessagesComponent } from './in-app-messages/in-app-messages.component';
-import { InAppMessageComponent } from './in-app-message/in-app-message.component';
+import { MobileInAppMessagesComponent } from './in-app-messages/in-app-messages.component';
+import { MobileInAppMessageModalComponent } from './in-app-messages/modals/in-app-message/in-app-message.component';
 
 import { PushNotificationsComponent } from './push-notifications/push-notifications.component';
 import { TriggerAutomationsComponent } from './trigger-automations/trigger-automations.component';
@@ -20,8 +20,8 @@ import { ArchwizardModule } from 'angular-archwizard';
   declarations: [
     MobileSmsCampaignsComponent,
     MobileSmsCampaignModalComponent,
-    InAppMessagesComponent,
-    InAppMessageComponent,
+    MobileInAppMessagesComponent,
+    MobileInAppMessageModalComponent,
     PushNotificationsComponent,
     TriggerAutomationsComponent,
   ],

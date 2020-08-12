@@ -6,7 +6,7 @@ import { CampaignService } from '@app-core/services/campaign.service';
 import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
-import { InAppMessageComponent } from '../in-app-message/in-app-message.component';
+// import { InAppMessageComponent } from '../in-app-messages/modals/in-app-message/in-app-message.component';
 import { DataSourceChange } from '@app-models/data-source';
 
 @Component({
@@ -70,25 +70,25 @@ export class PushNotificationsComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onCreateClicked() {
-    this.modalService.openModal(InAppMessageComponent, {
-      width: '100%',
-      data: {
-        createMode: true,
-        pushNotificationMode: true,
-      }
-    });
+    // this.modalService.openModal(InAppMessageComponent, {
+    //   width: '100%',
+    //   data: {
+    //     createMode: true,
+    //     pushNotificationMode: true,
+    //   }
+    // });
   }
 
   onActive(event) {
     if (event.type === 'click' && event.cellIndex === 1 && event.event.target.classList.value === 'datatable-body-cell-label') {
       const inAppMessage = event.row as Campaign;
-      this.modalService.openModal(InAppMessageComponent, {
-        width: '100%',
-        data: {
-          createMode: false,
-          pushNotificationMode: true,
-        }
-      });
+      // this.modalService.openModal(InAppMessageComponent, {
+      //   width: '100%',
+      //   data: {
+      //     createMode: false,
+      //     pushNotificationMode: true,
+      //   }
+      // });
     }
 
     if (event.type === 'checkbox') {

@@ -1,27 +1,24 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { MODAL_DATA, ModalRef } from '@app-components/modal/modal-ref';
-import { Campaign } from '@app-models/campaign';
+import { Component, OnInit, ViewChild, ViewEncapsulation, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Tab } from '@app-models/common';
-
-interface ComponentProps {
-  createMode: boolean;
-  inAppMessage: Campaign;
-  pushNotificationMode: boolean;
-}
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-in-app-message',
+  selector: 'app-mobile-in-app-message-modal',
   templateUrl: './in-app-message.component.html',
-  styleUrls: ['./in-app-message.component.scss']
+  styleUrls: ['./in-app-message.component.scss'],
+  encapsulation: ViewEncapsulation.None,
 })
-export class InAppMessageComponent implements OnInit {
+export class MobileInAppMessageModalComponent implements OnInit {
+  @Input() message;
+  @Input() modalType = ModalType.New;
+  @Input() pushNotification = 0;
+  @Output() update: EventEmitter<any> = new EventEmitter();
+  @ViewChild('inAppMessageModal', { static: false }) inAppMessageModal;
 
-  createMode: boolean;
-  pushNotificationMode: boolean;
   isAndroid: boolean;
   isIphone: boolean;
-
+  ModalType = ModalType;
   optionList: string[];
   step: boolean[];
   tabs: Tab[] = [
@@ -102,8 +99,6 @@ export class InAppMessageComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    @Inject(MODAL_DATA) private props: ComponentProps,
-    @Inject(ModalRef) private modalRef: ModalRef<InAppMessageComponent>
   ) {
     this.step = [true, false, false, false, false, false];
     this.isAndroid = false;
@@ -131,8 +126,8 @@ export class InAppMessageComponent implements OnInit {
 
   ngOnInit(): void {
     this.optionList = ['Tesh Header', 'UAT Header', 'UAT1010', 'Test In App', 'Test InApp'];
-    this.createMode = this.props.createMode;
-    this.pushNotificationMode = this.props.pushNotificationMode;
+    // this.createMode = this.props.createMode;
+    // this.pushNotificationMode = this.props.pushNotificationMode;
     this.formGroup = this.fb.group({
       headerTxt: '',
       bodyTxt: '',
@@ -158,7 +153,7 @@ export class InAppMessageComponent implements OnInit {
   }
 
   onDeviceModeClicked(deviceType: string) {
-    if (!this.createMode) {
+    if (this.modalType === ModalType.Edit) {
       return;
     } else {
       this.isAndroid = deviceType === 'android';
@@ -339,15 +334,28 @@ export class InAppMessageComponent implements OnInit {
   }
 
   sendInAppMessage() {
-    this.modalRef.cancel();
+
   }
 
   onCancelClick() {
-    this.modalRef.cancel();
+
   }
 
   revertFullScreen() {
     this.fullScreen = !this.fullScreen;
     this.modalClass = 'modal-wrapper' + (this.fullScreen ? ' full-screen' : '');
+  }
+
+  show() {
+    if (this.modalType === ModalType.Edit) {
+      setTimeout(() => this.inAppMessageModal.show());
+    } else {
+      setTimeout(() => this.inAppMessageModal.show());
+    }
+
+  }
+
+  hide() {
+    this.inAppMessageModal.hide();
   }
 }

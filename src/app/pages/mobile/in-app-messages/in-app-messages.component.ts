@@ -1,43 +1,45 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ViewChild } from '@angular/core';
 import { DataTableSource, DataTableColumn } from '@app-components/datatable/datatable-source';
-import { Campaign } from '@app-models/campaign';
 import { Subject } from 'rxjs';
 import { CampaignService } from '@app-core/services/campaign.service';
-import { ModalService } from '@app-components/modal/modal.service';
 import { takeUntil } from 'rxjs/operators';
 import { DateFormatPipe } from 'src/app/theme/shared/pipes/date-format.pipe';
-import { InAppMessageComponent } from '../in-app-message/in-app-message.component';
 import { DataSourceChange } from '@app-models/data-source';
+import { ModalType } from '@app-core/enums/modal-type.enum';
 
 @Component({
-  selector: 'app-in-app-messages',
+  selector: 'app-mobile-in-app-messages',
   templateUrl: './in-app-messages.component.html',
   styleUrls: ['./in-app-messages.component.scss']
 })
-export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit {
-
+export class MobileInAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit {
+  @ViewChild('inAppMessageModal', { static: false }) inAppMessageModal;
   @ViewChild('confirmModal', { static: false }) confirmModal;
+
+  modalType = ModalType.New;
   // confirm Modal
   confirmButtons = [
     { label: 'Yes', action: this.onDeleteClicked.bind(this), class: 'btn-primary' }
   ];
 
 
-  tableSource: DataTableSource<Campaign> = new DataTableSource<Campaign>(50);
+  tableSource: DataTableSource<any> = new DataTableSource<any>(50);
   tableButtons = [
     { label: 'Create', icon: 'fa fa-plus', click: () => this.onCreateClicked() },
     { label: 'Delete', icon: 'fa fa-trash', click: () => this.onDeleteClicked(), color: 'red', disabled: true, hide: false }
   ];
 
-  selected: Campaign[];
-  inAppMessageData: Campaign[];
+  selected: any[];
+  inAppMessageData: any[];
+  selectedMessage: any;
+
   destroy$ = new Subject();
 
   loading = false;
   totalCount = 0;
+  deletedCount = 0;
   constructor(
     private campaignService: CampaignService,
-    private modalService: ModalService
   ) {
     this.inAppMessageData = [];
   }
@@ -70,12 +72,9 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onCreateClicked() {
-    this.modalService.openModal(InAppMessageComponent, {
-      width: '100%',
-      data: {
-        createMode: true
-      }
-    });
+    this.modalType = ModalType.New;
+    this.selectedMessage = null;
+    setTimeout(() => this.inAppMessageModal.show());
   }
 
   onActive(event) {
@@ -83,14 +82,9 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
       event.type === 'click' && event.cellIndex === 1 &&
       event.event.target.classList.value === 'datatable-body-cell-label'
     ) {
-      const inAppMessage = event.row as Campaign;
-      this.modalService.openModal(InAppMessageComponent, {
-        width: '100%',
-        data: {
-          createMode: false,
-          inAppMessage,
-        }
-      });
+      this.selectedMessage = event.row;
+      this.modalType = ModalType.Edit;
+      setTimeout(() => this.inAppMessageModal.show());
     }
 
     if (event.type === 'checkbox') {
@@ -99,12 +93,6 @@ export class InAppMessagesComponent implements OnInit, OnDestroy, AfterViewInit 
   }
 
   onDeleteClicked() {
-    // this.modalService.openModal(ScoringConfirmDefaultModalComponent, {
-    //   width: '400px',
-    //   data: {
-    //     message: 'Are you sure you want to delete selected SMS?'
-    //   }
-    // });
     this.confirmModal.show();
   }
 

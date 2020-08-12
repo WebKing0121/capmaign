@@ -78,10 +78,10 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.initListTable();
 
-    // this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
-    //   .subscribe((res) => res === null && this.store.dispatch({
-    //     type: AppTypes.GetRecordColumns
-    //   }));
+    this.recordColumns$.pipe(takeUntil(this.unsubscribe$))
+      .subscribe((res) => res === null && this.store.dispatch({
+        type: AppTypes.GetRecordColumns
+      }));
 
   }
 

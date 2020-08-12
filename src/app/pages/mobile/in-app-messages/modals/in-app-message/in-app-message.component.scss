@@ -123,7 +123,7 @@
       position: absolute;
       left: 0;
       top: 0;
-      background: url("../../../../assets/images/campaign/iphone-iframe.png") no-repeat;
+      // background: url("../../../../assets/images/campaign/iphone-iframe.png") no-repeat;
       background-size: $iphone-width $iphone-height;
       padding-right: $iphone-width;
       padding-bottom: $iphone-height;
@@ -138,7 +138,7 @@
   .iphone-user-avatar {
     width: 40px;
     height: 40px;
-    background: url("../../../../assets/images/campaign/user-avatar.png") no-repeat;
+    // background: url("../../../../assets/images/campaign/user-avatar.png") no-repeat;
     background-size: 40px 40px;
     content: "";
   }
