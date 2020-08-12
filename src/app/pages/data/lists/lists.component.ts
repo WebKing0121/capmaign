@@ -45,6 +45,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   totalRecordsCount: number;
   loadingRecords = false;
   selectedRecords: any[] = [];
+  selectedRecordsFromModal = [];
   recordsTableButtons = [
     { label: 'Add Records', icon: 'fa fa-plus', click: () => this.onClickAddRecords(), disabled: true },
     { label: 'Remove Records', icon: 'fa fa-trash', click: () => this.onClickRemoveRecords(), color: 'red', disabled: true },
@@ -66,6 +67,8 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   tableRecordsButtons = [];
 
   loadingList = false;
+  addedCount = 0;
+
   constructor(
     private dataService: DataService,
     private store: Store<AppState>
@@ -82,7 +85,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe((res) => res === null && this.store.dispatch({
         type: AppTypes.GetRecordColumns
       }));
-
+    this.initRecordTable();
   }
 
   ngAfterViewInit(): void {
@@ -134,7 +137,6 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
         this.selected = selected;
       });
   }
-
 
   initRecordTable() {
     this.tableSourceRecords.changed$
@@ -193,35 +195,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
       this.tableButtons[1].disabled = false;
       this.recordsTableButtons[0].disabled = false;
       this.recordsTableButtons[1].disabled = true;
-      this.loadingRecords = true;
-
-      const params = {
-        listId: this.selectedList.listId,
-        SortDirection: 'Ascending',
-        maxResultCount: this.tableSourceRecords.pageSize,
-        skipCount: (this.tableSourceRecords.currentPage - 1) * this.tableSourceRecords.pageSize,
-        sorting: ''
-      };
-
-      this.dataService.getRecordsByListId(params)
-        .pipe(takeUntil(this.unsubscribe$))
-        .subscribe(
-          data => {
-            if (data.result) {
-              this.records = data.result.items;
-              this.totalRecordsCount = data.result.totalCount;
-            } else {
-              this.records = [];
-              this.totalRecordsCount = 0;
-            }
-            this.tableSourceRecords.next(this.records, this.totalRecordsCount);
-            this.loadingRecords = false;
-          },
-          error => {
-            this.loadingRecords = false;
-            console.log('error', error.response);
-          }
-        );
+      this.loadListRecords(this.selectedList.listId);
 
       if (
         evt.cellIndex === 0 && evt.column.frozenLeft
@@ -233,6 +207,35 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  loadListRecords(listId: number) {
+    const params = {
+      listId,
+      SortDirection: 'Ascending',
+      maxResultCount: this.tableSourceRecords.pageSize,
+      skipCount: (this.tableSourceRecords.currentPage - 1) * this.tableSourceRecords.pageSize,
+      sorting: ''
+    };
+    this.loadingRecords = true;
+    this.dataService.getRecordsByListId(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        data => {
+          if (data.result) {
+            this.records = data.result.items;
+            this.totalRecordsCount = data.result.totalCount;
+          } else {
+            this.records = [];
+            this.totalRecordsCount = 0;
+          }
+          this.tableSourceRecords.next(this.records, this.totalRecordsCount);
+          this.loadingRecords = false;
+        },
+        error => {
+          this.loadingRecords = false;
+          console.log('error', error.response);
+        }
+      );
+  }
   onSaveList() {
     this.loadLists();
   }
@@ -260,12 +263,67 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onRemoveRecordsConfirm() {
-    this.confirmRemoveRecordsModal.hide();
+    const params = {
+      listId: this.selectedList.listId,
+      recordId: this.selectedRecords.map(x => x.id)
+    };
+    this.loadingRecords = true;
+
+    this.dataService.removeFromList(params)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe(
+        () => {
+          this.loadingRecords = false;
+          this.loadListRecords(this.selectedList.listId);
+        },
+        error => {
+          this.loadingRecords = false;
+          console.log('error', error.response);
+        }
+      );
   }
 
+  onAssignRecords() {
+    this.addedCount = 0;
+    this.loadingRecords = true;
+    this.selectedRecordsFromModal.forEach(record => {
+      const params = {
+        list: this.selectedList,
+        listId: this.selectedList.id,
+        record,
+        recordId: record.id,
+        listOptOut: true,
+      };
+      this.dataService.addToList(params)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          () => {
+            this.addedCount++;
+          },
+          error => {
+            this.addedCount++;
+            console.log('error', error.response);
+          }
+        );
+
+    });
+    setTimeout(() => this.isAddedDone());
+
+  }
+
+  isAddedDone() {
+    if (this.addedCount === this.selectedRecordsFromModal.length) {
+      this.dataRecordsModal.hide();
+      this.addedCount = 0;
+      this.loadingRecords = false;
+      this.loadListRecords(this.selectedList.listId);
+    } else {
+      setTimeout(() => this.isAddedDone(), 500);
+    }
+  }
   // activate event in data-records table
   onActiveRecords(event) {
-    if (event.type === 'click') {
+    if (event.type === 'checkbox') {
       this.recordsTableButtons[1].disabled = this.selectedRecords.length === 0;
     }
   }
@@ -274,7 +332,7 @@ export class DataListsComponent implements OnInit, AfterViewInit, OnDestroy {
   onActiveRecordsTable(evt) {
     const { event, selected } = evt;
     if (event.type === 'checkbox') {
-      console.log(selected);
+      this.selectedRecordsFromModal = selected;
     }
   }
 

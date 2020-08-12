@@ -28,8 +28,8 @@ export class ContentService {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/landingPage/GetLandingPageCategoryInOuIncludingChildren`, params);
   }
 
-  deleteCategory(params: any): Observable<any> {
-    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/landingPage/deleteLandingPageCategory`, params);
+  deleteCategory(ids: number): Observable<any> {
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/landingPage/deleteLandingPageCategory?ids=${ids}`);
   }
 
   createCategory(params: any): Observable<any> {

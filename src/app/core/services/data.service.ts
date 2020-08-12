@@ -1,21 +1,13 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { of, Observable } from 'rxjs';
 
-import {
-  AllRecordGridColumnsMock, AllRecordsMock, SubscribersMock,
-  LeadsMock, ProspectsMock, TransactionalsMock
-} from '@app-fake-db/data-records-mock';
 import { ListsMockData } from '@app-fake-db/data-list-mock';
-import { CustomFieldsMock } from '@app-fake-db/data-custom-fields-mock';
 import { AccountsImportMocks } from '@app-fake-db/data-import-accounts-mock';
 import { LeadCategoriesImportMock } from '@app-fake-db/data-import-lead-categories-mock';
 import { MapsMappingImportMocks } from '@app-fake-db/data-import-maps-mock';
-import { EventListsMockData } from '@app-fake-db/data-list-event-mock';
 import { EventsMockData } from '@app-fake-db/events-mock';
-import { DataFiltersMock, filterColumnsMock } from '@app-fake-db/data-filters-mock';
-import { ListValuesMock } from '@app-fake-db/data-list-values-mock';
 
 
 @Injectable({
@@ -45,6 +37,17 @@ export class DataService {
 
   addList(params: any): Observable<any> {
     return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/AddList`, params);
+  }
+
+  addToList(params: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiUrl}/api/services/app/list/AddToList`, params);
+  }
+
+  removeFromList(params: any): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: params
+    };
+    return this.http.delete<any>(`${environment.apiUrl}/api/services/app/list/DeleteSelectedListRecord`, httpOptions);
   }
 
   getLists() {

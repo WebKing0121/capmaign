@@ -17,7 +17,7 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
   @ViewChild('categoryModal', { static: false }) categoryModal;
 
   private unsubscribe$ = new Subject();
-  deleteFrom = 0;
+
   categories: ContentCategory[];
   tableSource: DataTableSource<ContentCategory> = new DataTableSource<ContentCategory>(50);
   totalCount: number;
@@ -36,6 +36,8 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
   category: ContentCategory;
 
   loading = false;
+  deleteFrom = 0;
+  deletedCount = 0;
 
   constructor(
     private contentService: ContentService
@@ -86,24 +88,46 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   onConfirmDelete() {
-    const params = {
-      ids: this.deleteFrom === 0 ?
-        this.selected.map(x => x.id) : [this.category.id]
-    };
-    this.loading = true;
-    this.contentService.deleteCategory(params)
-      .pipe(takeUntil(this.unsubscribe$))
-      .subscribe(
-        data => {
-          this.loadTableData();
-          this.loading = false;
-          this.confirmModal.hide();
-        },
-        error => {
-          this.loading = false;
-          console.log('error', error.response);
-        }
-      );
+    if (this.deleteFrom === 1) {
+      this.contentService.deleteCategory(this.category.id)
+        .pipe(takeUntil(this.unsubscribe$))
+        .subscribe(
+          () => {
+            this.loading = false;
+            this.loadTableData();
+            this.categoryModal.hide();
+          },
+          error => {
+            this.loading = false;
+            console.log('error', error.response);
+          }
+        );
+    } else {
+      this.selected.forEach(category => {
+        this.contentService.deleteCategory(category.id)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(
+            () => {
+              this.deletedCount++;
+            },
+            error => {
+              this.loading = false;
+              console.log('error', error.response);
+            }
+          );
+      });
+      setTimeout(() => this.isDeletedDone());
+    }
+
+  }
+
+  isDeletedDone() {
+    if (this.deletedCount === this.selected.length) {
+      this.loadTableData();
+      this.deletedCount = 0;
+    } else {
+      setTimeout(() => this.isDeletedDone(), 500);
+    }
   }
 
   initTable() {
@@ -133,6 +157,7 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe(
         data => {
+          this.loading = false;
           if (data.result) {
             this.categories = data.result.items;
             this.totalCount = data.result.totalCount;
@@ -143,6 +168,7 @@ export class ContentCategoriesComponent implements OnInit, OnDestroy, AfterViewI
           this.tableSource.next(this.categories, this.totalCount);
         },
         error => {
+          this.loading = false;
           console.log('error', error.response);
         }
       );
